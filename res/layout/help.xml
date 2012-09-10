@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/menu_screen"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/white"
+    >
+    <TextView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:textColor="@android:color/black"
+    android:text="@string/help_title"
+    android:gravity="center"
+    android:layout_marginBottom="20dip"
+    android:textSize="@dimen/title_size"
+    android:shadowColor="@color/title_shadow"
+    android:shadowDx="2"
+    android:shadowDy="2"
+    android:shadowRadius="1"/>
+        <Button
+        android:id="@+id/back_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="...Back"
+        android:onClick="HandleButton"
+		android:layout_marginBottom="10dip">
+		</Button>
+
+    <TextView
+        android:id="@+id/help_text"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/back_help"
+        android:autoLink="all"
+        android:bufferType="spannable"
+        android:drawablePadding="5px"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="7dip"
+        android:isScrollContainer="true"
+        android:padding="@dimen/help_text_padding"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="vertical"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/help_text_size" >
+
+        </TextView>
+   
+</RelativeLayout>

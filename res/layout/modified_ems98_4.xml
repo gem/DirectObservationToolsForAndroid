@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ems_menu_screen_1"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/white"
+    >
+
+
+
+     <TextView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:textColor="@android:color/black"
+    android:text="Additional Comments"
+    android:gravity="center"
+    android:layout_marginBottom="25dip"
+    android:textSize="@dimen/title_size"
+    android:shadowColor="@color/title_shadow"
+    android:shadowDx="2"
+    android:shadowDy="2"
+    android:shadowRadius="1"/>
+    
+    <ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    <LinearLayout
+    android:orientation="vertical"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    >
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@android:color/black"
+    android:text="@string/general_info"
+    android:textStyle="bold">
+    </TextView>
+    <EditText
+    android:id="@+id/additional_edit"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:maxLines="10">
+    </EditText>
+    
+   
+ 
+  <RelativeLayout
+   android:layout_width="fill_parent"
+   android:layout_height="wrap_content"
+   android:paddingTop="10dip">
+   
+   <Button
+   android:id="@+id/back_4"
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   android:text="@string/back"
+   android:layout_alignParentLeft="true"
+   android:layout_marginLeft="10dip"
+   android:onClick="HandleButton">
+   </Button>
+   <Button
+   android:id="@+id/next_4"
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   android:text="@string/next"
+   android:layout_alignParentRight="true"
+   android:layout_marginRight="11dip"
+   android:onClick="HandleButton">
+   </Button>
+   </RelativeLayout>
+   </LinearLayout>
+   </ScrollView>
+   </LinearLayout>
+
+
+

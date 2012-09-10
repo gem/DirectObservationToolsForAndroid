@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ems_menu_screen_1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical" >
+
+    
+        <RelativeLayout
+        android:id="@+id/LinearLayout03"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+
+        <Button
+            android:id="@+id/next_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dip"
+            android:onClick="HandleButton"
+            android:text="@string/next" >
+        </Button>
+
+        <Button
+            android:id="@+id/back_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dip"
+            android:onClick="HandleButton"
+            android:text="@string/back" >
+        </Button>
+    </RelativeLayout>
+    
+        
+        
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/LinearLayout03" 
+        android:layout_marginBottom="72dip"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dip"
+                android:gravity="center"
+                android:shadowColor="@color/title_shadow"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="1"
+                android:text="Damage Data 2"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/title_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/damage_level"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" >
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <Spinner
+                    android:id="@+id/damage_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+                </Spinner>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/image_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@android:color/black" >
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/failure_mode"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" >
+            </TextView>
+
+            <Spinner
+                android:id="@+id/failure_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </Spinner>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="If other..."
+                android:textColor="@android:color/black"
+                android:textStyle="bold" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/other_failure"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="400"
+                android:maxLines="1" >
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/structural_system"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" >
+            </TextView>
+
+            <Spinner
+                android:id="@+id/structural_system"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </Spinner>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="If other..."
+                android:textColor="@android:color/black"
+                android:textStyle="bold" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/other_system"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="400"
+                android:maxLines="1" >
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/column_reo"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" >
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <Spinner
+                    android:id="@+id/column_main_reo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+                </Spinner>
+
+                <Spinner
+                    android:id="@+id/column_main_reo_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right" >
+                </Spinner>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/column_confining"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" >
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <Spinner
+                    android:id="@+id/column_confining_reo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+                </Spinner>
+
+                <Spinner
+                    android:id="@+id/column_confining_reo_spacing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right" >
+                </Spinner>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/beam_reo"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" >
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <Spinner
+                    android:id="@+id/beam_main_reo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+                </Spinner>
+
+                <Spinner
+                    android:id="@+id/beam_main_reo_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right" >
+                </Spinner>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/beam_shear"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" >
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <Spinner
+                    android:id="@+id/beam_shear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+                </Spinner>
+
+                <Spinner
+                    android:id="@+id/beam_shear_spacing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right" >
+                </Spinner>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

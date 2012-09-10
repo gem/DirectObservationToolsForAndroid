@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ems_menu_screen_1"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/white"
+    >
+
+
+
+     <TextView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:textColor="@android:color/black"
+    android:text="Save"
+    android:gravity="center"
+    android:layout_marginBottom="25dip"
+    android:textSize="@dimen/title_size"
+    android:shadowColor="@color/title_shadow"
+    android:shadowDx="2"
+    android:shadowDy="2"
+    android:shadowRadius="1"/>
+    
+    <LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingTop="30dip">
+    
+    <TextView
+    android:id="@+id/save_filename"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:textColor="@android:color/black"
+    android:textStyle="bold"
+    android:paddingTop="10dip">
+    </TextView>
+    
+    <Button
+    android:id="@+id/save_button"
+    android:text="Save"
+    android:layout_width="100dip"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal">
+    </Button>
+     <TextView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:textColor="@android:color/black"
+    android:textStyle="bold"
+    android:text="@string/save_explain"
+    android:paddingTop="10dip">
+    </TextView>
+    
+    
+   
+ 
+  <RelativeLayout
+   android:layout_width="fill_parent"
+   android:layout_height="wrap_content"
+   android:paddingTop="20dip">
+   
+   <Button
+   android:id="@+id/back_5"
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   android:text="@string/back"
+   android:layout_alignParentLeft="true"
+   android:layout_marginLeft="10dip"
+   android:onClick="HandleButton">
+   </Button>
+   </RelativeLayout>
+   </LinearLayout>
+
+
+
+</LinearLayout>

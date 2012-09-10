@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Auto generated Strings -->
+    <string name="app_name">IDCT DO SURVEY</string>  
+    
+    
+    <!-- Splash Strings -->
+   <string name="splash_title">IDCT ANDROID FIELD TOOL</string>
+    <string name="splash_version_info">Version 1</string>
+    <string name="splash_author_info">University of Nottingham</string>
+    <!-- Main Menu Strings" -->
+    <string name="menu_title">Global Earthquake Model\nInventory Data Capture Tool\n</string>
+    <string name="modified_ems98_button">Modified EMS-98</string>
+    <string name="settings_button">Settings</string>
+    <string name="help_button">Help</string>
+    <string name="sync_data_button">Sync Data</string>
+    <string name="survey_summary_button">Summary</string>
+    <string name="map_view_button">Map View</string>
+    
+    <!-- Modified EMS98 Strings -->
+    <string name="ems98_title">Survey</string>
+    <string name="next">Next...</string>
+    <string name="back">...Back</string>
+    <string name="lngt">Longitude</string>
+    <string name="lat">Latitude</string>
+    <string name="ems_1_explanation">The following values are common to all forms\nand can be edited in the settings menu</string>
+    <string name="ems98_2_location">Location (Lat, Long)</string>
+    <string name="ems98_2_address">Address (2 lines Max)</string>
+    <string name="ems98_2_occupancy_type">Occupancy type</string>
+    <string name="ems98_2_storeys">Building storeys</string>
+    <string name="ems98_2_storeys_below">Building storeys below ground</string>
+    <string name="ems98_2_soil_type">Soil type</string>
+    <string name="ems98_2_sloping_ground">Sloping ground?</string>
+    <string name="ems98_2_reg_plan">Regularity in plan?</string>
+    <string name="ems98_2_reg_elev">Regularity in elevation?</string>
+    <string name="ems98_2_secondary">Secondary hazard</string>
+    <string name="ems98_2_original_assess">Original risk assessment</string>
+    <string name="ems98_2_reassess">New risk assessment?</string>
+    <string name="damage_level">Damage level</string>
+    <string name="take_image">Capture image</string>
+    <string name="failure_mode">Failure mode</string>
+    <string name="structural_system">Structural system</string>
+    <string name="column_reo">Column reinforcement (and number)</string>
+    <string name="column_confining">Column confining reinforcement (and centres)</string>
+    <string name="beam_reo">Beam main reinforcement (and number)</string>
+    <string name="beam_shear">Beam shear reinforcement (and centres)</string>
+    <string name="file_name">Filename:</string>
+    <string	name="clear_explain">Pressing "Clear" will reset the form (excluding the fields edited in "Settings") to allow a new survey to be conducted. Please remember to enter a new Filename </string>
+    <string name="other_failure_mode">If "Other" please describe</string>
+    <string name="general_info">Additional comments/relevant observations</string>
+    <string name="save_explain">No changes can be made to the file from within the app after pressing "Save"\nPlease press "Back" to make any final amendments</string>
+    
+    
+    
+    <!-- Please Select String -->
+    <string name="select">Please select</string>
+        <!-- Settings Strings -->
+    <string name="settings_title">Settings</string>
+    <string name="earthquake">Earthquake:</string>
+    <string name="surveyor">Surveyor:</string>
+    <string name="date">Date:</string>
+    
+    <string name="survey_name">Survey name:</string>
+    
+    <!-- Help Strings -->
+    <string name="help_title">Help</string>
+      
+    <!-- About Strings -->
+    <string name="about_button">About</string>
+    <string name="about_title">About</string>
+    
+     <!-- Structural Systems Spinner -->
+    <string name="systems1">Moment Resisting Frame - no infill/weak infill</string>
+    <string name="systems2">Moment Resisting Frame - strong infill material</string>
+    <string name="systems3">Shear Wall Structure - RC</string>
+    <string name="systems4">Concentrically Braced Frame - Steel</string>
+    <string name="systems5">Eccentrically braced Frame - Steel</string>
+    <string name="systems6">Unreinforced Masonry</string>
+    <string name="systems7">Reinforced Masonry</string>
+    <string name="systems8">Confined Masonry</string>
+    <string name="systems9">Wooden Frame</string>
+	<string name="systems10">Adobe</string>
+	<string name="systems11">Other</string>
+	
+	<!-- Soil Type Spinner -->
+	<string name="type1">Soft</string>
+	<string name="type2">Firm</string>
+	<string name="type3">Rock</string>
+	<string name="type4">Unknown</string>
+	<string name="type5">Other...</string>
+	
+	<!-- Occupancy Type Spinner -->
+<string name="occu1">Assembly (50+ persons)</string>
+<string name="occu2">Commercial</string>
+<string name="occu3">Educational</string>
+<string name="occu4">Factory (Excluding hazardous)</string>
+<string name="occu5">High Hazard</string>
+<string name="occu6">Institutional (Unable to leave W/O physical assistance Hospitals prisons etc)</string>
+<string name="occu7">Mixed</string>
+<string name="occu8">Residential (Excluding institutional)</string>
+<string name="occu9">Storage</string>
+<string name="occu10">Other...</string>
+
+<!-- Damage Assessment Level Spinners -->
+<string name="assess1">Red</string>
+<string name="assess2">Yellow</string>
+<string name="assess3">Green</string>
+<string name="assess4">None</string>
+
+<string name="assess5">Red</string>
+<string name="assess6">Yellow</string>
+<string name="assess7">Green</string>
+<string name="assess8">N/A</string>
+
+	<!-- Collapse State Spinner -->
+	<string name="state1">Slight (Immediate occupancy)</string>
+	<string name="state2">Moderate (Repairable)</string>
+	<string name="state3">Extensive (Not repairable)</string>
+	<string name="state4">Partial Collapse</string>
+	<string name="state5">Total Collapse</string>
+	
+	<!--  Yes No Spinners -->
+	
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
+	
+	<!-- Main Reinforcing Sizes -->
+	<string name="main_reo_1">ø8</string>
+	<string name="main_reo_2">ø10</string>
+	<string name="main_reo_3">ø12</string>
+	<string name="main_reo_4">ø16</string>
+	<string name="main_reo_5">ø20</string>
+	<string name="main_reo_6">ø25</string>
+	<string name="main_reo_7">ø28</string>
+	<string name="main_reo_8">ø32</string>
+	<string name="main_reo_9">ø36</string>
+	<string name="main_reo_10">ø40</string>
+	<string name="main_reo_11">ø50</string>
+	
+	<!-- Secondary Reinforcing Sizes -->
+	<string name="second_reo_1">ø6</string>
+	<string name="second_reo_2">ø8</string>
+	<string name="second_reo_3">ø10</string>
+	<string name="second_reo_4">ø12</string>
+	
+	<!-- Reo Centres -->
+	<string name="centre1">\@50  mm</string>
+	<string name="centre2">\@100 mm</string>
+	<string name="centre3">\@150 mm</string>
+	<string name="centre4">\@200 mm</string>
+	<string name="centre5">\@250 mm</string>
+	<string name="centre6">\@300 mm</string>
+	
+	<!-- Reo Numbers -->
+	<string name="number1"> *4</string>
+	<string name="number2"> *6</string>
+	<string name="number3"> *8</string>
+	<string name="number4">*10</string>
+	<string name="number5">*12</string>
+	<string name="number6">*14</string>
+	<string name="number7">*16</string>
+	<string name="number8">*18</string>
+	<string name="number9">*20</string>
+	
+		<!-- Damage Level Spinner -->
+	<string name="damage0">0: No structural damage </string>
+	<string name="damage1">1: Negligible to slight damage </string>
+	<string name="damage2">2: Moderate damage </string>
+	<string name="damage3">3: Substantial to heavy damage </string>
+	<string name="damage4">4: Very heavy damage </string>
+	<string name="damage5">5: Destruction </string>
+	
+	<!-- Failure Spinner -->
+	<string name="fail_no">No failure</string>
+	<string name="fail_1">Soft storey</string>
+	<string name="fail_2">Shear failure</string>
+	<string name="fail_3">Plastic hinges</string>
+	<string name="fail_4">Collapse of masonry walls</string>
+	<string name="fail_5">Other...</string>
+</resources>

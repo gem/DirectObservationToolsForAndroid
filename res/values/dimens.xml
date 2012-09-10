@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+<dimen name="title_size">30dip</dimen>
+<dimen name="help_text_padding">5dip</dimen>
+<dimen name="help_text_size">11pt</dimen>
+<dimen name="selection_size">8pt</dimen>
+<dimen name="explanation">8pt</dimen>
+<!-- Splash Screen Dimensions -->
+<dimen name="splash_title">12pt</dimen>
+<dimen name="splash_info">8pt</dimen>
+
+
+</resources>
