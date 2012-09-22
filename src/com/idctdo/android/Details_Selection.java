@@ -37,6 +37,7 @@ public class Details_Selection extends EQForm {
 
 	
 	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

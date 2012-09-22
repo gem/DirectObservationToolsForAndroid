@@ -13,8 +13,8 @@ public class GemUtilities {
 		mCursor.moveToFirst();
 		while(!mCursor.isAfterLast()) {
 			DBRecord o1 = new DBRecord();		
-	        o1.setOrderName(mCursor.getString(0));
-	        o1.setOrderStatus(mCursor.getString(1));
+	        o1.setAttributeDescription(mCursor.getString(0));
+	        o1.setAttributeValue(mCursor.getString(1));
 	        o1.setJson(mCursor.getString(2));
 	        mArrayList.add(o1);
 		    mCursor.moveToNext();

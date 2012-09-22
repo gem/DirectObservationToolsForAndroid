@@ -12,7 +12,18 @@
         <item>3 is selected</item>
     </string-array>
     
-    
+    <string-array name="hazardOptions">
+        <item>Earthquake</item>
+        <item>Landslide</item>
+        <item>Tsunami</item>
+        <item>Volcano</item>
+    </string-array>
+    <string-array name="hazardListValues">
+        <item>1 is selected</item>
+        <item>2 is selected</item>
+        <item>3 is selected</item>
+        <item>4 is selected</item>
+    </string-array>
     <string-array name="structural_systems">
         <item>@string/select</item>
         <item>@string/systems1</item>

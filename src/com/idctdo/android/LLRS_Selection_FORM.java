@@ -31,6 +31,9 @@ public class LLRS_Selection_FORM extends EQForm {
 	public int tabIndex = 1;
 	
 
+	private String topLevelAttributeType = "LLRS";
+	private String secondLevelAttributeType = "LLRSD";
+	
 	private SelectedAdapter selectedAdapter;
 	private SelectedAdapter selectedAdapter2;
 
@@ -44,6 +47,7 @@ public class LLRS_Selection_FORM extends EQForm {
 
 
 	public GemDbAdapter mDbHelper;
+	public GEMSurveyObject surveyDataObject;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,10 @@ public class LLRS_Selection_FORM extends EQForm {
     protected void onResume() {
         super.onResume();
 		MainTabActivity a = (MainTabActivity)getParent();
+		surveyDataObject = (GEMSurveyObject)getApplication();
+
+		
+		
 		if (a.isTabCompleted(tabIndex)) {
 			
 		} else {
@@ -64,24 +72,6 @@ public class LLRS_Selection_FORM extends EQForm {
 			mDbHelper.createDatabase();      
 			mDbHelper.open();
 
-			Cursor testdata = mDbHelper.getTestData();
-
-			if (DEBUG_LOG) Log.d(TAG,"getTestData-GetColumnName " + DatabaseUtils.dumpCursorToString(testdata));
-
-
-			mDbHelper.insertTestData();
-
-			if (DEBUG_LOG) Log.d(TAG,"insertTestData ");
-
-			Cursor testdata2 = mDbHelper.getTestData();
-
-			if (DEBUG_LOG) Log.d(TAG,"GETTESTDATA AGAIN" + DatabaseUtils.dumpCursorToString(testdata2));
-
-			UUID uid = UUID.fromString("08991839-dff5-4d24-b39a-9303d1f34dae");
-			Cursor ojbByUid= mDbHelper.getObjectByUid(uid);
-			if (DEBUG_LOG) Log.d(TAG,"GETTESTDATA ojbByUid" + DatabaseUtils.dumpCursorToString(ojbByUid));
-
-
 			Cursor allLLRSCursor = mDbHelper.getAllLLRS();        
 			ArrayList<DBRecord> lLrs = GemUtilities.cursorToArrayList(allLLRSCursor);        
 			if (DEBUG_LOG) Log.d(TAG,"lLrs: " + lLrs.toString());
@@ -89,7 +79,6 @@ public class LLRS_Selection_FORM extends EQForm {
 
 			Cursor allLLRSDCursor = mDbHelper.getAllLLRSD();
 			lLrsd = GemUtilities.cursorToArrayList(allLLRSDCursor);
-
 
 
 			mDbHelper.close();
@@ -118,7 +107,8 @@ public class LLRS_Selection_FORM extends EQForm {
 						int position, long id) {
 					// user clicked a list item, make it "selected"
 					selectedAdapter.setSelectedPosition(position);
-
+					surveyDataObject.putData(topLevelAttributeType, selectedAdapter.getItem(position).getAttributeValue());
+					
 
 					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 
@@ -131,7 +121,8 @@ public class LLRS_Selection_FORM extends EQForm {
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter2.setSelectedPosition(position);
-
+					surveyDataObject.putData(secondLevelAttributeType, selectedAdapter2.getItem(position).getAttributeValue());
+					
 					//Toast.makeText(getApplicationContext(), "LV2 click: " + selectedAdapter2.getItem(position).getOrderName() + " " + selectedAdapter2.getItem(position).getOrderStatus() + " " +selectedAdapter2.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 
 					completeThis();		

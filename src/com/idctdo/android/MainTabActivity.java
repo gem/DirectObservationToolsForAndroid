@@ -355,13 +355,11 @@ public class MainTabActivity extends TabActivity {
 		mDbHelper.createDatabase();      
 		mDbHelper.open();		
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
-
-
 		mDbHelper.insertGemData(g);
-		if (DEBUG_LOG) Log.d(TAG,"insert Test GEM Data ");
-		Cursor testdata2 = mDbHelper.getTestData();
-		if (DEBUG_LOG) Log.d(TAG,"GETTESTDATA AGAIN" + DatabaseUtils.dumpCursorToString(testdata2));
+		
 		mDbHelper.close();
+		
+		
 
 		return false;
 	}

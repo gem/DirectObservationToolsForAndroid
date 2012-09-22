@@ -49,15 +49,12 @@ public class Roof_Selection_Form extends EQForm {
 		 
 
 	public GemDbAdapter mDbHelper;
-		
+	public GEMSurveyObject surveyDataObject;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.roof_selectable_list);
-		
-	
-        
+		setContentView(R.layout.roof_selectable_list);       
 	}
 
 	@Override
@@ -72,6 +69,10 @@ public class Roof_Selection_Form extends EQForm {
     protected void onResume() {
         super.onResume();
 		MainTabActivity a = (MainTabActivity)getParent();
+		surveyDataObject = (GEMSurveyObject)getApplication();
+
+		
+		
 		if (a.isTabCompleted(tabIndex)) {
 			
 		} else {
@@ -80,17 +81,7 @@ public class Roof_Selection_Form extends EQForm {
 	        mDbHelper.createDatabase();      
 	        mDbHelper.open();
 
-	        Cursor testdata = mDbHelper.getTestData();
-
-	        if (DEBUG_LOG) Log.d("IDCT","getTestData-GetColumnName " + DatabaseUtils.dumpCursorToString(testdata));
-	        
-	        
-	        mDbHelper.insertTestData();
-	        
-	        if (DEBUG_LOG) Log.d("IDCT","insertTestData ");
-	        
-	        Cursor testdata2 = mDbHelper.getTestData();
-
+        
 	        
 	        Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByType(topLevelAttributeType);     
 	        ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
@@ -131,7 +122,9 @@ public class Roof_Selection_Form extends EQForm {
 					selectedAdapter.setSelectedPosition(position);
 					selectedAdapter2.setSelectedPosition(-1);
 					
-							
+					surveyDataObject.putData(topLevelAttributeType, selectedAdapter.getItem(position).getAttributeValue());
+					
+			
 					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 					
 	    
@@ -156,8 +149,8 @@ public class Roof_Selection_Form extends EQForm {
 				        if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
 				        //String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
 				        
-				        o1.setOrderName(mCursor.getString(0));
-				        o1.setOrderStatus(mCursor.getString(1));
+				        o1.setAttributeDescription(mCursor.getString(0));
+				        o1.setAttributeValue(mCursor.getString(1));
 				        o1.setJson(mCursor.getString(2));
 				        secondLevelAttributesList.add(o1);
 					    mCursor.moveToNext();
@@ -183,6 +176,8 @@ public class Roof_Selection_Form extends EQForm {
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter2.setSelectedPosition(position);
+					
+					surveyDataObject.putData(secondLevelAttributeType, selectedAdapter2.getItem(position).getAttributeValue());
 					
 
 					

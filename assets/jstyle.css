@@ -159,4 +159,231 @@
 		  display:none;
 		}
 
+		
+		
+		
+		
+		
+		
+		
+		
+			
+	#chicken_contentDiv {
+		background-color: #000000;
+		color:#ffffff;
+		border-radius: 15px;
+		-webkit-opacity: 0.5!important;
+	}
+
+
+	.olLayerGooglePoweredBy {
+		visibility:hidden;
+	}
+	
+        #controls {
+			/*background-color: rgb(101, 188, 215);*/
+			/*height:100px;*/
+			visibility:hidden;
+        }
+        #controlToggle {
+            padding-left: 1em;
+        }
+        #controlToggle li {
+            list-style: none;
+        }
+		
+		.ui-collapsible-content {
+			/*background-color: rgb(101, 188, 215);*/
+
+		}
+		.ui-body-c {
+			background-color: rgb(101, 188, 215);
+		}
+		.olControlEditingToolbar  {
+            float:right;
+            width: 216px;
+        }
+	
+		div.olControlLayerSwitcher {
+            width: 310px;		
+			color: white;
+			font-family: sans-serif;			
+			font-size:24px;			
+        }
+		
+        div.olControlNoSelect {
+            width: 310px;
+        }
+      div.olControlLayerSwitcher .layersDiv {
+          padding-top: 5px;
+          padding-left: 0px !important;
+          padding-bottom: 5px;
+          padding-right: 0px !important;
+          background-color: black;
+          width: 100%;
+          height: auto !important;
+
+		  
+		}
+		
+		div.olControlLayerSwitcher .layersDiv .baseLbl{
+			color:grey;
+		}
+
+		div.olControlLayerSwitcher .layersDiv .baseLayersDiv .labelSpan {
+			border-width:10px;
+			border-color: blue;
+			color:white;
+		}
+		
+		div.olControlLoadingPanel {
+            background-image:url( loading.gif);
+            position: absolute;
+            left: 1px;
+            top: 1px;
+			height:15px;
+			width:15px;
+            background-position:center;
+            background-repeat:no-repeat;
+            display: none;
+        }
+		
+		
+		
+		#home {
+			background-color: rgb(101, 188, 215);
+		}
+		
+		#panel {
+
+			/*height: 50px;*/
+        }
+		
+		div.olMapViewport {
+			z-index: 0;
+			position:absolute
+		}
+			
+
+			
+		#zoomInButton{
+			position:absolute; 
+			left:5px; 
+			top:40px; 
+			z-index:10000; 
+			width:50px; 
+			height:50px; 
+			/*background-color:#3333FF;*/
+			background-image:url('zoomIn.png');
+		}
+		#zoomInButton:active { background: url('zoomOut.png') no-repeat bottom; }
+		
+		
+		#zoomOutButton{
+			position:absolute; 
+			left:5px; 
+			top:70px; 
+			z-index:10000; 
+			width:50px; 
+			height:50px; 
+			/*background-color:#3333FF;*/
+			background-image:url('zoomOut.png');
+		}
+
+	    #zoomOutButton:active,
+			a.active{
+			background: #666;
+			color: #EEE;
+		}
+  
+  
+		#rightLayerButton{
+			position:absolute; 
+			right:5px; 
+			bottom:200px; 
+			z-index:10000; 
+			width:50px; 
+			height:50px; 
+			/*background-color:#3333FF;*/
+			background-image:url('zoomIn.png');
+		}
+		
+		#leftLayerButton{
+			position:absolute; 
+			left:5px; 
+			bottom:200px; 
+			z-index:10000; 
+			width:50px; 
+			height:50px; 
+			/*background-color:#3333FF;*/
+			background-image:url('zoomOut.png');
+		}
+		
+   		#finishAndDeselect {
+			position:absolute;  
+			bottom:110px;
+			right:0px;
+			z-index:10000; 
+			width:64px; 
+			height:64px; 
+			/*visibility:hidden;*/
+			background-image:url('finish_small.png');
+		}
+		
+		
+		  *{
+			-webkit-user-select: none;
+			-webkit-tap-highlight-color: rgba(0,0,0,0);
+		  }
+
+		  a{
+			border: 1px solid #333;
+			color: #333;
+			display: block;
+			z-index:10000; 
+			text-decoration: none;
+			padding: 10px;
+			-webkit-border-radius: 10px;
+		  }
+		  a#touchstartcss:active,
+		  #reset:active,
+		  a.active{
+			background: #666;
+			color: #EEE;
+		  }
+		  #reset{
+			float: right;
+		  }
+		  
+		  
+		  a#touchstartcss:active,
+		  #zoomIn:active,#zoomOut:active,
+		  a.active{
+			background-color: #666;
+			color: #EEE;
+		  }
+		  
+		  #zoomIn{
+			background: #ccc;
+			float: left;
+			left:5px; 
+			top:40px; 
+			position:absolute;  
+			background-image:url('img/zoom-in.png');
+			background-repeat:no-repeat;
+			width:30px;
+			height:30px;
+		  }
+		  
+		  #zoomOut{
+			background: #ccc;
+			float: left;
+			left:5px; 
+			top:120px; 
+			position:absolute;  
+			background-image:url('img/zoom-out.png');
+			background-repeat:no-repeat;
+			width:30px;
+			height:30px;
+		  }		  
 

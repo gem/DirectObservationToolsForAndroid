@@ -3,29 +3,29 @@ package com.idctdo.android;
 
 public class DBRecord {
     
-    private String orderName;
-    private String orderStatus;
-    private String json;
+    private String attributeDescription;
+    private String attributeValue;
+    private String attributeScope;
     private int layoutId;
     
-    public String getOrderName() {
-        return orderName;
+    public String getAttributeDescription() {
+        return attributeDescription;
     }
-    public void setOrderName(String orderName) {
-        this.orderName = orderName;
+    public void setAttributeDescription(String orderName) {
+        this.attributeDescription = orderName;
     }
-    public String getOrderStatus() {
-        return orderStatus;
+    public String getAttributeValue() {
+        return attributeValue;
     }
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
+    public void setAttributeValue(String orderStatus) {
+        this.attributeValue = orderStatus;
     }
     
     public void setJson(String jsonString) {
-        this.json = jsonString;
+        this.attributeScope = jsonString;
     }
     public String getJson() {
-        return json;
+        return attributeScope;
     }
     
     public void setLayoutId(int layoutId) {
@@ -33,5 +33,12 @@ public class DBRecord {
     }
     public int getLayoutId() {
         return layoutId;
+    }
+    
+    public String toString(){
+    	
+		return attributeDescription + " " + attributeValue + " " + attributeScope + " " + layoutId;
+    	
+    
     }
 }

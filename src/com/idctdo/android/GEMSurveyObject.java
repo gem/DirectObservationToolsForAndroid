@@ -38,13 +38,23 @@ public class GEMSurveyObject extends Application {
 	public double getLat(){
 		return this.currentSurveyPointLat;
 	}
+	
+	public String getComment(){
+		
+		return null;
+	}
+	
+	
 
 	public boolean putData(String key, String value) {		
 		surveyData.put(key, value);
-		Log.d("IDCT","Hashmap : " + surveyData.toString());
+		Log.d("IDCT","HASHMAP : " + surveyData.toString());
 		return true;
 	}
 	
+	public HashMap getKeyValuePairsMap() {		
+		return surveyData;
+	}
 	
 }
 

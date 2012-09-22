@@ -58,7 +58,7 @@ public class Material_Selection_Form extends EQForm {
 	ListView listview5;
 
 	public GemDbAdapter mDbHelper;
-
+	public GEMSurveyObject surveyDataObject;
 
 
 	@Override
@@ -86,6 +86,11 @@ public class Material_Selection_Form extends EQForm {
 	protected void onResume() {
 		super.onResume();
 		MainTabActivity a = (MainTabActivity)getParent();
+		
+		surveyDataObject = (GEMSurveyObject)getApplication();
+
+		
+		
 		if (a.isTabCompleted(tabIndex)) {
 
 		} else {
@@ -181,8 +186,10 @@ public class Material_Selection_Form extends EQForm {
 
 					mDbHelper.open();
 
-					if (DEBUG_LOG) Log.d("IDCT", "MATERIAL TYPE SELECING BY " + secondLevelAttributeType + " and " + selectedAdapter.getItem(position).getJson());
-
+					if (DEBUG_LOG) Log.d("IDCT", "MATERIAL TYPE SELECING BY " + secondLevelAttributeType + " and " + selectedAdapter.getItem(position).getJson());				
+					if (DEBUG_LOG) Log.d("IDCT", "SELECTED DB RECORD QUADRUPLET: "  + selectedAdapter.getItem(position).toString());
+					surveyDataObject.putData(topLevelAttributeType, selectedAdapter.getItem(position).getAttributeValue());
+					
 					Cursor mCursor = mDbHelper.getAttributeValuesByTypeAndScope(secondLevelAttributeType,selectedAdapter.getItem(position).getJson());
 
 					mCursor.moveToFirst();
@@ -194,8 +201,8 @@ public class Material_Selection_Form extends EQForm {
 						//if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
 						//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
 
-						o1.setOrderName(mCursor.getString(0));
-						o1.setOrderStatus(mCursor.getString(1));
+						o1.setAttributeDescription(mCursor.getString(0));
+						o1.setAttributeValue(mCursor.getString(1));
 						o1.setJson(mCursor.getString(2));
 						secondLevelAttributesList.add(o1);
 						mCursor.moveToNext();
@@ -207,7 +214,7 @@ public class Material_Selection_Form extends EQForm {
 					RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel2);
 					relativeLayout.setVisibility(View.VISIBLE);
 
-					saveGlobals();
+			
 					
 					completeThis();
 
@@ -223,7 +230,9 @@ public class Material_Selection_Form extends EQForm {
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter2.setSelectedPosition(position);
-
+					
+					surveyDataObject.putData(secondLevelAttributeType, selectedAdapter2.getItem(position).getAttributeValue());
+					
 					//Toast.makeText(getApplicationContext(), "LV2 click: " + selectedAdapter2.getItem(position).getOrderName() + " " + selectedAdapter2.getItem(position).getOrderStatus() + " " +selectedAdapter2.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 
 					thirdLevelAttributesList.clear();
@@ -246,8 +255,8 @@ public class Material_Selection_Form extends EQForm {
 						if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
 						//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
 
-						o1.setOrderName(mCursor.getString(0));
-						o1.setOrderStatus(mCursor.getString(1));
+						o1.setAttributeDescription(mCursor.getString(0));
+						o1.setAttributeValue(mCursor.getString(1));
 						o1.setJson(mCursor.getString(2));
 						thirdLevelAttributesList.add(o1);
 						mCursor.moveToNext();
@@ -264,8 +273,8 @@ public class Material_Selection_Form extends EQForm {
 						if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
 						//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
 
-						o1.setOrderName(mCursor.getString(0));
-						o1.setOrderStatus(mCursor.getString(1));
+						o1.setAttributeDescription(mCursor.getString(0));
+						o1.setAttributeValue(mCursor.getString(1));
 						o1.setJson(mCursor.getString(2));
 						fourthLevelAttributesList.add(o1);
 						mCursor.moveToNext();
@@ -283,8 +292,8 @@ public class Material_Selection_Form extends EQForm {
 						if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
 						//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
 
-						o1.setOrderName(mCursor.getString(0));
-						o1.setOrderStatus(mCursor.getString(1));
+						o1.setAttributeDescription(mCursor.getString(0));
+						o1.setAttributeValue(mCursor.getString(1));
 						o1.setJson(mCursor.getString(2));
 						fifthLevelAttributesList.add(o1);
 						mCursor.moveToNext();
@@ -317,7 +326,8 @@ public class Material_Selection_Form extends EQForm {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter3.setSelectedPosition(position);				
 					//Toast.makeText(getApplicationContext(), "LV3 click: " + selectedAdapter3.getItem(position).getOrderName() + " " + selectedAdapter3.getItem(position).getOrderStatus() + " " +selectedAdapter3.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
-
+					surveyDataObject.putData(thirdLevelAttributeType, selectedAdapter3.getItem(position).getAttributeValue());
+					
 				}
 			});
 
@@ -328,7 +338,8 @@ public class Material_Selection_Form extends EQForm {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter4.setSelectedPosition(position);				
 					//Toast.makeText(getApplicationContext(), "LV3 click: " + selectedAdapter3.getItem(position).getOrderName() + " " + selectedAdapter3.getItem(position).getOrderStatus() + " " +selectedAdapter3.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
-
+					surveyDataObject.putData(fourthLevelAttributeType, selectedAdapter4.getItem(position).getAttributeValue());
+					
 				}
 			}); 
 			
@@ -338,7 +349,8 @@ public class Material_Selection_Form extends EQForm {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter5.setSelectedPosition(position);				
 					//Toast.makeText(getApplicationContext(), "LV3 click: " + selectedAdapter3.getItem(position).getOrderName() + " " + selectedAdapter3.getItem(position).getOrderStatus() + " " +selectedAdapter3.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
-
+					surveyDataObject.putData(fifthLevelAttributeType, selectedAdapter5.getItem(position).getAttributeValue());
+					
 				}
 			});            
 		}		
@@ -366,7 +378,7 @@ public class Material_Selection_Form extends EQForm {
 
 	public void saveGlobals(String key, String value) {
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
-		g.putData(key, value)
+		g.putData(key, value);
 		//Log.d(TAG,"GLOBAL VARS " + g.getLon()+ " lat: " + g.getLat());
 	}
 

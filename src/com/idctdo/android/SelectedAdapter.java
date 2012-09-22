@@ -75,7 +75,7 @@ public class SelectedAdapter extends ArrayAdapter<DBRecord>{
 
 		DBRecord myObj = (DBRecord)this.getItem(position);
 
-		label.setText(myObj.getOrderName());
+		label.setText(myObj.getAttributeDescription());
 
 		return(v);
 	}

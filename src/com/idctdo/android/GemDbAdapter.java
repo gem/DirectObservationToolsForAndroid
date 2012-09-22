@@ -1,5 +1,8 @@
 package com.idctdo.android;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.UUID;
 
 import android.content.ContentValues;
@@ -388,32 +391,34 @@ public class GemDbAdapter
 
 	public void insertGemData(GEMSurveyObject gemGlobalVariables)
 	{		
-		Log.e(TAG, "Trying to insert Gem data");
+		Log.d(TAG, "Trying to insert Gem data");
 		try
 		{								
 			//Cursor mCur = mDb.execSQL(sql, null);
 			ContentValues cv = new ContentValues();
 			UUID id = UUID.randomUUID();
 			cv.put("OBJ_UID", id.toString());
-			cv.put("PROJ_UID", id.toString()); //This should be a proj uid
+			cv.put("PROJ_UID", id.toString()); //This should be a proj uid, define in a preferences thing
 			cv.put("OBJ_SCOPE", "BUILD");
 			cv.put("X", Double.toString(gemGlobalVariables.getLon()));
 			cv.put("Y",  Double.toString(gemGlobalVariables.getLat()));
 			cv.put("EPSG_CODE", "4326"); //Should get this from the db
 			cv.put("SOURCE", "FIELD");
 			
-			//Need to amend these to get dynamic data
 			cv.put("COMMENTS", "Dummy comment information");
-			cv.put("MTYPE", "MAT99");
-			cv.put("MTECH", "CT99");
-			cv.put("MORT", "MON99");
-			cv.put("MREIN", "RS");
-			cv.put("SCONN", "WEL");
-			cv.put("SCONN", "WEL");
 			
 			
-			Log.e(TAG, "GEM ContentValues: " + cv.toString());
+			HashMap<String,String> keyVals = gemGlobalVariables.getKeyValuePairsMap();
+			for (Map.Entry<String, String> entry : keyVals.entrySet()) {
+			    String key = entry.getKey();
+			    String value = entry.getValue();
+			    cv.put(key, value);
+			}
+			
+			Log.d(TAG, "GEM ContentValues: " + cv.toString());
 			mDb.insert("GEM_OBJECT", null, cv);
+			gemGlobalVariables.getKeyValuePairsMap().clear();
+			
 		}
 		catch (SQLException mSQLException) 
 		{

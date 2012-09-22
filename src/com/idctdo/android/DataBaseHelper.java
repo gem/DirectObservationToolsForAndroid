@@ -95,7 +95,11 @@ public class DataBaseHelper extends SQLiteOpenHelper
 		   String backupDBPath = null;
 		   Log.e(TAG, "TRYING TO BACK DB TO SDCARD");
 		   try {
-		        File sd = Environment.getExternalStorageDirectory();
+		        //File sd = Environment.getExternalStorageDirectory();
+			    File sd = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/db_snapshots");
+			    sd.mkdirs();
+			    
+			    
 		        File data = Environment.getDataDirectory();
 		        Log.e(TAG, "BACKING UP FROM: " + data);
 		        Log.e(TAG, "BACKING UP TO: " + sd);

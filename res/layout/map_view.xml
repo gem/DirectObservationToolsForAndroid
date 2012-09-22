@@ -72,6 +72,7 @@
         android:layout_below="@+id/btn_zoom_out"
         android:text="refresh"
         android:visibility="invisible" />
+    
 
     <Button
         android:id="@+id/btn_select_vector_layer"
@@ -80,6 +81,7 @@
         android:layout_above="@+id/btn_locate_me"
         android:layout_marginRight="21dp"
         android:layout_toLeftOf="@+id/btn_select_layer"
+        android:visibility="invisible"
         android:background="@drawable/vector_layers_icon" />
 
 </RelativeLayout>

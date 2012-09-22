@@ -71,9 +71,7 @@ public class EQForm_MapView extends EQForm {
 	private static final String TAG = "IDCT";
 
 	SharedPreferences mAppSettings;
-
 	public GemDbAdapter mDbHelper;
-
 
 	public TabActivity tabActivity;
 	public TabHost tabHost;
@@ -113,6 +111,7 @@ public class EQForm_MapView extends EQForm {
 	File vectorsFile;
 	File mapTilesFile;
 	String sdCardPath;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -154,12 +153,13 @@ public class EQForm_MapView extends EQForm {
 
 
 		//Create Folder
-
-		vectorsFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo2/kml");
+		vectorsFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/kml");
 		vectorsFile.mkdirs();
 
-		mapTilesFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo2/maptiles");
+		mapTilesFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/maptiles");
 		mapTilesFile.mkdirs();
+		
+		
 		//Save the path as a string value
 		String extStorageDirectory = vectorsFile.toString();
 		SingleMediaScanner scan2 = new SingleMediaScanner(this, vectorsFile);
@@ -666,7 +666,7 @@ public class EQForm_MapView extends EQForm {
 		}
 	};
 	private CharSequence[] getLocalBaseMapLayers() {
-		mapTilesFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo2/maptiles");
+		mapTilesFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/maptiles");
 		String files;
 		String[] listOfFiles = mapTilesFile.list(); 
 		ArrayList<CharSequence> choiceList = new ArrayList();
@@ -681,7 +681,7 @@ public class EQForm_MapView extends EQForm {
 	}
 
 	private CharSequence[] getVectorLayers() {
-		vectorsFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo2/kml");
+		vectorsFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/kml");
 		String files;
 		File[] listOfFiles = vectorsFile.listFiles(); 
 
@@ -718,6 +718,7 @@ public class EQForm_MapView extends EQForm {
 
 			mWebView.loadUrl("javascript:addKmlStringToMap("+ egg +")");
 
+			
 			int selected = -1; // does not select anything
 			final CharSequence[] choiceList = getVectorLayers();
 			builder.setSingleChoiceItems(
@@ -726,7 +727,7 @@ public class EQForm_MapView extends EQForm {
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog,	int which) {
-							String kmlPath = sdCardPath +  "idctdo2/kml/" + choiceList[which];
+							String kmlPath = sdCardPath +  "idctdo/kml/" + choiceList[which];
 							if (DEBUG_LOG) Log.d(TAG,"selected " + kmlPath);
 							int index = 1;
 							mWebView.loadUrl("javascript:addLocalKmlLayer("+ kmlPath +")");
@@ -737,6 +738,7 @@ public class EQForm_MapView extends EQForm {
 
 		}
 	};
+	
 
 
 	@Override
@@ -744,7 +746,7 @@ public class EQForm_MapView extends EQForm {
 	{
 		menu.add(0,0,0,"Refresh Map");
 		menu.add(0,1,0,"Settings");
-		menu.add(0,2,0,"Export Database to SDCard");
+		menu.add(0,2,0,"Export Database Snapshot to SDCard");
 
 		return true;
 	}
@@ -761,6 +763,7 @@ public class EQForm_MapView extends EQForm {
 			mWebView.loadUrl("javascript:map.layers[0].redraw()");
 			break;
 		case 1: 
+			
 			Intent intent = new Intent(EQForm_MapView.this,PrefsActivity.class);
 			startActivity(intent);
 			break;
@@ -866,6 +869,8 @@ public class EQForm_MapView extends EQForm {
 				currentLocation = loc;
 			}
 
+			
+			
 
 			currentLatitude = currentLocation.getLatitude();
 			currentLongitude = currentLocation.getLongitude();
@@ -882,6 +887,7 @@ public class EQForm_MapView extends EQForm {
 			if (DEBUG_LOG) Log.d(TAG,"lat: "+loc.getLatitude() + "lng: " + loc.getLongitude() );
 			//mWebView.loadUrl("javascript:locateMe("+ currentLatitude+","+currentLongitude+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");
 
+			
 
 			//textViewLatitude.setText(Double.toString(loc.getLatitude()));
 			//textViewLongitude.setText(Double.toString(loc.getLongitude()));

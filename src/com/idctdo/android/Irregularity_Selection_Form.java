@@ -51,7 +51,7 @@ public class Irregularity_Selection_Form extends EQForm {
 	ListView listview3;
 
 	public GemDbAdapter mDbHelper;
-
+	public GEMSurveyObject surveyDataObject;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +72,8 @@ public class Irregularity_Selection_Form extends EQForm {
 	protected void onResume() {
 		super.onResume();
 		MainTabActivity a = (MainTabActivity)getParent();
+		surveyDataObject = (GEMSurveyObject)getApplication();
+		
 		if (a.isTabCompleted(tabIndex)) {
 
 		} else {
@@ -123,13 +125,14 @@ public class Irregularity_Selection_Form extends EQForm {
 					// user clicked a list item, make it "selected"
 					selectedAdapter.setSelectedPosition(position);
 					selectedAdapter2.setSelectedPosition(-1);			
-
+					surveyDataObject.putData(topLevelAttributeType, selectedAdapter.getItem(position).getAttributeValue());
+					
 					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();				
 
 					DBRecord selectedItem = selectedAdapter.getItem(position);
 					if (DEBUG_LOG) Log.d("IDCT", "SELECTED ITEM: " + selectedItem.getJson());
 					if (DEBUG_LOG) Log.d("IDCT", "SELECTED ITEM: " + selectedItem.getLayoutId());
-					if (DEBUG_LOG) Log.d("IDCT", "SELECTED ITEM: " + selectedItem.getOrderName());
+					if (DEBUG_LOG) Log.d("IDCT", "SELECTED ITEM: " + selectedItem.getAttributeDescription());
 					//GEMSurveyObject g = (GEMSurveyObject)getApplication();
 					//g.putData(key, value);
 
@@ -151,8 +154,8 @@ public class Irregularity_Selection_Form extends EQForm {
 						if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
 						//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
 
-						o1.setOrderName(mCursor.getString(0));
-						o1.setOrderStatus(mCursor.getString(1));
+						o1.setAttributeDescription(mCursor.getString(0));
+						o1.setAttributeValue(mCursor.getString(1));
 						o1.setJson(mCursor.getString(2));
 						secondLevelAttributesList.add(o1);
 						mCursor.moveToNext();
@@ -179,7 +182,8 @@ public class Irregularity_Selection_Form extends EQForm {
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter2.setSelectedPosition(position);
-
+					surveyDataObject.putData(secondLevelAttributeType, selectedAdapter2.getItem(position).getAttributeValue());
+					
 
 					//Toast.makeText(getApplicationContext(), "LV2 click: " + selectedAdapter2.getItem(position).getOrderName() + " " + selectedAdapter2.getItem(position).getOrderStatus() + " " +selectedAdapter2.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 
@@ -196,8 +200,8 @@ public class Irregularity_Selection_Form extends EQForm {
 						if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
 						//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
 
-						o1.setOrderName(mCursor.getString(0));
-						o1.setOrderStatus(mCursor.getString(1));
+						o1.setAttributeDescription(mCursor.getString(0));
+						o1.setAttributeValue(mCursor.getString(1));
 						o1.setJson(mCursor.getString(2));
 						thirdLevelAttributesList.add(o1);
 						mCursor.moveToNext();
@@ -218,7 +222,11 @@ public class Irregularity_Selection_Form extends EQForm {
 				@Override
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
-					selectedAdapter3.setSelectedPosition(position);				
+					selectedAdapter3.setSelectedPosition(position);
+					
+					//Broken as the column name doesn't map, columen should be strhvi not strvi
+					//surveyDataObject.putData(thirdLevelAttributeType, selectedAdapter3.getItem(position).getAttributeValue());
+					
 					//Toast.makeText(getApplicationContext(), "LV3 click: " + selectedAdapter3.getItem(position).getOrderName() + " " + selectedAdapter3.getItem(position).getOrderStatus() + " " +selectedAdapter3.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 
 				}
