@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 
 public class GemDbAdapter 
@@ -93,7 +94,7 @@ public class GemDbAdapter
 	{
 		try
 		{
-			String sql ="SELECT OBJECT_UID, X, Y FROM GEM_OBJECT";
+			String sql ="SELECT OBJ_UID, X, Y FROM GEM_OBJECT";
 
 			Cursor mCur = mDb.rawQuery(sql, null);
 
@@ -115,7 +116,7 @@ public class GemDbAdapter
 	{
 		try
 		{
-			String sql ="select OBJECT_UID, X, Y FROM GEM_OBJECT WHERE OBJECT_UID == '08991839-dff5-4d24-b39a-9303d1f34dae'";
+			String sql ="select OBJ_UID, X, Y FROM GEM_OBJECT WHERE OBJ_UID == '08991839-dff5-4d24-b39a-9303d1f34dae'";
 
 			Cursor mCur = mDb.rawQuery(sql, null);
 			if (mCur!=null)
@@ -365,9 +366,9 @@ public class GemDbAdapter
 			//Cursor mCur = mDb.execSQL(sql, null);
 			ContentValues cv = new ContentValues();
 			UUID id = UUID.randomUUID();
-			cv.put("OBJECT_UID", id.toString());
-			cv.put("PROJECT_UID", id.toString());
-			cv.put("OBJECT_SCOPE", "BUILD");
+			cv.put("OBJ_UID", id.toString());
+			cv.put("PROJ_UID", id.toString());
+			cv.put("OBJ_SCOPE", "BUILD");
 			cv.put("X", "1234");
 			cv.put("Y", "4567");
 			cv.put("EPSG_CODE", "4326");	
@@ -383,6 +384,8 @@ public class GemDbAdapter
 	}
 
 
+
+
 	public void insertGemData(GEMSurveyObject gemGlobalVariables)
 	{		
 		Log.e(TAG, "Trying to insert Gem data");
@@ -391,13 +394,25 @@ public class GemDbAdapter
 			//Cursor mCur = mDb.execSQL(sql, null);
 			ContentValues cv = new ContentValues();
 			UUID id = UUID.randomUUID();
-			cv.put("OBJECT_UID", id.toString());
-			cv.put("PROJECT_UID", id.toString());
-			cv.put("OBJECT_SCOPE", "BUILD");
+			cv.put("OBJ_UID", id.toString());
+			cv.put("PROJ_UID", id.toString()); //This should be a proj uid
+			cv.put("OBJ_SCOPE", "BUILD");
 			cv.put("X", Double.toString(gemGlobalVariables.getLon()));
 			cv.put("Y",  Double.toString(gemGlobalVariables.getLat()));
-			cv.put("EPSG_CODE", "4326");	
-			cv.put("SOURCE", "FIELD");	
+			cv.put("EPSG_CODE", "4326"); //Should get this from the db
+			cv.put("SOURCE", "FIELD");
+			
+			//Need to amend these to get dynamic data
+			cv.put("COMMENTS", "Dummy comment information");
+			cv.put("MTYPE", "MAT99");
+			cv.put("MTECH", "CT99");
+			cv.put("MORT", "MON99");
+			cv.put("MREIN", "RS");
+			cv.put("SCONN", "WEL");
+			cv.put("SCONN", "WEL");
+			
+			
+			Log.e(TAG, "GEM ContentValues: " + cv.toString());
 			mDb.insert("GEM_OBJECT", null, cv);
 		}
 		catch (SQLException mSQLException) 
@@ -406,4 +421,20 @@ public class GemDbAdapter
 			throw mSQLException;
 		}
 	}
+
+	public void copyDataBaseToSdCard()
+	{		
+		Log.e(TAG, "copying to sdcard");
+
+		try {
+			mDbHelper.copyDataBaseToSdCard();
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			Log.e(TAG, "copying to sd card problem >>"+ e.toString());
+			e.printStackTrace();
+		}
+	}
+
 }

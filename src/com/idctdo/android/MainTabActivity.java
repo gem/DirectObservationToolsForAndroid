@@ -6,6 +6,7 @@ package com.idctdo.android;
 
 
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -18,6 +19,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +34,7 @@ import android.widget.TextView;
 public class MainTabActivity extends TabActivity {
 	private static final String TAG = "IDCT";
 	public boolean DEBUG_LOG = false; 
-	
+
 	public TabHost tabHost;
 
 	public GemDbAdapter mDbHelper;
@@ -42,13 +44,14 @@ public class MainTabActivity extends TabActivity {
 	public int unselectedTabColour = Color.parseColor("#cccccc");
 	public int unselectedTabColour2 = Color.parseColor("#00ff00");
 	public int selectedTabColour = Color.parseColor("#eeeeee");
-	
+
 	boolean[] completedTabs;
 
 	public void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_tab_activity);
+
 
 
 		ressources = getResources(); 
@@ -66,7 +69,7 @@ public class MainTabActivity extends TabActivity {
 
 		// add all tabs 
 		tabHost.addTab(tabMapView);
-*/
+		 */
 
 		generateTabs();
 		/*
@@ -100,9 +103,9 @@ public class MainTabActivity extends TabActivity {
 		//tabHost.getTabWidget().setVisibility(View.GONE);
 
 
-		
 
-		
+
+
 
 		tabHost.setOnTabChangedListener(new OnTabChangeListener(){
 			@Override
@@ -118,6 +121,19 @@ public class MainTabActivity extends TabActivity {
 
 	}
 
+
+	public static boolean createDirIfNotExists(String path) {
+		boolean ret = true;
+
+		File file = new File(Environment.getExternalStorageDirectory(), path);
+		if (!file.exists()) {
+			if (!file.mkdirs()) {
+				Log.d(TAG, "Problem creating Image folder");
+				ret = false;
+			}
+		}
+		return ret;
+	}
 
 	public void generateTabs() {
 
@@ -162,7 +178,7 @@ public class MainTabActivity extends TabActivity {
 		.setIndicator("Occu", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageSix);
 
-		
+
 
 		Intent intentPageSeven = new Intent().setClass(this, Age_Height_Selection_Form.class);
 		TabSpec tabSpecPageSeven = tabHost
@@ -184,8 +200,8 @@ public class MainTabActivity extends TabActivity {
 		tabHost.addTab(tabSpecPageSix);
 		tabHost.addTab(tabSpecPageSeven);
 		tabHost.addTab(tabSpecPageEight);
-		
-		
+
+
 		initTabIcons(tabHost);
 		setTabColor();
 		completedTabs = new boolean[20];
@@ -197,17 +213,17 @@ public class MainTabActivity extends TabActivity {
 		Intent intent = getIntent();
 		finish();
 		startActivity(intent);
-		*/
-		
+		 */
+
 		if (DEBUG_LOG) Log.d(TAG,"removing tabs " + tabHost.getTabWidget().getChildCount());
 		//tabHost.clearAllTabs();
-		
+
 		Activity currentActivity = getLocalActivityManager().getActivity("Material");
-	     if (currentActivity instanceof Material_Selection_Form) {
-	            ((Material_Selection_Form) currentActivity).clearThis();
-	        }
-	     
-	     
+		if (currentActivity instanceof Material_Selection_Form) {
+			((Material_Selection_Form) currentActivity).clearThis();
+		}
+
+
 		int count = tabHost.getTabWidget().getChildCount();
 		int i = tabHost.getTabWidget().getChildCount();
 		while(tabHost.getTabWidget().getChildCount()>1)
@@ -215,14 +231,14 @@ public class MainTabActivity extends TabActivity {
 			//String currentActivityId = getLocalActivityManager().getCurrentId();
 			//if (DEBUG_LOG) Log.d(TAG,"REMOVING SOMETHING CALLED: " + currentActivityId);
 			//Activity currentActivity = getLocalActivityManager().getActivity(currentActivityId)
-			
+
 			tabHost.getTabWidget().removeView(tabHost.getTabWidget().getChildTabViewAt(i));
-			
+
 			i--;
 
 		}
 		generateTabs();
-		
+
 
 	}
 
@@ -280,7 +296,7 @@ public class MainTabActivity extends TabActivity {
 	}
 
 
-	
+
 	public void unlockTabIcons(TabHost tabHost){
 
 		if (tabHost.getTabWidget().isEnabled() == false) {
@@ -327,26 +343,26 @@ public class MainTabActivity extends TabActivity {
 		completedTabs[tabIndex] = true;
 		if (DEBUG_LOG) Log.d(TAG, "completd tab " + completedTabs[tabIndex]);
 	}
-	
+
 	public boolean isTabCompleted(int tabIndex) {
 		return completedTabs[tabIndex];
 	}
 
 	public boolean saveData() {
 		if (DEBUG_LOG) Log.d(TAG, "Saving data");		
-		
+
 		mDbHelper = new GemDbAdapter(getBaseContext());      
 		mDbHelper.createDatabase();      
 		mDbHelper.open();		
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
-		
-		
+
+
 		mDbHelper.insertGemData(g);
 		if (DEBUG_LOG) Log.d(TAG,"insert Test GEM Data ");
 		Cursor testdata2 = mDbHelper.getTestData();
 		if (DEBUG_LOG) Log.d(TAG,"GETTESTDATA AGAIN" + DatabaseUtils.dumpCursorToString(testdata2));
 		mDbHelper.close();
-		
+
 		return false;
 	}
 
@@ -377,7 +393,7 @@ public class MainTabActivity extends TabActivity {
 				// if this button is clicked, close
 				// current activity
 				saveData();
-				
+
 				MainTabActivity.this.finish();
 
 			}

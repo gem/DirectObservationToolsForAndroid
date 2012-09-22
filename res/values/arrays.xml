@@ -1,155 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
-<string-array
-name="structural_systems">
-<item>@string/select</item>
-<item>@string/systems1</item>
-<item>@string/systems2</item>
-<item>@string/systems3</item>
-<item>@string/systems4</item>
-<item>@string/systems5</item>
-<item>@string/systems6</item>
-<item>@string/systems7</item>
-<item>@string/systems8</item>
-<item>@string/systems9</item>
-<item>@string/systems10</item>
-<item>@string/systems11</item>
-</string-array>
-
-<string-array
-name="soil_types">
-<item>@string/select</item>
-<item>@string/type1</item>
-<item>@string/type2</item>
-<item>@string/type3</item>
-<item>@string/type4</item>
-<item>@string/type5</item>
-</string-array>
-
-<string-array
-name="collapse_state">
-<item>@string/select</item>
-<item>@string/state1</item>
-<item>@string/state2</item>
-<item>@string/state3</item>
-<item>@string/state4</item>
-<item>@string/state5</item>
-</string-array>
-
-<string-array
-name="occupancy_type">
-<item>@string/select</item>
-<item>@string/occu1</item>
-<item>@string/occu2</item>
-<item>@string/occu3</item>
-<item>@string/occu4</item>
-<item>@string/occu5</item>
-<item>@string/occu6</item>
-<item>@string/occu7</item>
-<item>@string/occu8</item>
-<item>@string/occu9</item>
-<item>@string/occu10</item>
-
-</string-array>
-
-<string-array
-name="assessment_state">
-<item>@string/select</item>
-<item>@string/assess1</item>
-<item>@string/assess2</item>
-<item>@string/assess3</item>
-<item>@string/assess4</item>
-</string-array>
-
-<string-array
-name="assessment_state_2">
-<item>@string/select</item>
-<item>@string/assess5</item>
-<item>@string/assess6</item>
-<item>@string/assess7</item>
-<item>@string/assess8</item>
-</string-array>
-
-<string-array
-name="yes_no">
-<item>@string/select</item>
-<item>@string/yes</item>
-<item>@string/no</item>
-</string-array>
-
-<string-array
-name="main_reo">
-<item>@string/select</item>
-<item>@string/main_reo_1</item>
-<item>@string/main_reo_2</item>
-<item>@string/main_reo_3</item>
-<item>@string/main_reo_4</item>
-<item>@string/main_reo_5</item>
-<item>@string/main_reo_6</item>
-<item>@string/main_reo_7</item>
-<item>@string/main_reo_8</item>
-<item>@string/main_reo_9</item>
-<item>@string/main_reo_10</item>
-<item>@string/main_reo_11</item>
-</string-array>
-
-<string-array
-name="secondary_reo">
-<item>@string/select</item>
-<item>@string/second_reo_1</item>
-<item>@string/second_reo_2</item>
-<item>@string/second_reo_3</item>
-<item>@string/second_reo_4</item>
-</string-array>
-
-<string-array
-name="reo_numbers">
-<item>@string/select</item>
-<item>@string/number1</item>
-<item>@string/number2</item>
-<item>@string/number3</item>
-<item>@string/number4</item>
-<item>@string/number5</item>
-<item>@string/number6</item>
-<item>@string/number7</item>
-<item>@string/number8</item>
-<item>@string/number9</item>
-</string-array>
-
-<string-array
-name="reo_spacings">
-<item>@string/select</item>
-<item>@string/centre1</item>
-<item>@string/centre2</item>
-<item>@string/centre3</item>
-<item>@string/centre4</item>
-<item>@string/centre5</item>
-<item>@string/centre6</item>
-</string-array>
-
-<string-array
-name="damage_level">
-<item>@string/select</item>
-<item>@string/damage0</item>
-<item>@string/damage1</item>
-<item>@string/damage2</item>
-<item>@string/damage3</item>
-<item>@string/damage4</item>
-<item>@string/damage5</item>
-</string-array>
-
-<string-array
-name="failure_mode">
-<item>@string/select</item>
-<item>@string/fail_no</item>
-<item>@string/fail_1</item>
-<item>@string/fail_2</item>
-<item>@string/fail_3</item>
-<item>@string/fail_4</item>
-<item>@string/fail_5</item>
-</string-array>
-
+    <string-array name="listOptions">
+        <item>Option 1</item>
+        <item>Option 2</item>
+        <item>Option 3</item>
+    </string-array>
+    <string-array name="listValues">
+        <item>1 is selected</item>
+        <item>2 is selected</item>
+        <item>3 is selected</item>
+    </string-array>
+    
+    
+    <string-array name="structural_systems">
+        <item>@string/select</item>
+        <item>@string/systems1</item>
+        <item>@string/systems2</item>
+        <item>@string/systems3</item>
+        <item>@string/systems4</item>
+        <item>@string/systems5</item>
+        <item>@string/systems6</item>
+        <item>@string/systems7</item>
+        <item>@string/systems8</item>
+        <item>@string/systems9</item>
+        <item>@string/systems10</item>
+        <item>@string/systems11</item>
+    </string-array>
+    <string-array name="soil_types">
+        <item>@string/select</item>
+        <item>@string/type1</item>
+        <item>@string/type2</item>
+        <item>@string/type3</item>
+        <item>@string/type4</item>
+        <item>@string/type5</item>
+    </string-array>
+    <string-array name="collapse_state">
+        <item>@string/select</item>
+        <item>@string/state1</item>
+        <item>@string/state2</item>
+        <item>@string/state3</item>
+        <item>@string/state4</item>
+        <item>@string/state5</item>
+    </string-array>
+    <string-array name="occupancy_type">
+        <item>@string/select</item>
+        <item>@string/occu1</item>
+        <item>@string/occu2</item>
+        <item>@string/occu3</item>
+        <item>@string/occu4</item>
+        <item>@string/occu5</item>
+        <item>@string/occu6</item>
+        <item>@string/occu7</item>
+        <item>@string/occu8</item>
+        <item>@string/occu9</item>
+        <item>@string/occu10</item>
+    </string-array>
+    <string-array name="assessment_state">
+        <item>@string/select</item>
+        <item>@string/assess1</item>
+        <item>@string/assess2</item>
+        <item>@string/assess3</item>
+        <item>@string/assess4</item>
+    </string-array>
+    <string-array name="assessment_state_2">
+        <item>@string/select</item>
+        <item>@string/assess5</item>
+        <item>@string/assess6</item>
+        <item>@string/assess7</item>
+        <item>@string/assess8</item>
+    </string-array>
+    <string-array name="yes_no">
+        <item>@string/select</item>
+        <item>@string/yes</item>
+        <item>@string/no</item>
+    </string-array>
+    <string-array name="main_reo">
+        <item>@string/select</item>
+        <item>@string/main_reo_1</item>
+        <item>@string/main_reo_2</item>
+        <item>@string/main_reo_3</item>
+        <item>@string/main_reo_4</item>
+        <item>@string/main_reo_5</item>
+        <item>@string/main_reo_6</item>
+        <item>@string/main_reo_7</item>
+        <item>@string/main_reo_8</item>
+        <item>@string/main_reo_9</item>
+        <item>@string/main_reo_10</item>
+        <item>@string/main_reo_11</item>
+    </string-array>
+    <string-array name="secondary_reo">
+        <item>@string/select</item>
+        <item>@string/second_reo_1</item>
+        <item>@string/second_reo_2</item>
+        <item>@string/second_reo_3</item>
+        <item>@string/second_reo_4</item>
+    </string-array>
+    <string-array name="reo_numbers">
+        <item>@string/select</item>
+        <item>@string/number1</item>
+        <item>@string/number2</item>
+        <item>@string/number3</item>
+        <item>@string/number4</item>
+        <item>@string/number5</item>
+        <item>@string/number6</item>
+        <item>@string/number7</item>
+        <item>@string/number8</item>
+        <item>@string/number9</item>
+    </string-array>
+    <string-array name="reo_spacings">
+        <item>@string/select</item>
+        <item>@string/centre1</item>
+        <item>@string/centre2</item>
+        <item>@string/centre3</item>
+        <item>@string/centre4</item>
+        <item>@string/centre5</item>
+        <item>@string/centre6</item>
+    </string-array>
+    <string-array name="damage_level">
+        <item>@string/select</item>
+        <item>@string/damage0</item>
+        <item>@string/damage1</item>
+        <item>@string/damage2</item>
+        <item>@string/damage3</item>
+        <item>@string/damage4</item>
+        <item>@string/damage5</item>
+    </string-array>
+    <string-array name="failure_mode">
+        <item>@string/select</item>
+        <item>@string/fail_no</item>
+        <item>@string/fail_1</item>
+        <item>@string/fail_2</item>
+        <item>@string/fail_3</item>
+        <item>@string/fail_4</item>
+        <item>@string/fail_5</item>
+    </string-array>
 
 </resources>
-

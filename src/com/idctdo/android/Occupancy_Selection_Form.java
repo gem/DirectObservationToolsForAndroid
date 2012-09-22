@@ -135,8 +135,7 @@ public class Occupancy_Selection_Form extends EQForm {
 						secondLevelAttributesList.add(o1);
 						mCursor.moveToNext();
 					}		     
-					mDbHelper.close();    		          
-
+					mDbHelper.close();
 
 
 					if (mCursor.getCount() > 0) { 

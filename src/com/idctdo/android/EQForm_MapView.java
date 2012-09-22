@@ -2,11 +2,27 @@ package com.idctdo.android;
 
 
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -25,6 +41,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Color;
@@ -46,7 +63,7 @@ import android.widget.Toast;
 
 public class EQForm_MapView extends EQForm {
 
-	public boolean DEBUG_LOG = false; 
+	public boolean DEBUG_LOG = true; 
 
 	WebView mWebView;
 	/** Called when the activity is first created. */
@@ -88,10 +105,14 @@ public class EQForm_MapView extends EQForm {
 	Button btn_takeCameraPhoto;
 	Button btn_startSurvey;
 	Button btn_selectLayer;
+	Button btn_selectVectorLayer;
 	Button btn_zoomIn;
 	Button btn_zoomOut;
 	Button btn_refreshLayer;
 
+	File vectorsFile;
+	File mapTilesFile;
+	String sdCardPath;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -128,19 +149,28 @@ public class EQForm_MapView extends EQForm {
 
 		//progressBar = ProgressDialog.show(EQForm_MapView.this, "IDCT Surveyor", "Loading Maps...");
 
-		String sdCardPath = "file:///" +  Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
+
+
+
+
+		//Create Folder
+
+		vectorsFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo2/kml");
+		vectorsFile.mkdirs();
+
+		mapTilesFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo2/maptiles");
+		mapTilesFile.mkdirs();
+		//Save the path as a string value
+		String extStorageDirectory = vectorsFile.toString();
+		SingleMediaScanner scan2 = new SingleMediaScanner(this, vectorsFile);
+		SingleMediaScanner scan3 = new SingleMediaScanner(this, mapTilesFile);
+
+		sdCardPath = "file:///" +  Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
 		if (DEBUG_LOG) Log.d(TAG,"sdcard Path: " + sdCardPath);
 		// Restore preferences
 		PreferenceManager.getDefaultSharedPreferences(this);
-
-
-
-
 		//SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 
-
-		
-	
 		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
 			Toast.makeText(this, "GPS is Enabled in your device", Toast.LENGTH_SHORT).show();
@@ -148,7 +178,7 @@ public class EQForm_MapView extends EQForm {
 			showGPSDisabledAlertToUser();
 		}
 
-		
+
 		mlocListener = new MyLocationListener();
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10f, mlocListener);
 
@@ -162,11 +192,11 @@ public class EQForm_MapView extends EQForm {
 		locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
 		currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-		
-		
-		
-		
-		
+
+
+
+
+
 		btn_locateMe = (Button)findViewById(R.id.btn_locate_me);
 		btn_locateMe.setOnClickListener(locateMeListener);
 
@@ -179,6 +209,10 @@ public class EQForm_MapView extends EQForm {
 
 		btn_selectLayer =(Button)findViewById(R.id.btn_select_layer);
 		btn_selectLayer.setOnClickListener(selectLayerListener);
+
+		btn_selectVectorLayer =(Button)findViewById(R.id.btn_select_vector_layer);
+		btn_selectVectorLayer.setOnClickListener(selectVectorLayerListener);
+
 
 		btn_zoomIn =(Button)findViewById(R.id.btn_zoom_in);
 		btn_zoomIn.setOnClickListener(zoomInListener);
@@ -206,7 +240,7 @@ public class EQForm_MapView extends EQForm {
 		super.onResume();
 		if (DEBUG_LOG) Log.d("IDCT","ON RESUME");
 
-		
+
 		drawUpdateCounter = new MyCount(100000000,1000);
 		drawUpdateCounter.start();
 
@@ -215,7 +249,7 @@ public class EQForm_MapView extends EQForm {
 		//mWebView.loadUrl("javascript:locateMe("+ currentLatitude+","+currentLongitude+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");
 
 	}
-	
+
 
 	@Override
 	protected void onStart() {
@@ -393,10 +427,10 @@ public class EQForm_MapView extends EQForm {
 		//Log.d("IDCT","Gem Map Objects List " + gemObjectsList.get(gemObjectsList.size()-1));
 		mCursor.moveToFirst();
 
-		
-		
+
+
 		mWebView.loadUrl("javascript:clearMySurveyPoints()");//Inefficient	
-		
+
 		while(!mCursor.isAfterLast()) {
 			if (DEBUG_LOG) Log.d("IDCT","Gem Map Objects cursor " + mCursor.getDouble(1) + " , " + mCursor.getDouble(2));
 
@@ -412,6 +446,7 @@ public class EQForm_MapView extends EQForm {
 		}
 		 */
 	}
+
 	/*
 	private void drawPreviousSurveyPoints() {
 		if (DEBUG_LOG) Log.d(TAG,"loading survey points");
@@ -485,6 +520,122 @@ public class EQForm_MapView extends EQForm {
 
 
 
+	public String readFileToString() {
+
+		String fileName = "file:////android_asset/kml/sundials.kml";
+		StringBuilder ReturnString = new StringBuilder();
+		InputStream fIn = null;
+		InputStreamReader isr = null;
+		BufferedReader input = null;
+		try {
+			fIn = EQForm_MapView.this.getBaseContext().getResources().getAssets()
+			.open(fileName, EQForm_MapView.this.getBaseContext().MODE_WORLD_READABLE);
+			isr = new InputStreamReader(fIn);
+			input = new BufferedReader(isr);
+			String line = "";
+			while ((line = input.readLine()) != null) {
+				ReturnString.append(line);
+			}
+		} catch (Exception e) {
+			e.getMessage();
+		} finally {
+			try {
+				if (isr != null)
+					isr.close();
+				if (fIn != null)
+					fIn.close();
+				if (input != null)
+					input.close();
+			} catch (Exception e2) {
+				e2.getMessage();
+			}
+		}
+		Log.d("JFR", "KML is: " + ReturnString.toString());
+		return ReturnString.toString();
+
+	}
+
+	public String convertXMLFileToString(InputStream inputStream) 
+	{ 
+		try{ 
+			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance(); 
+			org.w3c.dom.Document doc = documentBuilderFactory.newDocumentBuilder().parse(inputStream); 
+			StringWriter stw = new StringWriter(); 
+			Transformer serializer = TransformerFactory.newInstance().newTransformer(); 
+			serializer.transform(new DOMSource(doc), new StreamResult(stw)); 
+			return stw.toString(); 
+		} 
+		catch (Exception e) { 
+			e.printStackTrace(); 
+		} 
+		return null; 
+		
+	}
+
+
+	private String readTxt() throws IOException{
+
+		AssetManager am = EQForm_MapView.this.getBaseContext().getAssets();
+		InputStream inputStream = null;
+		try {
+			inputStream = am.open("kml/prevSurveyPointsSmall.kml");
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			Log.d("JFR", "PROBLEM READING SUNDIALS");
+			e1.printStackTrace();			
+		}
+
+		//InputStream inputStream = getResources().openRawResource(R.raw.);
+		//	     InputStream inputStream = getResources().openRawResource(R.raw.internals);
+		System.out.println(inputStream);
+
+		 
+		String kml = convertXMLFileToString(inputStream);
+		Log.d("JFR", "KML INPUTSTREAM is: " + kml.toString());
+		return kml;
+/*
+
+		InputStreamReader is = new InputStreamReader(inputStream);
+		StringBuilder sb=new StringBuilder();
+		BufferedReader br = new BufferedReader(is);
+		String read = br.readLine();
+
+		while(read != null) {
+			//System.out.println(read);
+			sb.append(read);
+			read =br.readLine();
+
+		}
+		Log.d("JFR", "KML is: " + sb.toString());
+
+		return sb.toString();
+*/
+
+
+		/*
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+		int i;
+		try {
+			i = inputStream.read();
+			while (i != -1)
+			{
+				byteArrayOutputStream.write(i);
+				i = inputStream.read();
+			}
+			inputStream.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Log.d("JFR", "KML is: " + byteArrayOutputStream.toString());
+		return byteArrayOutputStream.toString();
+		 */
+	}
+
+
+
 	private OnClickListener selectLayerListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -492,20 +643,17 @@ public class EQForm_MapView extends EQForm {
 			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 			builder.setTitle("Select Base Map");			
 
+			final CharSequence[] baseMaps = {"OpenStreetMap","Bing Hybrid","Bing Roads","Bing Aerial"};
+			final CharSequence[] localBaseMaps = getLocalBaseMapLayers();
 
-			final CharSequence[] choiceList = 
-				//{ "OpenStreetMap" ,"Bing Hybrid", "Bing Roads" , "Bing Aerial" , "Google Maps" , "Google Hybrid" , "Google Satellite"};
-
-				//{ "Bing Hybrid","OSM cached", "OpenStreetMap","Bing Roads" , "Bing Aerial" };
-			{ "OpenStreetMap","Bing Hybrid","Bing Roads" , "Bing Aerial" };
-
+			final CharSequence[] choiceList = new CharSequence[baseMaps.length + localBaseMaps.length];
+			System.arraycopy(baseMaps, 0, choiceList, 0, baseMaps.length);
+			System.arraycopy(localBaseMaps, 0, choiceList, baseMaps.length, localBaseMaps.length);
 			int selected = -1; // does not select anything
-
 			builder.setSingleChoiceItems(
 					choiceList, 
 					selected, 
 					new DialogInterface.OnClickListener() {
-
 						@Override
 						public void onClick(DialogInterface dialog,	int which) {
 							if (DEBUG_LOG) Log.d(TAG,"selected "+choiceList[which]);
@@ -515,17 +663,89 @@ public class EQForm_MapView extends EQForm {
 					});
 			AlertDialog alert = builder.create();
 			alert.show();
+		}
+	};
+	private CharSequence[] getLocalBaseMapLayers() {
+		mapTilesFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo2/maptiles");
+		String files;
+		String[] listOfFiles = mapTilesFile.list(); 
+		ArrayList<CharSequence> choiceList = new ArrayList();
+		int j = 0;
+		for (int i = 0; i < listOfFiles.length; i++) 	{
+			files = listOfFiles[i].toString();				
+			choiceList.add(files);
+		}
+		final CharSequence[] choiceListFinal = choiceList.toArray(new CharSequence[choiceList.size()]);
+
+		return choiceListFinal;
+	}
+
+	private CharSequence[] getVectorLayers() {
+		vectorsFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo2/kml");
+		String files;
+		File[] listOfFiles = vectorsFile.listFiles(); 
+
+		ArrayList<CharSequence> choiceList = new ArrayList();
+		int j = 0;
+		for (int i = 0; i < listOfFiles.length; i++) {
+			if (listOfFiles[i].isFile()) 	{
+				files = listOfFiles[i].getName();
+				if (files.endsWith(".kml") || files.endsWith(".KML"))	{
+					System.out.println(files);
+					choiceList.add(files);
+				}
+			}
+		}
+		final CharSequence[] choiceListFinal = choiceList.toArray(new CharSequence[choiceList.size()]);
+		return choiceListFinal;
+	}
+	private OnClickListener selectVectorLayerListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Log.i(TAG, "show Dialog ButtonClick");
+			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+			builder.setTitle("Select Vector Layer To Show");		
+
+
+			//String egg = readFileToString();
+			String egg = null;
+			try {
+				egg = readTxt();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+
+			mWebView.loadUrl("javascript:addKmlStringToMap("+ egg +")");
+
+			int selected = -1; // does not select anything
+			final CharSequence[] choiceList = getVectorLayers();
+			builder.setSingleChoiceItems(
+					choiceList, 
+					selected, 
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,	int which) {
+							String kmlPath = sdCardPath +  "idctdo2/kml/" + choiceList[which];
+							if (DEBUG_LOG) Log.d(TAG,"selected " + kmlPath);
+							int index = 1;
+							mWebView.loadUrl("javascript:addLocalKmlLayer("+ kmlPath +")");
+						}
+					});
+			AlertDialog alert = builder.create();
+			alert.show();
 
 		}
 	};
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		menu.add(0,0,0,"Refresh Map");
-		//menu.add(0,1,0,"Settings");
+		menu.add(0,1,0,"Settings");
+		menu.add(0,2,0,"Export Database to SDCard");
 
-		
 		return true;
 	}
 
@@ -536,18 +756,24 @@ public class EQForm_MapView extends EQForm {
 		super.onOptionsItemSelected(item);
 
 		switch (item.getItemId()){
-	
-			case 0: //Refresh / redraw map
-				mWebView.loadUrl("javascript:map.layers[0].redraw()");
-				break;
-			case 1: 
-				
-				break;
-			case 2: 
-				
-				break;
-			default:
-				break;
+
+		case 0: //Refresh / redraw map
+			mWebView.loadUrl("javascript:map.layers[0].redraw()");
+			break;
+		case 1: 
+			Intent intent = new Intent(EQForm_MapView.this,PrefsActivity.class);
+			startActivity(intent);
+			break;
+		case 2: //Export data 
+			
+			mDbHelper = new GemDbAdapter(getBaseContext());    
+			mDbHelper.open();	
+			Toast.makeText(this, "Exporting Database to SDCard", Toast.LENGTH_SHORT).show();
+			mDbHelper.copyDataBaseToSdCard();
+			mDbHelper.close();
+			break;
+		default:
+			break;
 		}
 
 		return false;
@@ -621,7 +847,7 @@ public class EQForm_MapView extends EQForm {
 			}
 			if (isFirstLoad) {
 				//mWebView.loadUrl("javascript:locateMe("+ currentLatitude+","+currentLongitude+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");
-				
+
 				locateMe(false);
 				loadPrevSurveyPoints();
 			}

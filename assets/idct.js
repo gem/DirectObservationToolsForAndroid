@@ -894,11 +894,63 @@ function setMapLayer(index) {
 	map.setBaseLayer(layers[index]);
 }
 
+function addLocalKmlLayer(localFilePath) {
 
+/*
+   var sundials = new OpenLayers.Layer.Vector("KML", {
+			projection: map.displayProjection,
+			strategies: [new OpenLayers.Strategy.Fixed()],
+			protocol: new OpenLayers.Protocol.HTTP({
+				url: "http://dev.openlayers.org/releases/OpenLayers-2.12/examples/kml/sundials.kml",
+				//url: localFilePath,
+				format: new OpenLayers.Format.KML({
+					extractStyles: true,
+					extractAttributes: true
+				})
+			})
+		});
+		
+	map.addLayers([sundials]);
+	*/
+	
+
+}
+
+function addKmlStringToMap(kmlString) {
+	var layer = new OpenLayers.Layer.Vector("KML");
+    layer.addFeatures(GetFeaturesFromKMLString(kmlString));
+    map.addLayer(layer);
+}
+
+ function addGeometryToWebviewByPlanId(){
+ 	
+	try
+	  {
+	  //Run some code here
+	    //document.getElementById('boldStuff2').innerHTML = "in try ";
+		var jsonData = window.webConnector.loadGeoms(); 
+		var roomId = window.webConnector.loadPlanId(); 
+		var obj = jQuery.parseJSON(jsonData);
+		var xArr = obj.x;
+		var yArr = obj.y;
+		var polygonLabel = obj.name;
+		var polygonAngle = obj.polygonangle;
+	
+		//var polygonLabel = "testname";
+		addPolygon(xArr,yArr,polygonLabel,polygonAngle,roomId);
+		
+	  }
+	catch(err)
+	  {
+		//document.getElementById('boldStuff2').innerHTML = "no android: ";
+		//var obj2 = jQuery.parseJSON('{"name":"John"}');
+		//document.getElementById('boldStuff2').innerHTML = "jq json " + obj2.name;
+	  }
+}
 
 function GetFeaturesFromKMLString (strKML) {
 	var format = new OpenLayers.Format.KML({
-		'internalProjection': myMapObject.baseLayer.projection,
+		'internalProjection': map.baseLayer.projection,
 		'externalProjection': new OpenLayers.Projection("EPSG:4326")
 	});
 	return format.read(strKML);

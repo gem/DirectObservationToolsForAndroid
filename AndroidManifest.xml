@@ -6,20 +6,21 @@
 
     <uses-sdk android:minSdkVersion="8" />
 
+    
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>E
 
     <application
+        android:name=".GEMSurveyObject"
+     
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/MyTheme"
-        android:name=".GEMSurveyObject"
-        android:hardwareAccelerated="false"
-       
-         >
+        android:theme="@style/MyTheme" >
         <activity
             android:name=".EQForm_MapView"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,9 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-                       
-            
-        android:name=".MainTabActivity"
+            android:name=".MainTabActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
@@ -68,6 +67,10 @@
         <activity
             android:name=".Age_Height_Selection_Form"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".PrefsActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+        </activity>
     </application>
 
 </manifest>

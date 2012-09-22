@@ -49,8 +49,7 @@ public class Roof_Selection_Form extends EQForm {
 		 
 
 	public GemDbAdapter mDbHelper;
-	
-	
+		
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

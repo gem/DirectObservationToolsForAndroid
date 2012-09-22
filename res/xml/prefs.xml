@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:summary="Map Display Settings"
+        android:title="Map Settings" >
+        <CheckBoxPreference
+            android:enabled="false"
+            android:key="checkBox"
+            android:summary="On/Off"
+            android:title="Auto-Update position" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:summary="Map Layer Settings"
+        android:title="Map Layer Settings" >
+        <ListPreference
+            android:entries="@array/listOptions"
+            android:entryValues="@array/listValues"
+            android:key="listpref"
+            android:summary="List preference example"
+            android:title="List preference" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

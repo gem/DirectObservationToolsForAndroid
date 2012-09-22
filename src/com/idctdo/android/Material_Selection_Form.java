@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 public class Material_Selection_Form extends EQForm {
 	
-	public boolean DEBUG_LOG = false; 
+	public boolean DEBUG_LOG = true; 
 
 	public TabActivity tabActivity;
 	public TabHost tabHost;
@@ -204,10 +204,11 @@ public class Material_Selection_Form extends EQForm {
 
 
 					listview2.setVisibility(View.VISIBLE);
-
 					RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel2);
 					relativeLayout.setVisibility(View.VISIBLE);
 
+					saveGlobals();
+					
 					completeThis();
 
 					selectedAdapter2.notifyDataSetChanged();
@@ -357,10 +358,19 @@ public class Material_Selection_Form extends EQForm {
 		MainTabActivity a = (MainTabActivity)getParent();
 		a.completeTab(tabIndex);
 
+		
+
 
 	}
 	
 
+	public void saveGlobals(String key, String value) {
+		GEMSurveyObject g = (GEMSurveyObject)getApplication();
+		g.putData(key, value)
+		//Log.d(TAG,"GLOBAL VARS " + g.getLon()+ " lat: " + g.getLat());
+	}
+
+	
 	
 	/*
 	// Move selected item "up" in the ViewList.
