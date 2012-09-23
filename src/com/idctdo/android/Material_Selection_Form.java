@@ -105,7 +105,7 @@ public class Material_Selection_Form extends EQForm {
 
 
 
-			Cursor testdata = mDbHelper.getTestData();
+			Cursor testdata = mDbHelper.getGemObjects();
 			if (DEBUG_LOG) Log.d("IDCT","getTestData-GetColumnName " + DatabaseUtils.dumpCursorToString(testdata));
 
 

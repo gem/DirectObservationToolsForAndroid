@@ -1,5 +1,11 @@
 package com.idctdo.android;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -10,6 +16,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -70,7 +77,7 @@ public class GemDbAdapter
 
 
 
-	public Cursor getTestData()
+	public Cursor getGemObjects()
 	{
 		try
 		{
@@ -91,7 +98,64 @@ public class GemDbAdapter
 		}
 	}
 
+	public void exportGemTableToCsv(){
+		
+		File sd = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/db_snapshots");
+		sd.mkdirs();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+		Date currentDate = new Date(System.currentTimeMillis());
+		String currentDateandTime = sdf.format(currentDate);
+		String backupDBPath = null;
+		backupDBPath = "IDCTDO_survey_points_" + currentDateandTime.toString() + ".csv";
+				
+		//File dbFile=getDatabasePath("yourDBname.sqlite");
+/*
+         File exportDir = new File(sd, backupDBPath);
+         
+        if (!exportDir.exists()) 
+        {
+            exportDir.mkdirs();
+        }
+*/
+		File file = new File(sd, backupDBPath);
+        try       {
+            file.createNewFile();                
+            CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
+            //SQLiteDatabase db = dbhelper.getReadableDatabase();
+            Cursor curCSV = getGemObjects();
+            csvWrite.writeNext(curCSV.getColumnNames());
+            while(curCSV.moveToNext())
+            {
+               //Which column you want to exprort
+                //String arrStr[] ={curCSV.getString(0),curCSV.getString(1), curCSV.getString(2),curCSV.getString(3),curCSV.getString(4), curCSV.getString(5)};
+                int x  = 0;
+                String[] arrStr = new String[curCSV.getColumnCount()];
+                //String[] arrStr; // elements are Strings
+                //arrStr = new String[]
+                //while( x < curCSV.getColumnCount()-2 ){
+                //	arrStr[x] =  curCSV.getString(x);
+               // }
+              
+                for (int i = 0; i < curCSV.getColumnCount(); i = i + 1) {
+                
+                	arrStr[i] = curCSV.getString(i);
+                }
+                csvWrite.writeNext(arrStr);
+                Log.d("IDCT","IDCT DB Export" + Arrays.toString(arrStr));
+            }
+            csvWrite.close();
+            curCSV.close();
+            Toast.makeText(this.mContext.getApplicationContext(), "CSV export created. Export is located at: \n" + sd + "/" + backupDBPath , Toast.LENGTH_LONG).show();
 
+        }
+        catch(Exception sqlEx)
+        {
+            Log.e("IDCT DB Export", sqlEx.getMessage(), sqlEx);
+        }
+		
+	}
+	
 
 	public Cursor getGemObjectsForMap()
 	{
@@ -370,7 +434,7 @@ public class GemDbAdapter
 			ContentValues cv = new ContentValues();
 			UUID id = UUID.randomUUID();
 			cv.put("OBJ_UID", id.toString());
-			cv.put("PROJ_UID", id.toString());
+			cv.put("PROJ_UID", "dummy proj string");
 			cv.put("OBJ_SCOPE", "BUILD");
 			cv.put("X", "1234");
 			cv.put("Y", "4567");

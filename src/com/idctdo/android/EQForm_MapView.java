@@ -747,7 +747,8 @@ public class EQForm_MapView extends EQForm {
 		menu.add(0,0,0,"Refresh Map");
 		menu.add(0,1,0,"Settings");
 		menu.add(0,2,0,"Export Database Snapshot to SDCard");
-
+		menu.add(0,3,0,"Export Survey Data to SDCard");
+		
 		return true;
 	}
 
@@ -774,6 +775,15 @@ public class EQForm_MapView extends EQForm {
 			Toast.makeText(this, "Exporting Database to SDCard", Toast.LENGTH_SHORT).show();
 			mDbHelper.copyDataBaseToSdCard();
 			mDbHelper.close();
+			break;
+		case 3: //Export data to csv 
+			
+			mDbHelper = new GemDbAdapter(getBaseContext());    
+			mDbHelper.open();	
+			Toast.makeText(this, "Exporting Survey Data to CSV SDCard", Toast.LENGTH_SHORT).show();
+			mDbHelper.exportGemTableToCsv();
+			mDbHelper.close();
+			
 			break;
 		default:
 			break;

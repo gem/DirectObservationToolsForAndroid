@@ -3,6 +3,7 @@ package com.idctdo.android;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -32,8 +33,8 @@ public class DataBaseHelper extends SQLiteOpenHelper
 	private static String DB_NAME ="gem_v9.db3";// 
 	private SQLiteDatabase mDataBase; 
 	private final Context mContext;
-	
-	
+
+
 	public DataBaseHelper(Context context) 
 	{
 		super(context, DB_NAME, null, 1);// 1? its Database Version
@@ -43,7 +44,7 @@ public class DataBaseHelper extends SQLiteOpenHelper
 
 	public void createDataBase() throws IOException
 	{		
-		
+
 		//If database not exists copy it from the assets
 
 		boolean mDataBaseExist = checkDataBase();
@@ -92,47 +93,46 @@ public class DataBaseHelper extends SQLiteOpenHelper
 	//Pre-condition that the database in the package area
 	public void copyDataBaseToSdCard() throws IOException
 	{
-		   String backupDBPath = null;
-		   Log.e(TAG, "TRYING TO BACK DB TO SDCARD");
-		   try {
-		        //File sd = Environment.getExternalStorageDirectory();
-			    File sd = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/db_snapshots");
-			    sd.mkdirs();
-			    
-			    
-		        File data = Environment.getDataDirectory();
-		        Log.e(TAG, "BACKING UP FROM: " + data);
-		        Log.e(TAG, "BACKING UP TO: " + sd);
-		        if (sd.canWrite()) {
-		        	Log.e(TAG, "CAN WRITE TO SD");
-		            String currentDBPath = DB_PATH + DB_NAME;
-		            Log.e(TAG, "currentDBPath: " + currentDBPath);
+		String backupDBPath = null;
+		Log.e(TAG, "TRYING TO BACK DB TO SDCARD");
+		try {
+			//File sd = Environment.getExternalStorageDirectory();
+			File sd = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/db_snapshots");
+			sd.mkdirs();
+			File data = Environment.getDataDirectory();
+			Log.e(TAG, "BACKING UP FROM: " + data);
+			Log.e(TAG, "BACKING UP TO: " + sd);
+			if (sd.canWrite()) {
+				Log.e(TAG, "CAN WRITE TO SD");
+				String currentDBPath = DB_PATH + DB_NAME;
+				Log.e(TAG, "currentDBPath: " + currentDBPath);
 
-		            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-		            Date currentDate = new Date(System.currentTimeMillis());
-		            String currentDateandTime = sdf.format(currentDate);
-		            backupDBPath = "IDCTDO_db_snapshot_" + currentDateandTime.toString() + ".db3";
-		            File currentDB = new File(currentDBPath);
-		            File backupDB = new File(sd, backupDBPath);
-	            	
-		            if (currentDB.exists()) {
-		            	Log.e(TAG, "CURRENTDB EXISTS");
-		                FileChannel src = new FileInputStream(currentDB).getChannel();
-		                FileChannel dst = new FileOutputStream(backupDB).getChannel();
-		                dst.transferFrom(src, 0, src.size());
-		                src.close();
-		                dst.close();
-		                Log.e(TAG, "FINISHED BACKING UP DB");
-		                Toast.makeText(this.mContext.getApplicationContext(), "Database snapshot created. Snapshot is located at: \n" + sd + "/" + backupDBPath , Toast.LENGTH_LONG).show();
-		                
-		            }
-		        }
-		    } catch (Exception e) {
-		    	Log.e(TAG, "PROBLEM BACKING UP DB");
-		    }
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+				Date currentDate = new Date(System.currentTimeMillis());
+				String currentDateandTime = sdf.format(currentDate);
+				backupDBPath = "IDCTDO_db_snapshot_" + currentDateandTime.toString() + ".db3";
+				File currentDB = new File(currentDBPath);
+				File backupDB = new File(sd, backupDBPath);
+
+				if (currentDB.exists()) {
+					Log.e(TAG, "CURRENTDB EXISTS");
+					FileChannel src = new FileInputStream(currentDB).getChannel();
+					FileChannel dst = new FileOutputStream(backupDB).getChannel();
+					dst.transferFrom(src, 0, src.size());
+					src.close();
+					dst.close();
+					Log.e(TAG, "FINISHED BACKING UP DB");
+					Toast.makeText(this.mContext.getApplicationContext(), "Database snapshot created. Snapshot is located at: \n" + sd + "/" + backupDBPath , Toast.LENGTH_LONG).show();
+
+				}
+			}
+		} catch (Exception e) {
+			Log.e(TAG, "PROBLEM BACKING UP DB");
+		}
 
 	}
-	
+
+
 	//Open the database, so we can query it
 	public boolean openDataBase() throws SQLException
 	{
@@ -142,7 +142,7 @@ public class DataBaseHelper extends SQLiteOpenHelper
 		//mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);
 		Log.e(TAG, "opened db");
 		return mDataBase != null;
-		
+
 	}
 
 	@Override
@@ -156,13 +156,13 @@ public class DataBaseHelper extends SQLiteOpenHelper
 	@Override
 	public void onCreate(SQLiteDatabase arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
