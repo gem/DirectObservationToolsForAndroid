@@ -35,24 +35,25 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:text="Button" />
+            android:text="Button" />
         -->
-
+
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/editTextDateVal1"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:ems="10"
+            android:hint="date 1"
             android:inputType="number"
+	
             android:width="50dp" >
 
-            <requestFocus />
         </EditText>
-
+
         <ListView
             android:id="@+id/listExample"
-            android:layout_width="122dp"
+            android:layout_width="182dp"
             android:layout_height="122dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/textView1"
@@ -61,13 +62,15 @@
         </ListView>
 
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/editTextDateVal2"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/editText2"
+            android:layout_centerVertical="true"
             android:ems="10"
             android:inputType="number"
+            android:hint="date 2"
+            android:visibility="invisible"
             android:width="50dp" />
 
     </RelativeLayout>

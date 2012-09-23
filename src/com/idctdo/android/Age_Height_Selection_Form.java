@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.AdapterView.OnItemClickListener;
@@ -45,13 +46,19 @@ public class Age_Height_Selection_Form extends EQForm {
 	ListView listview2;
 
 	public GemDbAdapter mDbHelper;
+	public GEMSurveyObject surveyDataObject;
 
-
+	public EditText date1;
+	public EditText date2;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.age_and_height);
-
+		
+		date1 = (EditText)findViewById(R.id.editTextDateVal1);
+		date2 = (EditText)findViewById(R.id.editTextDateVal2);
 	}
 	
 	@Override
@@ -67,7 +74,11 @@ public class Age_Height_Selection_Form extends EQForm {
 	protected void onResume() {
 		super.onResume();
 
+
+		
 		MainTabActivity a = (MainTabActivity)getParent();
+		surveyDataObject = (GEMSurveyObject)getApplication();
+		
 		if (a.isTabCompleted(tabIndex)) {
 
 		} else {
@@ -110,9 +121,22 @@ public class Age_Height_Selection_Form extends EQForm {
 						int position, long id) {
 					// user clicked a list item, make it "selected"
 					selectedAdapter.setSelectedPosition(position);
-					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();				
-					completeThis();
-
+					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
+					if (DEBUG_LOG) Log.d("IDCT","back button pressed");
+					if (DEBUG_LOG) Log.d("IDCT","DATE SELECT: " + selectedAdapter.getItem(position).toString());
+					if (DEBUG_LOG) Log.d("IDCT","DATE Code: " + selectedAdapter.getItem(position).getAttributeValue());
+					if (Integer.parseInt(selectedAdapter.getItem(position).getAttributeValue()) == 4 ) {
+						//Make second date val visible
+						if (DEBUG_LOG) Log.d("IDCT","enter date 2");
+						date2.setVisibility(View.VISIBLE);
+						date1.setVisibility(View.VISIBLE);
+					} else {
+						date2.setVisibility(View.INVISIBLE);
+						date1.setVisibility(View.VISIBLE);
+					}
+					
+					surveyDataObject.putData("D", selectedAdapter.getItem(position).getAttributeValue());
+					
 				}
 			});    
 			

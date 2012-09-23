@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 public class Occupancy_Selection_Form extends EQForm {
 
-	public boolean DEBUG_LOG = true; 
+	public boolean DEBUG_LOG = false; 
 
 	private String topLevelAttributeType = "OCC";
 	private String secondLevelAttributeType = "OCCD";

@@ -6,6 +6,7 @@ package com.idctdo.android;
 
 
 
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -24,12 +25,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainTabActivity extends TabActivity {
 	private static final String TAG = "IDCT";
@@ -350,15 +353,35 @@ public class MainTabActivity extends TabActivity {
 
 	public boolean saveData() {
 		if (DEBUG_LOG) Log.d(TAG, "Saving data");		
+		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
+		
+		
+		/*
+		EditText date1 = (EditText)findViewById(R.id.editTextDateVal1);
+		EditText date2 = (EditText)findViewById(R.id.editTextDateVal2);
+		String dateString1 = date1.getText().toString();
+		String dateString2 = date2.getText().toString();
 
+		
+		//surveyDataObject.putData("D1", dateString1);
+		//surveyDataObject.putData("D2",dateString2);
+		
+		
+		EditText surveyComment = (EditText)findViewById(R.id.editTextSurveyComment);
+		String surveyCommentString = surveyComment.getText().toString();
+		*/
+		
+		
 		mDbHelper = new GemDbAdapter(getBaseContext());      
 		mDbHelper.createDatabase();      
 		mDbHelper.open();		
-		GEMSurveyObject g = (GEMSurveyObject)getApplication();
-		mDbHelper.insertGemData(g);
+		
+		mDbHelper.insertGemData(surveyDataObject);
 		
 		mDbHelper.close();
-		
+
+		Toast.makeText(getApplicationContext(), "Survey data saved", Toast.LENGTH_SHORT).show();
+
 		
 
 		return false;

@@ -28,7 +28,7 @@
             android:text="Comments" />
        
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/surveyComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView1"
@@ -54,14 +54,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
- 		android:layout_below="@+id/editText1"	
+ 		android:layout_below="@+id/surveyComment"	
         android:text="Save this observation" />
 
     <Button
         android:id="@+id/btn_cancel_observation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-      	android:layout_below="@+id/editText1"	
+      	android:layout_below="@+id/surveyComment"	
         android:layout_alignParentLeft="true"
         android:text="Cancel this observation" />
             

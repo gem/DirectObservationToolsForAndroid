@@ -48,7 +48,7 @@ public class GEMSurveyObject extends Application {
 
 	public boolean putData(String key, String value) {		
 		surveyData.put(key, value);
-		Log.d("IDCT","HASHMAP : " + surveyData.toString());
+		//Log.d("IDCT","HASHMAP : " + surveyData.toString());
 		return true;
 	}
 	

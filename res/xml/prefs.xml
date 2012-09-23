@@ -29,11 +29,11 @@
 
         <EditTextPreference
             android:name="hazardName"
-            android:defaultValue="[Enter hazard name ]"
+            android:defaultValue=""
             android:key="hazardNameTextPref"
             android:summary="Enter hazard name"
             android:title="Enter hazard name" />
-        
+              
         
     </PreferenceCategory>
     <PreferenceCategory
@@ -41,6 +41,7 @@
         android:title="Map Layer Settings" >
         <ListPreference
             android:entries="@array/listOptions"
+            android:enabled="false"
             android:entryValues="@array/listValues"
             android:key="listpref"
             android:summary="List preference example"

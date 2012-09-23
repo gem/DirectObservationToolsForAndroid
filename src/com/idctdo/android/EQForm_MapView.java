@@ -63,7 +63,7 @@ import android.widget.Toast;
 
 public class EQForm_MapView extends EQForm {
 
-	public boolean DEBUG_LOG = true; 
+	public boolean DEBUG_LOG = false; 
 
 	WebView mWebView;
 	/** Called when the activity is first created. */

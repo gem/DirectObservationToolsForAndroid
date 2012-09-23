@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 public class Material_Selection_Form extends EQForm {
 	
-	public boolean DEBUG_LOG = true; 
+	public boolean DEBUG_LOG = false; 
 
 	public TabActivity tabActivity;
 	public TabHost tabHost;

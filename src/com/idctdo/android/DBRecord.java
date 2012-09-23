@@ -6,7 +6,7 @@ public class DBRecord {
     private String attributeDescription;
     private String attributeValue;
     private String attributeScope;
-    private int layoutId;
+    private int recordCode;
     
     public String getAttributeDescription() {
         return attributeDescription;
@@ -28,16 +28,16 @@ public class DBRecord {
         return attributeScope;
     }
     
-    public void setLayoutId(int layoutId) {
-        this.layoutId = layoutId;
+    public void setrecordCode(int recordCode) {
+        this.recordCode = recordCode;
     }
-    public int getLayoutId() {
-        return layoutId;
+    public int getCode() {
+        return recordCode;
     }
     
     public String toString(){
     	
-		return attributeDescription + " " + attributeValue + " " + attributeScope + " " + layoutId;
+		return attributeDescription + " " + attributeValue + " " + attributeScope + " " + recordCode;
     	
     
     }

@@ -27,7 +27,7 @@ import android.widget.Toast;
 
 
 public class Irregularity_Selection_Form extends EQForm {
-	public boolean DEBUG_LOG = true; 
+	public boolean DEBUG_LOG = false; 
 
 
 	private String topLevelAttributeType = "STRI";
@@ -131,7 +131,7 @@ public class Irregularity_Selection_Form extends EQForm {
 
 					DBRecord selectedItem = selectedAdapter.getItem(position);
 					if (DEBUG_LOG) Log.d("IDCT", "SELECTED ITEM: " + selectedItem.getJson());
-					if (DEBUG_LOG) Log.d("IDCT", "SELECTED ITEM: " + selectedItem.getLayoutId());
+					if (DEBUG_LOG) Log.d("IDCT", "SELECTED ITEM: " + selectedItem.getCode());
 					if (DEBUG_LOG) Log.d("IDCT", "SELECTED ITEM: " + selectedItem.getAttributeDescription());
 					//GEMSurveyObject g = (GEMSurveyObject)getApplication();
 					//g.putData(key, value);
