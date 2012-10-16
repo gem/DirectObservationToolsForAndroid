@@ -229,7 +229,8 @@ function init(){
 		[
 			//"file:////mnt/sdcard/maptiles/mapnik/${z}/${x}/${y}.png.tile"
 			//"file:////mnt/sdcard/maptiles/binghybrid/${z}/${x}/${y}.png.tile"
-			"tiles/${z}/${x}/${y}.png.tile"
+			//"tiles/${z}/${x}/${y}.png.tile"
+			"file:////mnt/sdcard/idctdo/maptiles2/sdtiles/${z}/${x}/${y}.png.tile"
 		], {
 			attribution: "Tiles © " + 
 				"Data © <a href='http://www.openstreetmap.org/'>OpenStreetMap</a> " +
@@ -245,7 +246,6 @@ function init(){
 		"Bing Aerial With Labels Cached",
 		[
 			"file:////mnt/sdcard/maptiles/binghybrid/${z}/${x}/${y}.png.tile"
-
 		], {
 			attribution: "Tiles © " + 
 				"Data © Microsoft" +
@@ -257,15 +257,6 @@ function init(){
 		}
 	);
 	
-	
-	
-	var layer = new OpenLayers.Layer.XYZ(
-	        "Cached Tiles",
-	         "tiles/${z}/${x}/${y}.png",
-	        {
-            sphericalMercator: true
-        }
-	);
 
 	var tiles3 = new OpenLayers.Layer.XYZ(
 	        "Cached Tiles 3",
@@ -311,9 +302,8 @@ function init(){
 	//map.addLayers([sdtiles,bingHybrid,mapnik,bingRoads,bingAerial,gmap, ghyb, gsat,myPositions,locationPointLayer,prevSurveyPoints]);
 	//map.addLayers([bingHybrid,sdtiles,mapnik,bingRoads,bingAerial,gmap, ghyb, gsat,myPositions,locationPointLayer,prevSurveyPoints]);
 	
-	map.addLayers([mapnik,bingHybrid,bingRoads,bingAerial,myPositions,locationPointLayer,prevSurveyPoints]);
-	
-	
+	map.addLayers([mapnik,bingHybrid,bingRoads,bingAerial,myPositions,locationPointLayer,prevSurveyPoints,sdtiles]);
+		
 	
 	
 	/* Causing issues at the moment*/
@@ -349,12 +339,9 @@ function init(){
         } else {
             status.innerHTML = "Local storage not supported. Try a different browser.";
         }
-    }
-    
+    }    
     */
-    
-     
-    
+       
 	
 	
 	if (DEBUG_DISPLAY_PANZOOM) {
@@ -599,6 +586,10 @@ function init(){
 } //end of init()
 
 
+function addBaseLayers() {
+	
+}
+
 
 function locateMe(latitude,longitude,locationAccuracy,setCentre) {
 	/*document.getElementById('boldStuff2').innerHTML = "saving layout..." + latitude + ", " + longitude; */
@@ -779,6 +770,38 @@ function nextLayer(index) {
 function setMapLayer(index) {
 	var layers = map.layers;
 	map.setBaseLayer(layers[index]);
+}
+
+
+function addOfflineBaseMap(tileLocationPath,zoom) {
+
+	var zoomLevel = parseInt(zoomLevel);
+	var layers = map.layers;	
+	//Remove the last layer i.e. the offline map layer
+	map.removeLayer(layers[layers.length-1]);
+	
+	var sdtiles = new OpenLayers.Layer.XYZ(
+		"OpenStreetMap (cached)",
+		[
+			//"file:////mnt/sdcard/maptiles/mapnik/${z}/${x}/${y}.png.tile"
+			//"file:////mnt/sdcard/maptiles/binghybrid/${z}/${x}/${y}.png.tile"
+			//"tiles/${z}/${x}/${y}.png.tile"
+			//"file:////mnt/sdcard/idctdo/maptiles2/sdtiles/${z}/${x}/${y}.png.tile"
+			tileLocationPath + "${z}/${x}/${y}.png.tile"
+		], {
+
+			attribution: "Tiles © " + 
+				"Data © <a href='http://www.openstreetmap.org/'>OpenStreetMap</a> " +
+				"and contributors, CC-BY-SA",
+			sphericalMercator: true,
+			transitionEffect: "resize",
+			buffer: 1,
+			numZoomLevels: 17
+		}
+	);	
+	map.addLayer(sdtiles);
+	var layers = map.layers;
+	map.setBaseLayer(layers[layers.length-1]);
 }
 
 function addLocalKmlLayer(localFilePath) {

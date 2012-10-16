@@ -32,6 +32,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -63,7 +64,7 @@ import android.widget.Toast;
 
 public class EQForm_MapView extends EQForm {
 
-	public boolean DEBUG_LOG = false; 
+	public boolean DEBUG_LOG = true; 
 
 	WebView mWebView;
 	/** Called when the activity is first created. */
@@ -159,12 +160,29 @@ public class EQForm_MapView extends EQForm {
 		mapTilesFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/maptiles");
 		mapTilesFile.mkdirs();
 		
+		File testFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/kml/PUT_KML_FILES_HERE");
+		try {
+			testFile.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		File testFile2 = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/maptiles/PUT_DIRECTORIES_OF_ZYX_TILES_HERE");
+		try {
+			testFile2.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		//Save the path as a string value
 		String extStorageDirectory = vectorsFile.toString();
-		SingleMediaScanner scan2 = new SingleMediaScanner(this, vectorsFile);
-		SingleMediaScanner scan3 = new SingleMediaScanner(this, mapTilesFile);
-
+		//SingleMediaScanner scan2 = new SingleMediaScanner(this, vectorsFile);
+		//SingleMediaScanner scan3 = new SingleMediaScanner(this, mapTilesFile);
+		SingleMediaScanner scan2 = new SingleMediaScanner(this, testFile);
+		SingleMediaScanner scan3 = new SingleMediaScanner(this, testFile2);
+		
+		 
 		sdCardPath = "file:///" +  Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
 		if (DEBUG_LOG) Log.d(TAG,"sdcard Path: " + sdCardPath);
 		// Restore preferences
@@ -645,20 +663,38 @@ public class EQForm_MapView extends EQForm {
 
 			final CharSequence[] baseMaps = {"OpenStreetMap","Bing Hybrid","Bing Roads","Bing Aerial"};
 			final CharSequence[] localBaseMaps = getLocalBaseMapLayers();
-
+			if (DEBUG_LOG) Log.d(TAG,"LOCAL BASEMAPS " + localBaseMaps.toString());
+			
 			final CharSequence[] choiceList = new CharSequence[baseMaps.length + localBaseMaps.length];
 			System.arraycopy(baseMaps, 0, choiceList, 0, baseMaps.length);
 			System.arraycopy(localBaseMaps, 0, choiceList, baseMaps.length, localBaseMaps.length);
-			int selected = -1; // does not select anything
+			int selected = -1; // does not select anything			
+					
+			
 			builder.setSingleChoiceItems(
 					choiceList, 
 					selected, 
+					
+					
+					
+					
+					
 					new DialogInterface.OnClickListener() {
 						@Override
+						
 						public void onClick(DialogInterface dialog,	int which) {
 							if (DEBUG_LOG) Log.d(TAG,"selected "+choiceList[which]);
 							int index = 1;
-							mWebView.loadUrl("javascript:setMapLayer("+ which +")");
+							if (which > 3) {
+								//String tileLocationPath = "file:////mnt/sdcard/idctdo/maptiles/laquila_mapquest/";
+								String tileLocationPath = sdCardPath +  "idctdo/maptiles/" + choiceList[which] +"/";
+								String zoomLevel = "17";						
+								
+								
+								mWebView.loadUrl("javascript:addOfflineBaseMap(\""+ tileLocationPath + "\" , \"" + zoomLevel +"\")");
+							} else {
+								mWebView.loadUrl("javascript:setMapLayer("+ which +")");
+							}
 						}
 					});
 			AlertDialog alert = builder.create();
@@ -667,24 +703,28 @@ public class EQForm_MapView extends EQForm {
 	};
 	private CharSequence[] getLocalBaseMapLayers() {
 		mapTilesFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/maptiles");
-		String files;
-		String[] listOfFiles = mapTilesFile.list(); 
+		String file;
+
+		File[] listOfFiles = mapTilesFile.listFiles(); 
 		ArrayList<CharSequence> choiceList = new ArrayList();
 		int j = 0;
 		for (int i = 0; i < listOfFiles.length; i++) 	{
-			files = listOfFiles[i].toString();				
-			choiceList.add(files);
+			if (listOfFiles[i].isDirectory()) {
+				file = listOfFiles[i].getName();		
+				choiceList.add(file);
+			}
 		}
 		final CharSequence[] choiceListFinal = choiceList.toArray(new CharSequence[choiceList.size()]);
 
 		return choiceListFinal;
 	}
 
+	
 	private CharSequence[] getVectorLayers() {
 		vectorsFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/kml");
+		vectorsFile.mkdirs();
 		String files;
 		File[] listOfFiles = vectorsFile.listFiles(); 
-
 		ArrayList<CharSequence> choiceList = new ArrayList();
 		int j = 0;
 		for (int i = 0; i < listOfFiles.length; i++) {
@@ -736,9 +776,9 @@ public class EQForm_MapView extends EQForm {
 			AlertDialog alert = builder.create();
 			alert.show();
 
+			
 		}
 	};
-	
 
 
 	@Override
@@ -746,8 +786,8 @@ public class EQForm_MapView extends EQForm {
 	{
 		menu.add(0,0,0,"Refresh Map");
 		menu.add(0,1,0,"Settings");
-		menu.add(0,2,0,"Export Database Snapshot to SDCard");
-		menu.add(0,3,0,"Export Survey Data to SDCard");
+		menu.add(0,2,0,"Export DB Snapshot to SDCard");
+		menu.add(0,3,0,"Export CSV to SDCard");
 		
 		return true;
 	}
@@ -878,8 +918,6 @@ public class EQForm_MapView extends EQForm {
 				if (DEBUG_LOG) Log.d(TAG,"New location is better. Updating it");
 				currentLocation = loc;
 			}
-
-			
 			
 
 			currentLatitude = currentLocation.getLatitude();
@@ -888,16 +926,12 @@ public class EQForm_MapView extends EQForm {
 			currentLocationAccuracy = currentLocation.getAccuracy();
 			currentBearingFromGPS = currentLocation.getBearing();
 			currentLocationProvider = currentLocation.getProvider();
-
-
-
 			//textViewLocationProvider.setText("Loc. Provider: " + currentLocationProvider);
 			//textViewLocationAccuracy.setText("Loc. Accuracy: " + currentLocationAccuracy);
 
 			if (DEBUG_LOG) Log.d(TAG,"lat: "+loc.getLatitude() + "lng: " + loc.getLongitude() );
 			//mWebView.loadUrl("javascript:locateMe("+ currentLatitude+","+currentLongitude+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");
-
-			
+		
 
 			//textViewLatitude.setText(Double.toString(loc.getLatitude()));
 			//textViewLongitude.setText(Double.toString(loc.getLongitude()));
