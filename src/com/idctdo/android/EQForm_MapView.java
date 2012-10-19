@@ -130,12 +130,11 @@ public class EQForm_MapView extends EQForm {
 		if (DEBUG_LOG) Log.d(TAG,"adding JS interface");
 		mWebView.addJavascriptInterface(this, "webConnector"); 
 
-
-
 		mWebView.loadUrl("file:///android_asset/idct_map.html");
 		mWebView.setWebViewClient(new HelloWebViewClient());
-
-
+	
+		
+		
 		progressBar = new ProgressDialog(EQForm_MapView.this);
 		progressBar.setMessage("Loading maps...");
 		progressBar.setCancelable(false);
@@ -679,8 +678,10 @@ public class EQForm_MapView extends EQForm {
 					
 					
 					
+					
 					new DialogInterface.OnClickListener() {
 						@Override
+										
 						
 						public void onClick(DialogInterface dialog,	int which) {
 							if (DEBUG_LOG) Log.d(TAG,"selected "+choiceList[which]);
@@ -689,9 +690,19 @@ public class EQForm_MapView extends EQForm {
 								//String tileLocationPath = "file:////mnt/sdcard/idctdo/maptiles/laquila_mapquest/";
 								String tileLocationPath = sdCardPath +  "idctdo/maptiles/" + choiceList[which] +"/";
 								String zoomLevel = "17";						
+																
+								File extStore = Environment.getExternalStorageDirectory();
+								File xmlFile = new File(extStore.getAbsolutePath() + "/idctdo/maptiles/" + choiceList[which] +"/tilemapresource.xml");
 								
 								
-								mWebView.loadUrl("javascript:addOfflineBaseMap(\""+ tileLocationPath + "\" , \"" + zoomLevel +"\")");
+								if (DEBUG_LOG) Log.d(TAG,"possible tms xml path:" + xmlFile.getPath());
+								if (xmlFile.isFile()) {		
+									if (DEBUG_LOG) Log.d(TAG,"Tile resource File is there");
+									mWebView.loadUrl("javascript:addOfflineTMSMap(\""+ tileLocationPath + "\" , \"" + zoomLevel +"\")");
+								} else {
+									if (DEBUG_LOG) Log.d(TAG,"No TMS Resource file. Try loading zxy tiles");
+									mWebView.loadUrl("javascript:addOfflineBaseMap(\""+ tileLocationPath + "\" , \"" + zoomLevel +"\")");
+								}
 							} else {
 								mWebView.loadUrl("javascript:setMapLayer("+ which +")");
 							}

@@ -97,7 +97,13 @@
 				display:none;
 			}
 
-			
+	
+			.olImageLoadError {
+			/*
+				background-image: url('img/tile-error.png');
+				background-repeat: no-repeat;*/
+				display: none !important;
+			}		
 		
         .olControlPanel div { 
           display:block;

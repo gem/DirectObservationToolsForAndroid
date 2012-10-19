@@ -6,11 +6,23 @@ var DEBUG_MODE = false;
 var DEBUG_SHOW_DIFF_LAYERS = true;
 var DEBUG_SHOW_MOUSE_POS = true;
 var DEBUG_DISPLAY_OVERVIEW = false;
-var DEBUG_DISPLAY_PANZOOM = false;
+var DEBUG_DISPLAY_PANZOOM = true;
 var DEBUG_FREE_ROTATE = true;
-var DEBUG_SHOW_LAYER_SWITCHER = false;
+var DEBUG_SHOW_LAYER_SWITCHER = true;
+
 var DEBUG_USE_BROWSER_CACHING = false;
-	
+
+
+
+//var mapBounds = new OpenLayers.Bounds( -1.00041666667, 49.9995106059, 1.99995992776, 53.0004166667);
+var mapBounds = new OpenLayers.Bounds( 13.3589926433, 42.3394886236, 13.4150903442, 42.3687820513);
+var mapMinZoom = 0;
+var mapMaxZoom = 20;
+
+// avoid pink tiles
+OpenLayers.IMAGE_RELOAD_ATTEMPTS = 3;
+
+ OpenLayers.Util.onImageLoadErrorColor = "transparent";
 
 var map, vectors, myPositions, locationPointLayer, prevSurveyPoints, vectorEditing, controls;
 
@@ -33,6 +45,9 @@ var bingApiKey = "AqTGBsziZHIJYYxgivLBf0hVdrAk9mWO5cQcb8Yux8sW5M8c8opEC2lZqKR1ZZ
 
 
 						 
+OpenLayers.Util.onImageLoadError = function () {
+    this.src = "img/close.gif";
+}
 
 						 
  	
@@ -112,8 +127,13 @@ function init(){
 	
 	map = new OpenLayers.Map({
 		div: "map",
-		resolutions: [0.087890625, 0.0439453125, 0.02197265625, 0.010986328125],
-
+		projection: new OpenLayers.Projection("EPSG:900913"),
+		displayProjection: new OpenLayers.Projection("EPSG:4326"),
+		units: "m",
+		//maxResolution: 156543.0339,
+		//maxExtent: new OpenLayers.Bounds(-20037508, -20037508, 20037508, 20037508.34),
+					
+					
 		controls: [
            new OpenLayers.Control.TouchNavigation({
                 dragPanOptions: {
@@ -168,6 +188,7 @@ function init(){
 	var bingRoads = new OpenLayers.Layer.Bing({
 		key: bingApiKey,
 		type: "Road",
+		name: "Bing Roads",
 		// custom metadata parameter to request the new map style - only useful
 		// before May 1st, 2011
 		metadataParams: {mapVersion: "v1"}
@@ -175,7 +196,8 @@ function init(){
 	
 	var bingAerial = new OpenLayers.Layer.Bing({
 		key: bingApiKey,
-		type: "Aerial"
+		type: "Aerial",
+		name: "Bing Aerial"
 	});
 	
 	var bingHybrid = new OpenLayers.Layer.Bing({
@@ -257,6 +279,9 @@ function init(){
 		}
 	);
 	
+	
+  
+					  
 
 	var tiles3 = new OpenLayers.Layer.XYZ(
 	        "Cached Tiles 3",
@@ -265,27 +290,28 @@ function init(){
             sphericalMercator: true
         }
 	);
-		
-	// create TMS Overlay layer
 
-	var tmsoverlay = new OpenLayers.Layer.TMS( "TMS Overlay", "",
 
-		{   // url: '', serviceVersion: '.', layername: '.',
 
-			type: 'png', getURL: overlay_getTileURL, alpha: true, 
+					
+	var localTMSTiles = new OpenLayers.Layer.XYZ("OpenLayers.Layer.XYZ",
+	"tiles/",
+	{ 
+		type: 'png', 
+		getURL: xyz_getTileURL, 
+		alpha: true, 
+		isBaseLayer: false,
+		numZoomLevels: 18	
+	});
 
-			isBaseLayer: false
+			
+			
 
-		});
 
-	if (OpenLayers.Util.alphaHack() == false) { tmsoverlay.setOpacity(0.7); }							
-
-	
 	
 	myPositions = new OpenLayers.Layer.Vector("My Location", {
 		styleMap:  testStyleMap
 	});
-
 
 	locationPointLayer = new OpenLayers.Layer.Vector("Current Survey Point", {
 		styleMap:  locationPointLayerStyleMap
@@ -302,9 +328,9 @@ function init(){
 	//map.addLayers([sdtiles,bingHybrid,mapnik,bingRoads,bingAerial,gmap, ghyb, gsat,myPositions,locationPointLayer,prevSurveyPoints]);
 	//map.addLayers([bingHybrid,sdtiles,mapnik,bingRoads,bingAerial,gmap, ghyb, gsat,myPositions,locationPointLayer,prevSurveyPoints]);
 	
-	map.addLayers([mapnik,bingHybrid,bingRoads,bingAerial,myPositions,locationPointLayer,prevSurveyPoints,sdtiles]);
-		
-	
+
+					
+	map.addLayers([mapnik,bingHybrid,bingRoads,bingAerial,myPositions,locationPointLayer,prevSurveyPoints,sdtiles,localTMSTiles]);	
 	
 	/* Causing issues at the moment*/
 	//Browser caching
@@ -649,33 +675,6 @@ function locateMe(latitude,longitude,locationAccuracy,setCentre) {
 
 
 
-function overlay_getTileURL(bounds) {
-	var res = this.map.getResolution();
-	var x = Math.round((bounds.left - this.maxExtent.left) / (res * this.tileSize.w));
-
-	var y = Math.round((bounds.bottom - this.tileOrigin.lat) / (res * this.tileSize.h));
-
-	var z = this.map.getZoom();
-
-	if (this.map.baseLayer.name == 'Virtual Earth Roads' || this.map.baseLayer.name == 'Virtual Earth Aerial' || this.map.baseLayer.name == 'Virtual Earth Hybrid') {
-
-	   z = z + 1;
-
-	}
-
-	if (mapBounds.intersectsBounds( bounds ) && z >= mapMinZoom && z <= mapMaxZoom ) {
-	   //console.log( this.url + z + "/" + x + "/" + y + "." + this.type);
-	   return this.url + z + "/" + x + "/" + y + "." + this.type;
-	} else {
-	   return "http://www.maptiler.org/img/none.png";
-	}
-
-}		
-
-
-
-
-
 
 function clearMyPositions() {
 	myPositions.removeAllFeatures();
@@ -774,7 +773,6 @@ function setMapLayer(index) {
 
 
 function addOfflineBaseMap(tileLocationPath,zoom) {
-
 	var zoomLevel = parseInt(zoomLevel);
 	var layers = map.layers;	
 	//Remove the last layer i.e. the offline map layer
@@ -803,6 +801,31 @@ function addOfflineBaseMap(tileLocationPath,zoom) {
 	var layers = map.layers;
 	map.setBaseLayer(layers[layers.length-1]);
 }
+
+
+function addOfflineTMSMap(tileLocationPath,zoom) {
+
+	var zoomLevel = parseInt(zoomLevel);
+	var layers = map.layers;	
+	//Remove the last layer i.e. the offline map layer
+	map.removeLayer(layers[layers.length-1]);
+	
+	var localTMSTiles = new OpenLayers.Layer.XYZ("OpenLayers.Layer.XYZ",
+	tileLocationPath,
+	{ 
+		type: 'png', 
+		getURL: xyz_getTileURL, 
+		alpha: true, 
+		isBaseLayer: false,
+		numZoomLevels: 18	
+	});
+
+	map.addLayer(localTMSTiles);
+	var layers = map.layers;
+	map.setBaseLayer(layers[layers.length-1]);
+}
+
+
 
 function addLocalKmlLayer(localFilePath) {
 
@@ -846,3 +869,57 @@ function GetFeaturesFromKMLString (strKML) {
 
 
 
+function osm_getTileURL(bounds) {
+
+	//console.log("zoom:" + map.getZoom());
+	var res = this.map.getResolution();
+	//console.log("res: "+ res);
+	var x = Math.round((bounds.left - this.maxExtent.left) / (res * this.tileSize.w));	
+	var y = Math.round((this.maxExtent.top - bounds.top) / (res * this.tileSize.h));
+	var z = map.getZoom();
+	var limit = Math.pow(2, z);
+	console.log("xyz: "+ this.url + z + "/" + x + "/" + y + "." + this.type);
+	if (y < 0 || y >= limit) {
+		return "http://www.maptiler.org/img/none.png";
+	} else {
+		x = ((x % limit) + limit) % limit;
+		return this.url + z + "/" + x + "/" + y + "." + this.type;
+	}
+}
+
+
+function overlay_getTileURL(bounds) {
+	var res = this.map.getResolution();
+	var x = Math.round((bounds.left - this.maxExtent.left) / (res * this.tileSize.w));
+	var y = Math.round((bounds.bottom - this.tileOrigin.lat) / (res * this.tileSize.h));
+	var z = this.map.getZoom();
+	if (this.map.baseLayer.name == 'Virtual Earth Roads' || this.map.baseLayer.name == 'Virtual Earth Aerial' || this.map.baseLayer.name == 'Virtual Earth Hybrid') {
+	   z = z + 1;
+	}
+	if (mapBounds.intersectsBounds( bounds ) && z >= mapMinZoom && z <= mapMaxZoom ) {
+	   //console.log( this.url + z + "/" + x + "/" + y + "." + this.type);
+	   return this.url + z + "/" + x + "/" + y + "." + this.type;
+	} else {
+	   return "http://www.maptiler.org/img/none.png";
+	}
+}	
+
+
+//This function allows a TMS tileset to be used with OpenLayers.Layer.XYZ
+function xyz_getTileURL(bounds) {
+	var res = this.map.getResolution();
+	var x = Math.round((bounds.left - this.maxExtent.left) / (res * this.tileSize.w));
+	var y = Math.round((this.maxExtent.top - bounds.top) / (res * this.tileSize.h));
+	var z = this.map.getZoom();
+	
+	if (this.map.baseLayer.name == 'Bing Roads' || this.map.baseLayer.name == 'Bing Aerial' || this.map.baseLayer.name == 'Bing Aerial With Labels') {
+	   z = z + 1;
+	}
+	
+	var limit = Math.pow(2, z);
+	console.log("xyz: "+ this.url + z + "/" + x + "/" + y + "." + this.type);
+	  x = ((x % limit) + limit) % limit;
+	  y = Math.pow(2,z) - y - 1;
+	  return this.url + z + "/" + x + "/" + y + "." + this.type;
+}
+			
