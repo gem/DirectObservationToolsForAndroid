@@ -31,8 +31,12 @@ public class LLRS_Selection_FORM extends EQForm {
 	public int tabIndex = 1;
 	
 
-	private String topLevelAttributeType = "LLRS";
-	private String secondLevelAttributeType = "LLRSD";
+	private String topLevelAttributeDictionary = "DIC_LLRS";
+	private String topLevelAttributeKey = "LLRS_L";
+	
+	private String secondLevelAttributeDictionary = "DIC_LLRS_DUCTILITY";
+	private String secondLevelAttributeKey = "LLRS_DUCT_L";
+	
 	
 	private SelectedAdapter selectedAdapter;
 	private SelectedAdapter selectedAdapter2;
@@ -72,12 +76,12 @@ public class LLRS_Selection_FORM extends EQForm {
 			mDbHelper.createDatabase();      
 			mDbHelper.open();
 
-			Cursor allLLRSCursor = mDbHelper.getAllLLRS();        
+			Cursor allLLRSCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);        
 			ArrayList<DBRecord> lLrs = GemUtilities.cursorToArrayList(allLLRSCursor);        
 			if (DEBUG_LOG) Log.d(TAG,"lLrs: " + lLrs.toString());
 
 
-			Cursor allLLRSDCursor = mDbHelper.getAllLLRSD();
+			Cursor allLLRSDCursor = mDbHelper.getAttributeValuesByDictionaryTable(secondLevelAttributeDictionary); 
 			lLrsd = GemUtilities.cursorToArrayList(allLLRSDCursor);
 
 
@@ -107,8 +111,7 @@ public class LLRS_Selection_FORM extends EQForm {
 						int position, long id) {
 					// user clicked a list item, make it "selected"
 					selectedAdapter.setSelectedPosition(position);
-					surveyDataObject.putData(topLevelAttributeType, selectedAdapter.getItem(position).getAttributeValue());
-					
+					surveyDataObject.putData(topLevelAttributeDictionary, selectedAdapter.getItem(position).getAttributeValue());		
 
 					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 
@@ -121,10 +124,8 @@ public class LLRS_Selection_FORM extends EQForm {
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter2.setSelectedPosition(position);
-					surveyDataObject.putData(secondLevelAttributeType, selectedAdapter2.getItem(position).getAttributeValue());
-					
+					surveyDataObject.putData(secondLevelAttributeKey, selectedAdapter2.getItem(position).getAttributeValue());					
 					//Toast.makeText(getApplicationContext(), "LV2 click: " + selectedAdapter2.getItem(position).getOrderName() + " " + selectedAdapter2.getItem(position).getOrderStatus() + " " +selectedAdapter2.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
-
 					completeThis();		
 					
 				}

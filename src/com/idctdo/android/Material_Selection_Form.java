@@ -32,11 +32,11 @@ public class Material_Selection_Form extends EQForm {
 	public int tabIndex = 0;
 
 
-	private String topLevelAttributeType = "MTYPE";
-	private String secondLevelAttributeType = "MTECH";
-	private String thirdLevelAttributeType = "MORT";
-	private String fourthLevelAttributeType = "MREIN";
-	private String fifthLevelAttributeType = "SCONN";
+	private String topLevelAttributeType = "DIC_MATERIAL_TYPE";
+	private String secondLevelAttributeType = "DIC_MATERIAL_TECHNOLOGY";
+	private String thirdLevelAttributeType = "DIC_MASONARY_MORTAR_TYPE";
+	private String fourthLevelAttributeType = "DIC_MASONRY_REINFORCEMENT";
+	private String fifthLevelAttributeType = "DIC_STEEL_CONNECTION_TYPE";
 
 
 	private SelectedAdapter selectedAdapter;
@@ -66,12 +66,8 @@ public class Material_Selection_Form extends EQForm {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.material_selectable_list);
 
-
 		tabActivity = (TabActivity) getParent();
 		tabHost = tabActivity.getTabHost();
-
-
-		
 
 	}
 
@@ -109,21 +105,21 @@ public class Material_Selection_Form extends EQForm {
 			if (DEBUG_LOG) Log.d("IDCT","getTestData-GetColumnName " + DatabaseUtils.dumpCursorToString(testdata));
 
 
-			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByType(topLevelAttributeType);     
+			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeType);     
 			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 			if (DEBUG_LOG) Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
 
 
-			Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByTypeAndScope(secondLevelAttributeType,"X");
+			Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(secondLevelAttributeType);
 			secondLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesSecondLevelCursor);
 
-			Cursor allAttributeTypesThirdLevelCursor = mDbHelper.getAttributeValuesByTypeAndScope(secondLevelAttributeType,"X");
+			Cursor allAttributeTypesThirdLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(thirdLevelAttributeType);
 			thirdLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesThirdLevelCursor);
 
-			Cursor allAttributeTypesFourthLevelCursor = mDbHelper.getAttributeValuesByTypeAndScope(secondLevelAttributeType,"X");
+			Cursor allAttributeTypesFourthLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(fourthLevelAttributeType);
 			fourthLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesThirdLevelCursor);
 
-			Cursor allAttributeTypesFifthLevelCursor = mDbHelper.getAttributeValuesByTypeAndScope(secondLevelAttributeType,"X");
+			Cursor allAttributeTypesFifthLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(fifthLevelAttributeType);
 			fifthLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesThirdLevelCursor);
 			
 			mDbHelper.close();
@@ -190,7 +186,7 @@ public class Material_Selection_Form extends EQForm {
 					if (DEBUG_LOG) Log.d("IDCT", "SELECTED DB RECORD QUADRUPLET: "  + selectedAdapter.getItem(position).toString());
 					surveyDataObject.putData(topLevelAttributeType, selectedAdapter.getItem(position).getAttributeValue());
 					
-					Cursor mCursor = mDbHelper.getAttributeValuesByTypeAndScope(secondLevelAttributeType,selectedAdapter.getItem(position).getJson());
+					Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(secondLevelAttributeType,selectedAdapter.getItem(position).getJson());
 
 					mCursor.moveToFirst();
 					while(!mCursor.isAfterLast()) {
@@ -244,7 +240,7 @@ public class Material_Selection_Form extends EQForm {
 
 					if (DEBUG_LOG) Log.d("IDCT", "MATERIAL TECH ON CLICK" + thirdLevelAttributeType + " and " + selectedAdapter2.getItem(position).getJson());
 
-					Cursor mCursor = mDbHelper.getAttributeValuesByTypeAndScope(thirdLevelAttributeType,selectedAdapter2.getItem(position).getJson());
+					Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(thirdLevelAttributeType,selectedAdapter2.getItem(position).getJson());
 
 					mCursor.moveToFirst();
 					while(!mCursor.isAfterLast()) {
@@ -262,7 +258,7 @@ public class Material_Selection_Form extends EQForm {
 						mCursor.moveToNext();
 					}		     
 
-					mCursor = mDbHelper.getAttributeValuesByTypeAndScope(fourthLevelAttributeType,selectedAdapter2.getItem(position).getJson());
+					mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(fourthLevelAttributeType,selectedAdapter2.getItem(position).getJson());
 
 					mCursor.moveToFirst();
 					while(!mCursor.isAfterLast()) {
@@ -281,7 +277,7 @@ public class Material_Selection_Form extends EQForm {
 					}		     
 
 
-					mCursor = mDbHelper.getAttributeValuesByTypeAndScope(fifthLevelAttributeType,selectedAdapter2.getItem(position).getJson());
+					mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(fifthLevelAttributeType,selectedAdapter2.getItem(position).getJson());
 
 					mCursor.moveToFirst();
 					while(!mCursor.isAfterLast()) {
@@ -365,14 +361,8 @@ public class Material_Selection_Form extends EQForm {
 	}
 
 	public void completeThis() {
-
-
 		MainTabActivity a = (MainTabActivity)getParent();
 		a.completeTab(tabIndex);
-
-		
-
-
 	}
 	
 

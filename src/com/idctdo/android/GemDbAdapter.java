@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 public class GemDbAdapter 
 {
-	public boolean DEBUG_LOG = false; 
+	public boolean DEBUG_LOG = true; 
 
 	protected static final String TAG = "DataAdapter";
 
@@ -351,6 +351,7 @@ public class GemDbAdapter
 	}
 
 
+	//Functiones like this will be deprected as they use a superdictionary
 	public Cursor getAttributeValuesByTypeAndScope(String attributeType, String attributeScope)
 	{
 		try
@@ -375,6 +376,57 @@ public class GemDbAdapter
 	}
 
 
+	
+	public Cursor getAttributeValuesByDictionaryTable(String dictionaryTable)
+	{
+		try
+		{
+			String sql = "select DESCRIPTION, CODE, TRIM(SCOPE) from '"+ dictionaryTable + "'";
+
+			if (DEBUG_LOG) Log.d("IDCT", "running sql " + sql);
+
+			Cursor mCur = mDb.rawQuery(sql, null);
+			if (mCur!=null)
+			{
+				mCur.moveToNext();
+				Log.e(TAG, "mCur not null " + mCur.getColumnCount());
+			}
+			return mCur;
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "getAllMaterialTypes >>"+ mSQLException.toString());
+			throw mSQLException;
+		}
+	}
+
+	
+	public Cursor getAttributeValuesByDictionaryTableAndScope(String dictionaryTable, String attributeScope)
+	{
+		try
+		{
+			String sql = "select DESCRIPTION, CODE, SCOPE from '"+ dictionaryTable + "' where SCOPE = '"+ attributeScope + "'";
+
+			if (DEBUG_LOG) Log.d("IDCT", "running sql " + sql);
+
+			Cursor mCur = mDb.rawQuery(sql, null);
+			if (mCur!=null)
+			{
+				mCur.moveToNext();
+				Log.e(TAG, "mCur not null " + mCur.getColumnCount());
+			}
+			return mCur;
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "getAllMaterialTypes >>"+ mSQLException.toString());
+			throw mSQLException;
+		}
+	}
+
+	
+	
+	
 
 
 	public Cursor getQualifierValuesByQualifierType(String qualifierType)

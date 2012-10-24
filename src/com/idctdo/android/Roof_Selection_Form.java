@@ -27,13 +27,15 @@ public class Roof_Selection_Form extends EQForm {
 	
 	public boolean DEBUG_LOG = false; 
 	
-	
 	public TabActivity tabActivity;
 	public TabHost tabHost;
 	public int tabIndex = 2;
 	
-	private String topLevelAttributeType = "RMAT";
-	private String secondLevelAttributeType = "RTYPE";
+	private String topLevelAttributeDictionary = "DIC_ROOF_SYSTEM_MATERIAL";
+	private String topLevelAttributeKey = "ROOFSYSMAT";
+	
+	private String secondLevelAttributeDictionary = "DIC_ROOF_SYSTEM_TYPE";
+	private String secondLevelAttributeKey = "ROOFSYSTYP";
 	
 	
 	private SelectedAdapter selectedAdapter;
@@ -83,12 +85,12 @@ public class Roof_Selection_Form extends EQForm {
 
         
 	        
-	        Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByType(topLevelAttributeType);     
+	        Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
 	        ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 	        if (DEBUG_LOG) Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
 	             
 	        
-	        Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByTypeAndScope(secondLevelAttributeType,"X");
+	        Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(secondLevelAttributeDictionary);
 	        secondLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesSecondLevelCursor);
 	       
 	              
@@ -122,7 +124,7 @@ public class Roof_Selection_Form extends EQForm {
 					selectedAdapter.setSelectedPosition(position);
 					selectedAdapter2.setSelectedPosition(-1);
 					
-					surveyDataObject.putData(topLevelAttributeType, selectedAdapter.getItem(position).getAttributeValue());
+					surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());
 					
 			
 					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
@@ -136,9 +138,9 @@ public class Roof_Selection_Form extends EQForm {
 					
 					
 			        //Cursor mCursor = mDbHelper.getAllMaterialTechnologies(selectedAdapter.getItem(position).getJson());
-					 if (DEBUG_LOG) Log.d("IDCT", "Going to select by" + secondLevelAttributeType + " and " + selectedAdapter.getItem(position).getJson());
+					 if (DEBUG_LOG) Log.d("IDCT", "Going to select by" + secondLevelAttributeKey + " and " + selectedAdapter.getItem(position).getJson());
 				       
-					Cursor mCursor = mDbHelper.getAttributeValuesByTypeAndScope(secondLevelAttributeType,selectedAdapter.getItem(position).getJson());
+					Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(secondLevelAttributeDictionary,selectedAdapter.getItem(position).getJson());
 									
 					mCursor.moveToFirst();
 					while(!mCursor.isAfterLast()) {
@@ -177,7 +179,7 @@ public class Roof_Selection_Form extends EQForm {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter2.setSelectedPosition(position);
 					
-					surveyDataObject.putData(secondLevelAttributeType, selectedAdapter2.getItem(position).getAttributeValue());
+					surveyDataObject.putData(secondLevelAttributeKey, selectedAdapter2.getItem(position).getAttributeValue());
 					
 
 					

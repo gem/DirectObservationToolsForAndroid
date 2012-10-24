@@ -683,6 +683,8 @@ public class EQForm_MapView extends EQForm {
 						@Override
 										
 						
+						
+						
 						public void onClick(DialogInterface dialog,	int which) {
 							if (DEBUG_LOG) Log.d(TAG,"selected "+choiceList[which]);
 							int index = 1;

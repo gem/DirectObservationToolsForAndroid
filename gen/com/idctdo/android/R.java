@@ -221,6 +221,7 @@ public final class R {
         public static final int selected_row=0x7f030015;
         public static final int settings=0x7f030016;
         public static final int splash=0x7f030017;
+        public static final int structure=0x7f030018;
     }
     public static final class raw {
         public static final int about=0x7f050000;

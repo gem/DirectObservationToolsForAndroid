@@ -195,6 +195,16 @@ public class MainTabActivity extends TabActivity {
 		.newTabSpec("Page 8")
 		.setIndicator("Comm.", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageEight);
+		
+		
+		Intent intentPageNine = new Intent().setClass(this, Structure_Selection_Form.class);
+		TabSpec tabSpecPageNine = tabHost
+		.newTabSpec("Page 9")
+		.setIndicator("Struc", ressources.getDrawable(R.drawable.tab_icon))
+		.setContent(intentPageNine);
+		
+		
+		
 		tabHost.addTab(tabSpecPageOne);
 		tabHost.addTab(tabSpecPageTwo);
 		tabHost.addTab(tabSpecPageThree);
@@ -203,7 +213,7 @@ public class MainTabActivity extends TabActivity {
 		tabHost.addTab(tabSpecPageSix);
 		tabHost.addTab(tabSpecPageSeven);
 		tabHost.addTab(tabSpecPageEight);
-
+		tabHost.addTab(tabSpecPageNine);
 
 		initTabIcons(tabHost);
 		setTabColor();

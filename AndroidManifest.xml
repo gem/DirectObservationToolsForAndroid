@@ -65,6 +65,9 @@
         <activity
             android:name=".Age_Height_Selection_Form"
             android:screenOrientation="portrait" />
+       	<activity
+            android:name=".Structure_Selection_Form"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".PrefsActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar" >

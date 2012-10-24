@@ -32,8 +32,14 @@ public class Floor_Selection_Form extends EQForm {
 	public TabHost tabHost;
 	public int tabIndex = 3;
 
-	private String topLevelAttributeType = "FMAT";
-	private String secondLevelAttributeType = "FTYPE";
+	private String topLevelAttributeDictionary = "DIC_FLOOR_MATERIAL";
+	private String topLevelAttributeKey = "FLOOR_MAT";
+	
+	private String secondLevelAttributeDictionary = "DIC_FLOOR_TYPE";
+	private String secondLevelAttributeKey = "FLOOR_TYPE";
+	
+	
+
 
 
 	private SelectedAdapter selectedAdapter;
@@ -76,12 +82,12 @@ public class Floor_Selection_Form extends EQForm {
 			mDbHelper.createDatabase();      
 			mDbHelper.open();
 
-			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByType(topLevelAttributeType);     
+			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
 			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 			if (DEBUG_LOG) Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
 
 
-			Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByTypeAndScope(secondLevelAttributeType,"X");
+			Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(secondLevelAttributeDictionary,"X");
 			secondLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesSecondLevelCursor);
 
 			mDbHelper.close();
@@ -112,27 +118,21 @@ public class Floor_Selection_Form extends EQForm {
 					// user clicked a list item, make it "selected"
 					selectedAdapter.setSelectedPosition(position);
 					selectedAdapter2.setSelectedPosition(-1);				
-					surveyDataObject.putData(topLevelAttributeType, selectedAdapter.getItem(position).getAttributeValue());
-					
+					surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());					
 					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
-
-					secondLevelAttributesList.clear();					
+					secondLevelAttributesList.clear();				
 
 					mDbHelper.open();				
-
 					//Cursor mCursor = mDbHelper.getAllMaterialTechnologies(selectedAdapter.getItem(position).getJson());
-
-					Cursor mCursor = mDbHelper.getAttributeValuesByTypeAndScope(secondLevelAttributeType,selectedAdapter.getItem(position).getJson());
-
+					Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(secondLevelAttributeDictionary,selectedAdapter.getItem(position).getJson());
 					mCursor.moveToFirst();
 					while(!mCursor.isAfterLast()) {
 						//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
 
-						DBRecord o1 = new DBRecord();		
+						DBRecord o1 = new DBRecord();	
 
 						if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
 						//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
-
 						o1.setAttributeDescription(mCursor.getString(0));
 						o1.setAttributeValue(mCursor.getString(1));
 						o1.setJson(mCursor.getString(2));
@@ -163,7 +163,7 @@ public class Floor_Selection_Form extends EQForm {
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter2.setSelectedPosition(position);		
-					surveyDataObject.putData(secondLevelAttributeType, selectedAdapter2.getItem(position).getAttributeValue());
+					surveyDataObject.putData(secondLevelAttributeKey, selectedAdapter2.getItem(position).getAttributeValue());
 					
 					//Toast.makeText(getApplicationContext(), "LV2 click: " + selectedAdapter2.getItem(position).getOrderName() + " " + selectedAdapter2.getItem(position).getOrderStatus() + " " +selectedAdapter2.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 
@@ -191,30 +191,5 @@ public class Floor_Selection_Form extends EQForm {
 		MainTabActivity a = (MainTabActivity)getParent();
 		a.completeTab(tabIndex);
 	}
-
-
-	/*
-	// Move selected item "up" in the ViewList.
-	private void moveUp(){
-    	int selectedPos = selectedAdapter.getSelectedPosition();
-    	if (selectedPos > 0 ){
-    		String str = (String) list.remove(selectedPos);
-    		list.add(selectedPos-1, str);
-    		// set selected position in the adapter
-    		selectedAdapter.setSelectedPosition(selectedPos-1);
-    	}
-	}
-
-	// Move selected item "down" in the ViewList.
-	private void moveDown(){
-    	int selectedPos = selectedAdapter.getSelectedPosition();
-    	if (selectedPos < list.size()-1 ){
-    		String str = (String) list.remove(selectedPos);
-    		list.add(selectedPos+1, str);
-    		// set selected position in the adapter
-    		selectedAdapter.setSelectedPosition(selectedPos+1);
-    	}
-	}
-	 */
 
 }
