@@ -183,7 +183,7 @@ public class MainTabActivity extends TabActivity {
 
 
 
-		Intent intentPageSeven = new Intent().setClass(this, Age_Height_Selection_Form.class);
+		Intent intentPageSeven = new Intent().setClass(this, Age_Selection_Form.class);
 		TabSpec tabSpecPageSeven = tabHost
 		.newTabSpec("Page 7")
 		.setIndicator("AgeHght", ressources.getDrawable(R.drawable.tab_icon))
@@ -195,13 +195,18 @@ public class MainTabActivity extends TabActivity {
 		.newTabSpec("Page 8")
 		.setIndicator("Comm.", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageEight);
-		
-		
+				
 		Intent intentPageNine = new Intent().setClass(this, Structure_Selection_Form.class);
 		TabSpec tabSpecPageNine = tabHost
 		.newTabSpec("Page 9")
 		.setIndicator("Struc", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageNine);
+	
+		Intent intentPageTen = new Intent().setClass(this, Height_Selection_Form.class);
+		TabSpec tabSpecPageTen = tabHost
+		.newTabSpec("Page 10")
+		.setIndicator("Height", ressources.getDrawable(R.drawable.tab_icon))
+		.setContent(intentPageTen);
 		
 		
 		
@@ -212,8 +217,10 @@ public class MainTabActivity extends TabActivity {
 		tabHost.addTab(tabSpecPageFive);
 		tabHost.addTab(tabSpecPageSix);
 		tabHost.addTab(tabSpecPageSeven);
+		tabHost.addTab(tabSpecPageTen);
 		tabHost.addTab(tabSpecPageEight);
 		tabHost.addTab(tabSpecPageNine);
+
 
 		initTabIcons(tabHost);
 		setTabColor();

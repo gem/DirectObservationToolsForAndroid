@@ -3,10 +3,10 @@ var obj;
 var testll;
 
 var DEBUG_MODE = false;
-var DEBUG_SHOW_DIFF_LAYERS = true;
+var DEBUG_SHOW_DIFF_LAYERS = false;
 var DEBUG_SHOW_MOUSE_POS = true;
 var DEBUG_DISPLAY_OVERVIEW = false;
-var DEBUG_DISPLAY_PANZOOM = true;
+var DEBUG_DISPLAY_PANZOOM = false;
 var DEBUG_FREE_ROTATE = true;
 var DEBUG_SHOW_LAYER_SWITCHER = true;
 

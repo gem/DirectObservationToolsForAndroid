@@ -24,12 +24,20 @@ import android.widget.Toast;
 
 
 
-
-
 public class Irregularity_Selection_Form extends EQForm {
 	public boolean DEBUG_LOG = false; 
 
-
+	private String topLevelAttributeDictionary = "DIC_STRUCTURAL_IRREGULARITY";
+	private String topLevelAttributeKey = "STR_IRREG";
+	
+	private String secondLevelAttributeDictionary = "DIC_STRUCTURAL_HORIZ_IRREG";
+	private String secondLevelAttributeKey = "STR_HZIR_P";
+	
+	private String thirdLevelAttributeDictionary = "DIC_STRUCTURAL_VERT_IRREG";
+	private String thirdLevelAttributeKey = "STR_VEIR_P";
+		
+	
+	
 	private String topLevelAttributeType = "STRI";
 	private String secondLevelAttributeType = "STRHI";
 	private String thirdLevelAttributeType = "STRHVI";
@@ -82,14 +90,14 @@ public class Irregularity_Selection_Form extends EQForm {
 			mDbHelper.createDatabase();      
 			mDbHelper.open();
 
-			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByType(topLevelAttributeType);     
+			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
 			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 			if (DEBUG_LOG) Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
 
-			Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByTypeAndScope(secondLevelAttributeType,"IR");
+			Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(secondLevelAttributeDictionary,"IR");
 			secondLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesSecondLevelCursor);
 
-			Cursor allAttributeTypesThirdLevelCursor = mDbHelper.getAttributeValuesByTypeAndScope(secondLevelAttributeType,"IR");
+			Cursor allAttributeTypesThirdLevelCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(thirdLevelAttributeDictionary,"IR");
 			thirdLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesThirdLevelCursor);
 
 			mDbHelper.close();
@@ -143,7 +151,7 @@ public class Irregularity_Selection_Form extends EQForm {
 
 					mDbHelper.open();			
 
-					Cursor mCursor = mDbHelper.getAttributeValuesByTypeAndScope(secondLevelAttributeType,selectedAdapter.getItem(position).getJson());
+					Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(secondLevelAttributeDictionary, selectedAdapter.getItem(position).getJson());
 
 					mCursor.moveToFirst();
 					while(!mCursor.isAfterLast()) {
@@ -189,7 +197,7 @@ public class Irregularity_Selection_Form extends EQForm {
 
 					mDbHelper.open();			
 
-					Cursor mCursor = mDbHelper.getAttributeValuesByTypeAndScope(thirdLevelAttributeType,selectedAdapter2.getItem(position).getJson());
+					Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(thirdLevelAttributeDictionary,selectedAdapter2.getItem(position).getJson());
 
 					mCursor.moveToFirst();
 					while(!mCursor.isAfterLast()) {
@@ -239,41 +247,13 @@ public class Irregularity_Selection_Form extends EQForm {
 		if (DEBUG_LOG) Log.d("IDCT", "clearing stuff");
 		selectedAdapter.setSelectedPosition(-1);
 		selectedAdapter2.setSelectedPosition(-1);
-		selectedAdapter3.setSelectedPosition(-1);
+		selectedAdapter3.setSelectedPosition(-1);	
 
 	}
 
-
 	public void completeThis() {
-
-
-
 		MainTabActivity a = (MainTabActivity)getParent();
 		a.completeTab(tabIndex);
 	}
-
-	/*
-	// Move selected item "up" in the ViewList.
-	private void moveUp(){
-    	int selectedPos = selectedAdapter.getSelectedPosition();
-    	if (selectedPos > 0 ){
-    		String str = (String) list.remove(selectedPos);
-    		list.add(selectedPos-1, str);
-    		// set selected position in the adapter
-    		selectedAdapter.setSelectedPosition(selectedPos-1);
-    	}
-	}
-
-	// Move selected item "down" in the ViewList.
-	private void moveDown(){
-    	int selectedPos = selectedAdapter.getSelectedPosition();
-    	if (selectedPos < list.size()-1 ){
-    		String str = (String) list.remove(selectedPos);
-    		list.add(selectedPos+1, str);
-    		// set selected position in the adapter
-    		selectedAdapter.setSelectedPosition(selectedPos+1);
-    	}
-	}
-	 */
 
 }

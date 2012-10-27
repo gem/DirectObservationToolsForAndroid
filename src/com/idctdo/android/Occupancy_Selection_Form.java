@@ -30,9 +30,17 @@ public class Occupancy_Selection_Form extends EQForm {
 
 	public boolean DEBUG_LOG = false; 
 
+
+	private String topLevelAttributeDictionary = "DIC_OCCUPANCY";
+	private String topLevelAttributeKey = "OCCUPCY";
+	
+	private String secondLevelAttributeDictionary = "DIC_OCCUPANCY_DETAIL";
+	private String secondLevelAttributeKey = "OCCUPCY_DT";	
+	
+	/*
 	private String topLevelAttributeType = "OCC";
 	private String secondLevelAttributeType = "OCCD";
-
+	 */
 
 	public TabActivity tabActivity;
 	public TabHost tabHost;
@@ -77,11 +85,11 @@ public class Occupancy_Selection_Form extends EQForm {
 			mDbHelper.createDatabase();      
 			mDbHelper.open();
 
-			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByType(topLevelAttributeType);     
+			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
 			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 			if (DEBUG_LOG) Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
 
-			Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByTypeAndScope(secondLevelAttributeType,"IR");
+			Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(secondLevelAttributeDictionary,"X");
 			secondLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesSecondLevelCursor);
 
 
@@ -111,19 +119,16 @@ public class Occupancy_Selection_Form extends EQForm {
 					// user clicked a list item, make it "selected"
 					selectedAdapter.setSelectedPosition(position);
 					selectedAdapter2.setSelectedPosition(-1);			
-					surveyDataObject.putData(topLevelAttributeType, selectedAdapter.getItem(position).getAttributeValue());
+					surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());
 					
 					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();				
 
 					completeThis();
 
 					secondLevelAttributesList.clear();
-
-
 					mDbHelper.open();			
 
-					Cursor mCursor = mDbHelper.getAttributeValuesByTypeAndScope(secondLevelAttributeType,selectedAdapter.getItem(position).getJson());
-
+					Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(secondLevelAttributeDictionary,selectedAdapter.getItem(position).getJson());
 					mCursor.moveToFirst();
 					while(!mCursor.isAfterLast()) {
 						//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
@@ -140,7 +145,6 @@ public class Occupancy_Selection_Form extends EQForm {
 						mCursor.moveToNext();
 					}		     
 					mDbHelper.close();
-
 
 					if (mCursor.getCount() > 0) { 
 						listview2.setVisibility(View.VISIBLE);
@@ -159,7 +163,7 @@ public class Occupancy_Selection_Form extends EQForm {
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter2.setSelectedPosition(position);
-					surveyDataObject.putData(secondLevelAttributeType, selectedAdapter2.getItem(position).getAttributeValue());
+					surveyDataObject.putData(secondLevelAttributeKey, selectedAdapter2.getItem(position).getAttributeValue());
 					
 
 				}
