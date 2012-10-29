@@ -140,16 +140,22 @@ public class MainTabActivity extends TabActivity {
 
 	public void generateTabs() {
 
-		Intent intentPageOne = new Intent().setClass(this,  Material_Selection_Form.class);
+		Intent intentPageOne = new Intent().setClass(this,  Material_Selection_Longitudinal_Form.class);
 		TabSpec tabSpecPageOne = tabHost
-		.newTabSpec("Page 1")
-		.setIndicator("Material", ressources.getDrawable(R.drawable.tab_icon))
+		.newTabSpec("Page 1.1")
+		.setIndicator("Material 1", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageOne);
 
-		Intent intentPageTwo = new Intent().setClass(this,  LLRS_Selection_FORM.class);
+		Intent intentPageOne2 = new Intent().setClass(this,  Material_Selection_Transverse_Form.class);
+		TabSpec tabSpecPageOne2 = tabHost
+		.newTabSpec("Page 1.2")
+		.setIndicator("Material 2", ressources.getDrawable(R.drawable.tab_icon))
+		.setContent(intentPageOne2);		
+		
+		Intent intentPageTwo = new Intent().setClass(this,  LLRS_Selection_Longitudinal_Transverse_Form.class);
 		TabSpec tabSpecPageTwo = tabHost
-		.newTabSpec("Page 2")	
-		.setIndicator("LLRS", ressources.getDrawable(R.drawable.tab_icon))
+		.newTabSpec("Page 2.1")	
+		.setIndicator("LLRS 1", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageTwo);
 
 
@@ -211,7 +217,10 @@ public class MainTabActivity extends TabActivity {
 		
 		
 		tabHost.addTab(tabSpecPageOne);
+		tabHost.addTab(tabSpecPageOne2);
 		tabHost.addTab(tabSpecPageTwo);
+
+		
 		tabHost.addTab(tabSpecPageThree);
 		tabHost.addTab(tabSpecPageFour);
 		tabHost.addTab(tabSpecPageFive);
@@ -239,8 +248,8 @@ public class MainTabActivity extends TabActivity {
 		//tabHost.clearAllTabs();
 
 		Activity currentActivity = getLocalActivityManager().getActivity("Material");
-		if (currentActivity instanceof Material_Selection_Form) {
-			((Material_Selection_Form) currentActivity).clearThis();
+		if (currentActivity instanceof Material_Selection_Longitudinal_Form) {
+			((Material_Selection_Longitudinal_Form) currentActivity).clearThis();
 		}
 
 

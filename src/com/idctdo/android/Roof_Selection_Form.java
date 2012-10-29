@@ -29,7 +29,7 @@ public class Roof_Selection_Form extends EQForm {
 	
 	public TabActivity tabActivity;
 	public TabHost tabHost;
-	public int tabIndex = 2;
+	public int tabIndex = 4;
 	
 	private String topLevelAttributeDictionary = "DIC_ROOF_SYSTEM_MATERIAL";
 	private String topLevelAttributeKey = "ROOFSYSMAT";

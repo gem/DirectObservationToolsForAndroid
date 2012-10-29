@@ -30,7 +30,7 @@ public class Floor_Selection_Form extends EQForm {
 
 	public TabActivity tabActivity;
 	public TabHost tabHost;
-	public int tabIndex = 3;
+	public int tabIndex = 5;
 
 	private String topLevelAttributeDictionary = "DIC_FLOOR_MATERIAL";
 	private String topLevelAttributeKey = "FLOOR_MAT";
