@@ -515,12 +515,11 @@ public class GemDbAdapter
 			UUID id = UUID.randomUUID();
 			cv.put("OBJ_UID", id.toString());
 			cv.put("PROJ_UID", id.toString()); //This should be a proj uid, define in a preferences thing
-			cv.put("OBJ_SCOPE", "BUILD");
+			//cv.put("OBJ_SCOPE", "BUILD");
 			cv.put("X", Double.toString(gemGlobalVariables.getLon()));
 			cv.put("Y",  Double.toString(gemGlobalVariables.getLat()));
-			cv.put("EPSG_CODE", "4326"); //Should get this from the db
-			cv.put("SOURCE", "FIELD");
-			
+			//cv.put("EPSG_CODE", "4326"); //Should get this from the db
+			cv.put("SOURCE", "FIELD");			
 			cv.put("COMMENTS", "Dummy comment information");
 			
 			

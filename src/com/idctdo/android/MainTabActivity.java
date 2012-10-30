@@ -155,7 +155,7 @@ public class MainTabActivity extends TabActivity {
 		Intent intentPageTwo = new Intent().setClass(this,  LLRS_Selection_Longitudinal_Transverse_Form.class);
 		TabSpec tabSpecPageTwo = tabHost
 		.newTabSpec("Page 2.1")	
-		.setIndicator("LLRS 1", ressources.getDrawable(R.drawable.tab_icon))
+		.setIndicator("LLRS", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageTwo);
 
 
@@ -214,7 +214,7 @@ public class MainTabActivity extends TabActivity {
 		.setIndicator("Height", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageTen);
 		
-		
+				
 		
 		tabHost.addTab(tabSpecPageOne);
 		tabHost.addTab(tabSpecPageOne2);
@@ -226,9 +226,9 @@ public class MainTabActivity extends TabActivity {
 		tabHost.addTab(tabSpecPageFive);
 		tabHost.addTab(tabSpecPageSix);
 		tabHost.addTab(tabSpecPageSeven);
-		tabHost.addTab(tabSpecPageTen);
+		//tabHost.addTab(tabSpecPageTen);
 		tabHost.addTab(tabSpecPageEight);
-		tabHost.addTab(tabSpecPageNine);
+		//tabHost.addTab(tabSpecPageNine);
 
 
 		initTabIcons(tabHost);

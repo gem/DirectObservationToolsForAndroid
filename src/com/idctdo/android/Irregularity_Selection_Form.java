@@ -44,7 +44,7 @@ public class Irregularity_Selection_Form extends EQForm {
 
 	public TabActivity tabActivity;
 	public TabHost tabHost;
-	public int tabIndex = 4;
+	public int tabIndex = 5;
 
 	private SelectedAdapter selectedAdapter;
 	private SelectedAdapter selectedAdapter2;
@@ -155,7 +155,7 @@ public class Irregularity_Selection_Form extends EQForm {
 					selectedAdapter2.setSelectedPosition(-1);			
 					surveyDataObject.putData(topLevelAttributeType, selectedAdapter.getItem(position).getAttributeValue());
 					
-					/* Causing some fail having this inter-list dependency
+					
 					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();				
 
 					DBRecord selectedItem = selectedAdapter.getItem(position);
@@ -167,6 +167,7 @@ public class Irregularity_Selection_Form extends EQForm {
 
 					completeThis();
 
+					/* Causing some fail having this inter-list dependency
 					secondLevelAttributesList.clear();
 					thirdLevelAttributesList.clear();	
 

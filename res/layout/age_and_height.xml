@@ -6,28 +6,44 @@
     android:gravity="left"
     android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="" />
-
-    <RelativeLayout
+    <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/rel1"
+        android:id="@+id/ScrollView01"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/highlight_colour"
-        android:gravity="left"
-        android:orientation="vertical" >
+        android:layout_height="fill_parent" >
 
-        <TextView
-            android:id="@+id/textView1"
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
+            android:background="@color/highlight_colour"
             android:gravity="left"
-            android:text="Age (YYYY)" />
+            android:orientation="vertical" >
 
-        <!--
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rel1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/highlight_colour"
+                android:gravity="left"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="Age (YYYY)"
+                    android:textStyle="bold" />
+
+                <!--
         <Button
             android:id="@+id/button1"
             style="?android:attr/buttonStyleSmall"
@@ -35,212 +51,245 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:text="Button" />
-        -->
+            android:text="Button" />
+                -->
 
-        <EditText
-            android:id="@+id/editTextDateVal1"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:ems="10"
-            android:hint="date 1"
-            android:inputType="number"
-            android:width="50dp" >
-        </EditText>
+                <EditText
+                    android:id="@+id/editTextDateVal1"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:ems="10"
+                    android:hint="date 1"
+                    android:inputType="number"
+                    android:width="50dp" >
+                </EditText>
 
-        <ListView
-            android:id="@+id/listExample"
-            android:layout_width="182dp"
-            android:layout_height="122dp"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/textView1"
-            android:choiceMode="singleChoice" >
-        </ListView>
+                <ListView
+                    android:id="@+id/listExample"
+                    android:layout_width="182dp"
+                    android:layout_height="160dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/textView1"
+                    android:choiceMode="singleChoice" >
+                </ListView>
 
-        <EditText
-            android:id="@+id/editTextDateVal2"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:ems="10"
-            android:hint="date 2"
-            android:inputType="number"
-            android:visibility="invisible"
-            android:width="50dp" />
-    </RelativeLayout>
+                <EditText
+                    android:id="@+id/editTextDateVal2"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:ems="10"
+                    android:hint="date 2"
+                    android:inputType="number"
+                    android:visibility="invisible"
+                    android:width="50dp" />
+            </RelativeLayout>
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textStyle="bold" />
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/rel2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rel1"
-        android:background="@color/highlight_colour"
-        android:gravity="left"
-        android:orientation="vertical" >
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rel2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rel1"
+                android:background="@color/highlight_colour"
+                android:gravity="left"
+                android:orientation="vertical" >
 
                 <TextView
-            android:id="@+id/textViewHeightAboveGroundStoreys"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:gravity="left"
-            android:text="Height Above Ground (storeys)" />
-                
-                
-        <ListView
-            android:id="@+id/listAboveGroundQualifier"
-            android:layout_width="122dp"
-            android:layout_height="122dp"
-            android:layout_alignParentLeft="true"
+                    android:id="@+id/textViewHeightAboveGroundStoreys"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="left"
+                    android:text="Height Above Ground (storeys)"
+                    android:textStyle="bold" />
 
-             android:layout_below="@+id/textViewHeightAboveGroundStoreys"
-            android:choiceMode="singleChoice" >
-        </ListView>
+                <ListView
+                    android:id="@+id/listAboveGroundQualifier"
+                    android:layout_width="140dp"
+                    android:layout_height="122dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/textViewHeightAboveGroundStoreys"
+                    android:choiceMode="singleChoice" >
+                </ListView>
 
-        <EditText
-            android:id="@+id/editText3"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/listAboveGroundQualifier"
-            android:ems="10"
-            android:hint="storeys 1"
-            android:inputType="number" />
+                <EditText
+                    android:id="@+id/editText3"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/listAboveGroundQualifier"
+                    android:ems="10"
+                    android:hint="storeys 1"
+                    android:inputType="number" />
 
-        <EditText
-            android:id="@+id/editText4"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/editText3"
-            android:layout_alignBottom="@+id/editText3"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="14dp"
-            android:ems="10"
-            android:hint="storeys 2"
-            android:inputType="number" >
-        </EditText>
+                <EditText
+                    android:id="@+id/editText4"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/editText3"
+                    android:layout_alignBottom="@+id/editText3"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:ems="10"
+                    android:hint="storeys 2"
+                    android:inputType="number" >
+                </EditText>
+            </RelativeLayout>
 
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rel3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rel2"
+                android:background="@color/highlight_colour"
+                android:gravity="left"
+                android:orientation="vertical" >
 
+                <TextView
+                    android:id="@+id/textViewHeightBelowGroundStoreys"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="left"
+                    android:text="Height Below Ground (storeys)"
+                    android:textStyle="bold" />
 
-    </RelativeLayout>
+                <ListView
+                    android:id="@+id/listBelowGroundQualifier"
+                    android:layout_width="140dp"
+                    android:layout_height="122dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/textViewHeightBelowGroundStoreys"
+                    android:choiceMode="singleChoice" >
+                </ListView>
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/rel3"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rel2"
-        android:background="@color/highlight_colour"
-        android:gravity="left"
-        android:orientation="vertical" >
+                <EditText
+                    android:id="@+id/editText3"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/listBelowGroundQualifier"
+                    android:ems="10"
+                    android:hint="storeys 1"
+                    android:inputType="number" />
 
-        <TextView
-            android:id="@+id/textViewHeightBelowGroundStoreys"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:gravity="left"
-            
-            android:text="Height Below Ground (storeys)" />
+                <EditText
+                    android:id="@+id/editText4"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/editText3"
+                    android:layout_alignBottom="@+id/editText3"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:ems="10"
+                    android:hint="storeys 2"
+                    android:inputType="number" >
+                </EditText>
+            </RelativeLayout>
 
-        <ListView
-            android:id="@+id/listBelowGroundQualifier"
-            android:layout_width="122dp"
-            android:layout_height="122dp"
-            android:layout_alignParentLeft="true"
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rel4"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rel3"
+                android:background="@color/highlight_colour"
+                android:gravity="left"
+                android:orientation="vertical" >
 
-            android:layout_below="@+id/textViewHeightBelowGroundStoreys"
-            android:choiceMode="singleChoice" >
-        </ListView>
+                <TextView
+                    android:id="@+id/textViewHeightAboveGrade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="left"
+                    android:text="Height Above Grade"
+                    android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/editText3"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/listBelowGroundQualifier"
-            android:ems="10"
-            android:hint="storeys 1"
-            android:inputType="number" />
+                <ListView
+                    android:id="@+id/listAboveGradeQualifier"
+                    android:layout_width="140dp"
+                    android:layout_height="122dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/textViewHeightAboveGrade"
+                    android:choiceMode="singleChoice" >
+                </ListView>
 
-        <EditText
-            android:id="@+id/editText4"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/editText3"
-            android:layout_alignBottom="@+id/editText3"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="14dp"
-            android:ems="10"
-            android:hint="storeys 2"
-            android:inputType="number" >
-        </EditText>
-    </RelativeLayout>
+                <EditText
+                    android:id="@+id/editTextAboveGrade1"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/listAboveGradeQualifier"
+                    android:ems="10"
+                    android:hint="height 1"
+                    android:inputType="number" />
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/rel4"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rel3"
-        android:background="@color/highlight_colour"
-        android:gravity="left"
-        android:orientation="vertical" >
+                <EditText
+                    android:id="@+id/editTextAboveGrade2"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/editText3"
+                    android:layout_alignBottom="@+id/editText3"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:ems="10"
+                    android:hint="height 2"
+                    android:inputType="number" >
+                </EditText>
+            </RelativeLayout>
 
-        <TextView
-            android:id="@+id/textViewHeightAboveGrade"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:gravity="left"
-            android:text="Height Above Grade" />
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rel5"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rel4"
+                android:background="@color/highlight_colour"
+                android:gravity="left"
+                android:orientation="vertical" >
 
-        <ListView
-            android:id="@+id/listBelowGroundQualifier"
-            android:layout_width="122dp"
-            android:layout_height="122dp"
-            android:layout_alignParentLeft="true"
-            
-            android:layout_below="@+id/textViewHeightAboveGrade"
-            android:choiceMode="singleChoice" >
-        </ListView>
+                <TextView
+                    android:id="@+id/textViewSlope"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="left"
+                    android:text="Slope"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/editTextAboveGrade1"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/listBelowGroundQualifier"
-            android:ems="10"
-            android:hint="height 1"
-            android:inputType="number" />
+                <EditText
+                    android:id="@+id/editTextSlope"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:ems="10"
+                    android:hint="slope (degs)"
+                    android:inputType="number" >
 
-        <EditText
-            android:id="@+id/editTextAboveGrade2"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/editText3"
-            android:layout_alignBottom="@+id/editText3"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="14dp"
-            android:ems="10"
-            android:hint="height 2"
-            android:inputType="number" >
-        </EditText>
-    </RelativeLayout>
+                    <requestFocus />
+                </EditText>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
