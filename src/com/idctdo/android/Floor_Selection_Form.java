@@ -30,7 +30,7 @@ public class Floor_Selection_Form extends EQForm {
 
 	public TabActivity tabActivity;
 	public TabHost tabHost;
-	public int tabIndex = 4;
+	public int tabIndex = 6;
 
 	private String topLevelAttributeDictionary = "DIC_FLOOR_MATERIAL";
 	private String topLevelAttributeKey = "FLOOR_MAT";
@@ -118,7 +118,7 @@ public class Floor_Selection_Form extends EQForm {
 					// user clicked a list item, make it "selected"
 					selectedAdapter.setSelectedPosition(position);
 					selectedAdapter2.setSelectedPosition(-1);				
-					surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());					
+					surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());
 					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 					secondLevelAttributesList.clear();				
 
@@ -140,7 +140,6 @@ public class Floor_Selection_Form extends EQForm {
 						mCursor.moveToNext();
 					}
 
-					mDbHelper.insertTestData();
 
 
 					mDbHelper.close();    		  				
@@ -150,7 +149,7 @@ public class Floor_Selection_Form extends EQForm {
 						RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel2);
 						relativeLayout.setVisibility(View.VISIBLE);
 					}
-					selectedAdapter2.notifyDataSetChanged();        
+					selectedAdapter2.notifyDataSetChanged();       
 
 					completeThis();
 

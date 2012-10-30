@@ -32,7 +32,7 @@
         <ListView
             android:id="@+id/listExample"
             android:layout_width="fill_parent"
-            android:layout_height="122dp"
+            android:layout_height="162dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/textView1"
             android:choiceMode="singleChoice" >

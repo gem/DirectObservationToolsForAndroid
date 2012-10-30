@@ -44,7 +44,8 @@ public class Occupancy_Selection_Form extends EQForm {
 
 	public TabActivity tabActivity;
 	public TabHost tabHost;
-	public int tabIndex = 6;
+	public int tabIndex = 7;
+	
 
 	private SelectedAdapter selectedAdapter;
 	private SelectedAdapter selectedAdapter2;

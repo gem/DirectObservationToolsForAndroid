@@ -29,7 +29,7 @@ public class Roof_Selection_Form extends EQForm {
 	
 	public TabActivity tabActivity;
 	public TabHost tabHost;
-	public int tabIndex = 3;
+	public int tabIndex = 5;
 	
 	private String topLevelAttributeDictionary = "DIC_ROOF_SYSTEM_MATERIAL";
 	private String topLevelAttributeKey = "ROOFSYSMAT";
@@ -92,8 +92,7 @@ public class Roof_Selection_Form extends EQForm {
 	        
 	        Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(secondLevelAttributeDictionary);
 	        secondLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesSecondLevelCursor);
-	       
-	              
+	       	              
 	        mDbHelper.close();
 
 			selectedAdapter = new SelectedAdapter(this,0,topLevelAttributesList);
@@ -113,8 +112,7 @@ public class Roof_Selection_Form extends EQForm {
 			RelativeLayout relativeLayout2 = (RelativeLayout) findViewById(R.id.rel2);
 			relativeLayout2.setVisibility(View.INVISIBLE);
 			
-
-	        
+        
 	        
 	        listview.setOnItemClickListener(new OnItemClickListener() {
 				@Override
@@ -125,14 +123,11 @@ public class Roof_Selection_Form extends EQForm {
 					selectedAdapter2.setSelectedPosition(-1);
 					
 					surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());
-					
-			
+
 					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 					
-	    
 					secondLevelAttributesList.clear();
-		
-					
+						
 					
 					mDbHelper.open();
 					
@@ -162,11 +157,9 @@ public class Roof_Selection_Form extends EQForm {
 					
 			        listview2.setVisibility(View.VISIBLE);
 					RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel2);
-					relativeLayout.setVisibility(View.VISIBLE);
+					relativeLayout.setVisibility(View.VISIBLE);			
 					
-					
-			        selectedAdapter2.notifyDataSetChanged();
-			        
+			        selectedAdapter2.notifyDataSetChanged();			        
 			        completeThis();
 
 				}
@@ -180,11 +173,6 @@ public class Roof_Selection_Form extends EQForm {
 					selectedAdapter2.setSelectedPosition(position);
 					
 					surveyDataObject.putData(secondLevelAttributeKey, selectedAdapter2.getItem(position).getAttributeValue());
-					
-
-					
-					//Toast.makeText(getApplicationContext(), "LV2 click: " + selectedAdapter2.getItem(position).getOrderName() + " " + selectedAdapter2.getItem(position).getOrderStatus() + " " +selectedAdapter2.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
-					
 					
 					
 				}

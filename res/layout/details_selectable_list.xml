@@ -26,46 +26,34 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:text="Comments" />
-       
-    <EditText
-        android:id="@+id/surveyComment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
-        android:lines="5" >
-        
-    </EditText>
-    
-    
-        <!--  
+
+        <EditText
+            android:id="@+id/surveyComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView1"
+            android:hint="Enter general building comments here"
+            android:lines="9" >
+        </EditText>
+
+
         <Button
-            android:id="@+id/button1"
-            style="?android:attr/buttonStyleSmall"
+            android:id="@+id/btn_save_observation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="Button" />
-            
-            -->
+            android:layout_below="@+id/surveyComment"
+            android:visibility="gone"
+            android:text="Save this observation" />
 
-    <Button
-        android:id="@+id/btn_save_observation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
- 		android:layout_below="@+id/surveyComment"	
-        android:text="Save this observation" />
-
-    <Button
-        android:id="@+id/btn_cancel_observation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-      	android:layout_below="@+id/surveyComment"	
-        android:layout_alignParentLeft="true"
-        android:text="Cancel this observation" />
-            
+        <Button
+            android:id="@+id/btn_cancel_observation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/surveyComment"
+            android:visibility="gone"
+            android:text="Cancel this observation" />
     </RelativeLayout>
-
 
 </LinearLayout>

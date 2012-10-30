@@ -59,7 +59,7 @@ public class SelectedAdapter extends ArrayAdapter<DBRecord>{
 		if(selectedPos != -1){ 
 			if(selectedPos == position){
 				//label.setBackgroundColor(label.getContext().getResources().getColor(R.color.gem_blue));
-				label.setBackgroundColor(Color.CYAN);
+				label.setBackgroundColor(Color.rgb(125, 209,110));
 
 			}else {
 				//label.setBackgroundColor(label.getContext().getResources().getColor(R.color.light_green));

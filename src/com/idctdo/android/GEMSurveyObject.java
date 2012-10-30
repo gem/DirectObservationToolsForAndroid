@@ -56,5 +56,8 @@ public class GEMSurveyObject extends Application {
 		return surveyData;
 	}
 	
+	public void clearGemSurveyObject() {
+		surveyData = new HashMap<String, String>();
+	}
 }
 

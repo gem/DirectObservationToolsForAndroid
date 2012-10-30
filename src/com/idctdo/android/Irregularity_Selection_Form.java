@@ -32,19 +32,17 @@ public class Irregularity_Selection_Form extends EQForm {
 	
 	private String horiztonalIrregularityAttributeDictionary = "DIC_STRUCTURAL_HORIZ_IRREG";
 	private String secondLevelAttributeKey = "STR_HZIR_P";
+	private String secondLevelAttributeKeySecondary = "STR_HZIR_S";
 	
 	private String verticalIrregularityAttributeDictionary = "DIC_STRUCTURAL_VERT_IRREG";
 	private String thirdLevelAttributeKey = "STR_VEIR_P";
+	private String thirdLevelAttributeKeySecondary = "STR_VEIR_S";
 		
 	
-	
-	private String topLevelAttributeType = "STRI";
-	private String secondLevelAttributeType = "STRHI";
-	private String thirdLevelAttributeType = "STRHVI";
 
 	public TabActivity tabActivity;
 	public TabHost tabHost;
-	public int tabIndex = 5;
+	public int tabIndex = 2;
 
 	private SelectedAdapter selectedAdapter;
 	private SelectedAdapter selectedAdapter2;
@@ -153,7 +151,7 @@ public class Irregularity_Selection_Form extends EQForm {
 					// user clicked a list item, make it "selected"
 					selectedAdapter.setSelectedPosition(position);
 					selectedAdapter2.setSelectedPosition(-1);			
-					surveyDataObject.putData(topLevelAttributeType, selectedAdapter.getItem(position).getAttributeValue());
+					surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());
 					
 					
 					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();				
@@ -213,7 +211,7 @@ public class Irregularity_Selection_Form extends EQForm {
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter2.setSelectedPosition(position);
-					//surveyDataObject.putData(secondLevelAttributeType, selectedAdapter2.getItem(position).getAttributeValue());
+					surveyDataObject.putData(secondLevelAttributeKey, selectedAdapter2.getItem(position).getAttributeValue());
 				}
 			});
 
@@ -224,7 +222,7 @@ public class Irregularity_Selection_Form extends EQForm {
 					selectedAdapter3.setSelectedPosition(position);
 					
 					//Broken as the column name doesn't map, columen should be strhvi not strvi
-					//surveyDataObject.putData(thirdLevelAttributeType, selectedAdapter3.getItem(position).getAttributeValue());
+					surveyDataObject.putData(secondLevelAttributeKeySecondary, selectedAdapter3.getItem(position).getAttributeValue());
 					
 					//Toast.makeText(getApplicationContext(), "LV3 click: " + selectedAdapter3.getItem(position).getOrderName() + " " + selectedAdapter3.getItem(position).getOrderStatus() + " " +selectedAdapter3.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 
@@ -239,7 +237,7 @@ public class Irregularity_Selection_Form extends EQForm {
 					selectedAdapter4.setSelectedPosition(position);
 					
 					//Broken as the column name doesn't map, columen should be strhvi not strvi
-					//surveyDataObject.putData(thirdLevelAttributeType, selectedAdapter3.getItem(position).getAttributeValue());
+					surveyDataObject.putData(thirdLevelAttributeKey, selectedAdapter4.getItem(position).getAttributeValue());
 				}
 			});
 			
@@ -249,8 +247,9 @@ public class Irregularity_Selection_Form extends EQForm {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter5.setSelectedPosition(position);
 					
+					
 					//Broken as the column name doesn't map, columen should be strhvi not strvi
-					//surveyDataObject.putData(thirdLevelAttributeType, selectedAdapter3.getItem(position).getAttributeValue());
+					surveyDataObject.putData(thirdLevelAttributeKeySecondary, selectedAdapter5.getItem(position).getAttributeValue());
 				}
 			});
 		}		

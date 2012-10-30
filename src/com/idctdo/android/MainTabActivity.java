@@ -143,13 +143,13 @@ public class MainTabActivity extends TabActivity {
 		Intent intentPageOne = new Intent().setClass(this,  Material_Selection_Longitudinal_Form.class);
 		TabSpec tabSpecPageOne = tabHost
 		.newTabSpec("Page 1.1")
-		.setIndicator("Material 1", ressources.getDrawable(R.drawable.tab_icon))
+		.setIndicator("Mater L", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageOne);
 
 		Intent intentPageOne2 = new Intent().setClass(this,  Material_Selection_Transverse_Form.class);
 		TabSpec tabSpecPageOne2 = tabHost
 		.newTabSpec("Page 1.2")
-		.setIndicator("Material 2", ressources.getDrawable(R.drawable.tab_icon))
+		.setIndicator("Mater T", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageOne2);		
 		
 		Intent intentPageTwo = new Intent().setClass(this,  LLRS_Selection_Longitudinal_Transverse_Form.class);
@@ -214,23 +214,36 @@ public class MainTabActivity extends TabActivity {
 		.setIndicator("Height", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageTen);
 		
-				
+		Intent intentPageEleven = new Intent().setClass(this, Exposure_Form.class);
+		TabSpec tabSpecPageEleven = tabHost
+		.newTabSpec("Page 11")
+		.setIndicator("Exp", ressources.getDrawable(R.drawable.tab_icon))
+		.setContent(intentPageEleven);
+		
+		Intent intentPageTwelve = new Intent().setClass(this, Consequences_Form.class);
+		TabSpec tabSpecPageTwelve = tabHost
+		.newTabSpec("Page 11")
+		.setIndicator("Conseq", ressources.getDrawable(R.drawable.tab_icon))
+		.setContent(intentPageTwelve);
 		
 		tabHost.addTab(tabSpecPageOne);
 		tabHost.addTab(tabSpecPageOne2);
+		tabHost.addTab(tabSpecPageFive);
+		tabHost.addTab(tabSpecPageEight);
 		tabHost.addTab(tabSpecPageTwo);
 
 		
 		tabHost.addTab(tabSpecPageThree);
 		tabHost.addTab(tabSpecPageFour);
-		tabHost.addTab(tabSpecPageFive);
+		
 		tabHost.addTab(tabSpecPageSix);
 		tabHost.addTab(tabSpecPageSeven);
 		//tabHost.addTab(tabSpecPageTen);
-		tabHost.addTab(tabSpecPageEight);
+		
 		//tabHost.addTab(tabSpecPageNine);
-
-
+		tabHost.addTab(tabSpecPageEleven);
+		tabHost.addTab(tabSpecPageTwelve);
+		
 		initTabIcons(tabHost);
 		setTabColor();
 		completedTabs = new boolean[20];
@@ -403,7 +416,8 @@ public class MainTabActivity extends TabActivity {
 		mDbHelper.open();		
 		
 		mDbHelper.insertGemData(surveyDataObject);
-		
+		//Should really try / catch this
+		surveyDataObject.clearGemSurveyObject();
 		mDbHelper.close();
 
 		Toast.makeText(getApplicationContext(), "Survey data saved", Toast.LENGTH_SHORT).show();
@@ -441,8 +455,11 @@ public class MainTabActivity extends TabActivity {
 			public void onClick(DialogInterface dialog,int id) {
 				// if this button is clicked, close
 				// current activity
+				
+				//This is needed to trigger the focus changed events of EditText fields
+				tabHost.setCurrentTab(0);
+				
 				saveData();
-
 				MainTabActivity.this.finish();
 
 			}
