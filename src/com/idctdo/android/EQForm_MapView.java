@@ -12,7 +12,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -38,6 +43,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -45,6 +51,8 @@ import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.database.SQLException;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -99,9 +107,16 @@ public class EQForm_MapView extends EQForm {
 	MyCount drawUpdateCounter;
 
 	private ProgressDialog progressBar; 
+	
+	File ImageFile;
+	Uri FilenameUri;
+	String FILENAME;
+	String Filename;
+	
 
 	Button btn_locateMe;
 	Button btn_takeCameraPhoto;
+	Button btn_take_survey_photo;
 	Button btn_startSurvey;
 	Button btn_selectLayer;
 	Button btn_selectVectorLayer;
@@ -112,7 +127,7 @@ public class EQForm_MapView extends EQForm {
 	File vectorsFile;
 	File mapTilesFile;
 	String sdCardPath;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -132,9 +147,9 @@ public class EQForm_MapView extends EQForm {
 
 		mWebView.loadUrl("file:///android_asset/idct_map.html");
 		mWebView.setWebViewClient(new HelloWebViewClient());
-	
-		
-		
+
+
+
 		progressBar = new ProgressDialog(EQForm_MapView.this);
 		progressBar.setMessage("Loading maps...");
 		progressBar.setCancelable(false);
@@ -158,7 +173,7 @@ public class EQForm_MapView extends EQForm {
 
 		mapTilesFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/maptiles");
 		mapTilesFile.mkdirs();
-		
+
 		File testFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/kml/PUT_KML_FILES_HERE");
 		try {
 			testFile.createNewFile();
@@ -173,15 +188,15 @@ public class EQForm_MapView extends EQForm {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		//Save the path as a string value
 		String extStorageDirectory = vectorsFile.toString();
 		//SingleMediaScanner scan2 = new SingleMediaScanner(this, vectorsFile);
 		//SingleMediaScanner scan3 = new SingleMediaScanner(this, mapTilesFile);
 		SingleMediaScanner scan2 = new SingleMediaScanner(this, testFile);
 		SingleMediaScanner scan3 = new SingleMediaScanner(this, testFile2);
-		
-		 
+
+
 		sdCardPath = "file:///" +  Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
 		if (DEBUG_LOG) Log.d(TAG,"sdcard Path: " + sdCardPath);
 		// Restore preferences
@@ -220,10 +235,14 @@ public class EQForm_MapView extends EQForm {
 		btn_takeCameraPhoto =(Button)findViewById(R.id.btn_take_photo);
 		btn_takeCameraPhoto.setOnClickListener(takePhotoListener);
 
-		btn_startSurvey =(Button)findViewById(R.id.btn_start_survey);
-		//btn_startSurvey.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
-		btn_startSurvey.setOnClickListener(startSurveyListener);
+		//btn_take_survey_photo=(Button)findViewById(R.id.btn_take_survey_photo);
+		//btn_take_survey_photo.setVisibility(View.INVISIBLE);//Poss Dodgy threading stuff using this
 
+		
+		btn_startSurvey =(Button)findViewById(R.id.btn_start_survey);
+		btn_startSurvey.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
+
+		btn_startSurvey.setOnClickListener(startSurveyListener);
 		btn_selectLayer =(Button)findViewById(R.id.btn_select_layer);
 		btn_selectLayer.setOnClickListener(selectLayerListener);
 
@@ -256,15 +275,28 @@ public class EQForm_MapView extends EQForm {
 	public void onResume(){
 		super.onResume();
 		if (DEBUG_LOG) Log.d("IDCT","ON RESUME");
-
-
 		drawUpdateCounter = new MyCount(100000000,1000);
-		drawUpdateCounter.start();
-
+		drawUpdateCounter.start();				
 		mWebView.loadUrl("javascript:clearMyPositions()");
 		loadPrevSurveyPoints();
-		//mWebView.loadUrl("javascript:locateMe("+ currentLatitude+","+currentLongitude+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");
+		
+		GEMSurveyObject g = (GEMSurveyObject)getApplication();
+		//g.putData("OBJ_UID", id.toString());
+		if (DEBUG_LOG) Log.d(TAG,"RESUMING MAP, global vars " + g.getLon()+ " lat: " + g.getLat());
+		mWebView.loadUrl("javascript:locateMe("+ g.getLat()+","+g.getLon()+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");
+		
+		if (g.unsavedEdits) {
+			//Draw a candidate survey point
+			if (DEBUG_LOG) Log.d(TAG,"RESUMING EDITS. DRAWING MOVEABLE POINT, " + g.getLon()+ " lat: " + g.getLat());
+			mWebView.loadUrl("javascript:drawCandidateSurveyPoint("+ g.getLon()+","+g.getLat()+")");
+			
+		} else {
+			if (DEBUG_LOG) Log.d(TAG,"NO UNSAVED EDITS. Hide the survey button. , " + g.getLon()+ " lat: " + g.getLat());
+			btn_startSurvey.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
+			//btn_take_survey_photo.setVisibility(View.INVISIBLE);//Poss Dodgy threading stuff using this
 
+		}
+		
 	}
 
 
@@ -341,29 +373,30 @@ public class EQForm_MapView extends EQForm {
 
 		}
 	};
+	
 	private OnClickListener takePhotoListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			//addPoint();
 			if (DEBUG_LOG) Log.d(TAG,"camera class");
 
+			getSurveyPoint();
+			
+			GEMSurveyObject g = (GEMSurveyObject)getApplication();
+			UUID mediaId = UUID.randomUUID();
+			FILENAME = "gemSurveyPhoto_" + mediaId.toString();	
+			//Button CameraButton;
+			//mAppSettings = getSharedPreferences(APP_SETTINGS, MODE_PRIVATE);
+			//FILENAME = (mAppSettings.getString(APP_SETTINGS_FILE_NAME, ""));				
+			Filename = Environment.getExternalStorageDirectory().getAbsolutePath() + "/idctdo/" + FILENAME +".jpg";
+			
 
-			/*
-			String FILENAME;
-			String Filename;
-			File ImageFile;
-			Uri FilenameUri;
-			Button CameraButton;
-			mAppSettings = getSharedPreferences(APP_SETTINGS, MODE_PRIVATE);
-			FILENAME = (mAppSettings.getString(APP_SETTINGS_FILE_NAME, ""));
-			Filename = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + FILENAME +".jpg";
+			if (DEBUG_LOG) Log.d(TAG,"CAMERA IMAGE FILENAME: " + Filename.toString());
 			ImageFile = new File(Filename);
-			FilenameUri = Uri.fromFile(ImageFile);
-			 */
-
-
+			FilenameUri = Uri.fromFile(ImageFile);		
 			Intent takePic = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-			//takePic.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, FilenameUri);
+			takePic.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, FilenameUri);
+			takePic.putExtra("return-data", true);				
 			startActivityForResult(takePic, CAMERA_RESULT);
 
 			/*1
@@ -374,31 +407,69 @@ public class EQForm_MapView extends EQForm {
 
 
 
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		//super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == CAMERA_RESULT) {
+			//ShowMessage(outputFileUri.toString());
+			if (resultCode == Activity.RESULT_OK) {
+				Toast.makeText(this, "Photo captured", Toast.LENGTH_SHORT).show();
+				GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();				
+				UUID mediaUid = UUID.randomUUID();
+				surveyDataObject.putMediaData(
+						"MEDIA_UID", mediaUid.toString(),
+						"MEDIA_TYPE", "PHOTOGRAPH",
+						"COMMENTS", "DUMMY MEDIA COMMENTS",
+						"FILENAME", FILENAME
+				);
+
+						
+				
+			} else {
+				Toast.makeText(this, "Camera cancelled", Toast.LENGTH_SHORT).show();
+			}
+		}
+	}
+
 	//Called from JS with geoJson of Openlayers features
 	public boolean loadLayerNames(final String layerNamesJson) {
 
 		if (DEBUG_LOG) Log.d(TAG,"loading layer names");
 		if (DEBUG_LOG) Log.d(TAG,"layers are: " + layerNamesJson);
-		return false; 		
-
+		return false; 	
 	}
-
+	
+	
+	
+	
+	
+	
 	//Called from JS with point location of survey
 	//This point forms the survey point and should be saved in the db
 	//Can then mark the map tab as complete
 	public boolean loadSurveyPoint(final double lon, final double lat ) {
 		if (DEBUG_LOG) Log.d(TAG,"point location from Openlayers. Lon:" + lon + " lat: " + lat);
 		//mWebView.loadUrl("javascript:locateMe("+ lat+","+lon+","+currentLocationAccuracy+","+true+")");
-		//btn_startSurvey.setVisibility(View.VISIBLE);
 
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
 		g.setLon(lon);
 		g.setLat(lat);
+		//Generate a uid for this survey point
+		UUID id = UUID.randomUUID();
+		g.setUid(id.toString());
+		g.unsavedEdits = true;
+
+
+		//g.putData("OBJ_UID", id.toString());
+		if (DEBUG_LOG) Log.d(TAG,"GLOBAL VARS UID " + g.getUid());	
+	
 		if (DEBUG_LOG) Log.d(TAG,"GLOBAL VARS " + g.getLon()+ " lat: " + g.getLat());
+		g.setData(1);
 
-		prevSurveyPointLon =  lon; 
-		prevSurveyPointLat =  lat;
-
+		prevSurveyPointLon = lon; 
+		prevSurveyPointLat = lat;
+		btn_startSurvey.setVisibility(View.VISIBLE);//This might be causing issues
+		//btn_take_survey_photo.setVisibility(View.VISIBLE);//Poss Dodgy threading stuff using this
 		return false; 		
 	}	
 
@@ -407,15 +478,9 @@ public class EQForm_MapView extends EQForm {
 	//Called from JS with point location of survey
 	public boolean getSurveyPoint() {
 		if (DEBUG_LOG) Log.d(TAG,"getting point location from Openlayers");
-
-
-		GEMSurveyObject g = (GEMSurveyObject)getApplication();
-		int data=g.getData();
-
+		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
+		int data=surveyDataObject.getData();
 		if (DEBUG_LOG) Log.d(TAG,"TEST GLOBALS: " + data);
-
-
-
 		mWebView.loadUrl("javascript:getSurveyPoint()");
 		return false; 		
 	}
@@ -454,7 +519,6 @@ public class EQForm_MapView extends EQForm {
 			mWebView.loadUrl("javascript:loadSurveyPointsOnMap("+ mCursor.getDouble(1)+","+mCursor.getDouble(2)+")");
 			mCursor.moveToNext();
 		}
-
 
 
 		/*
@@ -586,7 +650,7 @@ public class EQForm_MapView extends EQForm {
 			e.printStackTrace(); 
 		} 
 		return null; 
-		
+
 	}
 
 
@@ -606,11 +670,11 @@ public class EQForm_MapView extends EQForm {
 		//	     InputStream inputStream = getResources().openRawResource(R.raw.internals);
 		System.out.println(inputStream);
 
-		 
+
 		String kml = convertXMLFileToString(inputStream);
 		Log.d("JFR", "KML INPUTSTREAM is: " + kml.toString());
 		return kml;
-/*
+		/*
 
 		InputStreamReader is = new InputStreamReader(inputStream);
 		StringBuilder sb=new StringBuilder();
@@ -626,7 +690,7 @@ public class EQForm_MapView extends EQForm {
 		Log.d("JFR", "KML is: " + sb.toString());
 
 		return sb.toString();
-*/
+		 */
 
 
 		/*
@@ -663,28 +727,28 @@ public class EQForm_MapView extends EQForm {
 			final CharSequence[] baseMaps = {"OpenStreetMap","Bing Hybrid","Bing Roads","Bing Aerial"};
 			final CharSequence[] localBaseMaps = getLocalBaseMapLayers();
 			if (DEBUG_LOG) Log.d(TAG,"LOCAL BASEMAPS " + localBaseMaps.toString());
-			
+
 			final CharSequence[] choiceList = new CharSequence[baseMaps.length + localBaseMaps.length];
 			System.arraycopy(baseMaps, 0, choiceList, 0, baseMaps.length);
 			System.arraycopy(localBaseMaps, 0, choiceList, baseMaps.length, localBaseMaps.length);
 			int selected = -1; // does not select anything			
-					
-			
+
+
 			builder.setSingleChoiceItems(
 					choiceList, 
 					selected, 
-					
-					
-					
-					
-					
-					
+
+
+
+
+
+
 					new DialogInterface.OnClickListener() {
 						@Override
-										
-						
-						
-						
+
+
+
+
 						public void onClick(DialogInterface dialog,	int which) {
 							if (DEBUG_LOG) Log.d(TAG,"selected "+choiceList[which]);
 							int index = 1;
@@ -692,11 +756,11 @@ public class EQForm_MapView extends EQForm {
 								//String tileLocationPath = "file:////mnt/sdcard/idctdo/maptiles/laquila_mapquest/";
 								String tileLocationPath = sdCardPath +  "idctdo/maptiles/" + choiceList[which] +"/";
 								String zoomLevel = "17";						
-																
+
 								File extStore = Environment.getExternalStorageDirectory();
 								File xmlFile = new File(extStore.getAbsolutePath() + "/idctdo/maptiles/" + choiceList[which] +"/tilemapresource.xml");
-								
-								
+
+
 								if (DEBUG_LOG) Log.d(TAG,"possible tms xml path:" + xmlFile.getPath());
 								if (xmlFile.isFile()) {		
 									if (DEBUG_LOG) Log.d(TAG,"Tile resource File is there");
@@ -732,7 +796,7 @@ public class EQForm_MapView extends EQForm {
 		return choiceListFinal;
 	}
 
-	
+
 	private CharSequence[] getVectorLayers() {
 		vectorsFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/kml");
 		vectorsFile.mkdirs();
@@ -771,7 +835,7 @@ public class EQForm_MapView extends EQForm {
 
 			mWebView.loadUrl("javascript:addKmlStringToMap("+ egg +")");
 
-			
+
 			int selected = -1; // does not select anything
 			final CharSequence[] choiceList = getVectorLayers();
 			builder.setSingleChoiceItems(
@@ -789,7 +853,7 @@ public class EQForm_MapView extends EQForm {
 			AlertDialog alert = builder.create();
 			alert.show();
 
-			
+
 		}
 	};
 
@@ -801,7 +865,7 @@ public class EQForm_MapView extends EQForm {
 		menu.add(0,1,0,"Settings");
 		menu.add(0,2,0,"Export DB Snapshot to SDCard");
 		menu.add(0,3,0,"Export CSV to SDCard");
-		
+
 		return true;
 	}
 
@@ -817,12 +881,12 @@ public class EQForm_MapView extends EQForm {
 			mWebView.loadUrl("javascript:map.layers[0].redraw()");
 			break;
 		case 1: 
-			
+
 			Intent intent = new Intent(EQForm_MapView.this,PrefsActivity.class);
 			startActivity(intent);
 			break;
 		case 2: //Export data 
-			
+
 			mDbHelper = new GemDbAdapter(getBaseContext());    
 			mDbHelper.open();	
 			Toast.makeText(this, "Exporting Database to SDCard", Toast.LENGTH_SHORT).show();
@@ -830,13 +894,13 @@ public class EQForm_MapView extends EQForm {
 			mDbHelper.close();
 			break;
 		case 3: //Export data to csv 
-			
+
 			mDbHelper = new GemDbAdapter(getBaseContext());    
 			mDbHelper.open();	
 			Toast.makeText(this, "Exporting Survey Data to CSV SDCard", Toast.LENGTH_SHORT).show();
 			mDbHelper.exportGemTableToCsv();
 			mDbHelper.close();
-			
+
 			break;
 		default:
 			break;
@@ -931,7 +995,7 @@ public class EQForm_MapView extends EQForm {
 				if (DEBUG_LOG) Log.d(TAG,"New location is better. Updating it");
 				currentLocation = loc;
 			}
-			
+
 
 			currentLatitude = currentLocation.getLatitude();
 			currentLongitude = currentLocation.getLongitude();
@@ -944,7 +1008,7 @@ public class EQForm_MapView extends EQForm {
 
 			if (DEBUG_LOG) Log.d(TAG,"lat: "+loc.getLatitude() + "lng: " + loc.getLongitude() );
 			//mWebView.loadUrl("javascript:locateMe("+ currentLatitude+","+currentLongitude+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");
-		
+
 
 			//textViewLatitude.setText(Double.toString(loc.getLatitude()));
 			//textViewLongitude.setText(Double.toString(loc.getLongitude()));

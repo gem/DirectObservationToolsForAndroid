@@ -410,7 +410,6 @@ public class MainTabActivity extends TabActivity {
 		String surveyCommentString = surveyComment.getText().toString();
 		*/
 		
-		
 		mDbHelper = new GemDbAdapter(getBaseContext());      
 		mDbHelper.createDatabase();      
 		mDbHelper.open();		
@@ -419,11 +418,9 @@ public class MainTabActivity extends TabActivity {
 		//Should really try / catch this
 		surveyDataObject.clearGemSurveyObject();
 		mDbHelper.close();
-
-		Toast.makeText(getApplicationContext(), "Survey data saved", Toast.LENGTH_SHORT).show();
-
+		//Toast.makeText(getApplicationContext(), "Survey data saved", Toast.LENGTH_SHORT).show();
+		surveyDataObject.unsavedEdits = false;
 		
-
 		return false;
 	}
 

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -99,63 +100,63 @@ public class GemDbAdapter
 	}
 
 	public void exportGemTableToCsv(){
-		
+
 		File sd = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/db_snapshots");
 		sd.mkdirs();
-		
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
 		Date currentDate = new Date(System.currentTimeMillis());
 		String currentDateandTime = sdf.format(currentDate);
 		String backupDBPath = null;
 		backupDBPath = "IDCTDO_survey_points_" + currentDateandTime.toString() + ".csv";
-				
+
 		//File dbFile=getDatabasePath("yourDBname.sqlite");
-/*
+		/*
          File exportDir = new File(sd, backupDBPath);
-         
+
         if (!exportDir.exists()) 
         {
             exportDir.mkdirs();
         }
-*/
+		 */
 		File file = new File(sd, backupDBPath);
-        try       {
-            file.createNewFile();                
-            CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
-            //SQLiteDatabase db = dbhelper.getReadableDatabase();
-            Cursor curCSV = getGemObjects();
-            csvWrite.writeNext(curCSV.getColumnNames());
-            while(curCSV.moveToNext())
-            {
-               //Which column you want to exprort
-                //String arrStr[] ={curCSV.getString(0),curCSV.getString(1), curCSV.getString(2),curCSV.getString(3),curCSV.getString(4), curCSV.getString(5)};
-                int x  = 0;
-                String[] arrStr = new String[curCSV.getColumnCount()];
-                //String[] arrStr; // elements are Strings
-                //arrStr = new String[]
-                //while( x < curCSV.getColumnCount()-2 ){
-                //	arrStr[x] =  curCSV.getString(x);
-               // }
-              
-                for (int i = 0; i < curCSV.getColumnCount(); i = i + 1) {
-                
-                	arrStr[i] = curCSV.getString(i);
-                }
-                csvWrite.writeNext(arrStr);
-                Log.d("IDCT","IDCT DB Export" + Arrays.toString(arrStr));
-            }
-            csvWrite.close();
-            curCSV.close();
-            Toast.makeText(this.mContext.getApplicationContext(), "CSV export created. Export is located at: \n" + sd + "/" + backupDBPath , Toast.LENGTH_LONG).show();
+		try       {
+			file.createNewFile();                
+			CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
+			//SQLiteDatabase db = dbhelper.getReadableDatabase();
+			Cursor curCSV = getGemObjects();
+			csvWrite.writeNext(curCSV.getColumnNames());
+			while(curCSV.moveToNext())
+			{
+				//Which column you want to exprort
+				//String arrStr[] ={curCSV.getString(0),curCSV.getString(1), curCSV.getString(2),curCSV.getString(3),curCSV.getString(4), curCSV.getString(5)};
+				int x  = 0;
+				String[] arrStr = new String[curCSV.getColumnCount()];
+				//String[] arrStr; // elements are Strings
+				//arrStr = new String[]
+				//while( x < curCSV.getColumnCount()-2 ){
+				//	arrStr[x] =  curCSV.getString(x);
+				// }
 
-        }
-        catch(Exception sqlEx)
-        {
-            Log.e("IDCT DB Export", sqlEx.getMessage(), sqlEx);
-        }
-		
+				for (int i = 0; i < curCSV.getColumnCount(); i = i + 1) {
+
+					arrStr[i] = curCSV.getString(i);
+				}
+				csvWrite.writeNext(arrStr);
+				Log.d("IDCT","IDCT DB Export" + Arrays.toString(arrStr));
+			}
+			csvWrite.close();
+			curCSV.close();
+			Toast.makeText(this.mContext.getApplicationContext(), "CSV export created. Export is located at: \n" + sd + "/" + backupDBPath , Toast.LENGTH_LONG).show();
+
+		}
+		catch(Exception sqlEx)
+		{
+			Log.e("IDCT DB Export", sqlEx.getMessage(), sqlEx);
+		}
+
 	}
-	
+
 
 	public Cursor getGemObjectsForMap()
 	{
@@ -376,7 +377,7 @@ public class GemDbAdapter
 	}
 
 
-	
+
 	public Cursor getAttributeValuesByDictionaryTable(String dictionaryTable)
 	{
 		try
@@ -400,7 +401,7 @@ public class GemDbAdapter
 		}
 	}
 
-	
+
 	public Cursor getAttributeValuesByDictionaryTableAndScope(String dictionaryTable, String attributeScope)
 	{
 		try
@@ -424,9 +425,9 @@ public class GemDbAdapter
 		}
 	}
 
-	
-	
-	
+
+
+
 
 
 	public Cursor getQualifierValuesByQualifierType(String qualifierType)
@@ -508,39 +509,152 @@ public class GemDbAdapter
 	public void insertGemData(GEMSurveyObject gemGlobalVariables)
 	{		
 		Log.d(TAG, "Trying to insert Gem data");
+		
+		
 		try
 		{								
 			//Cursor mCur = mDb.execSQL(sql, null);
 			ContentValues cv = new ContentValues();
-			UUID id = UUID.randomUUID();
-			cv.put("OBJ_UID", id.toString());
+
+			UUID id = UUID.randomUUID();			
+			
+			cv.put("OBJ_UID", gemGlobalVariables.getUid());
+			 
 			cv.put("PROJ_UID", id.toString()); //This should be a proj uid, define in a preferences thing
-			//cv.put("OBJ_SCOPE", "BUILD");
 			cv.put("X", Double.toString(gemGlobalVariables.getLon()));
 			cv.put("Y",  Double.toString(gemGlobalVariables.getLat()));
 			//cv.put("EPSG_CODE", "4326"); //Should get this from the db
 			cv.put("SOURCE", "FIELD");			
 			cv.put("COMMENTS", "Dummy comment information");
-			
-			
+
+
 			HashMap<String,String> keyVals = gemGlobalVariables.getKeyValuePairsMap();
 			for (Map.Entry<String, String> entry : keyVals.entrySet()) {
-			    String key = entry.getKey();
-			    String value = entry.getValue();
-			    cv.put(key, value);
+				String key = entry.getKey();
+				String value = entry.getValue();
+				cv.put(key, value);
 			}
-			
+
 			Log.d(TAG, "GEM ContentValues: " + cv.toString());
 			mDb.insert("GEM_OBJECT", null, cv);
-			gemGlobalVariables.getKeyValuePairsMap().clear();
-			
+			Toast.makeText(this.mContext.getApplicationContext(), "GEM Survey Data saved", Toast.LENGTH_LONG).show();
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "insertTestData >>"+ mSQLException.toString());
+			Toast.makeText(this.mContext.getApplicationContext(), "There was a problem saving the GEM survey data", Toast.LENGTH_LONG).show();
+			throw mSQLException;
+		}
+
+		
+		ArrayList mediaList = gemGlobalVariables.getMediaDetailKeyValuePairsMap();
+		Log.d(TAG, "MEDIA DETAIL LIST: " + mediaList.size());
+		
+		for (int i = 0; i < mediaList.size(); i++) {
+			Log.d(TAG, "Trying to insert Media detail data");
+			try
+			{
+				
+				HashMap map = (HashMap) mediaList.get(i);
+				//Cursor mCur = mDb.execSQL(sql, null);
+				
+				ContentValues cv = new ContentValues();		
+				cv.put("GEMOBJ_UID", gemGlobalVariables.getUid());
+				
+				HashMap<String,String> keyVals = map;
+				for (Map.Entry<String, String> entry : keyVals.entrySet()) {
+					String key = entry.getKey();
+					String value = entry.getValue();
+					Log.d(TAG, "GEM Media key: " + key.toString());
+					Log.d(TAG, "GEM Media val: " + value.toString());
+					cv.put(key, value);
+				}
+				Log.d(TAG, "GEM Media DetailValues: " + cv.toString());
+				Toast.makeText(this.mContext.getApplicationContext(), "The Media Details were saved successfully", Toast.LENGTH_LONG).show();
+				mDb.insert("MEDIA_DETAIL", null, cv);	
+							
+			}
+			catch (SQLException mSQLException) 
+			{
+				Log.e(TAG, "insertTestData >>"+ mSQLException.toString());
+				Toast.makeText(this.mContext.getApplicationContext(), "There was a problem saving the Media Detail", Toast.LENGTH_LONG).show();
+				throw mSQLException;
+			}
+		}
+		
+		
+		
+
+		gemGlobalVariables.getKeyValuePairsMap().clear();
+		
+		/*
+		Log.d(TAG, "Trying to insert Media detail data");
+		try
+		{								
+			//Cursor mCur = mDb.execSQL(sql, null);
+			ContentValues cv = new ContentValues();					
+			//UUID id = UUID.randomUUID();					
+			//cv.put("MEDIA_UID", "uid-val"); //This should be a proj uid, define in a preferences thing
+			cv.put("GEMOBJ_UID", "gemobjid-val");
+			cv.put("MEDIA_TYPE",  "PHOTO");
+			//cv.put("EPSG_CODE", "4326"); //Should get this from the db
+			cv.put("FILENAME", "filenameOfPhoto");			
+			cv.put("COMMENTS", "Dummy media comments");	
+
+			HashMap<String,String> keyVals = gemGlobalVariables.getMediaDetailKeyValuePairsMap();
+			for (Map.Entry<String, String> entry : keyVals.entrySet()) {
+				String key = entry.getKey();
+				String value = entry.getValue();
+				cv.put(key, value);
+			}
+			Log.d(TAG, "GEM Media DetailValues: " + cv.toString());
+			mDb.insert("MEDIA_DETAIL", null, cv);					
 		}
 		catch (SQLException mSQLException) 
 		{
 			Log.e(TAG, "insertTestData >>"+ mSQLException.toString());
 			throw mSQLException;
 		}
+*/
+
 	}
+
+	/*
+
+	public void insertMediaDetail(GEMSurveyObject gemGlobalVariables)
+	{		
+		Log.d(TAG, "Trying to insert Media detail data");
+		try
+		{								
+			//Cursor mCur = mDb.execSQL(sql, null);
+			ContentValues cv = new ContentValues();					
+			//UUID id = UUID.randomUUID();					
+			//cv.put("MEDIA_UID", "uid-val"); //This should be a proj uid, define in a preferences thing
+			cv.put("GEMOBJ_UID", "gemobjid-val");
+			cv.put("MEDIA_TYPE",  "PHOTO");
+			//cv.put("EPSG_CODE", "4326"); //Should get this from the db
+			cv.put("FILENAME", "filenameOfPhoto");			
+			cv.put("COMMENTS", "Dummy comment information");	
+
+			HashMap<String,String> keyVals = gemGlobalVariables.getMediaDetailKeyValuePairsMap();
+			for (Map.Entry<String, String> entry : keyVals.entrySet()) {
+				String key = entry.getKey();
+				String value = entry.getValue();
+				cv.put(key, value);
+			}
+			Log.d(TAG, "GEM Media DetailValues: " + cv.toString());
+			mDb.insert("MEDIA_DETAIL", null, cv);					
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "insertTestData >>"+ mSQLException.toString());
+			throw mSQLException;
+		}
+
+	}
+
+*/
+
 
 	public void copyDataBaseToSdCard()
 	{		
@@ -548,8 +662,8 @@ public class GemDbAdapter
 
 		try {
 			mDbHelper.copyDataBaseToSdCard();
-			
-			
+
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, "copying to sd card problem >>"+ e.toString());

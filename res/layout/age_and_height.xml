@@ -9,6 +9,7 @@
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/ScrollView01"
+        android:fadeScrollbars="false"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
 
@@ -19,7 +20,7 @@
             android:background="@color/highlight_colour"
             android:gravity="left"
             android:orientation="vertical" >
-
+            
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -51,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:text="Button" />
+            android:text="Button" />
                 -->
 
                 <EditText
@@ -110,7 +111,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:gravity="left"
-                    android:text="Height Above Ground (storeys)"
+                    android:text="No. of Storeys Above Ground (storeys)"
                     android:textStyle="bold" />
 
                 <ListView
@@ -123,7 +124,7 @@
                 </ListView>
 
                 <EditText
-                    android:id="@+id/editText3"
+                    android:id="@+id/editTextAboveGround1"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -133,11 +134,11 @@
                     android:inputType="number" />
 
                 <EditText
-                    android:id="@+id/editText4"
+                    android:id="@+id/editTextAboveGround2"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/editText3"
-                    android:layout_alignBottom="@+id/editText3"
+                    android:layout_alignBaseline="@+id/editTextAboveGround1"
+                    android:layout_alignBottom="@+id/editTextAboveGround1"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
@@ -164,7 +165,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:gravity="left"
-                    android:text="Height Below Ground (storeys)"
+                    android:text="No. of storeys below ground"
                     android:textStyle="bold" />
 
                 <ListView
@@ -177,7 +178,7 @@
                 </ListView>
 
                 <EditText
-                    android:id="@+id/editText3"
+                    android:id="@+id/editTextBelowGround1"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -187,11 +188,11 @@
                     android:inputType="number" />
 
                 <EditText
-                    android:id="@+id/editText4"
+                    android:id="@+id/editTextBelowGround2"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/editText3"
-                    android:layout_alignBottom="@+id/editText3"
+                    android:layout_alignBaseline="@+id/editTextBelowGround1"
+                    android:layout_alignBottom="@+id/editTextBelowGround1"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
@@ -218,7 +219,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:gravity="left"
-                    android:text="Height Above Grade"
+                    android:text="Ground Floor Height Above Grade (metres)"
                     android:textStyle="bold" />
 
                 <ListView
@@ -244,8 +245,8 @@
                     android:id="@+id/editTextAboveGrade2"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/editText3"
-                    android:layout_alignBottom="@+id/editText3"
+                    android:layout_alignBaseline="@+id/editTextAboveGrade1"
+                    android:layout_alignBottom="@+id/editTextAboveGrade1"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"

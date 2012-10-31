@@ -474,36 +474,12 @@ function init(){
 		
 		//myLocation.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject() );
 		console.log("opx" + lonlat);
-
 		
-		var attributes = {name: "my position"};
+		var myLocation = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat );
+		myLocation.transform(map.getProjectionObject(),new OpenLayers.Projection("EPSG:4326"));		
+		drawCandidateSurveyPoint(myLocation.x, myLocation.y);
 		
-		var myLocation = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat);
-		var feature = new OpenLayers.Feature.Vector(myLocation,attributes);
-
-            
-
-	
-		myPositions.removeAllFeatures();			
-		myPositions.addFeatures([feature]);			
-		myPositions.redraw();			
 		
-		/*
-	    while( map.popups.length ) {
-        	map.removePopup(map.popups[0]);
-        	
-    	}
-		popup = new OpenLayers.Popup("chicken", 
-                                 feature.geometry.getBounds().getCenterLonLat(),
-                                 null,
-                                 "<div style='font-size:1em'>Feature: </div>",
-                                 null, false);
-        feature.popup = popup;
-        map.addPopup(popup);
-        */
-        
-        
-		updateSurveyPointLocationInJava();
 	}});
 	 
 	map.addControl(click);
@@ -612,6 +588,35 @@ function init(){
 } //end of init()
 
 
+
+function drawCandidateSurveyPoint(lon, lat) {
+		var attributes = {name: "my position"};		
+		var myLocation = new OpenLayers.Geometry.Point(lon, lat);
+		myLocation.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject() );
+		var feature = new OpenLayers.Feature.Vector(myLocation,attributes);           
+	
+		myPositions.removeAllFeatures();			
+		myPositions.addFeatures([feature]);			
+		myPositions.redraw();
+		
+		/*
+	    while( map.popups.length ) {
+        	map.removePopup(map.popups[0]);
+        	
+    	}
+		popup = new OpenLayers.Popup("chicken", 
+                                 feature.geometry.getBounds().getCenterLonLat(),
+                                 null,
+                                 "<div style='font-size:1em'>Feature: </div>",
+                                 null, false);
+        feature.popup = popup;
+        map.addPopup(popup);
+        */
+        
+        
+		updateSurveyPointLocationInJava();
+		
+}
 function addBaseLayers() {
 	
 }
@@ -707,6 +712,7 @@ function updateSurveyPointLocationInJava() {
 	
 	var pt = myPositions.features[0].geometry;
 	var myLocation = new OpenLayers.Geometry.Point(pt.x, pt.y);
+
 	myLocation.transform(map.getProjectionObject(),new OpenLayers.Projection("EPSG:4326"));
 	console.log("updating survey point: " + myLocation.x + "," + myLocation.y);
 	try {

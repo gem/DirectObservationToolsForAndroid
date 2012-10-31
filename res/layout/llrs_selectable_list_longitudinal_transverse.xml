@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/highlight_colour"
+    android:gravity="left"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rel1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/highlight_colour"
+        android:gravity="left"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="LLRS"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/listLLRS"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView1"
+            android:choiceMode="singleChoice" >
+        </ListView>
+
+        <!--
+        <Button
+            android:id="@+id/button1"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="Button" />
+        -->
+    </RelativeLayout>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rel2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel1"
+        android:background="@color/highlight_colour"
+        android:gravity="left"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="LLRS Longitudinal"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewPrimaryTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView2"
+            android:gravity="left"
+            android:text="LLRS"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewSecondaryTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView2"
+            android:gravity="right"
+            android:text="LLRS Ductility"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/listLLRSLongitudinal"
+            android:layout_width="180dp"
+            android:layout_height="200dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textViewPrimaryTitle"
+            android:choiceMode="singleChoice" >
+        </ListView>
+
+        <ListView
+            android:id="@+id/listLLRSLongitudinalDuctility"
+            android:layout_width="180dp"
+            android:layout_height="200dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/textViewSecondaryTitle"
+            android:choiceMode="singleChoice" >
+        </ListView>
+        <!--
+        <Button
+            android:id="@+id/button2"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="Button" />
+        -->
+    </RelativeLayout>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rel3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel2"
+        android:background="@color/highlight_colour"
+        android:gravity="left"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textViewVerticalIrreg"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="LLRS Transverse"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewVerticalPrimaryTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewVerticalIrreg"
+            android:gravity="left"
+            android:text="LLRS"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewVerticalSecondaryTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewVerticalIrreg"
+            android:gravity="right"
+            android:text="Ductility"
+            android:textStyle="bold" />
+
+        <!--
+        <Button
+            android:id="@+id/button3"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="Button" />
+        -->
+
+        <ListView
+            android:id="@+id/listLLRSTransverse"
+            android:layout_width="180dp"
+            android:layout_height="200dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textViewVerticalPrimaryTitle"
+            android:choiceMode="singleChoice" >
+        </ListView>
+
+        <ListView
+            android:id="@+id/listLLRSTransverseDuctility"
+            android:layout_width="180dp"
+            android:layout_height="200dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/textViewVerticalSecondaryTitle"
+            android:choiceMode="singleChoice" >
+        </ListView>
+    </RelativeLayout>
+
+</LinearLayout>
