@@ -8,7 +8,7 @@
 
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/ScrollView01"
+        android:id="@+id/ScrollViewConsequences"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
 
@@ -58,7 +58,7 @@
                 android:inputType="number" />
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/textViewConsequences1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Number Missing"
@@ -72,7 +72,7 @@
                 android:inputType="numberDecimal" />
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/textViewConsequences2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Damage Grade"
@@ -87,7 +87,7 @@
             </ListView>
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/textViewConsequences5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Comments"

@@ -31,8 +31,10 @@ public class Consequences_Form extends EQForm {
 
 	public TabActivity tabActivity;
 	public TabHost tabHost;
-	public int tabIndex = 2;
+	public int tabIndex = 10;
 
+	
+	
 
 	public EditText editTextNumberOfFatalities;
 	public EditText editTextNumberOfInjured;	
@@ -66,6 +68,11 @@ public class Consequences_Form extends EQForm {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.consequences);
+		
+		editTextNumberOfFatalities = (EditText) findViewById(R.id.editTextNumberOfFatalities);
+		editTextNumberOfInjured = (EditText) findViewById(R.id.editTextNumberOfInjured);
+		editTextNumberOfMissing = (EditText) findViewById(R.id.editTextNumberOfMissing );
+		editTextConsequencesComments= (EditText) findViewById(R.id.editTextConsequencesComments);
 	}
 
 
@@ -89,51 +96,45 @@ public class Consequences_Form extends EQForm {
 			if (DEBUG_LOG) Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
 			mDbHelper.close();
 			
-			
-			editTextNumberOfFatalities = (EditText) findViewById(R.id.editTextNumberOfFatalities);
-			editTextNumberOfFatalities.setOnFocusChangeListener(new OnFocusChangeListener() { 				
 
+			editTextNumberOfFatalities.setOnFocusChangeListener(new OnFocusChangeListener() { 				
 				public void onFocusChange(View v, boolean hasFocus) {
 					if(!hasFocus) {
 						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
-						editTextNumberOfFatalities = (EditText) findViewById(R.id.editTextNumberOfFatalities);
 						surveyDataObject.putConsequencesData(attributeKey1, editTextNumberOfFatalities.getText().toString());
 						completeThis();
 					}
 				}
 			});
-			editTextNumberOfInjured = (EditText) findViewById(R.id.editTextNumberOfInjured);
-			editTextNumberOfInjured.setOnFocusChangeListener(new OnFocusChangeListener() { 				
 
+			editTextNumberOfInjured.setOnFocusChangeListener(new OnFocusChangeListener() { 				
 				public void onFocusChange(View v, boolean hasFocus) {
 					if(!hasFocus) {
 						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
-						editTextNumberOfInjured = (EditText) findViewById(R.id.editTextNumberOfInjured );
 						surveyDataObject.putConsequencesData(attributeKey2, editTextNumberOfInjured.getText().toString());
 						completeThis();
 					}
 				}
 			});
-			editTextNumberOfMissing = (EditText) findViewById(R.id.editTextNumberOfMissing );
 			editTextNumberOfMissing.setOnFocusChangeListener(new OnFocusChangeListener() { 				
 
 				public void onFocusChange(View v, boolean hasFocus) {
 					if(!hasFocus) {
 						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
-						editTextNumberOfMissing  = (EditText) findViewById(R.id.editTextNumberOfMissing );
+
 						surveyDataObject.putConsequencesData(attributeKey3, editTextNumberOfInjured.getText().toString());
 						completeThis();
 					}
 				}
 			});
 			
-			editTextConsequencesComments= (EditText) findViewById(R.id.editTextConsequencesComments);
+
 			editTextConsequencesComments.setOnFocusChangeListener(new OnFocusChangeListener() { 				
 
 				public void onFocusChange(View v, boolean hasFocus) {
 					if(!hasFocus) {
 						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
-						editTextConsequencesComments = (EditText) findViewById(R.id.editTextConsequencesComments);
+
 						surveyDataObject.putConsequencesData(attributeKey4, editTextConsequencesComments.getText().toString());
 						completeThis();
 					}
@@ -162,8 +163,8 @@ public class Consequences_Form extends EQForm {
 		}
 	}
 	public void completeThis() {
-		MainTabActivity a = (MainTabActivity)getParent();
-		a.completeTab(tabIndex);
+		//MainTabActivity a = (MainTabActivity)getParent();
+		//a.completeTab(tabIndex);
 	}
 	@Override
 	public void onBackPressed() {

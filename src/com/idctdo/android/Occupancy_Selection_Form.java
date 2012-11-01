@@ -30,6 +30,9 @@ public class Occupancy_Selection_Form extends EQForm {
 
 	public boolean DEBUG_LOG = false; 
 
+	public TabActivity tabActivity;
+	public TabHost tabHost;
+	public int tabIndex = 7;
 
 	private String topLevelAttributeDictionary = "DIC_OCCUPANCY";
 	private String topLevelAttributeKey = "OCCUPCY";
@@ -42,9 +45,6 @@ public class Occupancy_Selection_Form extends EQForm {
 	private String secondLevelAttributeType = "OCCD";
 	 */
 
-	public TabActivity tabActivity;
-	public TabHost tabHost;
-	public int tabIndex = 7;
 	
 
 	private SelectedAdapter selectedAdapter;

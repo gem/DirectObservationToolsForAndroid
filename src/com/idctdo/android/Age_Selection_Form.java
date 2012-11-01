@@ -29,6 +29,10 @@ import android.widget.Toast;
 public class Age_Selection_Form extends EQForm {
 	public boolean DEBUG_LOG = true; 
 	
+	public TabActivity tabActivity;
+	public TabHost tabHost;
+	public int tabIndex = 8;
+	
 	private String topLevelAttributeDictionary = "DIC_YEAR_BUILT_QUAL";
 	private String topLevelAttributeKey = "YR_BUILT_Q";
 	private String topLevelAttributeKey3 = "YR_BUILT_1";
@@ -47,9 +51,7 @@ public class Age_Selection_Form extends EQForm {
 	private String heightStoreysAboveGradeAttributeKey1 = "HT_GR_GF_1";		
 	private String heightStoreysAboveGradeAttributeKey2 = "HT_GR_GF_2";		
 	
-	public TabActivity tabActivity;
-	public TabHost tabHost;
-	public int tabIndex = 8;
+
 	
 	private SelectedAdapter selectedAdapter;
 	private SelectedAdapter selectedAdapter2;
@@ -83,6 +85,7 @@ public class Age_Selection_Form extends EQForm {
 	public EditText editTextAboveGrade1;
 	public EditText editTextAboveGrade2;
 	
+	public EditText editTextSlope;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

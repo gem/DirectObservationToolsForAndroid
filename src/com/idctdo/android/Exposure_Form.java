@@ -17,20 +17,24 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 public class Exposure_Form extends EQForm {
 
-
 	private ArrayList list;
 	public ArrayList<DBRecord> lLrsd;
 
-
+	public TabActivity tabActivity;
+	public TabHost tabHost;
+	public int tabIndex = 9;
+	
 	ListView listview;
 	ListView listview2;
 
@@ -40,9 +44,8 @@ public class Exposure_Form extends EQForm {
 	public GemDbAdapter mDbHelper;
 	public GEMSurveyObject surveyDataObject;
 
-	public TabActivity tabActivity;
-	public TabHost tabHost;
-	public int tabIndex = 9;
+	private String topLevelAttributeDictionary = "DIC_CURRENCY";
+	private String topLevelAttributeKey = "DAMAGE";
 
 	public EditText editTextNumberOfDayOccupants;
 	public EditText editTextNumberOfNightOccupants;	
@@ -52,98 +55,171 @@ public class Exposure_Form extends EQForm {
 	public EditText editTextReplacementCost;
 	public EditText editTextExposureComments;
 	
-
-
+	public Spinner spinnerCurrency;
+	
+	
+	private String attributeKey1 = "DAY_OCC";
+	private String attributeKey2 = "NIGHT_OCC";
+	private String attributeKey3 = "TRANS_OCC";
+	private String attributeKey4 = "NUM_DWELL";
+	private String attributeKey5 = "PLAN_AREA";
+	private String attributeKey6 = "REPLC_COST";
+	private String attributeKey7 = "CURRENCY";
+	private String attributeKey8 = "COMMENTS";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.exposure);
+		
+		editTextNumberOfDayOccupants = (EditText) findViewById(R.id.editTextNumberOfDayOccupants);
+		editTextNumberOfNightOccupants = (EditText) findViewById(R.id.editTextNumberOfNightOccupants);
+		editTextNumberOfTransitOccupants = (EditText) findViewById(R.id.editTextNumberOfTransitOccupants );
+		editTextNumberOfDwellings= (EditText) findViewById(R.id.editTextNumberOfDwellings);
+		editTextPlanArea= (EditText) findViewById(R.id.editTextPlanArea);
+		editTextReplacementCost= (EditText) findViewById(R.id.editTextReplacementCost);
+		editTextExposureComments= (EditText) findViewById(R.id.editTextExposureComments);
+		
+		spinnerCurrency = (Spinner)  findViewById(R.id.spinnerCurrency);
 	}
 
-
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		MainTabActivity a = (MainTabActivity)getParent();
-		surveyDataObject = (GEMSurveyObject)getApplication();
-		if (a.isTabCompleted(tabIndex)) {
-
-		} else {
-			editTextNumberOfDayOccupants = (EditText) findViewById(R.id.editTextNumberOfDayOccupants);
-			editTextNumberOfDayOccupants.setOnFocusChangeListener(new OnFocusChangeListener() { 				
-
-				public void onFocusChange(View v, boolean hasFocus) {
-					if(!hasFocus) {
-						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
-						editTextNumberOfDayOccupants = (EditText) findViewById(R.id.editTextNumberOfDayOccupants);
-						surveyDataObject.putData("COMMENTS", editTextNumberOfDayOccupants.getText().toString());
-						completeThis();
-					}
-				}
-			});
-			editTextNumberOfNightOccupants = (EditText) findViewById(R.id.editTextNumberOfNightOccupants);
-			editTextNumberOfNightOccupants.setOnFocusChangeListener(new OnFocusChangeListener() { 				
-
-				public void onFocusChange(View v, boolean hasFocus) {
-					if(!hasFocus) {
-						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
-						editTextNumberOfNightOccupants = (EditText) findViewById(R.id.editTextNumberOfNightOccupants );
-						surveyDataObject.putData("COMMENTS", editTextNumberOfNightOccupants.getText().toString());
-						completeThis();
-					}
-				}
-			});
-			editTextNumberOfTransitOccupants = (EditText) findViewById(R.id.editTextNumberOfTransitOccupants );
-			editTextNumberOfTransitOccupants.setOnFocusChangeListener(new OnFocusChangeListener() { 				
-
-				public void onFocusChange(View v, boolean hasFocus) {
-					if(!hasFocus) {
-						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
-						editTextNumberOfTransitOccupants  = (EditText) findViewById(R.id.editTextNumberOfTransitOccupants );
-						surveyDataObject.putData("COMMENTS", editTextNumberOfNightOccupants.getText().toString());
-						completeThis();
-					}
-				}
-			});
-			
-			editTextNumberOfDwellings= (EditText) findViewById(R.id.editTextNumberOfDwellings);
-			editTextNumberOfDwellings.setOnFocusChangeListener(new OnFocusChangeListener() { 				
-
-				public void onFocusChange(View v, boolean hasFocus) {
-					if(!hasFocus) {
-						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
-						editTextNumberOfDwellings = (EditText) findViewById(R.id.editTextNumberOfDwellings);
-						surveyDataObject.putData("COMMENTS", editTextNumberOfDwellings.getText().toString());
-						completeThis();
-					}
-				}
-			});
-			
-			editTextPlanArea= (EditText) findViewById(R.id.editTextPlanArea);
-			editTextPlanArea.setOnFocusChangeListener(new OnFocusChangeListener() { 				
-
-				public void onFocusChange(View v, boolean hasFocus) {
-					if(!hasFocus) {
-						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
-						editTextPlanArea = (EditText) findViewById(R.id.editTextPlanArea);
-						surveyDataObject.putData("COMMENTS", editTextPlanArea.getText().toString());
-						completeThis();
-					}
-				}
-			});
-			
-		}
-	}		
-	public void completeThis() {
-		MainTabActivity a = (MainTabActivity)getParent();
-		a.completeTab(tabIndex);
-	}
 	@Override
 	public void onBackPressed() {
 		Log.d("IDCT","back button pressed");
 		MainTabActivity a = (MainTabActivity)getParent();
 		a.backButtonPressed();
+	}
+
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		MainTabActivity a = (MainTabActivity)getParent();
+		surveyDataObject = (GEMSurveyObject)getApplication();
+		
+
+		if (a.isTabCompleted(tabIndex)) {
+
+		} else {
+			
+			mDbHelper = new GemDbAdapter(getBaseContext());        
+
+			mDbHelper.createDatabase();      
+			mDbHelper.open();
+
+			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
+			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
+			Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
+			
+			
+			mDbHelper.close();	
+
+			
+		    spinnerCurrency = (Spinner) findViewById(R.id.spinnerCurrency);
+
+		    ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,
+		                      android.R.layout.simple_spinner_item,topLevelAttributesList);                
+		              spinnerCurrency.setAdapter(spinnerArrayAdapter);
+		              
+		              
+		              
+            spinnerCurrency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+	        	    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+	        	        //Object item = parent.getItemAtPosition(pos);
+	        	    	Log.d("IDCT","spinner selected: " + spinnerCurrency.getSelectedItem().toString());
+	        			surveyDataObject.putConsequencesData(topLevelAttributeKey, spinnerCurrency.getSelectedItem().toString());						
+	        	    }
+	        	    public void onNothingSelected(AdapterView<?> parent) {
+	        	    }
+	        	});
+	          
+		              
+		       
+		              
+			editTextNumberOfDayOccupants.setOnFocusChangeListener(new OnFocusChangeListener() { 				
+
+				public void onFocusChange(View v, boolean hasFocus) {
+					if(!hasFocus) {
+						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
+						surveyDataObject.putGedData(attributeKey1, editTextNumberOfDayOccupants.getText().toString());
+						completeThis();
+					}
+				}
+			});
+
+			editTextNumberOfNightOccupants.setOnFocusChangeListener(new OnFocusChangeListener() { 				
+
+				public void onFocusChange(View v, boolean hasFocus) {
+					if(!hasFocus) {
+						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
+						surveyDataObject.putGedData(attributeKey2, editTextNumberOfNightOccupants.getText().toString());
+						completeThis();
+					}
+				}
+			});
+
+			editTextNumberOfTransitOccupants.setOnFocusChangeListener(new OnFocusChangeListener() { 				
+
+				public void onFocusChange(View v, boolean hasFocus) {
+					if(!hasFocus) {
+						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
+						surveyDataObject.putGedData(attributeKey3, editTextNumberOfNightOccupants.getText().toString());
+						completeThis();
+					}
+				}
+			});
+			
+
+			editTextNumberOfDwellings.setOnFocusChangeListener(new OnFocusChangeListener() { 				
+
+				public void onFocusChange(View v, boolean hasFocus) {
+					if(!hasFocus) {
+						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
+						surveyDataObject.putGedData(attributeKey4, editTextNumberOfDwellings.getText().toString());
+						completeThis();
+					}
+				}
+			});
+			
+
+			editTextPlanArea.setOnFocusChangeListener(new OnFocusChangeListener() { 				
+
+				public void onFocusChange(View v, boolean hasFocus) {
+					if(!hasFocus) {
+						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
+						surveyDataObject.putGedData(attributeKey5 , editTextPlanArea.getText().toString());
+						completeThis();
+					}
+				}
+			});
+			
+
+			editTextReplacementCost.setOnFocusChangeListener(new OnFocusChangeListener() {			
+				public void onFocusChange(View v, boolean hasFocus) {
+					if(!hasFocus) {
+						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
+						surveyDataObject.putGedData(attributeKey6 , editTextReplacementCost.getText().toString());
+						completeThis();
+					}
+				}
+			});
+			
+
+			editTextExposureComments.setOnFocusChangeListener(new OnFocusChangeListener() {			
+				public void onFocusChange(View v, boolean hasFocus) {
+					if(!hasFocus) {
+						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
+						surveyDataObject.putGedData(attributeKey8 ,editTextExposureComments.getText().toString());
+						completeThis();
+					}
+				}
+			});
+		}
+	}		
+	public void completeThis() {
+		MainTabActivity a = (MainTabActivity)getParent();
+		a.completeTab(tabIndex);
 	}
 
 

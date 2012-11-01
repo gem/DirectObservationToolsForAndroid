@@ -65,6 +65,7 @@ import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.Toast;
@@ -107,12 +108,12 @@ public class EQForm_MapView extends EQForm {
 	MyCount drawUpdateCounter;
 
 	private ProgressDialog progressBar; 
-	
+
 	File ImageFile;
 	Uri FilenameUri;
 	String FILENAME;
 	String Filename;
-	
+
 
 	Button btn_locateMe;
 	Button btn_takeCameraPhoto;
@@ -238,7 +239,7 @@ public class EQForm_MapView extends EQForm {
 		//btn_take_survey_photo=(Button)findViewById(R.id.btn_take_survey_photo);
 		//btn_take_survey_photo.setVisibility(View.INVISIBLE);//Poss Dodgy threading stuff using this
 
-		
+
 		btn_startSurvey =(Button)findViewById(R.id.btn_start_survey);
 		btn_startSurvey.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
 
@@ -279,24 +280,31 @@ public class EQForm_MapView extends EQForm {
 		drawUpdateCounter.start();				
 		mWebView.loadUrl("javascript:clearMyPositions()");
 		loadPrevSurveyPoints();
-		
+
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
 		//g.putData("OBJ_UID", id.toString());
 		if (DEBUG_LOG) Log.d(TAG,"RESUMING MAP, global vars " + g.getLon()+ " lat: " + g.getLat());
 		mWebView.loadUrl("javascript:locateMe("+ g.getLat()+","+g.getLon()+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");
-		
+
 		if (g.unsavedEdits) {
 			//Draw a candidate survey point
 			if (DEBUG_LOG) Log.d(TAG,"RESUMING EDITS. DRAWING MOVEABLE POINT, " + g.getLon()+ " lat: " + g.getLat());
 			mWebView.loadUrl("javascript:drawCandidateSurveyPoint("+ g.getLon()+","+g.getLat()+")");
-			
+
 		} else {
 			if (DEBUG_LOG) Log.d(TAG,"NO UNSAVED EDITS. Hide the survey button. , " + g.getLon()+ " lat: " + g.getLat());
-			btn_startSurvey.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
-			//btn_take_survey_photo.setVisibility(View.INVISIBLE);//Poss Dodgy threading stuff using this
+			runOnUiThread(new Runnable() {
+
+				@Override
+				public void run() {
+					btn_startSurvey.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
+					//btn_take_survey_photo.setVisibility(View.INVISIBLE);//Poss Dodgy threading stuff using this
+					btn_takeCameraPhoto.setBackgroundResource(R.drawable.camera);
+				}
+			});		       
 
 		}
-		
+
 	}
 
 
@@ -373,7 +381,7 @@ public class EQForm_MapView extends EQForm {
 
 		}
 	};
-	
+
 	private OnClickListener takePhotoListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -381,7 +389,7 @@ public class EQForm_MapView extends EQForm {
 			if (DEBUG_LOG) Log.d(TAG,"camera class");
 
 			getSurveyPoint();
-			
+
 			GEMSurveyObject g = (GEMSurveyObject)getApplication();
 			UUID mediaId = UUID.randomUUID();
 			FILENAME = "" + mediaId.toString();	
@@ -389,7 +397,7 @@ public class EQForm_MapView extends EQForm {
 			//mAppSettings = getSharedPreferences(APP_SETTINGS, MODE_PRIVATE);
 			//FILENAME = (mAppSettings.getString(APP_SETTINGS_FILE_NAME, ""));				
 			Filename = Environment.getExternalStorageDirectory().getAbsolutePath() + "/idctdo/" + FILENAME +".jpg";
-			
+
 
 			if (DEBUG_LOG) Log.d(TAG,"CAMERA IMAGE FILENAME: " + Filename.toString());
 			ImageFile = new File(Filename);
@@ -413,16 +421,57 @@ public class EQForm_MapView extends EQForm {
 		if (requestCode == CAMERA_RESULT) {
 			//ShowMessage(outputFileUri.toString());
 			if (resultCode == Activity.RESULT_OK) {
-				Toast.makeText(this, "Photo captured", Toast.LENGTH_SHORT).show();
-				GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();				
-				UUID mediaUid = UUID.randomUUID();
-				surveyDataObject.putMediaData(
-						"MEDIA_UID", FILENAME,
-						"MEDIA_TYPE", "PHOTOGRAPH",
-						"COMMENTS", "DUMMY MEDIA COMMENTS",
-						"FILENAME", FILENAME + ".jpg"
-				);						
-				
+				GEMSurveyObject g = (GEMSurveyObject)getApplication();
+
+				if (g.unsavedEdits) {
+					AlertDialog.Builder alert = new AlertDialog.Builder(this);
+	
+					alert.setTitle("Photo Comment");
+					alert.setMessage("Add a comment to this photo");
+	
+					// Set an EditText view to get user input 
+					final EditText input = new EditText(this);
+					alert.setView(input);
+	
+					alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {
+							String value = input.getText().toString();
+							// Do something with value!
+							
+							//Toast.makeText(this, "Photo captured", Toast.LENGTH_SHORT).show();
+							GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();				
+							UUID mediaUid = UUID.randomUUID();
+							surveyDataObject.putMediaData(
+									"MEDIA_UID", FILENAME,
+									"MEDIA_TYPE", "PHOTOGRAPH",
+									"COMMENTS", value,
+									"FILENAME", FILENAME + ".jpg"
+							);						
+	
+							
+							
+						}
+					});
+	
+					alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {
+							// Canceled.
+							//Toast.makeText(this, "Photo captured", Toast.LENGTH_SHORT).show();
+							GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();				
+							UUID mediaUid = UUID.randomUUID();
+							surveyDataObject.putMediaData(
+									"MEDIA_UID", FILENAME,
+									"MEDIA_TYPE", "PHOTOGRAPH",
+									"COMMENTS", "no comment entered",
+									"FILENAME", FILENAME + ".jpg"
+							);						
+	
+							
+						}
+					});
+	
+					alert.show();
+				}
 			} else {
 				Toast.makeText(this, "Camera cancelled", Toast.LENGTH_SHORT).show();
 			}
@@ -436,12 +485,12 @@ public class EQForm_MapView extends EQForm {
 		if (DEBUG_LOG) Log.d(TAG,"layers are: " + layerNamesJson);
 		return false; 	
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	//Called from JS with point location of survey
 	//This point forms the survey point and should be saved in the db
 	//Can then mark the map tab as complete
@@ -460,14 +509,22 @@ public class EQForm_MapView extends EQForm {
 
 		//g.putData("OBJ_UID", id.toString());
 		if (DEBUG_LOG) Log.d(TAG,"GLOBAL VARS UID " + g.getUid());	
-	
+
 		if (DEBUG_LOG) Log.d(TAG,"GLOBAL VARS " + g.getLon()+ " lat: " + g.getLat());
 		g.setData(1);
 
 		prevSurveyPointLon = lon; 
 		prevSurveyPointLat = lat;
-		btn_startSurvey.setVisibility(View.VISIBLE);//This might be causing issues
-		//btn_take_survey_photo.setVisibility(View.VISIBLE);//Poss Dodgy threading stuff using this
+
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				btn_startSurvey.setVisibility(View.VISIBLE);//This might be causing issues
+				btn_takeCameraPhoto.setBackgroundResource(R.drawable.camera_green);
+				//btn_take_survey_photo.setVisibility(View.VISIBLE);//Poss Dodgy threading stuff using this
+			}
+		});
+
 		return false; 		
 	}	
 

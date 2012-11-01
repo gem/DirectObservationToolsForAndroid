@@ -633,6 +633,9 @@ public class GemDbAdapter
 				cv.put(key, value);
 			}
 
+			
+			
+			
 			String comments = keyVals.get("COMMENTS");
 			Log.d(TAG, "CONSQ ContentValues: " + cv.toString());
 			mDb.insert("CONSEQUENCES", null, cv);

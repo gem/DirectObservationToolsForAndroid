@@ -38,16 +38,16 @@
     
     
     
-    
-    <!--  <Button
+    <!--  
+    <Button
         android:id="@+id/btn_take_survey_photo"
         android:layout_width="65dip"
         android:layout_height="65dip"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:background="@drawable/ic_launcher" />
+   
     -->
-    
         
         
     <Button
