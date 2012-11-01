@@ -27,7 +27,7 @@ import android.widget.Toast;
 
 
 public class Age_Selection_Form extends EQForm {
-	public boolean DEBUG_LOG = true; 
+	public boolean DEBUG_LOG = false; 
 	
 	public TabActivity tabActivity;
 	public TabHost tabHost;
@@ -51,7 +51,7 @@ public class Age_Selection_Form extends EQForm {
 	private String heightStoreysAboveGradeAttributeKey1 = "HT_GR_GF_1";		
 	private String heightStoreysAboveGradeAttributeKey2 = "HT_GR_GF_2";		
 	
-
+	private String slope = "SLOPE";		
 	
 	private SelectedAdapter selectedAdapter;
 	private SelectedAdapter selectedAdapter2;
@@ -103,6 +103,8 @@ public class Age_Selection_Form extends EQForm {
 		
 		editTextAboveGrade1 = (EditText)findViewById(R.id.editTextAboveGrade1);
 		editTextAboveGrade2 = (EditText)findViewById(R.id.editTextAboveGrade2);
+		
+		editTextSlope = (EditText)findViewById(R.id.editTextSlope);
 	}
 	
 	@Override
@@ -306,7 +308,14 @@ public class Age_Selection_Form extends EQForm {
 					}
 				}
 			});
-			
+			editTextSlope.setOnFocusChangeListener(new OnFocusChangeListener() { 				
+				public void onFocusChange(View v, boolean hasFocus) {
+					if(!hasFocus) {
+						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
+						surveyDataObject.putData(slope,editTextSlope.getText().toString());
+					}
+				}
+			});
 		}
 	}	
 

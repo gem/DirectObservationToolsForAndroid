@@ -25,7 +25,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 public class Consequences_Form extends EQForm {
-	public boolean DEBUG_LOG = true; 
+	public boolean DEBUG_LOG = false; 
 
 
 

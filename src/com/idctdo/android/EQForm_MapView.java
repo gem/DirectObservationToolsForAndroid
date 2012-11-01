@@ -73,7 +73,7 @@ import android.widget.Toast;
 
 public class EQForm_MapView extends EQForm {
 
-	public boolean DEBUG_LOG = true; 
+	public boolean DEBUG_LOG = false; 
 
 	WebView mWebView;
 	/** Called when the activity is first created. */
@@ -413,8 +413,6 @@ public class EQForm_MapView extends EQForm {
 		}
 	};
 
-
-
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		//super.onActivityResult(requestCode, resultCode, data);
@@ -422,10 +420,8 @@ public class EQForm_MapView extends EQForm {
 			//ShowMessage(outputFileUri.toString());
 			if (resultCode == Activity.RESULT_OK) {
 				GEMSurveyObject g = (GEMSurveyObject)getApplication();
-
 				if (g.unsavedEdits) {
 					AlertDialog.Builder alert = new AlertDialog.Builder(this);
-	
 					alert.setTitle("Photo Comment");
 					alert.setMessage("Add a comment to this photo");
 	
@@ -446,9 +442,7 @@ public class EQForm_MapView extends EQForm {
 									"MEDIA_TYPE", "PHOTOGRAPH",
 									"COMMENTS", value,
 									"FILENAME", FILENAME + ".jpg"
-							);						
-	
-							
+							);				
 							
 						}
 					});
@@ -480,7 +474,6 @@ public class EQForm_MapView extends EQForm {
 
 	//Called from JS with geoJson of Openlayers features
 	public boolean loadLayerNames(final String layerNamesJson) {
-
 		if (DEBUG_LOG) Log.d(TAG,"loading layer names");
 		if (DEBUG_LOG) Log.d(TAG,"layers are: " + layerNamesJson);
 		return false; 	

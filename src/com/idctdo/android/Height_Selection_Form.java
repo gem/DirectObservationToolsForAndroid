@@ -26,7 +26,7 @@ import android.widget.Toast;
 
 
 public class Height_Selection_Form extends EQForm {
-	public boolean DEBUG_LOG = true; 
+	public boolean DEBUG_LOG = false; 
 	
 	private String heightTopLevelAttributeDictionary = "DIC_HEIGHT_QUALIFIER";
 	private String topLevelAttributeKey = "STORY_AG_Q";

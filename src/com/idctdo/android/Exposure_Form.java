@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.AdapterView.OnItemClickListener;
@@ -34,7 +35,7 @@ public class Exposure_Form extends EQForm {
 	public TabActivity tabActivity;
 	public TabHost tabHost;
 	public int tabIndex = 9;
-	
+
 	ListView listview;
 	ListView listview2;
 
@@ -45,7 +46,7 @@ public class Exposure_Form extends EQForm {
 	public GEMSurveyObject surveyDataObject;
 
 	private String topLevelAttributeDictionary = "DIC_CURRENCY";
-	private String topLevelAttributeKey = "DAMAGE";
+	private String topLevelAttributeKey = "CURRENCY";
 
 	public EditText editTextNumberOfDayOccupants;
 	public EditText editTextNumberOfNightOccupants;	
@@ -54,10 +55,10 @@ public class Exposure_Form extends EQForm {
 	public EditText editTextPlanArea;
 	public EditText editTextReplacementCost;
 	public EditText editTextExposureComments;
-	
+
 	public Spinner spinnerCurrency;
-	
-	
+
+
 	private String attributeKey1 = "DAY_OCC";
 	private String attributeKey2 = "NIGHT_OCC";
 	private String attributeKey3 = "TRANS_OCC";
@@ -66,12 +67,12 @@ public class Exposure_Form extends EQForm {
 	private String attributeKey6 = "REPLC_COST";
 	private String attributeKey7 = "CURRENCY";
 	private String attributeKey8 = "COMMENTS";
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.exposure);
-		
+
 		editTextNumberOfDayOccupants = (EditText) findViewById(R.id.editTextNumberOfDayOccupants);
 		editTextNumberOfNightOccupants = (EditText) findViewById(R.id.editTextNumberOfNightOccupants);
 		editTextNumberOfTransitOccupants = (EditText) findViewById(R.id.editTextNumberOfTransitOccupants );
@@ -79,7 +80,7 @@ public class Exposure_Form extends EQForm {
 		editTextPlanArea= (EditText) findViewById(R.id.editTextPlanArea);
 		editTextReplacementCost= (EditText) findViewById(R.id.editTextReplacementCost);
 		editTextExposureComments= (EditText) findViewById(R.id.editTextExposureComments);
-		
+
 		spinnerCurrency = (Spinner)  findViewById(R.id.spinnerCurrency);
 	}
 
@@ -94,49 +95,55 @@ public class Exposure_Form extends EQForm {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+
 		MainTabActivity a = (MainTabActivity)getParent();
 		surveyDataObject = (GEMSurveyObject)getApplication();
-		
+
 
 		if (a.isTabCompleted(tabIndex)) {
 
 		} else {
-			
+
 			mDbHelper = new GemDbAdapter(getBaseContext());        
 
 			mDbHelper.createDatabase();      
 			mDbHelper.open();
 
-			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
+			final Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
 			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 			Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
-			
-			
-			mDbHelper.close();	
 
-			
-		    spinnerCurrency = (Spinner) findViewById(R.id.spinnerCurrency);
 
-		    ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,
-		                      android.R.layout.simple_spinner_item,topLevelAttributesList);                
-		              spinnerCurrency.setAdapter(spinnerArrayAdapter);
-		              
-		              
-		              
-            spinnerCurrency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-	        	    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-	        	        //Object item = parent.getItemAtPosition(pos);
-	        	    	Log.d("IDCT","spinner selected: " + spinnerCurrency.getSelectedItem().toString());
-	        			surveyDataObject.putConsequencesData(topLevelAttributeKey, spinnerCurrency.getSelectedItem().toString());						
-	        	    }
-	        	    public void onNothingSelected(AdapterView<?> parent) {
-	        	    }
-	        	});
-	          
-		              
-		       
-		              
+			mDbHelper.close();				
+			spinnerCurrency = (Spinner) findViewById(R.id.spinnerCurrency);
+
+			ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,
+					android.R.layout.simple_spinner_item,topLevelAttributesList);                
+			spinnerCurrency.setAdapter(spinnerArrayAdapter);
+			/*
+		    SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, 
+                    android.R.layout.simple_spinner_item, 
+                    allAttributeTypesTopLevelCursor, new String[] { "DESCRIPTION"},  
+                    new int[] {android.R.id.text1});
+		    spinnerCurrency.setAdapter(adapter);           
+			 */
+			spinnerCurrency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+					//Object item = parent.getItemAtPosition(pos);
+					Log.d("IDCT","spinner selected: " + spinnerCurrency.getSelectedItem().toString());
+					Log.d("IDCT","spinner selected pos: " + pos);
+					allAttributeTypesTopLevelCursor.moveToPosition(pos);
+					Log.d("IDCT","spinner selected pos val: " + allAttributeTypesTopLevelCursor.getString(1));
+					
+					surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());						
+				}
+				public void onNothingSelected(AdapterView<?> parent) {
+				}
+			});
+
+
+
+
 			editTextNumberOfDayOccupants.setOnFocusChangeListener(new OnFocusChangeListener() { 				
 
 				public void onFocusChange(View v, boolean hasFocus) {
@@ -169,7 +176,7 @@ public class Exposure_Form extends EQForm {
 					}
 				}
 			});
-			
+
 
 			editTextNumberOfDwellings.setOnFocusChangeListener(new OnFocusChangeListener() { 				
 
@@ -180,11 +187,9 @@ public class Exposure_Form extends EQForm {
 						completeThis();
 					}
 				}
-			});
-			
+			});		
 
-			editTextPlanArea.setOnFocusChangeListener(new OnFocusChangeListener() { 				
-
+			editTextPlanArea.setOnFocusChangeListener(new OnFocusChangeListener() {			
 				public void onFocusChange(View v, boolean hasFocus) {
 					if(!hasFocus) {
 						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
@@ -193,7 +198,7 @@ public class Exposure_Form extends EQForm {
 					}
 				}
 			});
-			
+
 
 			editTextReplacementCost.setOnFocusChangeListener(new OnFocusChangeListener() {			
 				public void onFocusChange(View v, boolean hasFocus) {
@@ -204,7 +209,7 @@ public class Exposure_Form extends EQForm {
 					}
 				}
 			});
-			
+
 
 			editTextExposureComments.setOnFocusChangeListener(new OnFocusChangeListener() {			
 				public void onFocusChange(View v, boolean hasFocus) {
