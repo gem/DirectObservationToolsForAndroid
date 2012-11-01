@@ -286,7 +286,6 @@
                     android:ems="10"
                     android:hint="slope (degs)"
                     android:inputType="number" >
-
                     <requestFocus />
                 </EditText>
             </RelativeLayout>

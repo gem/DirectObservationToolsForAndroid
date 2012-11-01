@@ -533,10 +533,10 @@ public class GemDbAdapter
 				cv.put(key, value);
 			}
 
-			String comments = keyVals.get("COMMENTS");
+			
 			Log.d(TAG, "GEM ContentValues: " + cv.toString());
 			mDb.insert("GEM_OBJECT", null, cv);
-			String feedbackMsg = "Survey Data saved:\n " + "LatLon: " + Double.toString(gemGlobalVariables.getLat()) + ", " + Double.toString(gemGlobalVariables.getLon()) + "\nComments: " + comments;
+			String feedbackMsg = "Survey Data saved\n " + "LatLon: " + Double.toString(gemGlobalVariables.getLat()) + ", " + Double.toString(gemGlobalVariables.getLon());
 			Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
 		}
 		catch (SQLException mSQLException) 
@@ -601,10 +601,10 @@ public class GemDbAdapter
 				cv.put(key, value);
 			}
 
-			String comments = keyVals.get("COMMENTS");
+			
 			Log.d(TAG, "GED ContentValues: " + cv.toString());
 			mDb.insert("GED", null, cv);
-			String feedbackMsg = "GED Data saved:\nComments: " + comments;
+			String feedbackMsg = "GED Data saved\n ";
 			Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
 		}
 		catch (SQLException mSQLException) 
@@ -634,12 +634,9 @@ public class GemDbAdapter
 			}
 
 			
-			
-			
-			String comments = keyVals.get("COMMENTS");
 			Log.d(TAG, "CONSQ ContentValues: " + cv.toString());
 			mDb.insert("CONSEQUENCES", null, cv);
-			String feedbackMsg = "CONSEQUENCES Data saved:\nComments: " + comments;
+			String feedbackMsg = "CONSEQUENCES Data saved\n";
 			Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
 		}
 		catch (SQLException mSQLException) 
