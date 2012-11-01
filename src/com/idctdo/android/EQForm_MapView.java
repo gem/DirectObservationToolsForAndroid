@@ -384,7 +384,7 @@ public class EQForm_MapView extends EQForm {
 			
 			GEMSurveyObject g = (GEMSurveyObject)getApplication();
 			UUID mediaId = UUID.randomUUID();
-			FILENAME = "gemSurveyPhoto_" + mediaId.toString();	
+			FILENAME = "" + mediaId.toString();	
 			//Button CameraButton;
 			//mAppSettings = getSharedPreferences(APP_SETTINGS, MODE_PRIVATE);
 			//FILENAME = (mAppSettings.getString(APP_SETTINGS_FILE_NAME, ""));				
@@ -417,13 +417,11 @@ public class EQForm_MapView extends EQForm {
 				GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();				
 				UUID mediaUid = UUID.randomUUID();
 				surveyDataObject.putMediaData(
-						"MEDIA_UID", mediaUid.toString(),
+						"MEDIA_UID", FILENAME,
 						"MEDIA_TYPE", "PHOTOGRAPH",
 						"COMMENTS", "DUMMY MEDIA COMMENTS",
-						"FILENAME", FILENAME
-				);
-
-						
+						"FILENAME", FILENAME + ".jpg"
+				);						
 				
 			} else {
 				Toast.makeText(this, "Camera cancelled", Toast.LENGTH_SHORT).show();

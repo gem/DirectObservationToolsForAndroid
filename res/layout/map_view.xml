@@ -35,6 +35,10 @@
         android:layout_below="@+id/btn_select_layer"
         android:text="Locate Me" />
     
+    
+    
+    
+    
     <!--  <Button
         android:id="@+id/btn_take_survey_photo"
         android:layout_width="65dip"
@@ -43,6 +47,9 @@
         android:layout_alignParentLeft="true"
         android:background="@drawable/ic_launcher" />
     -->
+    
+        
+        
     <Button
         android:id="@+id/btn_take_photo"
         android:layout_width="65dip"

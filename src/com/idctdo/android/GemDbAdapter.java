@@ -525,8 +525,6 @@ public class GemDbAdapter
 			cv.put("Y",  Double.toString(gemGlobalVariables.getLat()));
 			//cv.put("EPSG_CODE", "4326"); //Should get this from the db
 			cv.put("SOURCE", "FIELD");			
-			cv.put("COMMENTS", "Dummy comment information");
-
 
 			HashMap<String,String> keyVals = gemGlobalVariables.getKeyValuePairsMap();
 			for (Map.Entry<String, String> entry : keyVals.entrySet()) {
@@ -535,9 +533,11 @@ public class GemDbAdapter
 				cv.put(key, value);
 			}
 
+			String comments = keyVals.get("COMMENTS");
 			Log.d(TAG, "GEM ContentValues: " + cv.toString());
 			mDb.insert("GEM_OBJECT", null, cv);
-			Toast.makeText(this.mContext.getApplicationContext(), "GEM Survey Data saved", Toast.LENGTH_LONG).show();
+			String feedbackMsg = "Survey Data saved:\n " + "LatLon: " + Double.toString(gemGlobalVariables.getLat()) + ", " + Double.toString(gemGlobalVariables.getLon()) + "\nComments: " + comments;
+			Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
 		}
 		catch (SQLException mSQLException) 
 		{
@@ -570,7 +570,7 @@ public class GemDbAdapter
 					cv.put(key, value);
 				}
 				Log.d(TAG, "GEM Media DetailValues: " + cv.toString());
-				Toast.makeText(this.mContext.getApplicationContext(), "The Media Details were saved successfully", Toast.LENGTH_LONG).show();
+				Toast.makeText(this.mContext.getApplicationContext(), "Photos were sucessfully linked in the database", Toast.LENGTH_LONG).show();
 				mDb.insert("MEDIA_DETAIL", null, cv);	
 							
 			}
@@ -581,6 +581,71 @@ public class GemDbAdapter
 				throw mSQLException;
 			}
 		}
+		
+		
+		Log.d(TAG, "Trying to insert GED data");
+		
+		try
+		{								
+			//Cursor mCur = mDb.execSQL(sql, null);
+			ContentValues cv = new ContentValues();
+			UUID gedId = UUID.randomUUID();			
+			
+			cv.put("GEMOBJ_UID", gemGlobalVariables.getUid());
+			cv.put("GED_UID", gedId.toString()); 
+			
+			HashMap<String,String> keyVals = gemGlobalVariables.getGedKeyValuePairsMap();
+			for (Map.Entry<String, String> entry : keyVals.entrySet()) {
+				String key = entry.getKey();
+				String value = entry.getValue();
+				cv.put(key, value);
+			}
+
+			String comments = keyVals.get("COMMENTS");
+			Log.d(TAG, "GED ContentValues: " + cv.toString());
+			mDb.insert("GED", null, cv);
+			String feedbackMsg = "GED Data saved:\nComments: " + comments;
+			Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "insertTestData >>"+ mSQLException.toString());
+			Toast.makeText(this.mContext.getApplicationContext(), "There was a problem saving the GEM survey data", Toast.LENGTH_LONG).show();
+			throw mSQLException;
+		}
+		
+		
+		Log.d(TAG, "Trying to insert CONSEQUENCES data");
+		
+		try
+		{								
+			//Cursor mCur = mDb.execSQL(sql, null);
+			ContentValues cv = new ContentValues();
+			UUID consId = UUID.randomUUID();			
+			
+			cv.put("GEMOBJ_UID", gemGlobalVariables.getUid());
+			cv.put("CONSEQ_UID", consId.toString()); 
+			
+			HashMap<String,String> keyVals = gemGlobalVariables.getConsequencesKeyValuePairsMap();
+			for (Map.Entry<String, String> entry : keyVals.entrySet()) {
+				String key = entry.getKey();
+				String value = entry.getValue();
+				cv.put(key, value);
+			}
+
+			String comments = keyVals.get("COMMENTS");
+			Log.d(TAG, "CONSQ ContentValues: " + cv.toString());
+			mDb.insert("CONSEQUENCES", null, cv);
+			String feedbackMsg = "CONSEQUENCES Data saved:\nComments: " + comments;
+			Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "insertTestData >>"+ mSQLException.toString());
+			Toast.makeText(this.mContext.getApplicationContext(), "There was a problem saving the GEM survey data", Toast.LENGTH_LONG).show();
+			throw mSQLException;
+		}
+		
 		
 		
 		

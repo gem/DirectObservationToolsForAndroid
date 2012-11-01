@@ -51,6 +51,8 @@ public class Exposure_Form extends EQForm {
 	public EditText editTextPlanArea;
 	public EditText editTextReplacementCost;
 	public EditText editTextExposureComments;
+	
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

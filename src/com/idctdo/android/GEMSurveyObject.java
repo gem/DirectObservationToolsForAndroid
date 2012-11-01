@@ -17,7 +17,11 @@ public class GEMSurveyObject extends Application {
 	private double currentSurveyPointLon = 0;
 	private double currentSurveyPointLat = 0;	
 	
-	public HashMap<String, String> surveyData = new HashMap<String, String>();	
+	public HashMap<String, String> surveyData = new HashMap<String, String>();
+	
+	public HashMap<String, String> gedData = new HashMap<String, String>();
+	public HashMap<String, String> consequencesData = new HashMap<String, String>();	
+	
 	public ArrayList<HashMap<String, String>> mediaDetailDataList = new ArrayList<HashMap<String, String>>();
 	
 	
@@ -67,6 +71,16 @@ public class GEMSurveyObject extends Application {
 		return true;
 	}
 	
+	public boolean putGedData(String key, String value) {		
+		gedData.put(key, value);
+		//Log.d("IDCT","HASHMAP : " + surveyData.toString());
+		return true;
+	}
+	public boolean putConsequencesData(String key, String value) {		
+		consequencesData.put(key, value);
+		//Log.d("IDCT","HASHMAP : " + surveyData.toString());
+		return true;
+	}
 	
 	public boolean putMediaData(String key, String value,String key2, String value2,String key3, String value3,String key4, String value4) {		
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -87,9 +101,19 @@ public class GEMSurveyObject extends Application {
 		return surveyData;
 	}
 	
+	public HashMap getGedKeyValuePairsMap() {		
+		return gedData;
+	}
+	public HashMap getConsequencesKeyValuePairsMap() {		
+		return consequencesData;
+	}
+	
+	
 	public void clearGemSurveyObject() {
 		surveyData = new HashMap<String, String>();
 		mediaDetailDataList = new ArrayList<HashMap<String, String>>();
+		gedData = new HashMap<String, String>();
+		consequencesData = new HashMap<String, String>();
 		setData(0);
 	}
 	

@@ -416,9 +416,10 @@ public class MainTabActivity extends TabActivity {
 		
 		mDbHelper.insertGemData(surveyDataObject);
 		//Should really try / catch this
-		surveyDataObject.clearGemSurveyObject();
+		
 		mDbHelper.close();
 		//Toast.makeText(getApplicationContext(), "Survey data saved", Toast.LENGTH_SHORT).show();
+		surveyDataObject.clearGemSurveyObject();
 		surveyDataObject.unsavedEdits = false;
 		
 		return false;
@@ -465,6 +466,10 @@ public class MainTabActivity extends TabActivity {
 			public void onClick(DialogInterface dialog,int id) {
 				// if this button is clicked, just close
 				// the dialog box and do nothing
+				GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
+				surveyDataObject.clearGemSurveyObject();
+				surveyDataObject.unsavedEdits = false;
+				
 				MainTabActivity.this.finish();
 			}
 		});
