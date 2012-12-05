@@ -5,7 +5,8 @@
     android:background="@color/highlight_colour"
     android:gravity="left"
     android:orientation="vertical" >
-
+   
+        
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/ScrollView01"
@@ -113,7 +114,10 @@
                     android:gravity="left"
                     android:text="No. of Storeys Above Ground (storeys)"
                     android:textStyle="bold" />
-
+                
+                
+                
+                
                 <ListView
                     android:id="@+id/listAboveGroundQualifier"
                     android:layout_width="140dp"
