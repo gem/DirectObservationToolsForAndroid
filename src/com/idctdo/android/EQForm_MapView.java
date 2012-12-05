@@ -213,18 +213,11 @@ public class EQForm_MapView extends EQForm {
 
 
 		mlocListener = new MyLocationListener();
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10f, mlocListener);
+		
 
-		//locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 100, 100, mlocListener);
-
-
-		//locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 200, 0, mlocListener);
-
-		//locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, mlocListener,myLooper);
-
-		locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
+	    
+	    
 		currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
 
 
 
@@ -275,7 +268,26 @@ public class EQForm_MapView extends EQForm {
 	@Override
 	public void onResume(){
 		super.onResume();
+	
 		if (DEBUG_LOG) Log.d("IDCT","ON RESUME");
+		
+		/*
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10f, mlocListener);
+		locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
+		*/
+		// Register the listener with the Location Manager to receive location
+	    // updates
+	    if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+	        locationManager.requestLocationUpdates(
+	                LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
+	    } else {
+	        locationManager.requestLocationUpdates(
+	                LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
+	    }
+	    
+	    
+	    
+	    		
 		drawUpdateCounter = new MyCount(100000000,1000);
 		drawUpdateCounter.start();				
 		mWebView.loadUrl("javascript:clearMyPositions()");

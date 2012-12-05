@@ -133,14 +133,14 @@ public class Exposure_Form extends EQForm {
 					Log.d("IDCT","spinner selected: " + spinnerCurrency.getSelectedItem().toString());
 					Log.d("IDCT","spinner selected pos: " + pos);
 					allAttributeTypesTopLevelCursor.moveToPosition(pos);
-					Log.d("IDCT","spinner selected pos val: " + allAttributeTypesTopLevelCursor.getString(1));
-					
+					Log.d("IDCT","spinner selected pos val: " + allAttributeTypesTopLevelCursor.getString(1));					
 					surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());						
 				}
 				public void onNothingSelected(AdapterView<?> parent) {
 				}
 			});
 
+			
 
 
 

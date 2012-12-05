@@ -27,7 +27,7 @@ import android.widget.Toast;
 
 
 public class Age_Selection_Form extends EQForm {
-	public boolean DEBUG_LOG = false; 
+	public boolean DEBUG_LOG = false; 	
 	
 	public TabActivity tabActivity;
 	public TabHost tabHost;
