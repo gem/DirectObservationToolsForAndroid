@@ -13,8 +13,10 @@ import android.database.DatabaseUtils;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.AdapterView.OnItemClickListener;
@@ -88,6 +90,7 @@ public class LLRS_Selection_Transverse_Form extends EQForm {
 			selectedAdapter = new SelectedAdapter(this,0,lLrs);
 			selectedAdapter.setNotifyOnChange(true);
 			listview = (ListView) findViewById(R.id.listExample);
+	       
 			listview.setAdapter(selectedAdapter);        
 
 
@@ -98,7 +101,6 @@ public class LLRS_Selection_Transverse_Form extends EQForm {
 
 
 			//listview2.setVisibility(View.INVISIBLE);
-
 
 
 			listview.setOnItemClickListener(new OnItemClickListener() {

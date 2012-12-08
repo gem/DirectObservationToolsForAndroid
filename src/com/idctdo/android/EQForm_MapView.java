@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -68,12 +69,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
+
 
 
 public class EQForm_MapView extends EQForm {
 
-	public boolean DEBUG_LOG = false; 
+	public boolean DEBUG_LOG = true; 
 
 	WebView mWebView;
 	/** Called when the activity is first created. */
@@ -114,6 +117,10 @@ public class EQForm_MapView extends EQForm {
 	String FILENAME;
 	String Filename;
 
+	DecimalFormat df = new DecimalFormat("#0.####");
+
+	
+	
 
 	Button btn_locateMe;
 	Button btn_takeCameraPhoto;
@@ -129,6 +136,9 @@ public class EQForm_MapView extends EQForm {
 	File mapTilesFile;
 	String sdCardPath;
 
+	TextView text_view_gpsInfo;
+	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -147,7 +157,7 @@ public class EQForm_MapView extends EQForm {
 		mWebView.addJavascriptInterface(this, "webConnector"); 
 
 		mWebView.loadUrl("file:///android_asset/idct_map.html");
-		mWebView.setWebViewClient(new HelloWebViewClient());
+		mWebView.setWebViewClient(new MapWebViewClient());
 
 
 
@@ -252,6 +262,10 @@ public class EQForm_MapView extends EQForm {
 		btn_refreshLayer =(Button)findViewById(R.id.btn_refresh);
 		btn_refreshLayer.setOnClickListener(refreshLayerListener);
 
+		
+		text_view_gpsInfo = (TextView)findViewById(R.id.text_view_gpsInfo);
+		
+		
 		/*
 		tabActivity = (TabActivity) getParent();
 		tabHost = tabActivity.getTabHost();
@@ -372,7 +386,6 @@ public class EQForm_MapView extends EQForm {
 		public void onClick(View v) {
 			//addPoint();
 			if (DEBUG_LOG) Log.d(TAG,"locate me button clicked");
-
 			//mWebView.loadUrl("javascript:locateMe("+ currentLatitude+","+currentLongitude+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");
 			locateMe(true);
 
@@ -618,7 +631,7 @@ public class EQForm_MapView extends EQForm {
 
 	private void locateMe(boolean setAsCentre) {
 		if (DEBUG_LOG) Log.d(TAG,"locateMe. SetAsCentre " + setAsCentre);
-		mWebView.loadUrl("javascript:locateMe("+ currentLatitude+","+currentLongitude+","+currentLocationAccuracy+","+setAsCentre+")");
+		mWebView.loadUrl("javascript:locateMe("+ currentLatitude+","+currentLongitude+","+currentLocationAccuracy+"," + setAsCentre + ")");
 	}
 
 
@@ -1010,17 +1023,17 @@ public class EQForm_MapView extends EQForm {
 		@Override
 		public void onTick(long millisUntilFinished) {
 			if (DEBUG_LOG) Log.d(TAG,"seconds left: " +millisUntilFinished/1000);
+			if (DEBUG_LOG) Log.d(TAG,"currentLat:" + currentLatitude + " currentLon: " + currentLongitude);
+			text_view_gpsInfo.setText("Lat: " + df.format(currentLatitude) + ", Lon: " + df.format(currentLongitude) + ", Acc: " + currentLocationAccuracy);
 			//drawGuidePoint2();
 			locateMe(false);
 			//mWebView.loadUrl("javascript:locateMe("+ currentLatitude+","+currentLongitude+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");
-
-
-
 		}
 	}
-
-
-	private class HelloWebViewClient extends WebViewClient {
+	
+	
+	
+	private class MapWebViewClient extends WebViewClient {
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
 			view.loadUrl(url);

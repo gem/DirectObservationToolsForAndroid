@@ -19,12 +19,18 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Color;
+import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Display;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -50,6 +56,9 @@ public class MainTabActivity extends TabActivity {
 
 	boolean[] completedTabs;
 
+	
+
+	
 	public void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
@@ -120,7 +129,6 @@ public class MainTabActivity extends TabActivity {
 		});
 
 
-		//lockTabIcons();
 
 	}
 
@@ -480,6 +488,32 @@ public class MainTabActivity extends TabActivity {
 		alertDialog.show();
 
 		return;
+	}
+
+	
+	
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		menu.add(0,0,0,"Take Picture");
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		super.onOptionsItemSelected(item);
+
+		switch (item.getItemId()){
+
+		case 0: //Refresh / redraw map
+		
+			break;
+		default:
+			break;
+		}
+
+		return false;
 	}
 
 }

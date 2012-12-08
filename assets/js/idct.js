@@ -544,9 +544,7 @@ function init(){
 	var defaultLL = new OpenLayers.LonLat(-1.182725429534912,52.95185706277731);
 	defaultLL.transform(	new OpenLayers.Projection("EPSG:4326"),	map.getProjectionObject());
 	map.setCenter(defaultLL, 6);
-    
-
-	
+    	
 	// create some attributes for the feature
 	//var attributes = {name: "my name", bar: "foo"};
 
@@ -612,7 +610,7 @@ function drawCandidateSurveyPoint(lon, lat) {
         feature.popup = popup;
         map.addPopup(popup);
         */
-        
+
         
 		updateSurveyPointLocationInJava();
 		

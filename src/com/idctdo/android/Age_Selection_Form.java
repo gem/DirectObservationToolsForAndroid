@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 
 
+
 public class Age_Selection_Form extends EQForm {
 	public boolean DEBUG_LOG = false; 	
 	
@@ -37,6 +38,7 @@ public class Age_Selection_Form extends EQForm {
 	private String topLevelAttributeKey = "YR_BUILT_Q";
 	private String topLevelAttributeKey3 = "YR_BUILT_1";
 	private String topLevelAttributeKey2 = "YR_BUILT_2";
+	
 	
 	private String heightTopLevelAttributeDictionary = "DIC_HEIGHT_QUALIFIER";
 	private String heightStoreysAboveGroundQualifierAttributeKey = "STORY_AG_Q";	

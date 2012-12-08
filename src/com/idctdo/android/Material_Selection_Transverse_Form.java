@@ -11,9 +11,13 @@ import java.util.UUID;
 import android.app.Activity;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -358,8 +362,53 @@ public class Material_Selection_Transverse_Form extends EQForm {
 				}
 			});            
 		}		
+		
+		updateListViewHeights();
 	}
 
+	
+	public void updateListViewHeights() {		
+		int measuredWidth = 0;  
+		int measuredHeight = 0;  
+		Point size = new Point();
+		WindowManager w = getWindowManager();		
+		Display d = w.getDefaultDisplay(); 
+		measuredWidth = d.getWidth(); 
+		measuredHeight = d.getHeight(); 		  
+		if (DEBUG_LOG) Log.d("IDCT","SCREEN DIMENSIONS: measuredWidth "+  measuredWidth  + " MeasuredHeight: " + measuredHeight);
+		 		
+		int h1 = (int)(measuredHeight * 0.22);
+		int h2  = (int)(measuredHeight * 0.2);
+		int h3 = (int)(measuredHeight * 0.1);
+		int h4 = (int)(measuredHeight * 0.1);
+		int h5 = (int)(measuredHeight * 0.1);	
+		 		
+		LayoutParams lp = listview.getLayoutParams();
+        lp.height = h1;	       
+	    listview.setLayoutParams(lp);
+	    listview.requestLayout();
+
+		LayoutParams lp2 = listview2.getLayoutParams();
+        lp2.height = h2;	       
+	    listview2.setLayoutParams(lp2);
+	    listview2.requestLayout();
+
+		LayoutParams lp3 = listview3.getLayoutParams();
+        lp3.height = h3;	       
+	    listview3.setLayoutParams(lp3);
+	    listview3.requestLayout();
+	    
+		LayoutParams lp4 = listview4.getLayoutParams();
+        lp4.height = h4;	       
+	    listview4.setLayoutParams(lp4);
+	    listview4.requestLayout();
+
+		LayoutParams lp5 = listview5.getLayoutParams();
+        lp5.height = h5;	       
+	    listview5.setLayoutParams(lp5);
+	    listview5.requestLayout();    
+	}
+	
 	public void clearThis() {
 		if (DEBUG_LOG) Log.d("IDCT", "clearing stuff");
 		selectedAdapter.setSelectedPosition(-1);

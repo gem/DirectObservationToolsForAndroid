@@ -100,4 +100,12 @@
         android:background="@drawable/vector_layers_icon"
         android:visibility="invisible" />
 
+    <TextView
+        android:id="@+id/text_view_gpsInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Lat: Lon: " />
+
 </RelativeLayout>

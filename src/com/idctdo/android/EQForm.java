@@ -2,14 +2,12 @@ package com.idctdo.android;
 
 
 
+
 import android.app.Activity;
 import android.location.Location;
 
 public class EQForm extends Activity {
-	
-	
-
-	
+		
 		/*Defines the Shared Preferences memory spaces for the entire application in the parent Activity*/
 
 		public static final String APP_SETTINGS = "mAppSettings";

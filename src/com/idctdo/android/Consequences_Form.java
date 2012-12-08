@@ -26,9 +26,7 @@ import android.widget.Toast;
 
 public class Consequences_Form extends EQForm {
 	public boolean DEBUG_LOG = false; 
-
-
-
+	
 	public TabActivity tabActivity;
 	public TabHost tabHost;
 	public int tabIndex = 10;
