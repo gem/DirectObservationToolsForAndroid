@@ -227,7 +227,20 @@ public class Age_Selection_Form extends EQForm {
 					heightSelectedAdapter.setSelectedPosition(position);			
 					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();					
 					if (DEBUG_LOG) Log.d("IDCT","Height SELECT: " + heightSelectedAdapter.getItem(position).toString());
-					if (DEBUG_LOG) Log.d("IDCT","Height Code: " + heightSelectedAdapter.getItem(position).getAttributeValue());			
+					if (DEBUG_LOG) Log.d("IDCT","Height Code: " + heightSelectedAdapter.getItem(position).getAttributeValue());
+					
+					
+					if (heightSelectedAdapter.getItem(position).getAttributeValue().toString().equals("BETW")) {
+						//Make second date val visible
+						if (DEBUG_LOG) Log.d("IDCT","enter date 2");
+						editTextAboveGround1.setVisibility(View.VISIBLE);
+						editTextAboveGround2.setVisibility(View.VISIBLE);
+					} else {
+						editTextAboveGround2.setVisibility(View.INVISIBLE);
+						editTextAboveGround1.setVisibility(View.VISIBLE);
+					}		
+					
+					
 					surveyDataObject.putData(heightStoreysAboveGroundQualifierAttributeKey, heightSelectedAdapter.getItem(position).getAttributeValue());					
 				}
 			});    		
@@ -258,6 +271,18 @@ public class Age_Selection_Form extends EQForm {
 					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 				
 					if (DEBUG_LOG) Log.d("IDCT","height val: " + heightSelectedAdapter2.getItem(position).toString());
+					
+					if (heightSelectedAdapter2.getItem(position).getAttributeValue().toString().equals("BETW")) {
+						//Make second date val visible
+						if (DEBUG_LOG) Log.d("IDCT","enter date 2");
+						editTextBelowGround1.setVisibility(View.VISIBLE);
+						editTextBelowGround2.setVisibility(View.VISIBLE);
+					} else {
+						editTextBelowGround2.setVisibility(View.INVISIBLE);
+						editTextBelowGround1.setVisibility(View.VISIBLE);
+					}		
+					
+					
 					surveyDataObject.putData(heightStoreysBelowGroundQualifierAttributeKey, heightSelectedAdapter2.getItem(position).getAttributeValue());					
 					
 					completeThis();
@@ -289,6 +314,17 @@ public class Age_Selection_Form extends EQForm {
 					// user clicked a list item, make it "selected"
 					heightSelectedAdapter3.setSelectedPosition(position);
 					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
+					if (heightSelectedAdapter3.getItem(position).getAttributeValue().toString().equals("BETW")) {
+						//Make second date val visible
+						if (DEBUG_LOG) Log.d("IDCT","enter date 2");
+						editTextAboveGrade1.setVisibility(View.VISIBLE);
+						editTextAboveGrade2.setVisibility(View.VISIBLE);
+					} else {
+						editTextAboveGrade2.setVisibility(View.INVISIBLE);
+						editTextAboveGrade1.setVisibility(View.VISIBLE);
+					}		
+					
+					
 					surveyDataObject.putData(heightStoreysAboveGradeQualifierAttributeKey, heightSelectedAdapter3.getItem(position).getAttributeValue());					
 					completeThis();
 

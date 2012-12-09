@@ -106,7 +106,7 @@ public class EQForm_MapView extends EQForm {
 	public double currentLongitude;
 	public double currentLocationAccuracy;
 	public double currentBearingFromGPS;
-	public String  currentLocationProvider;
+	public String  currentLocationProvider = "Not set";
 	public boolean currentLocationSetAsCentre = true;
 	MyCount drawUpdateCounter;
 
@@ -117,10 +117,10 @@ public class EQForm_MapView extends EQForm {
 	String FILENAME;
 	String Filename;
 
-	DecimalFormat df = new DecimalFormat("#0.####");
+	DecimalFormat df = new DecimalFormat("#0.#####");
 
-	
-	
+
+
 
 	Button btn_locateMe;
 	Button btn_takeCameraPhoto;
@@ -137,8 +137,8 @@ public class EQForm_MapView extends EQForm {
 	String sdCardPath;
 
 	TextView text_view_gpsInfo;
-	
-	
+
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -221,16 +221,11 @@ public class EQForm_MapView extends EQForm {
 			showGPSDisabledAlertToUser();
 		}
 
-
 		mlocListener = new MyLocationListener();
-		
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10f, mlocListener);
+		locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
 
-	    
-	    
 		currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-
-
 
 
 		btn_locateMe = (Button)findViewById(R.id.btn_locate_me);
@@ -259,13 +254,12 @@ public class EQForm_MapView extends EQForm {
 		btn_zoomOut =(Button)findViewById(R.id.btn_zoom_out);
 		btn_zoomOut.setOnClickListener(zoomOutListener);
 
-		btn_refreshLayer =(Button)findViewById(R.id.btn_refresh);
-		btn_refreshLayer.setOnClickListener(refreshLayerListener);
 
-		
+
+
 		text_view_gpsInfo = (TextView)findViewById(R.id.text_view_gpsInfo);
-		
-		
+
+
 		/*
 		tabActivity = (TabActivity) getParent();
 		tabHost = tabActivity.getTabHost();
@@ -282,26 +276,27 @@ public class EQForm_MapView extends EQForm {
 	@Override
 	public void onResume(){
 		super.onResume();
-	
+
 		if (DEBUG_LOG) Log.d("IDCT","ON RESUME");
-		
+
 		/*
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10f, mlocListener);
 		locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
-		*/
+		
 		// Register the listener with the Location Manager to receive location
-	    // updates
-	    if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-	        locationManager.requestLocationUpdates(
-	                LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
-	    } else {
-	        locationManager.requestLocationUpdates(
-	                LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
-	    }
-	    
-	    
-	    
-	    		
+		// updates
+		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+			locationManager.requestLocationUpdates(
+					LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
+		} else {
+			locationManager.requestLocationUpdates(
+					LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
+		}
+		*/
+
+
+
+
 		drawUpdateCounter = new MyCount(100000000,1000);
 		drawUpdateCounter.start();				
 		mWebView.loadUrl("javascript:clearMyPositions()");
@@ -449,16 +444,16 @@ public class EQForm_MapView extends EQForm {
 					AlertDialog.Builder alert = new AlertDialog.Builder(this);
 					alert.setTitle("Photo Comment");
 					alert.setMessage("Add a comment to this photo");
-	
+
 					// Set an EditText view to get user input 
 					final EditText input = new EditText(this);
 					alert.setView(input);
-	
+
 					alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int whichButton) {
 							String value = input.getText().toString();
 							// Do something with value!
-							
+
 							//Toast.makeText(this, "Photo captured", Toast.LENGTH_SHORT).show();
 							GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();				
 							UUID mediaUid = UUID.randomUUID();
@@ -468,10 +463,10 @@ public class EQForm_MapView extends EQForm {
 									"COMMENTS", value,
 									"FILENAME", FILENAME + ".jpg"
 							);				
-							
+
 						}
 					});
-	
+
 					alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int whichButton) {
 							// Canceled.
@@ -484,11 +479,11 @@ public class EQForm_MapView extends EQForm {
 									"COMMENTS", "no comment entered",
 									"FILENAME", FILENAME + ".jpg"
 							);						
-	
-							
+
+
 						}
 					});
-	
+
 					alert.show();
 				}
 			} else {
@@ -1024,15 +1019,15 @@ public class EQForm_MapView extends EQForm {
 		public void onTick(long millisUntilFinished) {
 			if (DEBUG_LOG) Log.d(TAG,"seconds left: " +millisUntilFinished/1000);
 			if (DEBUG_LOG) Log.d(TAG,"currentLat:" + currentLatitude + " currentLon: " + currentLongitude);
-			text_view_gpsInfo.setText("Lat: " + df.format(currentLatitude) + ", Lon: " + df.format(currentLongitude) + ", Acc: " + currentLocationAccuracy);
+			text_view_gpsInfo.setText("GPS Information:\nLat: " + df.format(currentLatitude) + "\nLon: " + df.format(currentLongitude) + "\nAccuracy (Metres): " + currentLocationAccuracy + "\nProvider: " +currentLocationProvider );
 			//drawGuidePoint2();
 			locateMe(false);
 			//mWebView.loadUrl("javascript:locateMe("+ currentLatitude+","+currentLongitude+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");
 		}
 	}
-	
-	
-	
+
+
+
 	private class MapWebViewClient extends WebViewClient {
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -1069,7 +1064,6 @@ public class EQForm_MapView extends EQForm {
 				currentLocation = loc;
 			}
 
-
 			currentLatitude = currentLocation.getLatitude();
 			currentLongitude = currentLocation.getLongitude();
 
@@ -1100,6 +1094,13 @@ public class EQForm_MapView extends EQForm {
 
 	    					Toast.LENGTH_SHORT ).show();
 			 */
+
+			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+			if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,  mlocListener );
+			} else {
+				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener );
+			} 
 		}
 
 
@@ -1116,6 +1117,13 @@ public class EQForm_MapView extends EQForm {
 
 	    					Toast.LENGTH_SHORT).show();
 			 */
+
+			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);   
+			if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
+			} else {
+				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
+			}
 		}
 
 

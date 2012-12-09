@@ -35,19 +35,9 @@
             android:layout_height="122dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/textView1"
-            android:choiceMode="singleChoice" >
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false" >
         </ListView>
-
-        <!--
-        <Button
-            android:id="@+id/button1"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="Button" />
-        -->
     </RelativeLayout>
 
     <RelativeLayout
@@ -92,7 +82,8 @@
             android:layout_height="122dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/textViewPrimaryTitle"
-            android:choiceMode="singleChoice" >
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false" >
         </ListView>
 
         <ListView
@@ -101,18 +92,9 @@
             android:layout_height="122dp"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/textViewSecondaryTitle"
-            android:choiceMode="singleChoice" >
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false" >
         </ListView>
-        <!--
-        <Button
-            android:id="@+id/button2"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="Button" />
-        -->
     </RelativeLayout>
 
     <RelativeLayout
@@ -151,24 +133,14 @@
             android:text="Secondary"
             android:textStyle="bold" />
 
-        <!--
-        <Button
-            android:id="@+id/button3"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="Button" />
-        -->
-
         <ListView
             android:id="@+id/listVerticalIrregularityPrimary"
             android:layout_width="180dp"
             android:layout_height="130dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/textViewVerticalPrimaryTitle"
-            android:choiceMode="singleChoice" >
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false" >
         </ListView>
 
         <ListView
@@ -177,7 +149,8 @@
             android:layout_height="130dp"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/textViewVerticalSecondaryTitle"
-            android:choiceMode="singleChoice" >
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false" >
         </ListView>
     </RelativeLayout>
 

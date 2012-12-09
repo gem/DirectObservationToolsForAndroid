@@ -6,6 +6,7 @@
     android:gravity="left"
     android:orientation="vertical" >
 
+    
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -29,7 +30,7 @@
             android:text="Occupancy"
             android:textStyle="bold" />
 
-        <ListView
+        <ListView android:fadeScrollbars="false"
             android:id="@+id/listExample"
             android:layout_width="fill_parent"
             android:layout_height="162dp"
@@ -38,16 +39,7 @@
             android:choiceMode="singleChoice" >
         </ListView>
 
-        <!--
-        <Button
-            android:id="@+id/button1"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="Button" />
-        -->
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -68,7 +60,7 @@
             android:text="Occupancy Detail"
             android:textStyle="bold" />
 
-        <ListView
+        <ListView android:fadeScrollbars="false"
             android:id="@+id/listExample2"
             android:layout_width="fill_parent"
             android:layout_height="422dp"
@@ -76,16 +68,7 @@
             android:layout_below="@+id/textView2"
             android:choiceMode="singleChoice" >
         </ListView>
-        <!--
-        <Button
-            android:id="@+id/button2"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="Button" />
-        -->
+
     </RelativeLayout>
 
 </LinearLayout>

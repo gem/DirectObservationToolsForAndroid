@@ -35,19 +35,9 @@
             android:layout_height="200dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/textView1"
-            android:choiceMode="singleChoice" >
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false" >
         </ListView>
-
-        <!--
-        <Button
-            android:id="@+id/button1"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="Button" />
-        -->
     </RelativeLayout>
 
     <RelativeLayout
@@ -74,18 +64,9 @@
             android:layout_height="200dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/textView2"
-            android:choiceMode="singleChoice" >
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false" >
         </ListView>
-        <!--
-        <Button
-            android:id="@+id/button2"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="Button" />
-        -->
     </RelativeLayout>
 
 </LinearLayout>

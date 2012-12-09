@@ -22,8 +22,6 @@ import android.widget.Toast;
 
 
 
-
-
 public class DataBaseHelper extends SQLiteOpenHelper
 {	
 	private static String TAG = "DataBaseHelper"; // Tag just for the LogCat window

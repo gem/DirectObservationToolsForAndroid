@@ -9,6 +9,7 @@ package com.idctdo.android;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,6 +21,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -56,9 +58,14 @@ public class MainTabActivity extends TabActivity {
 
 	boolean[] completedTabs;
 
-	
+	final static int CAMERA_RESULT = 0;
+	File ImageFile;
+	Uri FilenameUri;
+	String FILENAME;
+	String Filename;
 
-	
+
+
 	public void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
@@ -159,7 +166,7 @@ public class MainTabActivity extends TabActivity {
 		.newTabSpec("Page 1.2")
 		.setIndicator("Mater T", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageOne2);		
-		
+
 		Intent intentPageTwo = new Intent().setClass(this,  LLRS_Selection_Longitudinal_Transverse_Form.class);
 		TabSpec tabSpecPageTwo = tabHost
 		.newTabSpec("Page 2.1")	
@@ -209,49 +216,49 @@ public class MainTabActivity extends TabActivity {
 		.newTabSpec("Page 8")
 		.setIndicator("Comm.", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageEight);
-				
+
 		Intent intentPageNine = new Intent().setClass(this, Structure_Selection_Form.class);
 		TabSpec tabSpecPageNine = tabHost
 		.newTabSpec("Page 9")
 		.setIndicator("Struc", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageNine);
-	
+
 		Intent intentPageTen = new Intent().setClass(this, Height_Selection_Form.class);
 		TabSpec tabSpecPageTen = tabHost
 		.newTabSpec("Page 10")
 		.setIndicator("Height", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageTen);
-		
+
 		Intent intentPageEleven = new Intent().setClass(this, Exposure_Form.class);
 		TabSpec tabSpecPageEleven = tabHost
 		.newTabSpec("Page 11")
 		.setIndicator("Exp", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageEleven);
-		
+
 		Intent intentPageTwelve = new Intent().setClass(this, Consequences_Form.class);
 		TabSpec tabSpecPageTwelve = tabHost
 		.newTabSpec("Page 11")
 		.setIndicator("Conseq", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageTwelve);
-		
+
 		tabHost.addTab(tabSpecPageOne);
 		tabHost.addTab(tabSpecPageOne2);
 		tabHost.addTab(tabSpecPageFive);
 		tabHost.addTab(tabSpecPageEight);
 		tabHost.addTab(tabSpecPageTwo);
 
-		
+
 		tabHost.addTab(tabSpecPageThree);
 		tabHost.addTab(tabSpecPageFour);
-		
+
 		tabHost.addTab(tabSpecPageSix);
 		tabHost.addTab(tabSpecPageSeven);
 		//tabHost.addTab(tabSpecPageTen);
-		
+
 		//tabHost.addTab(tabSpecPageNine);
 		tabHost.addTab(tabSpecPageEleven);
 		tabHost.addTab(tabSpecPageTwelve);
-		
+
 		initTabIcons(tabHost);
 		setTabColor();
 		completedTabs = new boolean[20];
@@ -401,41 +408,41 @@ public class MainTabActivity extends TabActivity {
 	public boolean saveData() {
 		if (DEBUG_LOG) Log.d(TAG, "Saving data");		
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
-		
-		
+
+
 		/*
 		EditText date1 = (EditText)findViewById(R.id.editTextDateVal1);
 		EditText date2 = (EditText)findViewById(R.id.editTextDateVal2);
 		String dateString1 = date1.getText().toString();
 		String dateString2 = date2.getText().toString();
 
-		
+
 		//surveyDataObject.putData("D1", dateString1);
 		//surveyDataObject.putData("D2",dateString2);
-		
-		
+
+
 		EditText surveyComment = (EditText)findViewById(R.id.editTextSurveyComment);
 		String surveyCommentString = surveyComment.getText().toString();
-		*/
-		
+		 */
+
 		mDbHelper = new GemDbAdapter(getBaseContext());      
 		mDbHelper.createDatabase();      
 		mDbHelper.open();		
-		
+
 		mDbHelper.insertGemData(surveyDataObject);
 		//Should really try / catch this
-		
+
 		mDbHelper.close();
 		//Toast.makeText(getApplicationContext(), "Survey data saved", Toast.LENGTH_SHORT).show();
 		surveyDataObject.clearGemSurveyObject();
 		surveyDataObject.unsavedEdits = false;
-		
+
 		return false;
 	}
 
 
-	
-	
+
+
 
 	public void backButtonPressed() {
 		// do something on back.
@@ -461,10 +468,10 @@ public class MainTabActivity extends TabActivity {
 			public void onClick(DialogInterface dialog,int id) {
 				// if this button is clicked, close
 				// current activity
-				
+
 				//This is needed to trigger the focus changed events of EditText fields
 				tabHost.setCurrentTab(0);
-				
+
 				saveData();
 				MainTabActivity.this.finish();
 
@@ -477,7 +484,7 @@ public class MainTabActivity extends TabActivity {
 				GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
 				surveyDataObject.clearGemSurveyObject();
 				surveyDataObject.unsavedEdits = false;
-				
+
 				MainTabActivity.this.finish();
 			}
 		});
@@ -490,8 +497,8 @@ public class MainTabActivity extends TabActivity {
 		return;
 	}
 
-	
-	
+
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
@@ -506,14 +513,98 @@ public class MainTabActivity extends TabActivity {
 
 		switch (item.getItemId()){
 
-		case 0: //Refresh / redraw map
-		
+		case 0: //Take Picture
+			if (DEBUG_LOG) Log.d(TAG,"camera class");
+
+			//getSurveyPoint();
+
+			GEMSurveyObject g = (GEMSurveyObject)getApplication();
+			UUID mediaId = UUID.randomUUID();
+			FILENAME = "" + mediaId.toString();	
+			//Button CameraButton;
+			//mAppSettings = getSharedPreferences(APP_SETTINGS, MODE_PRIVATE);
+			//FILENAME = (mAppSettings.getString(APP_SETTINGS_FILE_NAME, ""));				
+			Filename = Environment.getExternalStorageDirectory().getAbsolutePath() + "/idctdo/" + FILENAME +".jpg";
+
+			
+
+			if (DEBUG_LOG) Log.d(TAG,"CAMERA IMAGE FILENAME: " + Filename.toString());
+			ImageFile = new File(Filename);
+			FilenameUri = Uri.fromFile(ImageFile);		
+			Intent takePic = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+			takePic.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, FilenameUri);
+			takePic.putExtra("return-data", true);				
+			startActivityForResult(takePic, CAMERA_RESULT);
+
+			/*1
+			Intent PreviousPage = new Intent (EQForm_MapView.this, EQForm_ModifiedEMS_Camera.class);
+			startActivity(PreviousPage);*/
+
+
 			break;
 		default:
 			break;
 		}
 
 		return false;
+	}
+	
+	
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		//super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == CAMERA_RESULT) {
+			//ShowMessage(outputFileUri.toString());
+			if (resultCode == Activity.RESULT_OK) {
+				GEMSurveyObject g = (GEMSurveyObject)getApplication();
+				if (g.unsavedEdits) {
+					AlertDialog.Builder alert = new AlertDialog.Builder(this);
+					alert.setTitle("Photo Comment");
+					alert.setMessage("Add a comment to this photo");
+
+					// Set an EditText view to get user input 
+					final EditText input = new EditText(this);
+					alert.setView(input);
+
+					alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {
+							String value = input.getText().toString();
+							// Do something with value!
+
+							//Toast.makeText(this, "Photo captured", Toast.LENGTH_SHORT).show();
+							GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();				
+							UUID mediaUid = UUID.randomUUID();
+							surveyDataObject.putMediaData(
+									"MEDIA_UID", FILENAME,
+									"MEDIA_TYPE", "PHOTOGRAPH",
+									"COMMENTS", value,
+									"FILENAME", FILENAME + ".jpg"
+							);				
+						}
+					});
+
+					alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {
+							// Canceled.
+							//Toast.makeText(this, "Photo captured", Toast.LENGTH_SHORT).show();
+							GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();				
+							UUID mediaUid = UUID.randomUUID();
+							surveyDataObject.putMediaData(
+									"MEDIA_UID", FILENAME,
+									"MEDIA_TYPE", "PHOTOGRAPH",
+									"COMMENTS", "no comment entered",
+									"FILENAME", FILENAME + ".jpg"
+							);			
+						}
+					});
+
+					alert.show();
+				}
+			} else {
+				Toast.makeText(this, "Camera cancelled", Toast.LENGTH_SHORT).show();
+			}
+		}
 	}
 
 }

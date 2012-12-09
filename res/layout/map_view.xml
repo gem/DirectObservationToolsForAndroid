@@ -57,18 +57,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:background="@drawable/camera" />
-
-
-    <Button
-        android:id="@+id/btn_zoom_in"
-        android:layout_width="65dip"
-        android:layout_height="65dip"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/btn_locate_me"
-        android:layout_marginTop="30dp"
-        android:text="+"
-        android:textSize="40dp"
-        android:textStyle="bold" />
     
 
     <Button
@@ -81,14 +69,6 @@
         android:textSize="40dp"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/btn_refresh"
-        android:layout_width="65dip"
-        android:layout_height="65dip"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/btn_zoom_out"
-        android:text="refresh"
-        android:visibility="invisible" />
 
     <Button
         android:id="@+id/btn_select_vector_layer"
@@ -100,12 +80,22 @@
         android:background="@drawable/vector_layers_icon"
         android:visibility="invisible" />
 
+    <Button
+        android:id="@+id/btn_zoom_in"
+        android:layout_width="65dip"
+        android:layout_height="65dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/btn_locate_me"
+        android:text="+"
+        android:textSize="40dp"
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/text_view_gpsInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/btn_zoom_out"
         android:text="Lat: Lon: " />
 
 </RelativeLayout>
