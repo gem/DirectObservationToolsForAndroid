@@ -120,8 +120,10 @@ public class EQForm_MapView extends EQForm {
 	DecimalFormat df = new DecimalFormat("#0.#####");
 
 
+	public boolean showGPSDetails = false;
 
-
+	
+	
 	Button btn_locateMe;
 	Button btn_takeCameraPhoto;
 	Button btn_take_survey_photo;
@@ -212,7 +214,11 @@ public class EQForm_MapView extends EQForm {
 		if (DEBUG_LOG) Log.d(TAG,"sdcard Path: " + sdCardPath);
 		// Restore preferences
 		PreferenceManager.getDefaultSharedPreferences(this);
-		//SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+		//SharedPreferences settings = getSharedPreferences("R.xml.prefs"), 0);
+
+
+		
+		
 
 		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
@@ -278,7 +284,17 @@ public class EQForm_MapView extends EQForm {
 		super.onResume();
 
 		if (DEBUG_LOG) Log.d("IDCT","ON RESUME");
-
+		
+		
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		//SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);		
+		showGPSDetails= (settings.getBoolean("showPositionDetailsCheckBox", false));
+		
+		if (showGPSDetails) { 
+			text_view_gpsInfo.setVisibility(View.VISIBLE);//
+		} else {
+			text_view_gpsInfo.setVisibility(View.INVISIBLE);//
+		}
 		/*
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10f, mlocListener);
 		locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
@@ -1019,7 +1035,10 @@ public class EQForm_MapView extends EQForm {
 		public void onTick(long millisUntilFinished) {
 			if (DEBUG_LOG) Log.d(TAG,"seconds left: " +millisUntilFinished/1000);
 			if (DEBUG_LOG) Log.d(TAG,"currentLat:" + currentLatitude + " currentLon: " + currentLongitude);
-			text_view_gpsInfo.setText("GPS Information:\nLat: " + df.format(currentLatitude) + "\nLon: " + df.format(currentLongitude) + "\nAccuracy (Metres): " + currentLocationAccuracy + "\nProvider: " +currentLocationProvider );
+			
+			if (showGPSDetails) {
+				text_view_gpsInfo.setText("GPS Information:\nLat: " + df.format(currentLatitude) + "\nLon: " + df.format(currentLongitude) + "\nAccuracy (Metres): " + currentLocationAccuracy + "\nProvider: " +currentLocationProvider );
+			}
 			//drawGuidePoint2();
 			locateMe(false);
 			//mWebView.loadUrl("javascript:locateMe("+ currentLatitude+","+currentLongitude+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");

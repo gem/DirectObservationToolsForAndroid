@@ -21,14 +21,13 @@ import android.widget.Toast;
 
 
 
-
 public class DataBaseHelper extends SQLiteOpenHelper
 {	
 	private static String TAG = "DataBaseHelper"; // Tag just for the LogCat window
 	//destination path (location) of our database on device
 	private static String DB_PATH = "/data/data/com.dbhelper/databases/"; 
 	//private static String DB_NAME ="GEM_V001.s3db";// Database name
-	private static String DB_NAME ="gem_v12.1.db3";// 
+	private static String DB_NAME ="gem_7_12_12.db3";// 
 	private SQLiteDatabase mDataBase; 
 	private final Context mContext;
 

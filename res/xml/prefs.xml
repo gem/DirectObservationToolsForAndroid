@@ -9,6 +9,12 @@
             android:key="checkBox"
             android:summary="On/Off"
             android:title="Auto-Update position" />
+        <CheckBoxPreference
+            android:enabled="true"
+            android:key="showPositionDetailsCheckBox"
+            android:summary="On/Off"
+            android:defaultValue="false"
+            android:title="Show positioning details" />
     </PreferenceCategory>
     <PreferenceCategory
         android:summary="Enter Project Metadata"
@@ -33,15 +39,13 @@
             android:key="hazardNameTextPref"
             android:summary="Enter hazard name"
             android:title="Enter hazard name" />
-              
-        
     </PreferenceCategory>
     <PreferenceCategory
         android:summary="Map Layer Settings"
         android:title="Map Layer Settings" >
         <ListPreference
-            android:entries="@array/listOptions"
             android:enabled="false"
+            android:entries="@array/listOptions"
             android:entryValues="@array/listValues"
             android:key="listpref"
             android:summary="List preference example"
