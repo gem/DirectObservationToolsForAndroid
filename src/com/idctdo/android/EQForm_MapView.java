@@ -110,6 +110,7 @@ public class EQForm_MapView extends EQForm {
 	public boolean currentLocationSetAsCentre = true;
 	MyCount drawUpdateCounter;
 
+	
 	private ProgressDialog progressBar; 
 
 	File ImageFile;
@@ -118,11 +119,13 @@ public class EQForm_MapView extends EQForm {
 	String Filename;
 
 	DecimalFormat df = new DecimalFormat("#0.#####");
+	DecimalFormat dfRounded = new DecimalFormat("#0");
 
-
-	public boolean showGPSDetails = false;
 
 	
+	public boolean showGPSDetails = false;
+
+	public boolean isEditingPoints = false;
 	
 	Button btn_locateMe;
 	Button btn_takeCameraPhoto;
@@ -133,12 +136,14 @@ public class EQForm_MapView extends EQForm {
 	Button btn_zoomIn;
 	Button btn_zoomOut;
 	Button btn_refreshLayer;
+	Button btn_edit_points;
 
 	File vectorsFile;
 	File mapTilesFile;
 	String sdCardPath;
 
 	TextView text_view_gpsInfo;
+	
 
 
 	@Override
@@ -260,8 +265,10 @@ public class EQForm_MapView extends EQForm {
 		btn_zoomOut =(Button)findViewById(R.id.btn_zoom_out);
 		btn_zoomOut.setOnClickListener(zoomOutListener);
 
+		
 
-
+		btn_edit_points =(Button)findViewById(R.id.btn_edit_points); 
+		btn_edit_points.setOnClickListener(editPointsListener);
 
 		text_view_gpsInfo = (TextView)findViewById(R.id.text_view_gpsInfo);
 
@@ -375,8 +382,9 @@ public class EQForm_MapView extends EQForm {
 			mWebView.loadUrl("javascript:map.zoomIn()");
 			//loadSurveyPoints();
 		}
-
 	};
+	
+	
 	private OnClickListener zoomOutListener  = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -399,8 +407,23 @@ public class EQForm_MapView extends EQForm {
 			if (DEBUG_LOG) Log.d(TAG,"locate me button clicked");
 			//mWebView.loadUrl("javascript:locateMe("+ currentLatitude+","+currentLongitude+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");
 			locateMe(true);
-
-
+		}
+	};
+	
+	private OnClickListener editPointsListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			//addPoint();
+			if (DEBUG_LOG) Log.d(TAG,"locate me button clicked");
+			if (isEditingPoints) {
+				mWebView.loadUrl("javascript:startEditingMode(false)");
+				isEditingPoints = false;
+			} else {
+				mWebView.loadUrl("javascript:startEditingMode(true)");
+				isEditingPoints = true;
+			}
+			
+			locateMe(true);
 		}
 	};
 
@@ -538,7 +561,6 @@ public class EQForm_MapView extends EQForm {
 
 		//g.putData("OBJ_UID", id.toString());
 		if (DEBUG_LOG) Log.d(TAG,"GLOBAL VARS UID " + g.getUid());	
-
 		if (DEBUG_LOG) Log.d(TAG,"GLOBAL VARS " + g.getLon()+ " lat: " + g.getLat());
 		g.setData(1);
 
@@ -559,13 +581,12 @@ public class EQForm_MapView extends EQForm {
 
 
 
-	//Called from JS with point location of survey
 	public boolean getSurveyPoint() {
 		if (DEBUG_LOG) Log.d(TAG,"getting point location from Openlayers");
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
 		int data=surveyDataObject.getData();
 		if (DEBUG_LOG) Log.d(TAG,"TEST GLOBALS: " + data);
-		mWebView.loadUrl("javascript:getSurveyPoint()");
+		mWebView.loadUrl("javascript:updateSurveyPointPositionFromMap()");
 		return false; 		
 	}
 
@@ -822,11 +843,6 @@ public class EQForm_MapView extends EQForm {
 					choiceList, 
 					selected, 
 
-
-
-
-
-
 					new DialogInterface.OnClickListener() {
 						@Override
 
@@ -920,6 +936,7 @@ public class EQForm_MapView extends EQForm {
 			mWebView.loadUrl("javascript:addKmlStringToMap("+ egg +")");
 
 
+			
 			int selected = -1; // does not select anything
 			final CharSequence[] choiceList = getVectorLayers();
 			builder.setSingleChoiceItems(
@@ -1037,7 +1054,7 @@ public class EQForm_MapView extends EQForm {
 			if (DEBUG_LOG) Log.d(TAG,"currentLat:" + currentLatitude + " currentLon: " + currentLongitude);
 			
 			if (showGPSDetails) {
-				text_view_gpsInfo.setText("GPS Information:\nLat: " + df.format(currentLatitude) + "\nLon: " + df.format(currentLongitude) + "\nAccuracy (Metres): " + currentLocationAccuracy + "\nProvider: " +currentLocationProvider );
+				text_view_gpsInfo.setText("GPS Information:\nLat: " + df.format(currentLatitude) + "\nLon: " + df.format(currentLongitude) + "\nAccuracy (Metres): " + dfRounded.format(currentLocationAccuracy) + "\nProvider: " +currentLocationProvider );
 			}
 			//drawGuidePoint2();
 			locateMe(false);

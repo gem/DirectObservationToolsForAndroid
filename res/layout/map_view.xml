@@ -26,14 +26,6 @@
         android:layout_alignParentTop="true"
         android:background="@drawable/layers_icon"
         android:text="" />
-
-    <Button
-        android:id="@+id/btn_locate_me"
-        android:layout_width="65dip"
-        android:layout_height="65dip"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/btn_select_layer"
-        android:text="Locate Me" />
     
     
     
@@ -97,5 +89,23 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/btn_zoom_out"
         android:text="Lat: Lon: " />
+
+    <Button
+        android:id="@+id/btn_locate_me"
+        android:layout_width="65dip"
+        android:layout_height="65dip"
+        android:layout_below="@+id/btn_select_layer"
+        android:layout_marginTop="36dp"
+        android:layout_toRightOf="@+id/btn_select_vector_layer"
+        android:text="Locate Me" />
+
+    <Button
+        android:id="@+id/btn_edit_points"
+        android:layout_width="65dip"
+        android:layout_height="65dip"
+        android:layout_above="@+id/btn_locate_me"
+        android:layout_marginRight="35dp"
+        android:layout_toLeftOf="@+id/btn_select_layer"
+        android:text="Edit Points" />
 
 </RelativeLayout>

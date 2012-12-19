@@ -35,9 +35,14 @@ var jsonStr;
 var cacheWrite;
 var cacheRead;
 
-var selectControl;
+var newSurveyPointSelectControl;
 var drawPointControl;
 var regularPolygonControl;
+
+var prevSurveyPointsSelectControl;
+var prevSurveyPointsModifyControl;
+
+var isEditingPoints = false;
 
 var ll;
 
@@ -278,9 +283,7 @@ function init(){
 			numZoomLevels: 16
 		}
 	);
-	
-	
-  
+	  
 					  
 
 	var tiles3 = new OpenLayers.Layer.XYZ(
@@ -290,8 +293,6 @@ function init(){
             sphericalMercator: true
         }
 	);
-
-
 
 					
 	var localTMSTiles = new OpenLayers.Layer.XYZ("OpenLayers.Layer.XYZ",
@@ -349,25 +350,7 @@ function init(){
 	    map.addControl(cacheRead);    
 	}
     
-    
-    /*
-    // User interface for browser caching
-    var status = document.getElementById("status");
-    document.getElementById("clear").onclick = function() {
-        OpenLayers.Control.CacheWrite.clearCache();
-        updateStatus();
-    };
-    
-    // update the number of cached tiles and detect local storage support
-    function updateStatus() {
-        if (window.localStorage) {
-            status.innerHTML = localStorage.length + " entries in cache.";
-        } else {
-            status.innerHTML = "Local storage not supported. Try a different browser.";
-        }
-    }    
-    */
-       
+   
 	
 	
 	if (DEBUG_DISPLAY_PANZOOM) {
@@ -377,6 +360,13 @@ function init(){
 	 
 	map.addControl( new OpenLayers.Control.LoadingPanel());
 	 
+
+ 	// add animation transition when zooming 
+	for (var i=map.layers.length-1; i>=0; --i) {
+		map.layers[i].animationEnabled = true;
+	}
+
+
 	
     // Google.v3 uses EPSG:900913 as projection, so we have to
     // transform our coordinates
@@ -384,12 +374,9 @@ function init(){
         new OpenLayers.Projection("EPSG:4326"),
         map.getProjectionObject()
     ), 5);
-    
-		
-    
-	//saveLayout(0,0);
 
-	selectControl = new OpenLayers.Control.SelectFeature(myPositions, {
+
+	newSurveyPointSelectControl = new OpenLayers.Control.SelectFeature(myPositions, {
 		hover: true,
 		highlightOnly: false,
 		multiple:false,
@@ -397,45 +384,28 @@ function init(){
 		clickout: false,
 		toggle:false,
 		onUnselect: function() {  
-		
+			console.log("UNSELECTED MY POSITIONS");
 		},
 		onSelect: function(feature) { 
-
+			console.log("SELECTED MY POSITIONS");
 		} 		
 	});			
-	map.addControl(selectControl);
-	selectControl.activate();
-
-
+	map.addControl(newSurveyPointSelectControl);
+	newSurveyPointSelectControl.activate();	
+	
 	dragControl = new OpenLayers.Control.DragFeature(myPositions, {
 		vertexRenderIntent: 'temporary',
 		displayClass: 'olControlZoomBox',
 		clickout: false,
 		onComplete: function(feature,pixel) {
-			console.log("drag ended");
-			/*
-			var feature2 = feature;
-			testll = feature;
-			
-			
-			var myLocation = new OpenLayers.Geometry.Point(testll.geometry.x, testll.geometry.y);
-			myLocation.transform(map.getProjectionObject(),new OpenLayers.Projection("EPSG:4326"));
-			
-			console.log("drag ended feature: " + myLocation.x + "," +myLocation.y);
-			
-			currentSurveyPointLon = myLocation.x;
-			currentSurveyPointLon = myLocation.y;
-			*/
-			//updateSurveyPointLocationInJava(myLocation.x,myLocation.y);
-			
+			console.log("drag ended");			
 		},
 		toggle:false
 	});	
 	map.addControl(dragControl);
 	dragControl.activate();
-
 	
-	modifyControl = new OpenLayers.Control.ModifyFeature(myPositions, {
+	newSurveyPointModifyControl = new OpenLayers.Control.ModifyFeature(myPositions, {
 		vertexRenderIntent: 'temporary',
 		displayClass: 'olControlZoomBox',
 		clickout: false,
@@ -444,42 +414,60 @@ function init(){
 		mode: OpenLayers.Control.ModifyFeature.RESHAPE,
 		createVertices: false
 	});	
-	map.addControl(modifyControl);
-	modifyControl.activate();
+	map.addControl(newSurveyPointModifyControl);
+	newSurveyPointModifyControl.activate();
 
 
-	polyOptions = {sides: 4};
-	regularPolygonControl = new OpenLayers.Control.DrawFeature(locationPointLayer,
-									OpenLayers.Handler.RegularPolygon,
-									{handlerOptions: polyOptions});
-	
-	map.addControl(regularPolygonControl);
 
-	/*
-	//myPositions.events.on({"beforefeaturesadded": alert("features"), "beforefeatureadded":alert("feature")});
-	drawPointControl= new OpenLayers.Control.DrawFeature(myPositions,OpenLayers.Handler.Point),
-	map.addControl(drawPointControl);
-	drawPointControl.activate();
-	*/
-	
-	
 
-	var click = new OpenLayers.Control.Click( { trigger: function(e) {
+
+	prevSurveyPointsSelectControl = new OpenLayers.Control.SelectFeature(prevSurveyPoints, {
+		hover: false,
+		highlightOnly: true,
+		multiple:false,
+		enderIntent: "temporary",
+		clickout: false,
+		toggle:false,
+		onUnselect: function() {  
+			console.log("PREV SURVEY POINTS UNSELECTED");
+		},
+		onSelect: function(feature) { 
+			console.log("PREV SURVEY POINTS SELECTED");
+		},
+		onclick : function() {  
+			console.log("PREV SURVEY POINTS Clicked");
+		}
+	});			
+	map.addControl(prevSurveyPointsSelectControl);	
 		
-		console.log("clicked event");		
-		console.log("map click MOBILE");
-		var lonlat = map.getLonLatFromViewPortPx(e.xy);
-		//alert('mousedown');
-		// create some attributes for the feature
-		
-		//myLocation.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject() );
-		console.log("opx" + lonlat);
-		
-		var myLocation = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat );
-		myLocation.transform(map.getProjectionObject(),new OpenLayers.Projection("EPSG:4326"));		
-		drawCandidateSurveyPoint(myLocation.x, myLocation.y);
-		
-		
+	prevSurveyPointsDragControl = new OpenLayers.Control.DragFeature(prevSurveyPoints, {
+		vertexRenderIntent: 'temporary',
+		displayClass: 'olControlZoomBox',
+		clickout: false,
+		onComplete: function(feature,pixel) {
+			console.log("PREV SURVEY POINTS drag ended");
+		},
+		toggle:false
+	});	
+	map.addControl(prevSurveyPointsDragControl);
+	//prevSurveyPointsDragControl.activate();
+
+
+	var click = new OpenLayers.Control.Click( { trigger: function(e) {		
+
+		if (!isEditingPoints) {
+			console.log("clicked event");		
+			console.log("map click MOBILE");
+			var lonlat = map.getLonLatFromViewPortPx(e.xy);
+			//alert('mousedown');
+			// create some attributes for the feature			
+			//myLocation.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject() );
+			console.log("opx" + lonlat);
+			
+			var myLocation = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat );
+			myLocation.transform(map.getProjectionObject(),new OpenLayers.Projection("EPSG:4326"));		
+			drawCandidateSurveyPoint(myLocation.x, myLocation.y);		
+		}
 	}});
 	 
 	map.addControl(click);
@@ -487,6 +475,7 @@ function init(){
     
     
 
+	
 	//This doesn't seem to work on the Galaxy Tab / Android 2.3.4
 	map.events.register("click", map , function(e){
 		/*
@@ -512,7 +501,7 @@ function init(){
 			
 			//lonlat.transform(map.getProjectionObject(),new OpenLayers.Projection("EPSG:4326"));
 
-			updateSurveyPointLocationInJava(lonlat.lon,lonlat.lat);
+			updateSurveyPointPositionFromMap(lonlat.lon,lonlat.lat);
 			*/
 	});
 	
@@ -522,11 +511,7 @@ function init(){
 	
 	map.events.register('mousedown', function() { alert('mousedown')});
 	
-	// add animation transition when zooming 
-	for (var i=map.layers.length-1; i>=0; --i) {
-		map.layers[i].animationEnabled = true;
-	}
-    
+
 	
 	//map.setCenter(new OpenLayers.LonLat(point.x, point.y), 5);
 
@@ -574,19 +559,13 @@ function init(){
 	prevSurveyPoints.redraw();
 	
 	
-	//getLayersNames();
-	//getCurrentLocation();
-	
-	/*
-	var myLocation = new OpenLayers.Geometry.Point(-131653.22657435,6974000.4013905);
-	var feature = new OpenLayers.Feature.Vector(myLocation,attributes);
-	myPositions.addFeatures([feature]);		
-		*/	
-	 //loadSurveyPoints(-1.1841098, 52.9516616); 
+
 } //end of init()
 
 
 
+
+//Add a single point to the map which can be edited
 function drawCandidateSurveyPoint(lon, lat) {
 		var attributes = {name: "my position"};		
 		var myLocation = new OpenLayers.Geometry.Point(lon, lat);
@@ -596,30 +575,38 @@ function drawCandidateSurveyPoint(lon, lat) {
 		myPositions.removeAllFeatures();			
 		myPositions.addFeatures([feature]);			
 		myPositions.redraw();
-		
-		/*
-	    while( map.popups.length ) {
-        	map.removePopup(map.popups[0]);
-        	
-    	}
-		popup = new OpenLayers.Popup("chicken", 
-                                 feature.geometry.getBounds().getCenterLonLat(),
-                                 null,
-                                 "<div style='font-size:1em'>Feature: </div>",
-                                 null, false);
-        feature.popup = popup;
-        map.addPopup(popup);
-        */
-
-        
-		updateSurveyPointLocationInJava();
-		
-}
-function addBaseLayers() {
-	
+		        
+		updateSurveyPointPositionFromMap();
 }
 
 
+//Enter editing mode to allow selection of prevSurveyPoints
+//Called from Java
+function startEditingMode(startEditing) {
+	if (startEditing) {
+		isEditingPoints = true;
+		newSurveyPointSelectControl.deactivate();
+		newSurveyPointModifyControl.deactivate();
+		dragControl.deactivate();
+
+		prevSurveyPointsDragControl.activate()
+		prevSurveyPointsSelectControl.activate()
+
+	} else {
+		isEditingPoints = false;
+		newSurveyPointSelectControl.activate();
+		newSurveyPointModifyControl.activate();
+		dragControl.activate();
+
+		prevSurveyPointsDragControl.deactivate()
+		prevSurveyPointsSelectControl.deactivate()		
+	}
+}
+
+
+
+//Draw positioning point and accuracy circle on map
+//Called from Java
 function locateMe(latitude,longitude,locationAccuracy,setCentre) {
 	/*document.getElementById('boldStuff2').innerHTML = "saving layout..." + latitude + ", " + longitude; */
 
@@ -637,58 +624,38 @@ function locateMe(latitude,longitude,locationAccuracy,setCentre) {
 	var myLocation = new OpenLayers.Geometry.Point(ll.lon, ll.lat);
 	//var feature = new OpenLayers.Feature.Vector(myLocation, attributes);
 	var feature = new OpenLayers.Feature.Vector(myLocation);
-
-	// stuff for drawing lines
-	/*
-   var points = new Array(
-				  new OpenLayers.Geometry.Point(ll.lon, ll.lat),
-				  new OpenLayers.Geometry.Point(ll.lon+10, ll.lat+150)
-				  );
-
-
-
-	var line = new OpenLayers.Geometry.LineString(points);
-
-	var style = { strokeColor: '#0000ff', 
-				strokeOpacity: 0.5,
-				strokeWidth: 15,
-				fillOpacity: 0.5,
-				pointRadius: 15,
-	};
-
-	var lineFeature = new OpenLayers.Feature.Vector(line, null, style);
-	*/
-
 	
 	locationPointLayer.removeAllFeatures();
 	
 	
+	//Add the positioning / GPS accuracy circle
 	var origin = new OpenLayers.Geometry.Point(ll.lon, ll.lat);
-
     var circle = OpenLayers.Geometry.Polygon.createRegularPolygon(origin, locationAccuracy, 40,0);
+	var circleFeature = new OpenLayers.Feature.Vector(circle, null)
 
-	var circleFeature = new OpenLayers.Feature.Vector(circle, null);
-		
+
+	//Add the accuracy and point
 	locationPointLayer.addFeatures([circleFeature,feature]);
-	
 	locationPointLayer.redraw();
-	
 }
 
 
 
-
-
+//Remove the position and accuracy markers
+//Called from Java
 function clearMyPositions() {
 	myPositions.removeAllFeatures();
 	myPositions.redraw();
 }
 
-
+//Remove the position and accuracy markers
+//Called from Java
 function clearMySurveyPoints() {
 	prevSurveyPoints.destroyFeatures();
 }
 
+//Add previous survey points to the map
+//Called from Java
 function loadSurveyPointsOnMap(lon,lat) {
 	var points = new Array(
 				  new OpenLayers.Geometry.Point(lon,lat)
@@ -706,7 +673,10 @@ function loadSurveyPointsOnMap(lon,lat) {
 	prevSurveyPoints.redraw();
 }
 
-function updateSurveyPointLocationInJava() {
+
+//Get the current candidate / new survey point and update Java with it
+//Calls Java
+function updateSurveyPointPositionFromMap() {
 	
 	var pt = myPositions.features[0].geometry;
 	var myLocation = new OpenLayers.Geometry.Point(pt.x, pt.y);
@@ -720,14 +690,10 @@ function updateSurveyPointLocationInJava() {
 	}
 }
 
-function getSurveyPoint() {
-	updateSurveyPointLocationInJava();	
-}
 
 
 
-
-
+/*
 function startNextScreen() {
 	var result = window.webConnector.loadLayerNames();  
 }
@@ -744,9 +710,9 @@ function getCurrentLocation() {
 	
 	}	
 }
+*/
 
-
-
+/*
 function getLayersNames() {
 	var layers = map.layers;
 	layerNames = [];
@@ -768,14 +734,19 @@ function nextLayer(index) {
 	var layers = map.layers;
 	map.setBaseLayer(layers[currentLayerIndex+index]);
 }
+*/
 
 
+//Set the map Layer
+//Called from Java
 function setMapLayer(index) {
 	var layers = map.layers;
 	map.setBaseLayer(layers[index]);
 }
 
 
+//Add an offline base map to the map
+//Called from Java
 function addOfflineBaseMap(tileLocationPath,zoom) {
 	var zoomLevel = parseInt(zoomLevel);
 	var layers = map.layers;	
@@ -807,6 +778,8 @@ function addOfflineBaseMap(tileLocationPath,zoom) {
 }
 
 
+//Add an offline map based on the TMS tiling scheme
+//Called from Java
 function addOfflineTMSMap(tileLocationPath,zoom) {
 
 	var zoomLevel = parseInt(zoomLevel);
@@ -830,7 +803,8 @@ function addOfflineTMSMap(tileLocationPath,zoom) {
 }
 
 
-
+//Add KML to the map
+//Called from Java
 function addLocalKmlLayer(localFilePath) {
 
 /*
@@ -853,6 +827,8 @@ function addLocalKmlLayer(localFilePath) {
 
 }
 
+//Add KML to the map
+//Called from Java
 function addKmlStringToMap(kmlString) {
 	var layer = new OpenLayers.Layer.Vector("KML");
     layer.addFeatures(GetFeaturesFromKMLString(kmlString));
@@ -860,8 +836,8 @@ function addKmlStringToMap(kmlString) {
 }
 
 
-
-function GetFeaturesFromKMLString (strKML) {
+//Helper method to get features from KML string
+function GetFeaturesFromKMLString(strKML) {
 	var format = new OpenLayers.Format.KML({
 		'internalProjection': map.baseLayer.projection,
 		'externalProjection': new OpenLayers.Projection("EPSG:4326")
@@ -872,7 +848,7 @@ function GetFeaturesFromKMLString (strKML) {
 
 
 
-
+//Helper method to OSM tile URLS
 function osm_getTileURL(bounds) {
 
 	//console.log("zoom:" + map.getZoom());
