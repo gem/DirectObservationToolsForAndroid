@@ -12,6 +12,7 @@ public class GEMSurveyObject extends Application {
 	private String uid;
 	public boolean unsavedEdits = false;
 	
+	public boolean isExistingRecord = false;
 	
 	
 	private double currentSurveyPointLon = 0;

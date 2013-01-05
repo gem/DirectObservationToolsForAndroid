@@ -26,7 +26,7 @@ import android.widget.Toast;
 
 
 
-public class Occupancy_Selection_Form extends EQForm {
+public class Occupancy_Selection_Form extends Activity {
 
 	public boolean DEBUG_LOG = false; 
 

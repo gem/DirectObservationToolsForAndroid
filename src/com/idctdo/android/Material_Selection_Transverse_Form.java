@@ -27,7 +27,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 
-public class Material_Selection_Transverse_Form extends EQForm {
+public class Material_Selection_Transverse_Form extends Activity {
 
 	public boolean DEBUG_LOG = false; 
 
@@ -112,11 +112,6 @@ public class Material_Selection_Transverse_Form extends EQForm {
 			mDbHelper.open();
 
 
-
-			Cursor testdata = mDbHelper.getGemObjects();
-			if (DEBUG_LOG) Log.d("IDCT","getTestData-GetColumnName " + DatabaseUtils.dumpCursorToString(testdata));
-
-
 			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeType);     
 			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 			if (DEBUG_LOG) Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
@@ -134,6 +129,12 @@ public class Material_Selection_Transverse_Form extends EQForm {
 			Cursor allAttributeTypesFifthLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(fifthLevelAttributeType);
 			fifthLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesThirdLevelCursor);
 
+			allAttributeTypesTopLevelCursor.close();
+			allAttributeTypesSecondLevelCursor.close();
+			allAttributeTypesThirdLevelCursor.close();
+			allAttributeTypesFourthLevelCursor.close();
+			allAttributeTypesFifthLevelCursor.close();
+			
 			mDbHelper.close();
 
 			selectedAdapter = new SelectedAdapter(this,0,topLevelAttributesList);
@@ -215,6 +216,7 @@ public class Material_Selection_Transverse_Form extends EQForm {
 						secondLevelAttributesList.add(o1);
 						mCursor.moveToNext();
 					}		     
+					mCursor.close();
 					mDbHelper.close();    		          
 
 
@@ -315,6 +317,7 @@ public class Material_Selection_Transverse_Form extends EQForm {
 						relativeLayout5.setVisibility(View.VISIBLE);
 						listview5.setVisibility(View.VISIBLE);
 					}
+					mCursor.close();
 					mDbHelper.close();    
 
 

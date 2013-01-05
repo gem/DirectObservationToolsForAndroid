@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 
 
-public class Irregularity_Selection_Form extends EQForm {
+public class Irregularity_Selection_Form extends Activity {
 	public boolean DEBUG_LOG = false; 
 
 	private String topLevelAttributeDictionary = "DIC_STRUCTURAL_IRREGULARITY";

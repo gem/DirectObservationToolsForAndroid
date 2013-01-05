@@ -8,3 +8,6 @@ Direct Observation
 Android Tool
 
 
+
+
+Tested devices

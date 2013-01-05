@@ -24,7 +24,7 @@ import android.widget.TabHost;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
-public class Consequences_Form extends EQForm {
+public class Consequences_Form extends Activity {
 	public boolean DEBUG_LOG = false; 
 	
 	public TabActivity tabActivity;

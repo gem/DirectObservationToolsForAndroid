@@ -2,14 +2,15 @@
 //Enter editing mode to allow selection of prevSurveyPoints
 //Called from Java
 function startEditingMode(startEditing) {
+	
 	if (startEditing) {
 		isEditingPoints = true;
 		newSurveyPointSelectControl.deactivate();
 		newSurveyPointModifyControl.deactivate();
 		dragControl.deactivate();
 
-		prevSurveyPointsDragControl.activate()
-		prevSurveyPointsSelectControl.activate()
+		prevSurveyPointsDragControl.activate();
+		prevSurveyPointsSelectControl.activate();
 
 	} else {
 		isEditingPoints = false;
@@ -17,9 +18,10 @@ function startEditingMode(startEditing) {
 		newSurveyPointModifyControl.activate();
 		dragControl.activate();
 
-		prevSurveyPointsDragControl.deactivate()
-		prevSurveyPointsSelectControl.deactivate()		
+		prevSurveyPointsDragControl.deactivate();
+		prevSurveyPointsSelectControl.deactivate();		
 	}
+	
 }
 
 
@@ -75,16 +77,16 @@ function clearMySurveyPoints() {
 
 //Add previous survey points to the map
 //Called from Java
-function loadSurveyPointsOnMap(lon,lat) {
+function loadSurveyPointsOnMap(lon,lat,gemIdString) {
 	var points = new Array(
 				  new OpenLayers.Geometry.Point(lon,lat)
 				  );
     for (var i = 0; i < points.length; i++) {	
 
 		var myLocation = points[i];
-		myLocation.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject() );
+		myLocation.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
 		// create some attributes for the feature
-		var attributes = {name: "my name", bar: "foo"};
+		var attributes = {id: gemIdString, name: "my name", bar: "foo"};
 		var feature = new OpenLayers.Feature.Vector(myLocation, attributes);
 		
 		prevSurveyPoints.addFeatures([feature]);
@@ -95,19 +97,27 @@ function loadSurveyPointsOnMap(lon,lat) {
 
 //Get the current candidate / new survey point and update Java with it
 //Calls Java
-function updateSurveyPointPositionFromMap() {
-	
+function updateSurveyPointPositionFromMap(currentlyEditingPoints) {	
 	var pt = myPositions.features[0].geometry;
 	var myLocation = new OpenLayers.Geometry.Point(pt.x, pt.y);
 
 	myLocation.transform(map.getProjectionObject(),new OpenLayers.Projection("EPSG:4326"));
 	console.log("updating survey point: " + myLocation.x + "," + myLocation.y);
+    var id;
+    if (currentlyEditingPoints) {
+    	id = "not set";
+	} else{
+		console.log("updating survey PREVIOUS point: ");
+		id = editingPointGemId;
+	}
+
 	try {
-		var jsonData = window.webConnector.loadSurveyPoint(myLocation.x, myLocation.y);
+		var jsonData = window.webConnector.loadSurveyPoint(myLocation.x, myLocation.y,id);
 	} catch(err) {
-		console.log("loadSurveyPoint err");		
+		console.log("loadSurveyPoint error");		
 	}
 }
+
 
 
 

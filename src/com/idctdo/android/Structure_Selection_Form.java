@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 
 
-public class Structure_Selection_Form extends EQForm {
+public class Structure_Selection_Form extends Activity {
 	public boolean DEBUG_LOG = false; 
 	
 	private String topLevelAttributeType = "DATE";

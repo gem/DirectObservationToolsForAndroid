@@ -22,7 +22,7 @@ import android.widget.TabHost;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
-public class LLRS_Selection_Transverse_Form extends EQForm {
+public class LLRS_Selection_Transverse_Form extends Activity {
 	
 	private static final String TAG = "IDCT";
 	public boolean DEBUG_LOG = false; 

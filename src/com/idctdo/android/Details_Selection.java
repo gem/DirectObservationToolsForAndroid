@@ -24,7 +24,7 @@ import android.widget.TabHost;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
-public class Details_Selection extends EQForm {
+public class Details_Selection extends Activity {
 
 
 	private ArrayList list;

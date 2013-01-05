@@ -27,7 +27,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 
-public class Material_Selection_Longitudinal_Form extends EQForm {
+public class Material_Selection_Longitudinal_Form extends Activity {
 
 	public boolean DEBUG_LOG = false; 
 
@@ -111,11 +111,6 @@ public class Material_Selection_Longitudinal_Form extends EQForm {
 			mDbHelper.open();
 
 
-
-			Cursor testdata = mDbHelper.getGemObjects();
-			if (DEBUG_LOG) Log.d("IDCT","getTestData-GetColumnName " + DatabaseUtils.dumpCursorToString(testdata));
-
-
 			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeType);     
 			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 			if (DEBUG_LOG) Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
@@ -133,6 +128,12 @@ public class Material_Selection_Longitudinal_Form extends EQForm {
 			Cursor allAttributeTypesFifthLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(fifthLevelAttributeType);
 			fifthLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesThirdLevelCursor);
 
+			allAttributeTypesTopLevelCursor.close();
+			allAttributeTypesSecondLevelCursor.close();
+			allAttributeTypesThirdLevelCursor.close();
+			allAttributeTypesFourthLevelCursor.close();
+			allAttributeTypesFifthLevelCursor.close();
+			
 			mDbHelper.close();
 
 			selectedAdapter = new SelectedAdapter(this,0,topLevelAttributesList);
@@ -202,19 +203,14 @@ public class Material_Selection_Longitudinal_Form extends EQForm {
 
 					mCursor.moveToFirst();
 					while(!mCursor.isAfterLast()) {
-						//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-
 						DBRecord o1 = new DBRecord();		
-
-						//if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-						//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
-
 						o1.setAttributeDescription(mCursor.getString(0));
 						o1.setAttributeValue(mCursor.getString(1));
 						o1.setJson(mCursor.getString(2));
 						secondLevelAttributesList.add(o1);
 						mCursor.moveToNext();
-					}		     
+					}		  
+					mCursor.close();
 					mDbHelper.close();    		          
 
 
@@ -251,12 +247,9 @@ public class Material_Selection_Longitudinal_Form extends EQForm {
 					if (DEBUG_LOG) Log.d("IDCT", "MATERIAL TECH ON CLICK" + thirdLevelAttributeType + " and " + selectedAdapter2.getItem(position).getJson());
 
 					Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(thirdLevelAttributeType,selectedAdapter2.getItem(position).getJson());
-
 					if (mCursor.getCount() > 0) {						
 						mCursor.moveToFirst();
 						while(!mCursor.isAfterLast()) {
-							//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-
 							DBRecord o1 = new DBRecord();		
 
 							if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
@@ -310,7 +303,7 @@ public class Material_Selection_Longitudinal_Form extends EQForm {
 							fifthLevelAttributesList.add(o1);
 							mCursor.moveToNext();
 						}		     
-
+						mCursor.close();
 						mDbHelper.close();    
 
 						RelativeLayout relativeLayout5 = (RelativeLayout) findViewById(R.id.rel5);

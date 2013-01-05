@@ -74,7 +74,7 @@ import android.widget.Toast;
 
 
 
-public class EQForm_MapView extends EQForm {
+public class EQForm_MapView extends Activity {
 
 	public boolean DEBUG_LOG = true; 
 
@@ -110,6 +110,10 @@ public class EQForm_MapView extends EQForm {
 	public boolean currentLocationSetAsCentre = true;
 	MyCount drawUpdateCounter;
 
+	public long minTimePositionUpdates = 5000;
+	public float minDistPositionUpdates = 10f;
+	
+	
 	
 	private ProgressDialog progressBar; 
 
@@ -233,8 +237,8 @@ public class EQForm_MapView extends EQForm {
 		}
 
 		mlocListener = new MyLocationListener();
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10f, mlocListener);
-		locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
+		locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
 
 		currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
@@ -321,7 +325,9 @@ public class EQForm_MapView extends EQForm {
 
 
 		drawUpdateCounter = new MyCount(100000000,1000);
-		drawUpdateCounter.start();				
+		//drawUpdateCounter.start();
+		
+		
 		mWebView.loadUrl("javascript:clearMyPositions()");
 		loadPrevSurveyPoints();
 
@@ -364,6 +370,9 @@ public class EQForm_MapView extends EQForm {
 		// TODO Auto-generated method stub
 		super.onPause();
 		Log.d("IDCT", "On Pause .....");
+		
+		locationManager.removeUpdates(mlocListener);
+		
 		drawUpdateCounter.cancel();
 
 	}
@@ -410,6 +419,8 @@ public class EQForm_MapView extends EQForm {
 		}
 	};
 	
+	
+	
 	private OnClickListener editPointsListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -432,12 +443,12 @@ public class EQForm_MapView extends EQForm {
 		public void onClick(View v) {
 			if (DEBUG_LOG) Log.d(TAG,"next survey form");
 
+			isEditingPoints = false;
+			mWebView.loadUrl("javascript:startEditingMode(false)");
+			
 			getSurveyPoint();
 			Intent ModifiedEMS98 = new Intent (EQForm_MapView.this, MainTabActivity.class);
 			startActivity(ModifiedEMS98);
-
-
-
 		}
 	};
 
@@ -448,7 +459,9 @@ public class EQForm_MapView extends EQForm {
 			if (DEBUG_LOG) Log.d(TAG,"camera class");
 
 			getSurveyPoint();
-
+							
+			
+			
 			GEMSurveyObject g = (GEMSurveyObject)getApplication();
 			UUID mediaId = UUID.randomUUID();
 			FILENAME = "" + mediaId.toString();	
@@ -546,17 +559,23 @@ public class EQForm_MapView extends EQForm {
 	//Called from JS with point location of survey
 	//This point forms the survey point and should be saved in the db
 	//Can then mark the map tab as complete
-	public boolean loadSurveyPoint(final double lon, final double lat ) {
-		if (DEBUG_LOG) Log.d(TAG,"point location from Openlayers. Lon:" + lon + " lat: " + lat);
+	public boolean loadSurveyPoint(final double lon, final double lat,final String gemId) {
+		if (DEBUG_LOG) Log.d(TAG,"edited point location from Openlayers. Lon:" + lon + " lat: " + lat+ " gemId: " + gemId);
+		
 		//mWebView.loadUrl("javascript:locateMe("+ lat+","+lon+","+currentLocationAccuracy+","+true+")");
-
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
 		g.setLon(lon);
 		g.setLat(lat);
-		//Generate a uid for this survey point
-		UUID id = UUID.randomUUID();
-		g.setUid(id.toString());
-		g.unsavedEdits = true;
+		
+		if (gemId == "1") {
+			g.setUid(gemId);
+			g.isExistingRecord = true; 
+		} else {
+			//Generate a uid for this survey point
+			UUID id = UUID.randomUUID();
+			g.setUid(id.toString());
+			g.unsavedEdits = true;
+		}
 
 
 		//g.putData("OBJ_UID", id.toString());
@@ -576,28 +595,31 @@ public class EQForm_MapView extends EQForm {
 			}
 		});
 
-		return false; 		
+		return false;
 	}	
 
-
+	
 
 	public boolean getSurveyPoint() {
 		if (DEBUG_LOG) Log.d(TAG,"getting point location from Openlayers");
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
 		int data=surveyDataObject.getData();
 		if (DEBUG_LOG) Log.d(TAG,"TEST GLOBALS: " + data);
-		mWebView.loadUrl("javascript:updateSurveyPointPositionFromMap()");
+		
+		mWebView.loadUrl("javascript:updateSurveyPointPositionFromMap("+ isEditingPoints+")");
+
 		return false; 		
 	}
 
 
+	/*
 	private void loadSurveyPoints(double lon, double lat) {
 		if (DEBUG_LOG) Log.d(TAG,"loading survey points");
 		if (DEBUG_LOG) Log.d(TAG,"loading survey points into Java" + lon + " " + lat);
 
 		mWebView.loadUrl("javascript:loadSurveyPointsOnMap(-1.1662567,52.9470582)");
 	}
-
+*/
 
 
 	private void loadPrevSurveyPoints() {
@@ -614,17 +636,17 @@ public class EQForm_MapView extends EQForm {
 		//Log.d("IDCT","Gem Map Objects List " + gemObjectsList.get(gemObjectsList.size()-1));
 		mCursor.moveToFirst();
 
-
-
 		mWebView.loadUrl("javascript:clearMySurveyPoints()");//Inefficient	
 
 		while(!mCursor.isAfterLast()) {
-			if (DEBUG_LOG) Log.d("IDCT","Gem Map Objects cursor " + mCursor.getDouble(1) + " , " + mCursor.getDouble(2));
+			if (DEBUG_LOG) Log.d("IDCT","Gem Map Objects cursor " + mCursor.getDouble(1) + " , " + mCursor.getDouble(2) + " , " + mCursor.getString(0));
 
-			mWebView.loadUrl("javascript:loadSurveyPointsOnMap("+ mCursor.getDouble(1)+","+mCursor.getDouble(2)+")");
-			mCursor.moveToNext();
+			mWebView.loadUrl("javascript:loadSurveyPointsOnMap("+ mCursor.getDouble(1)+","+mCursor.getDouble(2)+", \"" + mCursor.getString(0) +"\")");
+			mCursor.moveToNext();			
 		}
-
+		mCursor.close();
+		
+		
 
 		/*
 		if (prevSurveyPointLat != 0) { 
@@ -703,6 +725,8 @@ public class EQForm_MapView extends EQForm {
 		//a.completeTab(tabIndex);
 	}
 
+	
+	
 
 
 
@@ -935,7 +959,6 @@ public class EQForm_MapView extends EQForm {
 
 			mWebView.loadUrl("javascript:addKmlStringToMap("+ egg +")");
 
-
 			
 			int selected = -1; // does not select anything
 			final CharSequence[] choiceList = getVectorLayers();
@@ -1021,13 +1044,13 @@ public class EQForm_MapView extends EQForm {
 			startActivity(ModifiedEMS98);*/
 
 		}   else if (v.getId()==R.id.settings){
-			Intent Settings = new Intent (EQForm_MapView.this, EQForm_Settings.class);
-			startActivity(Settings);
+			//Intent Settings = new Intent (EQForm_MapView.this, EQForm_Settings.class);
+			//startActivity(Settings);
 
 		}  else if (v.getId()==R.id.btn_take_photo){ 
 			Toast.makeText(this, "Launching camera", Toast.LENGTH_SHORT).show();
-			Intent PreviousPage = new Intent (EQForm_MapView.this, EQForm_ModifiedEMS_Camera.class);
-			startActivity(PreviousPage);
+			//Intent PreviousPage = new Intent (EQForm_MapView.this, EQForm_ModifiedEMS_Camera.class);
+			//startActivity(PreviousPage);
 		} 
 
 		else if (v.getId()==R.id.btn_select_layer){ 
@@ -1133,9 +1156,9 @@ public class EQForm_MapView extends EQForm {
 
 			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,  mlocListener );
+				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTimePositionUpdates, minDistPositionUpdates,  mlocListener );
 			} else {
-				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener );
+				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener );
 			} 
 		}
 
@@ -1156,9 +1179,9 @@ public class EQForm_MapView extends EQForm {
 
 			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);   
 			if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
+				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
 			} else {
-				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
+				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
 			}
 		}
 

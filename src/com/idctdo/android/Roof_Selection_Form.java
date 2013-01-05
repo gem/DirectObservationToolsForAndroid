@@ -23,7 +23,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 
-public class Roof_Selection_Form extends EQForm {
+public class Roof_Selection_Form extends Activity {
 	
 	public boolean DEBUG_LOG = false; 
 	

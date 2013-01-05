@@ -27,7 +27,7 @@ import android.widget.TabHost;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
-public class Exposure_Form extends EQForm {
+public class Exposure_Form extends Activity {
 
 	private ArrayList list;
 	public ArrayList<DBRecord> lLrsd;
