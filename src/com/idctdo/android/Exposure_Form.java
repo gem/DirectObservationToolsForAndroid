@@ -99,26 +99,23 @@ public class Exposure_Form extends Activity {
 		MainTabActivity a = (MainTabActivity)getParent();
 		surveyDataObject = (GEMSurveyObject)getApplication();
 
-
 		if (a.isTabCompleted(tabIndex)) {
 
 		} else {
 
+			Log.d("IDCT","Resuming exposure form.");
 			mDbHelper = new GemDbAdapter(getBaseContext());        
-
 			mDbHelper.createDatabase();      
 			mDbHelper.open();
-
 			final Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
 			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 			Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
-
-
-			mDbHelper.close();				
+			
+			allAttributeTypesTopLevelCursor.close();
+			mDbHelper.close();
+			
 			spinnerCurrency = (Spinner) findViewById(R.id.spinnerCurrency);
-
-			ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,
-					android.R.layout.simple_spinner_item,topLevelAttributesList);                
+			ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,topLevelAttributesList);                
 			spinnerCurrency.setAdapter(spinnerArrayAdapter);
 			/*
 		    SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, 
@@ -132,15 +129,18 @@ public class Exposure_Form extends Activity {
 					//Object item = parent.getItemAtPosition(pos);
 					Log.d("IDCT","spinner selected: " + spinnerCurrency.getSelectedItem().toString());
 					Log.d("IDCT","spinner selected pos: " + pos);
-					allAttributeTypesTopLevelCursor.moveToPosition(pos);
-					Log.d("IDCT","spinner selected pos val: " + allAttributeTypesTopLevelCursor.getString(1));					
-					surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());						
+					
+					//Temporarily disabled 7/1/13					
+					//allAttributeTypesTopLevelCursor.moveToPosition(pos);
+					//Log.d("IDCT","spinner selected pos val: " + allAttributeTypesTopLevelCursor.getString(1));							
+					//surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());
+					DBRecord selected = (DBRecord) spinnerCurrency.getSelectedItem();
+					Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
+					surveyDataObject.putGedData(topLevelAttributeKey, selected.getAttributeValue());		
 				}
 				public void onNothingSelected(AdapterView<?> parent) {
 				}
-			});
-
-			
+			});	
 
 
 

@@ -85,11 +85,12 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 			ArrayList<DBRecord> lLrs = GemUtilities.cursorToArrayList(allLLRSCursor);        
 			if (DEBUG_LOG) Log.d(TAG,"lLrs: " + lLrs.toString());
 
-
 			Cursor allLLRSDCursor = mDbHelper.getAttributeValuesByDictionaryTable(secondLevelAttributeDictionary); 
 			lLrsd = GemUtilities.cursorToArrayList(allLLRSDCursor);
 
-
+			allLLRSCursor.close(); 
+			allLLRSDCursor.close();
+			
 			mDbHelper.close();
 
 			

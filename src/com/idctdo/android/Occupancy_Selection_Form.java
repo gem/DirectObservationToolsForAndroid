@@ -93,7 +93,8 @@ public class Occupancy_Selection_Form extends Activity {
 			Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(secondLevelAttributeDictionary,"X");
 			secondLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesSecondLevelCursor);
 
-
+			allAttributeTypesTopLevelCursor.close(); 
+			allAttributeTypesSecondLevelCursor.close(); 
 			mDbHelper.close();
 
 			selectedAdapter = new SelectedAdapter(this,0,topLevelAttributesList);
@@ -152,7 +153,8 @@ public class Occupancy_Selection_Form extends Activity {
 						RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel2);
 						relativeLayout.setVisibility(View.VISIBLE);
 					}
-
+					mCursor.close();
+					
 					selectedAdapter2.notifyDataSetChanged();
 
 				}

@@ -47,7 +47,7 @@ public class Material_Selection_Transverse_Form extends Activity {
 	private String secondLevelAttributeKey = "MAT_TECH_T";
 	private String thirdLevelAttributeKey = "MAS_MORT_T";
 	private String fourthLevelAttributeKey = "MAS_REIN_T";
-	private String fifthLevelAttributeKey = "STEEL_CON_T";
+	private String fifthLevelAttributeKey = "STEELCON_T";
 
 
 	private SelectedAdapter selectedAdapter;
@@ -134,7 +134,7 @@ public class Material_Selection_Transverse_Form extends Activity {
 			allAttributeTypesThirdLevelCursor.close();
 			allAttributeTypesFourthLevelCursor.close();
 			allAttributeTypesFifthLevelCursor.close();
-			
+
 			mDbHelper.close();
 
 			selectedAdapter = new SelectedAdapter(this,0,topLevelAttributesList);
@@ -255,73 +255,79 @@ public class Material_Selection_Transverse_Form extends Activity {
 					if (DEBUG_LOG) Log.d("IDCT", "MATERIAL TECH ON CLICK" + thirdLevelAttributeType + " and " + selectedAdapter2.getItem(position).getJson());
 
 					Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(thirdLevelAttributeType,selectedAdapter2.getItem(position).getJson());
-					if (mCursor.getCount() > 0) {		
-						mCursor.moveToFirst();
-						while(!mCursor.isAfterLast()) {
-							//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
+					if (mCursor != null) {
+						if (mCursor.getCount() > 0) {		
+							mCursor.moveToFirst();
+							while(!mCursor.isAfterLast()) {
+								//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
 
-							DBRecord o1 = new DBRecord();		
+								DBRecord o1 = new DBRecord();		
 
-							if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-							//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
+								if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
+								//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
 
-							o1.setAttributeDescription(mCursor.getString(0));
-							o1.setAttributeValue(mCursor.getString(1));
-							o1.setJson(mCursor.getString(2));
-							thirdLevelAttributesList.add(o1);
-							mCursor.moveToNext();
-						}	
-						listview3.setVisibility(View.VISIBLE);
-						RelativeLayout relativeLayout3 = (RelativeLayout) findViewById(R.id.rel3);
-						relativeLayout3.setVisibility(View.VISIBLE);
+								o1.setAttributeDescription(mCursor.getString(0));
+								o1.setAttributeValue(mCursor.getString(1));
+								o1.setJson(mCursor.getString(2));
+								thirdLevelAttributesList.add(o1);
+								mCursor.moveToNext();
+							}	
+							listview3.setVisibility(View.VISIBLE);
+							RelativeLayout relativeLayout3 = (RelativeLayout) findViewById(R.id.rel3);
+							relativeLayout3.setVisibility(View.VISIBLE);
 
+						}
+						mCursor.close();
 					}
 					mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(fourthLevelAttributeType,selectedAdapter2.getItem(position).getJson());
-					if (mCursor.getCount() > 0) {	
-						mCursor.moveToFirst();
-						while(!mCursor.isAfterLast()) {
-							//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-							DBRecord o1 = new DBRecord();	
-							if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-							//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
+					if (mCursor != null) {
+						if (mCursor.getCount() > 0) {	
+							mCursor.moveToFirst();
+							while(!mCursor.isAfterLast()) {
+								//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
+								DBRecord o1 = new DBRecord();	
+								if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
+								//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
 
-							o1.setAttributeDescription(mCursor.getString(0));
-							o1.setAttributeValue(mCursor.getString(1));
-							o1.setJson(mCursor.getString(2));
-							fourthLevelAttributesList.add(o1);
-							mCursor.moveToNext();
-						}	
-						RelativeLayout relativeLayout4 = (RelativeLayout) findViewById(R.id.rel4);
-						relativeLayout4.setVisibility(View.VISIBLE);
-						listview4.setVisibility(View.VISIBLE);
+								o1.setAttributeDescription(mCursor.getString(0));
+								o1.setAttributeValue(mCursor.getString(1));
+								o1.setJson(mCursor.getString(2));
+								fourthLevelAttributesList.add(o1);
+								mCursor.moveToNext();
+							}	
+							RelativeLayout relativeLayout4 = (RelativeLayout) findViewById(R.id.rel4);
+							relativeLayout4.setVisibility(View.VISIBLE);
+							listview4.setVisibility(View.VISIBLE);
 
+						}
+						mCursor.close();
 					}
 					mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(fifthLevelAttributeType,selectedAdapter2.getItem(position).getJson());
-					if (mCursor.getCount() > 0) {	
-						mCursor.moveToFirst();
-						while(!mCursor.isAfterLast()) {
-							//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
+					if (mCursor != null) {
+						if (mCursor.getCount() > 0) {	
+							mCursor.moveToFirst();
+							while(!mCursor.isAfterLast()) {
+								//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
 
-							DBRecord o1 = new DBRecord();		
+								DBRecord o1 = new DBRecord();		
 
-							if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-							//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
+								if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
+								//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
 
-							o1.setAttributeDescription(mCursor.getString(0));
-							o1.setAttributeValue(mCursor.getString(1));
-							o1.setJson(mCursor.getString(2));
-							fifthLevelAttributesList.add(o1);
-							mCursor.moveToNext();
-						}		  
-						RelativeLayout relativeLayout5 = (RelativeLayout) findViewById(R.id.rel5);
-						relativeLayout5.setVisibility(View.VISIBLE);
-						listview5.setVisibility(View.VISIBLE);
+								o1.setAttributeDescription(mCursor.getString(0));
+								o1.setAttributeValue(mCursor.getString(1));
+								o1.setJson(mCursor.getString(2));
+								fifthLevelAttributesList.add(o1);
+								mCursor.moveToNext();
+							}		  
+							RelativeLayout relativeLayout5 = (RelativeLayout) findViewById(R.id.rel5);
+							relativeLayout5.setVisibility(View.VISIBLE);
+							listview5.setVisibility(View.VISIBLE);
+						}
+						mCursor.close();
 					}
-					mCursor.close();
+					
 					mDbHelper.close();    
-
-
-
 					selectedAdapter3.notifyDataSetChanged();
 					selectedAdapter4.notifyDataSetChanged();
 					selectedAdapter5.notifyDataSetChanged();		
@@ -455,5 +461,6 @@ public class Material_Selection_Transverse_Form extends Activity {
     	}
 	}
 	 */
+
 
 }

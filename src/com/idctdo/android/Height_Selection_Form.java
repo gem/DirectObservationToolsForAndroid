@@ -103,6 +103,9 @@ public class Height_Selection_Form extends Activity {
 			ArrayList<DBRecord> heightLevelAttributesList = GemUtilities.cursorToArrayList(allHeightAttributeTypesTopLevelCursor);        
 			Log.d("IDCT","QUALIFIER TYPES: " + heightLevelAttributesList.toString());
 									
+			heightAllAttributeTypesTopLevelCursor.close();
+			allHeightAttributeTypesTopLevelCursor.close();
+			
 			mDbHelper.close();
 			
 			selectedAdapter = new SelectedAdapter(this,0,heightTopLevelAttributesList);

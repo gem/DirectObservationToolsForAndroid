@@ -92,6 +92,7 @@ public class Consequences_Form extends Activity {
 			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
 			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 			if (DEBUG_LOG) Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
+			allAttributeTypesTopLevelCursor.close();
 			mDbHelper.close();
 			
 

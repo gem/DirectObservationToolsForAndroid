@@ -578,6 +578,7 @@ public class EQForm_MapView extends Activity {
 		}
 
 
+		
 		//g.putData("OBJ_UID", id.toString());
 		if (DEBUG_LOG) Log.d(TAG,"GLOBAL VARS UID " + g.getUid());	
 		if (DEBUG_LOG) Log.d(TAG,"GLOBAL VARS " + g.getLon()+ " lat: " + g.getLat());

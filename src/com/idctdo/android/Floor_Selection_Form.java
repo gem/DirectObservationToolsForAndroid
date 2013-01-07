@@ -85,11 +85,12 @@ public class Floor_Selection_Form extends Activity {
 			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
 			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 			if (DEBUG_LOG) Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
-
+			allAttributeTypesTopLevelCursor.close();
 
 			Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(secondLevelAttributeDictionary,"X");
 			secondLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesSecondLevelCursor);
-
+			allAttributeTypesSecondLevelCursor.close();
+			
 			mDbHelper.close();
 
 			selectedAdapter = new SelectedAdapter(this,0,topLevelAttributesList);
@@ -139,9 +140,7 @@ public class Floor_Selection_Form extends Activity {
 						secondLevelAttributesList.add(o1);
 						mCursor.moveToNext();
 					}
-
-
-
+				
 					mDbHelper.close();    		  				
 
 					if (mCursor.getCount() > 0) { 
@@ -149,6 +148,8 @@ public class Floor_Selection_Form extends Activity {
 						RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel2);
 						relativeLayout.setVisibility(View.VISIBLE);
 					}
+					mCursor.close();
+					
 					selectedAdapter2.notifyDataSetChanged();       
 
 					completeThis();

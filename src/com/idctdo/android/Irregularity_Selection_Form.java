@@ -103,6 +103,10 @@ public class Irregularity_Selection_Form extends Activity {
 			Cursor allAttributeTypesThirdLevelCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(verticalIrregularityAttributeDictionary,"IR");
 			thirdLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesThirdLevelCursor);
 
+			allAttributeTypesTopLevelCursor.close();
+			allAttributeTypesSecondLevelCursor.close();
+			allAttributeTypesThirdLevelCursor.close();
+			
 			mDbHelper.close();
 
 			selectedAdapter = new SelectedAdapter(this,0,topLevelAttributesList);

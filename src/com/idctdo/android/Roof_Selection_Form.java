@@ -88,11 +88,12 @@ public class Roof_Selection_Form extends Activity {
 	        Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
 	        ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 	        if (DEBUG_LOG) Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
-	             
-	        
+	             	        
 	        Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(secondLevelAttributeDictionary);
 	        secondLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesSecondLevelCursor);
-	       	              
+	       	     
+	        allAttributeTypesTopLevelCursor.close();
+	        allAttributeTypesSecondLevelCursor.close(); 
 	        mDbHelper.close();
 
 			selectedAdapter = new SelectedAdapter(this,0,topLevelAttributesList);
@@ -153,6 +154,7 @@ public class Roof_Selection_Form extends Activity {
 					    mCursor.moveToNext();
 					}
 			     
+					mCursor.close();
 			        mDbHelper.close();    	     
 					
 			        listview2.setVisibility(View.VISIBLE);

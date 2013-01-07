@@ -137,7 +137,9 @@ public class Age_Selection_Form extends Activity {
 			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
 			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 			Log.d("IDCT","QUALIFIER TYPES: " + topLevelAttributesList.toString());
+			allAttributeTypesTopLevelCursor.close();			
 			mDbHelper.close();			
+			
 			selectedAdapter = new SelectedAdapter(this,0,topLevelAttributesList);
 			selectedAdapter.setNotifyOnChange(true);
 			listview = (ListView) findViewById(R.id.listExample);
@@ -201,6 +203,7 @@ public class Age_Selection_Form extends Activity {
 			ArrayList<DBRecord> heightLevelAttributesList = GemUtilities.cursorToArrayList(allHeightAttributeTypesTopLevelCursor);        
 			Log.d("IDCT","QUALIFIER TYPES: " + heightLevelAttributesList.toString());
 				*/
+			heightAllAttributeTypesTopLevelCursor.close();			
 			mDbHelper.close();
 			
 			heightSelectedAdapter = new SelectedAdapter(this,0,heightTopLevelAttributesList);

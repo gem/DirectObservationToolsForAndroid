@@ -83,7 +83,8 @@ public class LLRS_Selection_Transverse_Form extends Activity {
 			Cursor allLLRSDCursor = mDbHelper.getAttributeValuesByDictionaryTable(secondLevelAttributeDictionary); 
 			lLrsd = GemUtilities.cursorToArrayList(allLLRSDCursor);
 
-
+			allLLRSCursor.close();
+			allLLRSDCursor.close(); 
 			mDbHelper.close();
 			
 			

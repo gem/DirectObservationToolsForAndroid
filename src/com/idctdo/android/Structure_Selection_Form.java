@@ -94,7 +94,9 @@ public class Structure_Selection_Form extends Activity {
 			ArrayList<DBRecord> heightLevelAttributesList = GemUtilities.cursorToArrayList(allHeightAttributeTypesTopLevelCursor);        
 			Log.d("IDCT","QUALIFIER TYPES: " + heightLevelAttributesList.toString());
 			
-						
+					
+			allAttributeTypesTopLevelCursor.close();
+			allHeightAttributeTypesTopLevelCursor.close();
 			mDbHelper.close();
 
 			selectedAdapter = new SelectedAdapter(this,0,topLevelAttributesList);
