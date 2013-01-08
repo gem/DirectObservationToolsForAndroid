@@ -495,6 +495,8 @@ public class GemDbAdapter
 			cv.put("SOURCE", "FIELD");	
 			mDb.insert("GEM_OBJECT", null, cv);
 
+
+
 		}
 		catch (SQLException mSQLException) 
 		{
@@ -508,19 +510,18 @@ public class GemDbAdapter
 
 	public void insertGemData(GEMSurveyObject gemGlobalVariables)
 	{		
-		Log.d(TAG, "Trying to insert Gem data");
-		
-		
+		Log.d(TAG, "Trying to insert Gem data");		
+
 		try
 		{								
-			//Cursor mCur = mDb.execSQL(sql, null);
-			ContentValues cv = new ContentValues();
+			//Cursor mCur = mDb.execSQL(sql, null);		
 
-			UUID id = UUID.randomUUID();			
+			ContentValues cv = new ContentValues();
+			cv.put("OBJ_UID", gemGlobalVariables.getUid());		
 			
-			cv.put("OBJ_UID", gemGlobalVariables.getUid());
-			 
+			UUID id = UUID.randomUUID();
 			cv.put("PROJ_UID", id.toString()); //This should be a proj uid, define in a preferences thing
+			
 			cv.put("X", Double.toString(gemGlobalVariables.getLon()));
 			cv.put("Y",  Double.toString(gemGlobalVariables.getLat()));
 			//cv.put("EPSG_CODE", "4326"); //Should get this from the db
@@ -533,9 +534,19 @@ public class GemDbAdapter
 				cv.put(key, value);
 			}
 
-			
+
 			Log.d(TAG, "GEM ContentValues: " + cv.toString());
-			mDb.insert("GEM_OBJECT", null, cv);
+
+			if (gemGlobalVariables.isExistingRecord) { 
+				if (DEBUG_LOG) Log.d(TAG,"updating record in db " + gemGlobalVariables.getUid());	
+				String columnName= "OBJ_UID";
+				mDb.update("GEM_OBJECT", cv, columnName+"=?", new String[] {gemGlobalVariables.getUid()});
+			}  else {
+				
+				if (DEBUG_LOG) Log.d(TAG,"inserting record in db " + gemGlobalVariables.getUid());	
+				mDb.insert("GEM_OBJECT", null, cv);
+			}
+
 			String feedbackMsg = "Survey Data saved\n " + "Lat: " + Double.toString(gemGlobalVariables.getLat()) + "\nLon: " + Double.toString(gemGlobalVariables.getLon());
 			Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
 		}
@@ -544,25 +555,23 @@ public class GemDbAdapter
 			Log.e(TAG, "insertTestData >>"+ mSQLException.toString());
 			Toast.makeText(this.mContext.getApplicationContext(), "There was a problem saving the GEM survey data", Toast.LENGTH_LONG).show();
 			throw mSQLException;
-		}
+		}		
 
-		
-		
-		
+
 		ArrayList mediaList = gemGlobalVariables.getMediaDetailKeyValuePairsMap();
 		Log.d(TAG, "MEDIA DETAIL LIST: " + mediaList.size());
-		
+
 		for (int i = 0; i < mediaList.size(); i++) {
 			Log.d(TAG, "Trying to insert Media detail data");
 			try
 			{
-				
+
 				HashMap map = (HashMap) mediaList.get(i);
 				//Cursor mCur = mDb.execSQL(sql, null);
-				
+
 				ContentValues cv = new ContentValues();		
 				cv.put("GEMOBJ_UID", gemGlobalVariables.getUid());
-				
+
 				HashMap<String,String> keyVals = map;
 				for (Map.Entry<String, String> entry : keyVals.entrySet()) {
 					String key = entry.getKey();
@@ -574,7 +583,7 @@ public class GemDbAdapter
 				Log.d(TAG, "GEM Media DetailValues: " + cv.toString());
 				Toast.makeText(this.mContext.getApplicationContext(), "Photos were sucessfully linked in the database", Toast.LENGTH_LONG).show();
 				mDb.insert("MEDIA_DETAIL", null, cv);	
-							
+
 			}
 			catch (SQLException mSQLException) 
 			{
@@ -583,19 +592,19 @@ public class GemDbAdapter
 				throw mSQLException;
 			}
 		}
-		
-		
+
+
 		Log.d(TAG, "Trying to insert GED data");
-		
+
 		try
 		{								
 			//Cursor mCur = mDb.execSQL(sql, null);
 			ContentValues cv = new ContentValues();
 			UUID gedId = UUID.randomUUID();			
-			
+
 			cv.put("GEMOBJ_UID", gemGlobalVariables.getUid());
 			cv.put("GED_UID", gedId.toString()); 
-			
+
 			HashMap<String,String> keyVals = gemGlobalVariables.getGedKeyValuePairsMap();
 			for (Map.Entry<String, String> entry : keyVals.entrySet()) {
 				String key = entry.getKey();
@@ -603,7 +612,7 @@ public class GemDbAdapter
 				cv.put(key, value);
 			}
 
-			
+
 			Log.d(TAG, "GED ContentValues: " + cv.toString());
 			mDb.insert("GED", null, cv);
 			String feedbackMsg = "GED Data saved\n ";
@@ -615,19 +624,19 @@ public class GemDbAdapter
 			Toast.makeText(this.mContext.getApplicationContext(), "There was a problem saving the GEM survey data", Toast.LENGTH_LONG).show();
 			throw mSQLException;
 		}
-		
-		
+
+
 		Log.d(TAG, "Trying to insert CONSEQUENCES data");
-		
+
 		try
 		{								
 			//Cursor mCur = mDb.execSQL(sql, null);
 			ContentValues cv = new ContentValues();
 			UUID consId = UUID.randomUUID();			
-			
+
 			cv.put("GEMOBJ_UID", gemGlobalVariables.getUid());
 			cv.put("CONSEQ_UID", consId.toString()); 
-			
+
 			HashMap<String,String> keyVals = gemGlobalVariables.getConsequencesKeyValuePairsMap();
 			for (Map.Entry<String, String> entry : keyVals.entrySet()) {
 				String key = entry.getKey();
@@ -635,7 +644,7 @@ public class GemDbAdapter
 				cv.put(key, value);
 			}
 
-			
+
 			Log.d(TAG, "CONSQ ContentValues: " + cv.toString());
 			mDb.insert("CONSEQUENCES", null, cv);
 			String feedbackMsg = "CONSEQUENCES Data saved\n";
@@ -647,13 +656,13 @@ public class GemDbAdapter
 			Toast.makeText(this.mContext.getApplicationContext(), "There was a problem saving the GEM survey data", Toast.LENGTH_LONG).show();
 			throw mSQLException;
 		}
-		
-		
-		
-		
+
+
+
+
 
 		gemGlobalVariables.getKeyValuePairsMap().clear();
-		
+
 		/*
 		Log.d(TAG, "Trying to insert Media detail data");
 		try
@@ -682,7 +691,7 @@ public class GemDbAdapter
 			Log.e(TAG, "insertTestData >>"+ mSQLException.toString());
 			throw mSQLException;
 		}
-*/
+		 */
 
 	}
 
@@ -720,7 +729,7 @@ public class GemDbAdapter
 
 	}
 
-*/
+	 */
 
 
 	public void copyDataBaseToSdCard()

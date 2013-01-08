@@ -443,7 +443,7 @@ function init(){
 			myLocation.transform(map.getProjectionObject(),new OpenLayers.Projection("EPSG:4326"));
 
 			//Draw the old feature as a candidate point
-			drawCandidateSurveyPoint(myLocation.x, myLocation.y);			
+			drawCandidateSurveyPoint(myLocation.x, myLocation.y,feature.attributes.id);			
 
 			//remove the point from the previous points layer
 			prevSurveyPoints.removeFeatures(feature);
@@ -494,7 +494,7 @@ function init(){
 			
 			var myLocation = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat );
 			myLocation.transform(map.getProjectionObject(),new OpenLayers.Projection("EPSG:4326"));		
-			drawCandidateSurveyPoint(myLocation.x, myLocation.y);		
+			drawCandidateSurveyPoint(myLocation.x, myLocation.y,"0");		
 		//}
 	}});
 	 
@@ -594,8 +594,8 @@ function init(){
 
 
 //Add a single point to the map which can be edited
-function drawCandidateSurveyPoint(lon, lat) {
-		var attributes = {name: "my position"};		
+function drawCandidateSurveyPoint(lon, lat,idString) {
+		var attributes = {id: idString, name: "my position"};		
 		var myLocation = new OpenLayers.Geometry.Point(lon, lat);
 		myLocation.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject() );
 		var feature = new OpenLayers.Feature.Vector(myLocation,attributes);           

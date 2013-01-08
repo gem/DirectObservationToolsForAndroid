@@ -48,6 +48,7 @@ public class Exposure_Form extends Activity {
 	private String topLevelAttributeDictionary = "DIC_CURRENCY";
 	private String topLevelAttributeKey = "CURRENCY";
 
+	
 	public EditText editTextNumberOfDayOccupants;
 	public EditText editTextNumberOfNightOccupants;	
 	public EditText editTextNumberOfTransitOccupants;	
@@ -56,6 +57,7 @@ public class Exposure_Form extends Activity {
 	public EditText editTextReplacementCost;
 	public EditText editTextExposureComments;
 
+	
 	public Spinner spinnerCurrency;
 
 

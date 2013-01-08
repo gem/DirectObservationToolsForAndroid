@@ -100,13 +100,16 @@ function loadSurveyPointsOnMap(lon,lat,gemIdString) {
 function updateSurveyPointPositionFromMap(currentlyEditingPoints) {	
 	var pt = myPositions.features[0].geometry;
 	var myLocation = new OpenLayers.Geometry.Point(pt.x, pt.y);
+	var feature = myPositions.features[0];
+	var editingPointGemId = feature.attributes.id;
 
 	myLocation.transform(map.getProjectionObject(),new OpenLayers.Projection("EPSG:4326"));
 	console.log("updating survey point: " + myLocation.x + "," + myLocation.y);
+
     var id;
     if (currentlyEditingPoints) {
-    	id = "not set";
-	} else{
+    	id = "0";
+	} else {
 		console.log("updating survey PREVIOUS point: ");
 		id = editingPointGemId;
 	}

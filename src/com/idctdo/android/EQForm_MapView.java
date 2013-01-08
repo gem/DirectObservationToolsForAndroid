@@ -558,6 +558,7 @@ public class EQForm_MapView extends Activity {
 
 	//Called from JS with point location of survey
 	//This point forms the survey point and should be saved in the db
+	//It could be a new survey point or a new geom of an exisiting one 
 	//Can then mark the map tab as complete
 	public boolean loadSurveyPoint(final double lon, final double lat,final String gemId) {
 		if (DEBUG_LOG) Log.d(TAG,"edited point location from Openlayers. Lon:" + lon + " lat: " + lat+ " gemId: " + gemId);
@@ -567,21 +568,26 @@ public class EQForm_MapView extends Activity {
 		g.setLon(lon);
 		g.setLat(lat);
 		
-		if (gemId == "1") {
-			g.setUid(gemId);
-			g.isExistingRecord = true; 
-		} else {
+
+		
+		
+		
+		if (gemId.equals("0")) {
 			//Generate a uid for this survey point
 			UUID id = UUID.randomUUID();
 			g.setUid(id.toString());
-			g.unsavedEdits = true;
+			g.isExistingRecord = false; 
+		} else {
+			g.setUid(gemId);			
+			g.isExistingRecord = true;
 		}
-
-
+		
+		g.unsavedEdits = true;
 		
 		//g.putData("OBJ_UID", id.toString());
 		if (DEBUG_LOG) Log.d(TAG,"GLOBAL VARS UID " + g.getUid());	
 		if (DEBUG_LOG) Log.d(TAG,"GLOBAL VARS " + g.getLon()+ " lat: " + g.getLat());
+		if (DEBUG_LOG) Log.d(TAG,"GLOBAL VARS ISEXISTINGRECORD: " + g.isExistingRecord);
 		g.setData(1);
 
 		prevSurveyPointLon = lon; 
@@ -610,6 +616,7 @@ public class EQForm_MapView extends Activity {
 		mWebView.loadUrl("javascript:updateSurveyPointPositionFromMap("+ isEditingPoints+")");
 
 		return false; 		
+		
 	}
 
 
