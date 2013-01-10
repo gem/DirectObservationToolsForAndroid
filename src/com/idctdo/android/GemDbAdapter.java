@@ -402,6 +402,7 @@ public class GemDbAdapter
 	}
 
 
+	
 	public Cursor getAttributeValuesByDictionaryTableAndScope(String dictionaryTable, String attributeScope)
 	{
 		try
