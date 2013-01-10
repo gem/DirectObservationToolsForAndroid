@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.idctdo.android"
+    android:versionCode="1"
+    android:versionName="1.0" >
+            
+    
+    <uses-sdk android:minSdkVersion="8" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    
+    <application
+        android:name=".GEMSurveyObject"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/MyTheme" >
+        <activity
+            android:name=".EQForm_MapView"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />               
+                
+                
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainTabActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EQForm_Help"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EQForm_Settings"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Material_Selection_Longitudinal_Form"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Material_Selection_Transverse_Form"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LLRS_Selection_Longitudinal_Form"
+            android:screenOrientation="portrait" />
+        
+        
+        
+        
+        <activity
+            android:name=".LLRS_Selection_Longitudinal_Transverse_Form"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LLRS_Selection_Transverse_Form"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Roof_Selection_Form"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Floor_Selection_Form"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EQForm_ModifiedEMS_Camera"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Irregularity_Selection_Form"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Irregularity_Selection_Secondary_Form"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EQForm_About"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Details_Selection"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Occupancy_Selection_Form"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Age_Selection_Form"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Height_Selection_Form"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Structure_Selection_Form"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Exposure_Form"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Consequences_Form"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PrefsActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+        </activity>
+    </application>
+
+</manifest>
