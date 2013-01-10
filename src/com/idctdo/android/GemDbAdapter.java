@@ -400,9 +400,7 @@ public class GemDbAdapter
 			throw mSQLException;
 		}
 	}
-
-
-	
+		
 	public Cursor getAttributeValuesByDictionaryTableAndScope(String dictionaryTable, String attributeScope)
 	{
 		try
