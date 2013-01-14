@@ -2,10 +2,10 @@
 
 
 
-## Global Earthquake Model 
-## Inventory Data Capture Tools 
-## Direct Observation 
-## Android Tool
+Global Earthquake Model 
+Inventory Data Capture Tools 
+Direct Observation 
+Android Tool
 
 
 
