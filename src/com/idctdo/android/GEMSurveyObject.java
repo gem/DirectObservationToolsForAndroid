@@ -87,6 +87,11 @@ public class GEMSurveyObject extends Application {
 		return true;
 	}
 	
+	public String getSurveyDataValue(String key) {			
+		//Log.d("IDCT","HASHMAP : " + surveyData.toString());
+		return surveyData.get(key);
+	}
+	
 	public boolean putGedData(String key, String value) {		
 		gedData.put(key, value);
 		//Log.d("IDCT","HASHMAP : " + surveyData.toString());
@@ -109,6 +114,7 @@ public class GEMSurveyObject extends Application {
 		return true;
 	}
 	
+
 	public ArrayList getMediaDetailKeyValuePairsMap() {		
 		return mediaDetailDataList;
 	}

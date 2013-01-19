@@ -20,6 +20,8 @@ import android.app.TabActivity;
 import android.os.Bundle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import android.app.Activity;
@@ -38,7 +40,7 @@ import android.widget.Toast;
 public class LLRS_Selection_Longitudinal_Form extends Activity {
 	
 	private static final String TAG = "IDCT";
-	public boolean DEBUG_LOG = false; 
+	public boolean DEBUG_LOG = true; 
 	
 	
 	public TabActivity tabActivity;
@@ -78,23 +80,18 @@ public class LLRS_Selection_Longitudinal_Form extends Activity {
     protected void onResume() {
         super.onResume();
 		MainTabActivity a = (MainTabActivity)getParent();
-		surveyDataObject = (GEMSurveyObject)getApplication();
-
-		
+		surveyDataObject = (GEMSurveyObject)getApplication();		
 		
 		if (a.isTabCompleted(tabIndex)) {
 			
 		} else {
-
-			mDbHelper = new GemDbAdapter(getBaseContext());        
-
+			mDbHelper = new GemDbAdapter(getBaseContext());      
 			mDbHelper.createDatabase();      
 			mDbHelper.open();
 
 			Cursor allLLRSCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);        
 			ArrayList<DBRecord> lLrs = GemUtilities.cursorToArrayList(allLLRSCursor);        
 			if (DEBUG_LOG) Log.d(TAG,"lLrs: " + lLrs.toString());
-
 
 			Cursor allLLRSDCursor = mDbHelper.getAttributeValuesByDictionaryTable(secondLevelAttributeDictionary); 
 			lLrsd = GemUtilities.cursorToArrayList(allLLRSDCursor);
@@ -129,9 +126,6 @@ public class LLRS_Selection_Longitudinal_Form extends Activity {
 					// user clicked a list item, make it "selected"
 					selectedAdapter.setSelectedPosition(position);
 					surveyDataObject.putData(topLevelAttributeDictionary, selectedAdapter.getItem(position).getAttributeValue());		
-
-					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
-
 				}
 			});        
 
@@ -149,7 +143,14 @@ public class LLRS_Selection_Longitudinal_Form extends Activity {
 			});
 
 			
-		}		
+		}
+		
+		if (surveyDataObject.isExistingRecord) {
+			if (DEBUG_LOG) Log.d(TAG, "Resuming attributes of existing record");
+				
+			String v = surveyDataObject.getSurveyDataValue(topLevelAttributeKey);
+			if (DEBUG_LOG) Log.d(TAG, "v: " + v);
+		}
     }
 	
 	public void clearThis() {

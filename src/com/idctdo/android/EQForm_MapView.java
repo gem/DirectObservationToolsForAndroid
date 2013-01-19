@@ -88,7 +88,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-
 public class EQForm_MapView extends Activity {
 
 	public boolean DEBUG_LOG = true; 
@@ -453,15 +452,20 @@ public class EQForm_MapView extends Activity {
 		}
 	};
 
+	//Press the tick button- start or modify the attribute / survey data  
 	private OnClickListener startSurveyListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			if (DEBUG_LOG) Log.d(TAG,"next survey form");
 
+			//Stop any geometry editing
 			isEditingPoints = false;
 			mWebView.loadUrl("javascript:startEditingMode(false)");
 			
+			//Get the most recent point geometry
 			getSurveyPoint();
+			
+			//Start the tabs view
 			Intent ModifiedEMS98 = new Intent (EQForm_MapView.this, MainTabActivity.class);
 			startActivity(ModifiedEMS98);
 		}
@@ -583,9 +587,6 @@ public class EQForm_MapView extends Activity {
 		g.setLon(lon);
 		g.setLat(lat);
 		
-
-		
-		
 		
 		if (gemId.equals("0")) {
 			//Generate a uid for this survey point
@@ -598,6 +599,7 @@ public class EQForm_MapView extends Activity {
 		}
 		
 		g.unsavedEdits = true;
+		
 		
 		//g.putData("OBJ_UID", id.toString());
 		if (DEBUG_LOG) Log.d(TAG,"GLOBAL VARS UID " + g.getUid());	

@@ -57,7 +57,7 @@ import android.widget.Toast;
 
 public class MainTabActivity extends TabActivity {
 	private static final String TAG = "IDCT";
-	public boolean DEBUG_LOG = false; 
+	public boolean DEBUG_LOG = true; 
 
 	public TabHost tabHost;
 
@@ -79,13 +79,23 @@ public class MainTabActivity extends TabActivity {
 
 
 
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {		
+		if (DEBUG_LOG) Log.d(TAG, "On Create of the  MainTab");		
+		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_tab_activity);
-
-
-
+		
+  
+		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
+		if (surveyDataObject.isExistingRecord) {
+			String existingId = surveyDataObject.getUid();
+			mDbHelper = new GemDbAdapter(getBaseContext());  
+			if (DEBUG_LOG) Log.d(TAG, "existing id " + existingId);		
+			Cursor curCSV = mDbHelper.getObjectByUid(existingId);
+			if (DEBUG_LOG) Log.d(TAG, "Existing data: " + curCSV.getColumnCount());	
+		}
+		
 		ressources = getResources(); 
 		tabHost = getTabHost(); 
 

@@ -98,7 +98,6 @@ public class GemDbAdapter
 		try
 		{
 			String sql ="SELECT * FROM GEM_OBJECT";
-
 			Cursor mCur = mDb.rawQuery(sql, null);
 
 			if (mCur!=null)
@@ -193,13 +192,14 @@ public class GemDbAdapter
 			throw mSQLException;
 		}
 	}
+	
+	
 
-
-	public Cursor getObjectByUid(UUID uid)
+	public Cursor getObjectByUid(String uid)
 	{
 		try
 		{
-			String sql ="select OBJ_UID, X, Y FROM GEM_OBJECT WHERE OBJ_UID == '08991839-dff5-4d24-b39a-9303d1f34dae'";
+			String sql ="select OBJ_UID, X, Y FROM GEM_OBJECT WHERE OBJ_UID = '"+ uid + "'";
 
 			Cursor mCur = mDb.rawQuery(sql, null);
 			if (mCur!=null)
