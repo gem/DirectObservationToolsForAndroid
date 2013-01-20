@@ -82,6 +82,7 @@ public class LLRS_Selection_Longitudinal_Form extends Activity {
 		MainTabActivity a = (MainTabActivity)getParent();
 		surveyDataObject = (GEMSurveyObject)getApplication();		
 		
+		
 		if (a.isTabCompleted(tabIndex)) {
 			
 		} else {
@@ -151,6 +152,8 @@ public class LLRS_Selection_Longitudinal_Form extends Activity {
 			String v = surveyDataObject.getSurveyDataValue(topLevelAttributeKey);
 			if (DEBUG_LOG) Log.d(TAG, "v: " + v);
 		}
+		
+
     }
 	
 	public void clearThis() {

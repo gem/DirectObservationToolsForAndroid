@@ -12,4 +12,12 @@
 </style>
 
 
+<style name="AttributeTitleStyle">
+    <item name="android:textColor">#333</item>
+    <item name="android:textSize">18dp</item>
+
+     <item name="android:textStyle">bold</item>
+</style>
+
+
 </resources>

@@ -76,7 +76,6 @@ public class Material_Selection_Longitudinal_Form extends Activity {
 	public ArrayList<DBRecord> fourthLevelAttributesList;
 	public ArrayList<DBRecord> fifthLevelAttributesList;
 
-
 	ListView listview;
 	ListView listview2;		 
 	ListView listview3;
@@ -85,7 +84,6 @@ public class Material_Selection_Longitudinal_Form extends Activity {
 
 	public GemDbAdapter mDbHelper;
 	public GEMSurveyObject surveyDataObject;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

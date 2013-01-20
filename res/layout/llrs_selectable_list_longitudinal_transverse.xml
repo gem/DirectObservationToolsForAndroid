@@ -4,43 +4,15 @@
     android:layout_height="fill_parent"
     android:background="@color/highlight_colour"
     android:gravity="left"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp" >
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text=""
         android:textStyle="bold" />
-
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/rel1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/highlight_colour"
-        android:gravity="left"
-        android:orientation="vertical"
-        android:visibility="gone" >
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:text="LLRS"
-            android:textStyle="bold" />
-
-        <ListView
-            android:id="@+id/listLLRS"
-            android:layout_width="fill_parent"
-            android:layout_height="200dp"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/textView1"
-            android:choiceMode="singleChoice"
-            android:fadeScrollbars="false" >
-        </ListView>
-
-    </RelativeLayout>
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -57,7 +29,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="LLRS Longitudinal"
+            android:text="LLRS"
             android:textStyle="bold" />
 
         <TextView
@@ -66,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView2"
             android:gravity="left"
-            android:text="LLRS"
+            android:text="Longitudinal"
             android:textStyle="bold" />
 
         <TextView
@@ -75,29 +47,40 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView2"
             android:gravity="right"
-            android:text="LLRS Ductility"
+            android:text="Transverse"
             android:textStyle="bold" />
+
+        <View
+            android:id="@+id/strut"
+            android:layout_width="5dp"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true" />
 
         <ListView
             android:id="@+id/listLLRSLongitudinal"
-            android:layout_width="180dp"
+            android:layout_width="fill_parent"
             android:layout_height="200dp"
-            android:layout_alignParentLeft="true"
+            android:layout_alignLeft="@id/strut"
             android:layout_below="@+id/textViewPrimaryTitle"
             android:choiceMode="singleChoice"
-            android:fadeScrollbars="false" >
+            android:fadeScrollbars="false"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" >
+
         </ListView>
 
         <ListView
-            android:id="@+id/listLLRSLongitudinalDuctility"
-            android:layout_width="150dp"
+            android:id="@+id/listLLRSTransverse"
+            android:layout_width="fill_parent"
             android:layout_height="200dp"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/textViewSecondaryTitle"
+            android:layout_alignRight="@id/strut"
+            android:layout_below="@+id/textViewPrimaryTitle"
             android:choiceMode="singleChoice"
-            android:fadeScrollbars="false" >
+            android:fadeScrollbars="false"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" >
+
         </ListView>
-      
     </RelativeLayout>
 
     <RelativeLayout
@@ -115,7 +98,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="LLRS Transverse"
+            android:text="Ductility"
             android:textStyle="bold" />
 
         <TextView
@@ -124,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewVerticalIrreg"
             android:gravity="left"
-            android:text="LLRS"
+            android:text="Longitudinal"
             android:textStyle="bold" />
 
         <TextView
@@ -133,28 +116,39 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewVerticalIrreg"
             android:gravity="right"
-            android:text="Ductility"
+            android:text="Transverse"
             android:textStyle="bold" />
 
+        <View
+            android:id="@+id/strut2"
+            android:layout_width="5dp"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true" />
 
         <ListView
-            android:id="@+id/listLLRSTransverse"
-            android:layout_width="180dp"
+            android:id="@+id/listLLRSLongitudinalDuctility"
+            android:layout_width="fill_parent"
             android:layout_height="200dp"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/textViewVerticalPrimaryTitle"
+            android:layout_alignLeft="@id/strut2"
+            android:layout_below="@+id/textViewVerticalSecondaryTitle"
             android:choiceMode="singleChoice"
-            android:fadeScrollbars="false" >
+            android:fadeScrollbars="false"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" >
+
         </ListView>
 
         <ListView
             android:id="@+id/listLLRSTransverseDuctility"
-            android:layout_width="150dp"
+            android:layout_width="fill_parent"
             android:layout_height="200dp"
-            android:layout_alignParentRight="true"
+            android:layout_alignRight="@id/strut2"
             android:layout_below="@+id/textViewVerticalSecondaryTitle"
             android:choiceMode="singleChoice"
-            android:fadeScrollbars="false" >
+            android:fadeScrollbars="false"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" >
+
         </ListView>
     </RelativeLayout>
 

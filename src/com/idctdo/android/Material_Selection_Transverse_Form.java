@@ -112,8 +112,6 @@ public class Material_Selection_Transverse_Form extends Activity {
 
 		surveyDataObject = (GEMSurveyObject)getApplication();
 
-
-
 		if (a.isTabCompleted(tabIndex)) {
 
 		} else {

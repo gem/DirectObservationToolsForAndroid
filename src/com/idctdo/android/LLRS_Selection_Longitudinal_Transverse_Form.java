@@ -44,7 +44,7 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 	
 	public TabActivity tabActivity;
 	public TabHost tabHost;
-	public int tabIndex = 4;
+	public int tabIndex = 1;
 	
 
 	private String topLevelAttributeDictionary = "DIC_LLRS";
@@ -108,14 +108,14 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 			
 			mDbHelper.close();
 
-			
+			/*
 			selectedAdapter = new SelectedAdapter(this,0,lLrs);
 			selectedAdapter.setNotifyOnChange(true);
 
 			listview = (ListView) findViewById(R.id.listLLRS);
 			listview.setAdapter(selectedAdapter);        
 
-
+*/
 			selectedAdapter2 = new SelectedAdapter(this,0,lLrs);    		
 			selectedAdapter2.setNotifyOnChange(true);		
 			listview2 = (ListView) findViewById(R.id.listLLRSLongitudinal);
@@ -141,7 +141,7 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 			//listview2.setVisibility(View.INVISIBLE);
 
 
-
+/*
 			listview.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView arg0, View view,
@@ -154,7 +154,7 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 
 				}
 			});        
-
+*/
 
 			listview2.setOnItemClickListener(new OnItemClickListener() {
 				@Override
@@ -205,7 +205,7 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 	
 	public void clearThis() {
 		if (DEBUG_LOG) Log.d(TAG, "clearing stuff");
-		selectedAdapter.setSelectedPosition(-1);
+		//selectedAdapter.setSelectedPosition(-1);
 		selectedAdapter2.setSelectedPosition(-1);
 	}
 	

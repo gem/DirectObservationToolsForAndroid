@@ -81,12 +81,12 @@ public class MainTabActivity extends TabActivity {
 
 	public void onCreate(Bundle savedInstanceState) {		
 		if (DEBUG_LOG) Log.d(TAG, "On Create of the  MainTab");		
-		
+
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_tab_activity);
-		
-  
+
+
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
 		if (surveyDataObject.isExistingRecord) {
 			String existingId = surveyDataObject.getUid();
@@ -95,7 +95,7 @@ public class MainTabActivity extends TabActivity {
 			Cursor curCSV = mDbHelper.getObjectByUid(existingId);
 			if (DEBUG_LOG) Log.d(TAG, "Existing data: " + curCSV.getColumnCount());	
 		}
-		
+
 		ressources = getResources(); 
 		tabHost = getTabHost(); 
 
@@ -178,6 +178,7 @@ public class MainTabActivity extends TabActivity {
 
 	public void generateTabs() {
 
+		/*
 		Intent intentPageOne = new Intent().setClass(this,  Material_Selection_Longitudinal_Form.class);
 		TabSpec tabSpecPageOne = tabHost
 		.newTabSpec("Page 1.1")
@@ -189,6 +190,14 @@ public class MainTabActivity extends TabActivity {
 		.newTabSpec("Page 1.2")
 		.setIndicator("Mater T", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageOne2);		
+		 */	
+
+		Intent intentPageOne=new Intent(this, SecondTabsActivity.class);
+		TabSpec tabSpecPageOne = tabHost
+		.newTabSpec("Page 1.1")
+		.setIndicator("Material", ressources.getDrawable(R.drawable.tab_icon))
+		.setContent(intentPageOne);
+
 
 		Intent intentPageTwo = new Intent().setClass(this,  LLRS_Selection_Longitudinal_Transverse_Form.class);
 		TabSpec tabSpecPageTwo = tabHost
@@ -264,11 +273,13 @@ public class MainTabActivity extends TabActivity {
 		.setIndicator("Conseq", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageTwelve);
 
+		
 		tabHost.addTab(tabSpecPageOne);
-		tabHost.addTab(tabSpecPageOne2);
+		//tabHost.addTab(tabSpecPageOne2);
+		tabHost.addTab(tabSpecPageTwo);
 		tabHost.addTab(tabSpecPageFive);
 		tabHost.addTab(tabSpecPageEight);
-		tabHost.addTab(tabSpecPageTwo);
+
 
 
 		tabHost.addTab(tabSpecPageThree);
@@ -281,6 +292,11 @@ public class MainTabActivity extends TabActivity {
 		//tabHost.addTab(tabSpecPageNine);
 		tabHost.addTab(tabSpecPageEleven);
 		tabHost.addTab(tabSpecPageTwelve);
+
+
+		//tabHost.addTab(tabHost.newTabSpec("tab_test1").setIndicator("TAB 1").setContent(tabs2));
+
+
 
 		initTabIcons(tabHost);
 		setTabColor();
@@ -398,22 +414,15 @@ public class MainTabActivity extends TabActivity {
 	}
 
 	public void lockTabIcons(){
-
 		unselectedTabColour = Color.parseColor("#cccccc");
 		//selectedTabColour = Color.parseColor(colorString);
-
-
 		for(int i=1;i<tabHost.getTabWidget().getChildCount();i++)			{
 			//tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#000000"));
 			ImageView iv2 = (ImageView)tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.icon);
-
 			iv2.setImageDrawable(getResources().getDrawable(R.drawable.layers_icon));
 		}		
 		setTabColor();
-
 	}
-
-
 
 
 	public void completeTab(int tabIndex) {
@@ -549,7 +558,7 @@ public class MainTabActivity extends TabActivity {
 			//FILENAME = (mAppSettings.getString(APP_SETTINGS_FILE_NAME, ""));				
 			Filename = Environment.getExternalStorageDirectory().getAbsolutePath() + "/idctdo/" + FILENAME +".jpg";
 
-			
+
 
 			if (DEBUG_LOG) Log.d(TAG,"CAMERA IMAGE FILENAME: " + Filename.toString());
 			ImageFile = new File(Filename);
@@ -571,8 +580,8 @@ public class MainTabActivity extends TabActivity {
 
 		return false;
 	}
-	
-	
+
+
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {

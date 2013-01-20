@@ -887,17 +887,18 @@ public class EQForm_MapView extends Activity {
 			System.arraycopy(localBaseMaps, 0, choiceList, baseMaps.length, localBaseMaps.length);
 			int selected = -1; // does not select anything			
 
-
+			builder.setPositiveButton("Ok",
+				    new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog, int which) {
+		          //dismiss the dialog  
+		        }
+		    });
+			
 			builder.setSingleChoiceItems(
 					choiceList, 
 					selected, 
-
 					new DialogInterface.OnClickListener() {
 						@Override
-
-
-
-
 						public void onClick(DialogInterface dialog,	int which) {
 							if (DEBUG_LOG) Log.d(TAG,"selected "+choiceList[which]);
 							int index = 1;
@@ -924,6 +925,7 @@ public class EQForm_MapView extends Activity {
 						}
 					});
 			AlertDialog alert = builder.create();
+
 			alert.show();
 		}
 	};

@@ -6,6 +6,7 @@
     android:gravity="left"
     android:orientation="vertical" >
 
+    
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rel1"
@@ -127,7 +128,6 @@
         android:id="@+id/rel5"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rel4"
         android:background="@color/highlight_colour"
         android:gravity="left"
         android:orientation="vertical" >
@@ -140,14 +140,14 @@
             android:text="Steel Connection"
             android:textStyle="bold" />
 
-
-        <ListView android:fadeScrollbars="false"
+        <ListView
             android:id="@+id/listExample5"
             android:layout_width="fill_parent"
             android:layout_height="100dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/textView5"
-            android:choiceMode="singleChoice" >
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false" >
         </ListView>
     </RelativeLayout>
 
