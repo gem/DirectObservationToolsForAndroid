@@ -4,10 +4,10 @@ var testll;
 
 var DEBUG_MODE = false;
 var DEBUG_SHOW_DIFF_LAYERS = false;
-var DEBUG_SHOW_MOUSE_POS = true;
+var DEBUG_SHOW_MOUSE_POS = false;
 var DEBUG_DISPLAY_OVERVIEW = false;
-var DEBUG_DISPLAY_PANZOOM = true;
-var DEBUG_FREE_ROTATE = true;
+var DEBUG_DISPLAY_PANZOOM = false;
+var DEBUG_FREE_ROTATE = false;
 var DEBUG_SHOW_LAYER_SWITCHER = false;
 
 var DEBUG_USE_BROWSER_CACHING = false;
@@ -75,7 +75,6 @@ OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {
 			this.handler = new OpenLayers.Handler.Click(
 			  this, {
 				'click': this.trigger
-
 			  }, this.handlerOptions
 			);
 		  }

@@ -98,8 +98,8 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 	@Override
 	public void onBackPressed() {
 		if (DEBUG_LOG) Log.d("IDCT","back button pressed");
-		//MainTabActivity a = (MainTabActivity)getParent();
-		//a.backButtonPressed();
+		SecondTabsActivity a = (SecondTabsActivity)getParent();
+		a.backButtonPressed();
 	}
 
 	@Override
@@ -393,10 +393,10 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 		if (DEBUG_LOG) Log.d("IDCT","SCREEN DIMENSIONS: measuredWidth "+  measuredWidth  + " MeasuredHeight: " + measuredHeight);
 
 		int h1 = (int)(measuredHeight * 0.2);
-		int h2  = (int)(measuredHeight * 0.2);
-		int h3 = (int)(measuredHeight * 0.2);
-		int h4 = (int)(measuredHeight * 0.2);
-		int h5 = (int)(measuredHeight * 0.2);	
+		int h2  = (int)(measuredHeight * 0.18);
+		int h3 = (int)(measuredHeight * 0.13);
+		int h4 = (int)(measuredHeight * 0.13);
+		int h5 = (int)(measuredHeight * 0.15);	
 
 		LayoutParams lp = listview.getLayoutParams();
 		lp.height = h1;	       

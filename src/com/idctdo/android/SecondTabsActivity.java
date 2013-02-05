@@ -75,6 +75,13 @@ public class SecondTabsActivity extends TabActivity {
 		super.onResume();
 	}
 	
+	
+	public void backButtonPressed() {
+		if (DEBUG_LOG) Log.d("IDCT","back button pressed");
+		MainTabActivity a = (MainTabActivity)getParent();
+		a.backButtonPressed();
+	}
+
 	public void completeThis() {
 		
 		MainTabActivity a = (MainTabActivity)getParent();

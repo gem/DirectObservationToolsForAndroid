@@ -36,25 +36,25 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
-	
+
 	private static final String TAG = "IDCT";
-	public boolean DEBUG_LOG = false; 
-	
-	
-	
+	public boolean DEBUG_LOG = true; 
+
+
+
 	public TabActivity tabActivity;
 	public TabHost tabHost;
 	public int tabIndex = 1;
-	
+
 
 	private String topLevelAttributeDictionary = "DIC_LLRS";
 	private String secondLevelAttributeDictionary = "DIC_LLRS_DUCTILITY";
-	
+
 	private String topLevelAttributeKeyLongitudinal = "LLRS_L";
 	private String topLevelAttributeKeyTransverse = "LLRS_T";
-	private String secondLevelAttributeKeyLongitudinal = "LLRS_DUCT_L";	
-	private String secondLevelAttributeKeyTransverse = "LLRS_DUCT_T";
-	
+	private String secondLevelAttributeKeyLongitudinal = "LLRS_DCT_L";	
+	private String secondLevelAttributeKeyTransverse = "LLRS_DCT_T";
+
 	private SelectedAdapter selectedAdapter;
 	private SelectedAdapter selectedAdapter2;
 	private SelectedAdapter selectedAdapter3;
@@ -62,8 +62,9 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 	private SelectedAdapter selectedAdapter5;
 
 	private ArrayList list;
-	public ArrayList<DBRecord> lLrsd;
 
+	public ArrayList<DBRecord> lLrs;
+	public ArrayList<DBRecord> lLrsd;
 
 
 	ListView listview;
@@ -80,15 +81,15 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.llrs_selectable_list_longitudinal_transverse);
 	}
-	
+
 	@Override
-    protected void onResume() {
-        super.onResume();
+	protected void onResume() {
+		super.onResume();
 		MainTabActivity a = (MainTabActivity)getParent();
 		surveyDataObject = (GEMSurveyObject)getApplication();		
-		
+
 		if (a.isTabCompleted(tabIndex)) {
-			
+
 		} else {
 
 			mDbHelper = new GemDbAdapter(getBaseContext());        
@@ -97,15 +98,16 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 			mDbHelper.open();
 
 			Cursor allLLRSCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);        
-			ArrayList<DBRecord> lLrs = GemUtilities.cursorToArrayList(allLLRSCursor);        
+			lLrs = GemUtilities.cursorToArrayList(allLLRSCursor);        
 			if (DEBUG_LOG) Log.d(TAG,"lLrs: " + lLrs.toString());
 
 			Cursor allLLRSDCursor = mDbHelper.getAttributeValuesByDictionaryTable(secondLevelAttributeDictionary); 
 			lLrsd = GemUtilities.cursorToArrayList(allLLRSDCursor);
+			if (DEBUG_LOG) Log.d(TAG,"lLrs: " + lLrsd.toString());
 
 			allLLRSCursor.close(); 
 			allLLRSDCursor.close();
-			
+
 			mDbHelper.close();
 
 			/*
@@ -115,7 +117,7 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 			listview = (ListView) findViewById(R.id.listLLRS);
 			listview.setAdapter(selectedAdapter);        
 
-*/
+			 */
 			selectedAdapter2 = new SelectedAdapter(this,0,lLrs);    		
 			selectedAdapter2.setNotifyOnChange(true);		
 			listview2 = (ListView) findViewById(R.id.listLLRSLongitudinal);
@@ -126,13 +128,13 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 			selectedAdapter3.setNotifyOnChange(true);		
 			listview3 = (ListView) findViewById(R.id.listLLRSLongitudinalDuctility);
 			listview3.setAdapter(selectedAdapter3);        
-			
+
 			selectedAdapter4 = new SelectedAdapter(this,0,lLrs);    		
 			selectedAdapter4.setNotifyOnChange(true);		
 			listview4 = (ListView) findViewById(R.id.listLLRSTransverse);
 			listview4.setAdapter(selectedAdapter4);        
 
-			
+
 			selectedAdapter5 = new SelectedAdapter(this,0,lLrsd);    		
 			selectedAdapter5.setNotifyOnChange(true);		
 			listview5 = (ListView) findViewById(R.id.listLLRSTransverseDuctility);
@@ -141,7 +143,7 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 			//listview2.setVisibility(View.INVISIBLE);
 
 
-/*
+			/*
 			listview.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView arg0, View view,
@@ -154,7 +156,7 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 
 				}
 			});        
-*/
+			 */
 
 			listview2.setOnItemClickListener(new OnItemClickListener() {
 				@Override
@@ -164,7 +166,7 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 					surveyDataObject.putData(topLevelAttributeKeyLongitudinal, selectedAdapter2.getItem(position).getAttributeValue());					
 					//Toast.makeText(getApplicationContext(), "LV2 click: " + selectedAdapter2.getItem(position).getOrderName() + " " + selectedAdapter2.getItem(position).getOrderStatus() + " " +selectedAdapter2.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 					completeThis();		
-					
+
 				}
 			});
 
@@ -176,7 +178,7 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 					surveyDataObject.putData(secondLevelAttributeKeyLongitudinal, selectedAdapter3.getItem(position).getAttributeValue());					
 					//Toast.makeText(getApplicationContext(), "LV2 click: " + selectedAdapter2.getItem(position).getOrderName() + " " + selectedAdapter2.getItem(position).getOrderStatus() + " " +selectedAdapter2.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 					completeThis();		
-					
+
 				}
 			});
 			listview4.setOnItemClickListener(new OnItemClickListener() {
@@ -185,8 +187,8 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter4.setSelectedPosition(position);
 					surveyDataObject.putData(topLevelAttributeKeyTransverse, selectedAdapter4.getItem(position).getAttributeValue());					
-		
-					
+
+
 				}
 			});
 			listview5.setOnItemClickListener(new OnItemClickListener() {
@@ -197,31 +199,58 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 					surveyDataObject.putData(secondLevelAttributeKeyTransverse, selectedAdapter5.getItem(position).getAttributeValue());					
 					//Toast.makeText(getApplicationContext(), "LV2 click: " + selectedAdapter2.getItem(position).getOrderName() + " " + selectedAdapter2.getItem(position).getOrderStatus() + " " +selectedAdapter2.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 					completeThis();		
-					
+
 				}
 			});
-		}		
-    }
-	
+		}
+
+		loadPreviousAtttributes(listview2, selectedAdapter2);
+		loadPreviousAtttributes(listview3, selectedAdapter3);
+		loadPreviousAtttributes(listview4, selectedAdapter4);
+		loadPreviousAtttributes(listview5, selectedAdapter5);
+
+	}
+
+
+	public void loadPreviousAtttributes(ListView lv, SelectedAdapter selectedAdapter) {
+		if (DEBUG_LOG) Log.d(TAG,"About to resume some values");
+		if (surveyDataObject.getSurveyDataValue(topLevelAttributeKeyLongitudinal) != null) {
+			//lLrs.indexOf(object)
+			String attributeValue = surveyDataObject.getSurveyDataValue(topLevelAttributeKeyLongitudinal);
+			if (DEBUG_LOG) Log.d(TAG, topLevelAttributeKeyLongitudinal + " is not null. attributeValue: " + attributeValue);
+			int i = 0;
+			for(DBRecord d : lLrs){
+				if (DEBUG_LOG) Log.d(TAG, "Looping thring arraylist of selectedAdapter " + i);
+				if (DEBUG_LOG) Log.d(TAG, "val" + d.getAttributeValue());
+				if(d.getAttributeValue().contains(attributeValue)) {
+					if (DEBUG_LOG) Log.d(TAG, "MATCH!" );
+					selectedAdapter.setSelectedPosition(i);
+					lv.setSelection(i);
+				}
+				i++;
+			}
+		}
+
+	}
 	public void clearThis() {
 		if (DEBUG_LOG) Log.d(TAG, "clearing stuff");
 		//selectedAdapter.setSelectedPosition(-1);
 		selectedAdapter2.setSelectedPosition(-1);
 	}
-	
+
 
 	public void completeThis() {
 		MainTabActivity a = (MainTabActivity)getParent();
 		a.completeTab(tabIndex);
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		if (DEBUG_LOG) Log.d(TAG,"back button pressed");
 		MainTabActivity a = (MainTabActivity)getParent();
 		a.backButtonPressed();
 	}
-	
-	
+
+
 
 }

@@ -89,11 +89,31 @@ public class MainTabActivity extends TabActivity {
 
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
 		if (surveyDataObject.isExistingRecord) {
+			if (DEBUG_LOG) Log.d(TAG, "Editing existing record. Going to get vars.");	
 			String existingId = surveyDataObject.getUid();
-			mDbHelper = new GemDbAdapter(getBaseContext());  
-			if (DEBUG_LOG) Log.d(TAG, "existing id " + existingId);		
+			mDbHelper = new GemDbAdapter(getBaseContext());
+			mDbHelper.open();	
+			if (DEBUG_LOG) Log.d(TAG, "Existing id " + existingId);		
 			Cursor curCSV = mDbHelper.getObjectByUid(existingId);
-			if (DEBUG_LOG) Log.d(TAG, "Existing data: " + curCSV.getColumnCount());	
+			mDbHelper.close();
+			//if (DEBUG_LOG) Log.d(TAG, "Existing data: " + curCSV.getColumnCount());
+			
+			//ArrayList<DBRecord> attributesForEditing = GemUtilities.cursorToArrayList(curCSV);        
+			//if (DEBUG_LOG) Log.d(TAG,"attributesForEditing: " + attributesForEditing.toString());
+		
+			if (DEBUG_LOG) Log.d(TAG,"colCount: " + curCSV.getColumnCount());
+	
+			
+			
+			for (int i = 0; i < curCSV.getColumnCount(); i++) {
+				String colName = curCSV.getColumnName(i);
+				if (DEBUG_LOG) Log.d(TAG,"colName : " + colName);
+				String colVal = curCSV.getString(i);
+				if (DEBUG_LOG) Log.d(TAG,"colVal : " + colVal);
+				if (colVal != null) {						
+					surveyDataObject.putData(colName, colVal);
+				}
+			}
 		}
 
 		ressources = getResources(); 
@@ -478,7 +498,6 @@ public class MainTabActivity extends TabActivity {
 
 	public void backButtonPressed() {
 		// do something on back.
-
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
 		// set title

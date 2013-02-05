@@ -199,7 +199,7 @@ public class GemDbAdapter
 	{
 		try
 		{
-			String sql ="select OBJ_UID, X, Y FROM GEM_OBJECT WHERE OBJ_UID = '"+ uid + "'";
+			String sql ="select * FROM GEM_OBJECT WHERE OBJ_UID = '"+ uid + "'";
 
 			Cursor mCur = mDb.rawQuery(sql, null);
 			if (mCur!=null)
@@ -367,7 +367,7 @@ public class GemDbAdapter
 	}
 
 
-	//Functiones like this will be deprected as they use a superdictionary
+	//Functions like this will be deprected as they use a superdictionary
 	public Cursor getAttributeValuesByTypeAndScope(String attributeType, String attributeScope)
 	{
 		try

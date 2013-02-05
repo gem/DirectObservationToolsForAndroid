@@ -129,6 +129,7 @@ public class EQForm_MapView extends Activity {
 	
 	
 	
+	
 	private ProgressDialog progressBar; 
 
 	File ImageFile;
@@ -138,7 +139,6 @@ public class EQForm_MapView extends Activity {
 
 	DecimalFormat df = new DecimalFormat("#0.#####");
 	DecimalFormat dfRounded = new DecimalFormat("#0");
-
 
 	
 	public boolean showGPSDetails = false;
@@ -198,9 +198,6 @@ public class EQForm_MapView extends Activity {
 		//progressBar.show();		
 
 		//progressBar = ProgressDialog.show(EQForm_MapView.this, "IDCT Surveyor", "Loading Maps...");
-
-
-
 
 
 		//Create Folder
@@ -458,9 +455,9 @@ public class EQForm_MapView extends Activity {
 		public void onClick(View v) {
 			if (DEBUG_LOG) Log.d(TAG,"next survey form");
 
-			//Stop any geometry editing
-			isEditingPoints = false;
+			//Stop any geometry editing			
 			mWebView.loadUrl("javascript:startEditingMode(false)");
+			isEditingPoints = false;
 			
 			//Get the most recent point geometry
 			getSurveyPoint();
@@ -511,11 +508,11 @@ public class EQForm_MapView extends Activity {
 			//ShowMessage(outputFileUri.toString());
 			if (resultCode == Activity.RESULT_OK) {
 				GEMSurveyObject g = (GEMSurveyObject)getApplication();
-				if (g.unsavedEdits) {
+				if (g.unsavedEdits) {					
 					AlertDialog.Builder alert = new AlertDialog.Builder(this);
 					alert.setTitle("Photo Comment");
 					alert.setMessage("Add a comment to this photo");
-
+					
 					// Set an EditText view to get user input 
 					final EditText input = new EditText(this);
 					alert.setView(input);
@@ -524,7 +521,6 @@ public class EQForm_MapView extends Activity {
 						public void onClick(DialogInterface dialog, int whichButton) {
 							String value = input.getText().toString();
 							// Do something with value!
-
 							//Toast.makeText(this, "Photo captured", Toast.LENGTH_SHORT).show();
 							GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();				
 							UUID mediaUid = UUID.randomUUID();
@@ -624,6 +620,7 @@ public class EQForm_MapView extends Activity {
 
 	
 
+	
 	public boolean getSurveyPoint() {
 		if (DEBUG_LOG) Log.d(TAG,"getting point location from Openlayers");
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();

@@ -21,7 +21,8 @@
             android:id="@+id/rel1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/highlight_colour"
+            android:background="@drawable/textlines"
+            
             android:gravity="left"
             android:orientation="vertical" >
 
@@ -29,7 +30,7 @@
                 android:id="@+id/textView1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
+                android:gravity="center"
                 android:text="Material Type"
                 style="@style/AttributeTitleStyle"
                  />
@@ -51,7 +52,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rel1"
-            android:background="@color/highlight_colour"
+     
+             android:background="@drawable/textlines"
             android:gravity="left"
             android:orientation="vertical" >
 
@@ -59,7 +61,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
+                android:gravity="center"
                 android:text="Material Tech"
                  style="@style/AttributeTitleStyle" />
 
@@ -72,12 +74,14 @@
                 android:choiceMode="singleChoice"
                 android:fadeScrollbars="false" >
             </ListView>
+
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/relMortar"
+            
             android:layout_below="@+id/rel2" >
 
             <View
@@ -93,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignRight="@id/strut"
-                android:background="@color/highlight_colour"
+                 android:background="@drawable/textlines"
                 android:gravity="left"
                 android:orientation="vertical" >
 
@@ -123,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/strut"
                 android:layout_alignParentRight="true"
-                android:background="@color/highlight_colour"
+                android:background="@drawable/textlines"
                 android:gravity="left"
                 android:orientation="vertical" >
 
@@ -132,7 +136,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="Mortar Reinforcement"
+                    android:text="Mort. Reinforce."
                       style="@style/AttributeTitleStyle"/>
 
                 <ListView
@@ -152,7 +156,7 @@
             android:id="@+id/rel5"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/highlight_colour"
+           android:background="@drawable/textlines"
             android:gravity="left"
             android:orientation="vertical" >
 
@@ -160,7 +164,7 @@
                 android:id="@+id/textView5"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
+                android:gravity="center"
                 android:text="Steel Connection"
                   style="@style/AttributeTitleStyle" />
 
