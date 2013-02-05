@@ -218,7 +218,6 @@ public class MainTabActivity extends TabActivity {
 		.setIndicator("Material", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageOne);
 
-
 		Intent intentPageTwo = new Intent().setClass(this,  LLRS_Selection_Longitudinal_Transverse_Form.class);
 		TabSpec tabSpecPageTwo = tabHost
 		.newTabSpec("Page 2.1")	

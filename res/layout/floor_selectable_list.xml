@@ -69,4 +69,9 @@
         </ListView>
     </RelativeLayout>
 
+    <Spinner
+        android:id="@+id/spinnerFoundationSystem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

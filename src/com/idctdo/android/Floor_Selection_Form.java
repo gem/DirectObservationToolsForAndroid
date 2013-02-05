@@ -30,9 +30,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
@@ -52,15 +54,17 @@ public class Floor_Selection_Form extends Activity {
 	
 	private String secondLevelAttributeDictionary = "DIC_FLOOR_TYPE";
 	private String secondLevelAttributeKey = "FLOOR_TYPE";
+		
+	private String foundationSystemAttributeDictionary = "DIC_FOUNDATION_SYSTEM";
+	private String foundationSystemAttributeKey = "FOUNDN_SYS";
 	
+
+	public Spinner spinnerFoundationSystem;
 	
-
-
-
 	private SelectedAdapter selectedAdapter;
 	private SelectedAdapter selectedAdapter2;
-	private SelectedAdapter selectedAdapter3;
 
+	
 	private ArrayList list;
 	public ArrayList<DBRecord> secondLevelAttributesList;
 
@@ -97,6 +101,16 @@ public class Floor_Selection_Form extends Activity {
 			mDbHelper.createDatabase();      
 			mDbHelper.open();
 
+			
+			
+			spinnerFoundationSystem = (Spinner)  findViewById(R.id.spinnerFoundationSystem);
+			final Cursor foundationSystemAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(foundationSystemAttributeDictionary);
+			ArrayList<DBRecord> foundationSystemAttributesList = GemUtilities.cursorToArrayList(foundationSystemAttributeDictionaryCursor);
+			ArrayAdapter spinnerArrayAdapter2 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,foundationSystemAttributesList );                
+			spinnerFoundationSystem.setAdapter(spinnerArrayAdapter2);
+			
+			
+						
 			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
 			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 			if (DEBUG_LOG) Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());

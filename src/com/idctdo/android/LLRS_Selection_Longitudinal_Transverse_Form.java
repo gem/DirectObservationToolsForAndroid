@@ -212,6 +212,7 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 	}
 
 
+		
 	public void loadPreviousAtttributes(ListView lv, SelectedAdapter selectedAdapter) {
 		if (DEBUG_LOG) Log.d(TAG,"About to resume some values");
 		if (surveyDataObject.getSurveyDataValue(topLevelAttributeKeyLongitudinal) != null) {
@@ -230,8 +231,9 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 				i++;
 			}
 		}
-
 	}
+	
+	
 	public void clearThis() {
 		if (DEBUG_LOG) Log.d(TAG, "clearing stuff");
 		//selectedAdapter.setSelectedPosition(-1);

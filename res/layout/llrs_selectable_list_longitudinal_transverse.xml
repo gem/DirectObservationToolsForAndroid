@@ -26,6 +26,7 @@
 
         <TextView
             android:id="@+id/textView2"
+            style="@style/AttributeTitleStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -34,6 +35,7 @@
 
         <TextView
             android:id="@+id/textViewPrimaryTitle"
+            style="@style/AttributeTitleStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView2"
@@ -43,6 +45,7 @@
 
         <TextView
             android:id="@+id/textViewSecondaryTitle"
+            style="@style/AttributeTitleStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView2"
@@ -66,7 +69,6 @@
             android:fadeScrollbars="false"
             android:paddingLeft="5dp"
             android:paddingRight="5dp" >
-
         </ListView>
 
         <ListView
@@ -79,7 +81,6 @@
             android:fadeScrollbars="false"
             android:paddingLeft="5dp"
             android:paddingRight="5dp" >
-
         </ListView>
     </RelativeLayout>
 
@@ -95,6 +96,7 @@
 
         <TextView
             android:id="@+id/textViewVerticalIrreg"
+            style="@style/AttributeTitleStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -103,6 +105,7 @@
 
         <TextView
             android:id="@+id/textViewVerticalPrimaryTitle"
+            style="@style/AttributeTitleStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewVerticalIrreg"
@@ -112,6 +115,7 @@
 
         <TextView
             android:id="@+id/textViewVerticalSecondaryTitle"
+            style="@style/AttributeTitleStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewVerticalIrreg"
@@ -135,7 +139,6 @@
             android:fadeScrollbars="false"
             android:paddingLeft="5dp"
             android:paddingRight="5dp" >
-
         </ListView>
 
         <ListView
@@ -148,7 +151,6 @@
             android:fadeScrollbars="false"
             android:paddingLeft="5dp"
             android:paddingRight="5dp" >
-
         </ListView>
     </RelativeLayout>
 

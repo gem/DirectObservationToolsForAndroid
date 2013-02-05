@@ -126,8 +126,7 @@ public class Exposure_Form extends Activity {
 			mDbHelper.open();
 			final Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
 			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
-			Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
-			
+			Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());			
 			allAttributeTypesTopLevelCursor.close();
 			mDbHelper.close();
 			

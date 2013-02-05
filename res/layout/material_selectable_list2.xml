@@ -22,18 +22,16 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/textlines"
-            
             android:gravity="left"
             android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/textView1"
+                style="@style/AttributeTitleStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Material Type"
-                style="@style/AttributeTitleStyle"
-                 />
+                android:text="Material Type" />
 
             <ListView
                 android:id="@+id/listExample"
@@ -52,18 +50,17 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rel1"
-     
-             android:background="@drawable/textlines"
+            android:background="@drawable/textlines"
             android:gravity="left"
             android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/textView2"
+                style="@style/AttributeTitleStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Material Tech"
-                 style="@style/AttributeTitleStyle" />
+                android:text="Material Tech" />
 
             <ListView
                 android:id="@+id/listExample2"
@@ -74,14 +71,12 @@
                 android:choiceMode="singleChoice"
                 android:fadeScrollbars="false" >
             </ListView>
-
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/relMortar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/relMortar"
-            
             android:layout_below="@+id/rel2" >
 
             <View
@@ -97,17 +92,17 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignRight="@id/strut"
-                 android:background="@drawable/textlines"
+                android:background="@drawable/textlines"
                 android:gravity="left"
                 android:orientation="vertical" >
 
                 <TextView
                     android:id="@+id/textView3"
+                    style="@style/AttributeTitleStyle"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="Mortar Type"
-                     style="@style/AttributeTitleStyle"/>
+                    android:text="Mortar Type" />
 
                 <ListView
                     android:id="@+id/listExample3"
@@ -133,11 +128,11 @@
 
                 <TextView
                     android:id="@+id/textView4"
+                    style="@style/AttributeTitleStyle"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="Mort. Reinforce."
-                      style="@style/AttributeTitleStyle"/>
+                    android:text="Mort. Reinforce." />
 
                 <ListView
                     android:id="@+id/listExample4"
@@ -156,17 +151,17 @@
             android:id="@+id/rel5"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-           android:background="@drawable/textlines"
+            android:background="@drawable/textlines"
             android:gravity="left"
             android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/textView5"
+                style="@style/AttributeTitleStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Steel Connection"
-                  style="@style/AttributeTitleStyle" />
+                android:text="Steel Connection" />
 
             <ListView
                 android:id="@+id/listExample5"

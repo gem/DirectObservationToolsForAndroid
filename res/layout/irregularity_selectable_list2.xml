@@ -26,6 +26,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
+             style="@style/AttributeTitleStyle"
             android:text="Structural Irregularity"
             android:textStyle="bold" />
 
@@ -55,6 +56,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+             style="@style/AttributeTitleStyle"
             android:text="Structural Horizontal Irregularity"
             android:textStyle="bold" />
 
@@ -65,6 +67,7 @@
             android:layout_below="@+id/textView2"
             android:gravity="left"
             android:text="Primary"
+             style="@style/AttributeTitleStyle"
             android:textStyle="bold" />
 
         <TextView
@@ -73,6 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView2"
             android:gravity="right"
+             style="@style/AttributeTitleStyle"
             android:text="Secondary"
             android:textStyle="bold" />
 
@@ -112,6 +116,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+             style="@style/AttributeTitleStyle"
             android:text="Structural Vertical Irregularity"
             android:textStyle="bold" />
 
@@ -121,6 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewVerticalIrreg"
             android:gravity="left"
+             style="@style/AttributeTitleStyle"
             android:text="Primary"
             android:textStyle="bold" />
 
@@ -131,6 +137,7 @@
             android:layout_below="@+id/textViewVerticalIrreg"
             android:gravity="right"
             android:text="Secondary"
+             style="@style/AttributeTitleStyle"
             android:textStyle="bold" />
 
         <ListView

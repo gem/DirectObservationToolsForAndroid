@@ -22,6 +22,7 @@
 
         <TextView
             android:id="@+id/textView1"
+            style="@style/AttributeTitleStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
@@ -32,10 +33,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView1"
-            android:hint="Enter general building comments here"
+            android:hint="Enter general building comments"
             android:lines="9" >
         </EditText>
-
 
         <Button
             android:id="@+id/btn_save_observation"
@@ -43,8 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/surveyComment"
-            android:visibility="gone"
-            android:text="Save this observation" />
+            android:text="Save this observation"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btn_cancel_observation"
@@ -52,8 +52,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/surveyComment"
-            android:visibility="gone"
-            android:text="Cancel this observation" />
+            android:text="Cancel this observation"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </LinearLayout>
