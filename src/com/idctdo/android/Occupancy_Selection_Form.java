@@ -47,7 +47,7 @@ public class Occupancy_Selection_Form extends Activity {
 
 	public TabActivity tabActivity;
 	public TabHost tabHost;
-	public int tabIndex = 7;
+	public int tabIndex = 6;
 
 	private String topLevelAttributeDictionary = "DIC_OCCUPANCY";
 	private String topLevelAttributeKey = "OCCUPCY";

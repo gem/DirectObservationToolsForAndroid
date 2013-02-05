@@ -47,7 +47,7 @@ public class Floor_Selection_Form extends Activity {
 
 	public TabActivity tabActivity;
 	public TabHost tabHost;
-	public int tabIndex = 6;
+	public int tabIndex = 5;
 
 	private String topLevelAttributeDictionary = "DIC_FLOOR_MATERIAL";
 	private String topLevelAttributeKey = "FLOOR_MAT";
@@ -106,11 +106,29 @@ public class Floor_Selection_Form extends Activity {
 			spinnerFoundationSystem = (Spinner)  findViewById(R.id.spinnerFoundationSystem);
 			final Cursor foundationSystemAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(foundationSystemAttributeDictionary);
 			ArrayList<DBRecord> foundationSystemAttributesList = GemUtilities.cursorToArrayList(foundationSystemAttributeDictionaryCursor);
-			ArrayAdapter spinnerArrayAdapter2 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,foundationSystemAttributesList );                
-			spinnerFoundationSystem.setAdapter(spinnerArrayAdapter2);
+			ArrayAdapter spinnerArrayAdapter2 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,foundationSystemAttributesList );
+			spinnerArrayAdapter2.setDropDownViewResource(R.layout.simple_spinner_item);
+			spinnerFoundationSystem.setAdapter(spinnerArrayAdapter2);						
+			
+			spinnerFoundationSystem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+					//Object item = parent.getItemAtPosition(pos);
+					Log.d("IDCT","spinner selected: " + spinnerFoundationSystem.getSelectedItem().toString());
+					Log.d("IDCT","spinner selected pos: " + pos);
+					
+					//Temporarily disabled 7/1/13					
+					//allAttributeTypesTopLevelCursor.moveToPosition(pos);							
+					//surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());
+					DBRecord selected = (DBRecord) spinnerFoundationSystem.getSelectedItem();
+					Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
+					surveyDataObject.putGedData(foundationSystemAttributeKey, selected.getAttributeValue());		
+				}
+				public void onNothingSelected(AdapterView<?> parent) {
+				}
+			});	
 			
 			
-						
+			
 			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
 			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 			if (DEBUG_LOG) Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());

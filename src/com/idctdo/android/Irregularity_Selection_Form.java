@@ -169,7 +169,7 @@ public class Irregularity_Selection_Form extends Activity {
 						int position, long id) {
 					// user clicked a list item, make it "selected"
 					selectedAdapter.setSelectedPosition(position);
-					selectedAdapter2.setSelectedPosition(-1);			
+					//selectedAdapter2.setSelectedPosition(-1);			
 					surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());
 					
 					

@@ -42,11 +42,11 @@ import android.widget.Toast;
 
 public class Roof_Selection_Form extends Activity {
 
-	public boolean DEBUG_LOG = false; 
+	public boolean DEBUG_LOG = true; 
 
 	public TabActivity tabActivity;
 	public TabHost tabHost;
-	public int tabIndex = 5;
+	public int tabIndex = 4;
 
 	private String roofShapeAttributeDictionary = "DIC_ROOF_SHAPE";
 	private String roofShapeAttributeKey = "ROOF_SHAPE";
@@ -115,16 +115,54 @@ public class Roof_Selection_Form extends Activity {
 			spinnerRoofShape = (Spinner)  findViewById(R.id.spinnerRoofShape);
 			final Cursor roofShapeAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(roofShapeAttributeDictionary);
 			ArrayList<DBRecord> roofShapeAttributesList = GemUtilities.cursorToArrayList(roofShapeAttributeDictionaryCursor);
-			ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,roofShapeAttributesList );                
+			ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,roofShapeAttributesList );
+			spinnerArrayAdapter.setDropDownViewResource(R.layout.simple_spinner_item);
 			spinnerRoofShape.setAdapter(spinnerArrayAdapter);
 
 
+			spinnerRoofShape.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+					//Object item = parent.getItemAtPosition(pos);
+					if (DEBUG_LOG) Log.d("IDCT","spinner selected: " + spinnerRoofShape.getSelectedItem().toString());
+					if (DEBUG_LOG) Log.d("IDCT","spinner selected pos: " + pos);
+					
+					//Temporarily disabled 7/1/13					
+					//allAttributeTypesTopLevelCursor.moveToPosition(pos);
+					//Log.d("IDCT","spinner selected pos val: " + allAttributeTypesTopLevelCursor.getString(1));							
+					//surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());
+					DBRecord selected = (DBRecord) spinnerRoofShape.getSelectedItem();
+					if (DEBUG_LOG) Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
+					surveyDataObject.putGedData(roofShapeAttributeKey, selected.getAttributeValue());		
+				}
+				public void onNothingSelected(AdapterView<?> parent) {
+				}
+			});	
+
+			
 			spinnerRoofCoverMaterial = (Spinner)  findViewById(R.id.spinnerRoofCoverMaterial);
 			final Cursor roofCoverMaterialAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(roofCoverMaterialAttributeDictionary);
 			ArrayList<DBRecord> roofCoverMaterialAttributesList = GemUtilities.cursorToArrayList(roofCoverMaterialAttributeDictionaryCursor);
-			ArrayAdapter spinnerArrayAdapter2 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,roofCoverMaterialAttributesList );                
+			ArrayAdapter spinnerArrayAdapter2 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,roofCoverMaterialAttributesList );
+			spinnerArrayAdapter2.setDropDownViewResource(R.layout.simple_spinner_item);
 			spinnerRoofCoverMaterial.setAdapter(spinnerArrayAdapter2);
-
+			
+			spinnerRoofCoverMaterial.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+					//Object item = parent.getItemAtPosition(pos);
+					if (DEBUG_LOG) Log.d("IDCT","spinner selected: " + spinnerRoofCoverMaterial.getSelectedItem().toString());
+					if (DEBUG_LOG) Log.d("IDCT","spinner selected pos: " + pos);
+					
+					//Temporarily disabled 7/1/13					
+					//allAttributeTypesTopLevelCursor.moveToPosition(pos);
+					//Log.d("IDCT","spinner selected pos val: " + allAttributeTypesTopLevelCursor.getString(1));							
+					//surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());
+					DBRecord selected = (DBRecord) spinnerRoofCoverMaterial.getSelectedItem();
+					if (DEBUG_LOG) Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
+					surveyDataObject.putGedData(roofCoverMaterialAttributeKey, selected.getAttributeValue());		
+				}
+				public void onNothingSelected(AdapterView<?> parent) {
+				}
+			});	
 
 
 			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     

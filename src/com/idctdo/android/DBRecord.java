@@ -52,8 +52,8 @@ public class DBRecord {
     
     public String toString(){
     	
-		return attributeDescription + " " + attributeValue + " " + attributeScope + " " + recordCode;
-    	
+		//return attributeDescription + " " + attributeValue + " " + attributeScope + " " + recordCode;
+		return attributeDescription;
     
     }
 }

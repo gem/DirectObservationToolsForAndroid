@@ -4,7 +4,9 @@
     android:layout_height="fill_parent"
     android:background="@color/highlight_colour"
     android:gravity="left"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+        android:paddingLeft="5dp"
+    android:paddingRight="5dp" >
 
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"

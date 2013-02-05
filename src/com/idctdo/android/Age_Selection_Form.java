@@ -47,7 +47,7 @@ public class Age_Selection_Form extends Activity {
 	
 	public TabActivity tabActivity;
 	public TabHost tabHost;
-	public int tabIndex = 8;
+	public int tabIndex = 7;
 	
 	private String topLevelAttributeDictionary = "DIC_YEAR_BUILT_QUAL";
 	private String topLevelAttributeKey = "YR_BUILT_Q";

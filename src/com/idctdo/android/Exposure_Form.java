@@ -131,8 +131,10 @@ public class Exposure_Form extends Activity {
 			mDbHelper.close();
 			
 			spinnerCurrency = (Spinner) findViewById(R.id.spinnerCurrency);
-			ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,topLevelAttributesList);                
+			ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,topLevelAttributesList);
+			spinnerArrayAdapter.setDropDownViewResource(R.layout.simple_spinner_item);
 			spinnerCurrency.setAdapter(spinnerArrayAdapter);
+			
 			/*
 		    SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, 
                     android.R.layout.simple_spinner_item, 
@@ -144,8 +146,7 @@ public class Exposure_Form extends Activity {
 				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 					//Object item = parent.getItemAtPosition(pos);
 					Log.d("IDCT","spinner selected: " + spinnerCurrency.getSelectedItem().toString());
-					Log.d("IDCT","spinner selected pos: " + pos);
-					
+					Log.d("IDCT","spinner selected pos: " + pos);					
 					//Temporarily disabled 7/1/13					
 					//allAttributeTypesTopLevelCursor.moveToPosition(pos);
 					//Log.d("IDCT","spinner selected pos val: " + allAttributeTypesTopLevelCursor.getString(1));							
