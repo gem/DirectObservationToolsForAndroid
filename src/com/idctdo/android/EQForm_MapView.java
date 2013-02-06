@@ -115,7 +115,7 @@ public class EQForm_MapView extends Activity {
 
 	public Location currentLocation; 
 	public LocationManager locationManager; 
-	public LocationListener mlocListener; 
+	public LocationListener mlocListener = new MyLocationListener();
 	public double currentLatitude;
 	public double currentLongitude;
 	public double currentLocationAccuracy;
@@ -124,12 +124,13 @@ public class EQForm_MapView extends Activity {
 	public boolean currentLocationSetAsCentre = true;
 	MyCount drawUpdateCounter;
 
-	public long minTimePositionUpdates = 5000;
-	public float minDistPositionUpdates = 10f;
-	
-	
-	
-	
+	public long minTimePositionUpdates = 0; //30000
+	public float minDistPositionUpdates = 0; //10f
+
+
+		
+	StringBuilder sb;
+
 	private ProgressDialog progressBar; 
 
 	File ImageFile;
@@ -140,11 +141,11 @@ public class EQForm_MapView extends Activity {
 	DecimalFormat df = new DecimalFormat("#0.#####");
 	DecimalFormat dfRounded = new DecimalFormat("#0");
 
-	
+
 	public boolean showGPSDetails = false;
 
 	public boolean isEditingPoints = false;
-	
+
 	Button btn_locateMe;
 	Button btn_takeCameraPhoto;
 	Button btn_take_survey_photo;
@@ -161,7 +162,7 @@ public class EQForm_MapView extends Activity {
 	String sdCardPath;
 
 	TextView text_view_gpsInfo;
-	
+
 
 
 	@Override
@@ -237,21 +238,13 @@ public class EQForm_MapView extends Activity {
 		//SharedPreferences settings = getSharedPreferences("R.xml.prefs"), 0);
 
 
-		
-		
 
-		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-			Toast.makeText(this, "GPS is Enabled in your device", Toast.LENGTH_SHORT).show();
-		}else{
-			showGPSDisabledAlertToUser();
-		}
 
-		mlocListener = new MyLocationListener();
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
-		locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
-
+		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+
+
 
 
 		btn_locateMe = (Button)findViewById(R.id.btn_locate_me);
@@ -280,7 +273,7 @@ public class EQForm_MapView extends Activity {
 		btn_zoomOut =(Button)findViewById(R.id.btn_zoom_out);
 		btn_zoomOut.setOnClickListener(zoomOutListener);
 
-		
+
 
 		btn_edit_points =(Button)findViewById(R.id.btn_edit_points); 
 		btn_edit_points.setOnClickListener(editPointsListener);
@@ -306,21 +299,25 @@ public class EQForm_MapView extends Activity {
 		super.onResume();
 
 		if (DEBUG_LOG) Log.d("IDCT","ON RESUME");
-		
-		
+
+
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 		//SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);		
 		showGPSDetails= (settings.getBoolean("showPositionDetailsCheckBox", false));
+
 		
 		if (showGPSDetails) { 
 			text_view_gpsInfo.setVisibility(View.VISIBLE);//
 		} else {
 			text_view_gpsInfo.setVisibility(View.INVISIBLE);//
 		}
+		
+
+		
 		/*
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10f, mlocListener);
 		locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
-		
+
 		// Register the listener with the Location Manager to receive location
 		// updates
 		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -330,15 +327,30 @@ public class EQForm_MapView extends Activity {
 			locationManager.requestLocationUpdates(
 					LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
 		}
-		*/
+		 */
+
+
+
+		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+			Toast.makeText(this, "GPS is Enabled in your device", Toast.LENGTH_SHORT).show();
+		}else{
+			showGPSDisabledAlertToUser();
+		}
+
+
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
+		//locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
+
+		//currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
 
 
 
-		drawUpdateCounter = new MyCount(100000000,1000);
+		//drawUpdateCounter = new MyCount(100000000,1000);
 		//drawUpdateCounter.start();
+
 		
-		
+
 		mWebView.loadUrl("javascript:clearMyPositions()");
 		loadPrevSurveyPoints();
 
@@ -347,7 +359,9 @@ public class EQForm_MapView extends Activity {
 		if (DEBUG_LOG) Log.d(TAG,"RESUMING MAP, global vars " + g.getLon()+ " lat: " + g.getLat());
 		mWebView.loadUrl("javascript:locateMe("+ g.getLat()+","+g.getLon()+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");
 
+		
 		if (g.unsavedEdits) {
+			
 			//Draw a candidate survey point
 			if (DEBUG_LOG) Log.d(TAG,"RESUMING EDITS. DRAWING MOVEABLE POINT, " + g.getLon()+ " lat: " + g.getLat());
 			mWebView.loadUrl("javascript:drawCandidateSurveyPoint("+ g.getLon()+","+g.getLat()+")");
@@ -381,10 +395,10 @@ public class EQForm_MapView extends Activity {
 		// TODO Auto-generated method stub
 		super.onPause();
 		Log.d("IDCT", "On Pause .....");
-		
+
 		locationManager.removeUpdates(mlocListener);
-		
-		drawUpdateCounter.cancel();
+
+		//drawUpdateCounter.cancel();
 
 	}
 
@@ -403,8 +417,8 @@ public class EQForm_MapView extends Activity {
 			//loadSurveyPoints();
 		}
 	};
-	
-	
+
+
 	private OnClickListener zoomOutListener  = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -429,9 +443,9 @@ public class EQForm_MapView extends Activity {
 			locateMe(true);
 		}
 	};
-	
-	
-	
+
+
+
 	private OnClickListener editPointsListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -444,7 +458,7 @@ public class EQForm_MapView extends Activity {
 				mWebView.loadUrl("javascript:startEditingMode(true)");
 				isEditingPoints = true;
 			}
-			
+
 			locateMe(true);
 		}
 	};
@@ -458,10 +472,10 @@ public class EQForm_MapView extends Activity {
 			//Stop any geometry editing			
 			mWebView.loadUrl("javascript:startEditingMode(false)");
 			isEditingPoints = false;
-			
+
 			//Get the most recent point geometry
 			getSurveyPoint();
-			
+
 			//Start the tabs view
 			Intent ModifiedEMS98 = new Intent (EQForm_MapView.this, MainTabActivity.class);
 			startActivity(ModifiedEMS98);
@@ -475,9 +489,9 @@ public class EQForm_MapView extends Activity {
 			if (DEBUG_LOG) Log.d(TAG,"camera class");
 
 			getSurveyPoint();
-							
-			
-			
+
+
+
 			GEMSurveyObject g = (GEMSurveyObject)getApplication();
 			UUID mediaId = UUID.randomUUID();
 			FILENAME = "" + mediaId.toString();	
@@ -512,7 +526,7 @@ public class EQForm_MapView extends Activity {
 					AlertDialog.Builder alert = new AlertDialog.Builder(this);
 					alert.setTitle("Photo Comment");
 					alert.setMessage("Add a comment to this photo");
-					
+
 					// Set an EditText view to get user input 
 					final EditText input = new EditText(this);
 					alert.setView(input);
@@ -577,13 +591,13 @@ public class EQForm_MapView extends Activity {
 	//Can then mark the map tab as complete
 	public boolean loadSurveyPoint(final double lon, final double lat,final String gemId) {
 		if (DEBUG_LOG) Log.d(TAG,"edited point location from Openlayers. Lon:" + lon + " lat: " + lat+ " gemId: " + gemId);
-		
+
 		//mWebView.loadUrl("javascript:locateMe("+ lat+","+lon+","+currentLocationAccuracy+","+true+")");
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
 		g.setLon(lon);
 		g.setLat(lat);
-		
-		
+
+
 		if (gemId.equals("0")) {
 			//Generate a uid for this survey point
 			UUID id = UUID.randomUUID();
@@ -593,10 +607,10 @@ public class EQForm_MapView extends Activity {
 			g.setUid(gemId);			
 			g.isExistingRecord = true;
 		}
-		
+
 		g.unsavedEdits = true;
-		
-		
+
+
 		//g.putData("OBJ_UID", id.toString());
 		if (DEBUG_LOG) Log.d(TAG,"GLOBAL VARS UID " + g.getUid());	
 		if (DEBUG_LOG) Log.d(TAG,"GLOBAL VARS " + g.getLon()+ " lat: " + g.getLat());
@@ -618,19 +632,19 @@ public class EQForm_MapView extends Activity {
 		return false;
 	}	
 
-	
 
-	
+
+
 	public boolean getSurveyPoint() {
 		if (DEBUG_LOG) Log.d(TAG,"getting point location from Openlayers");
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
 		int data=surveyDataObject.getData();
 		if (DEBUG_LOG) Log.d(TAG,"TEST GLOBALS: " + data);
-		
+
 		mWebView.loadUrl("javascript:updateSurveyPointPositionFromMap("+ isEditingPoints+")");
 
 		return false; 		
-		
+
 	}
 
 
@@ -641,7 +655,7 @@ public class EQForm_MapView extends Activity {
 
 		mWebView.loadUrl("javascript:loadSurveyPointsOnMap(-1.1662567,52.9470582)");
 	}
-*/
+	 */
 
 
 	private void loadPrevSurveyPoints() {
@@ -667,8 +681,8 @@ public class EQForm_MapView extends Activity {
 			mCursor.moveToNext();			
 		}
 		mCursor.close();
-		
-		
+
+
 
 		/*
 		if (prevSurveyPointLat != 0) { 
@@ -747,8 +761,8 @@ public class EQForm_MapView extends Activity {
 		//a.completeTab(tabIndex);
 	}
 
-	
-	
+
+
 
 
 
@@ -885,12 +899,12 @@ public class EQForm_MapView extends Activity {
 			int selected = -1; // does not select anything			
 
 			builder.setPositiveButton("Ok",
-				    new DialogInterface.OnClickListener() {
-		        public void onClick(DialogInterface dialog, int which) {
-		          //dismiss the dialog  
-		        }
-		    });
-			
+					new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					//dismiss the dialog  
+				}
+			});
+
 			builder.setSingleChoiceItems(
 					choiceList, 
 					selected, 
@@ -983,7 +997,7 @@ public class EQForm_MapView extends Activity {
 
 			mWebView.loadUrl("javascript:addKmlStringToMap("+ egg +")");
 
-			
+
 			int selected = -1; // does not select anything
 			final CharSequence[] choiceList = getVectorLayers();
 			builder.setSingleChoiceItems(
@@ -1099,9 +1113,9 @@ public class EQForm_MapView extends Activity {
 		public void onTick(long millisUntilFinished) {
 			if (DEBUG_LOG) Log.d(TAG,"seconds left: " +millisUntilFinished/1000);
 			if (DEBUG_LOG) Log.d(TAG,"currentLat:" + currentLatitude + " currentLon: " + currentLongitude);
-			
+
 			if (showGPSDetails) {
-				text_view_gpsInfo.setText("GPS Information:\nLat: " + df.format(currentLatitude) + "\nLon: " + df.format(currentLongitude) + "\nAccuracy (Metres): " + dfRounded.format(currentLocationAccuracy) + "\nProvider: " +currentLocationProvider );
+				//text_view_gpsInfo.setText("GPS Information:\nLat: " + df.format(currentLatitude) + "\nLon: " + df.format(currentLongitude) + "\nAccuracy (Metres): " + dfRounded.format(currentLocationAccuracy) + "\nProvider: " +currentLocationProvider );
 			}
 			//drawGuidePoint2();
 			locateMe(false);
@@ -1141,10 +1155,39 @@ public class EQForm_MapView extends Activity {
 		@Override
 		public void onLocationChanged(Location loc)	{
 
+			
 
 			if (isBetterLocation(loc,currentLocation)) {
 				if (DEBUG_LOG) Log.d(TAG,"New location is better. Updating it");
 				currentLocation = loc;
+				
+				locateMe(false);
+
+				sb = new StringBuilder(512);
+				/* display some of the data in the TextView */
+
+				sb.append("Londitude: ");
+				sb.append(loc.getLongitude());
+				sb.append('\n');
+
+				sb.append("Latitude: ");
+				sb.append(loc.getLatitude());
+				sb.append('\n');
+
+				sb.append("Altitiude: ");
+				sb.append(loc.getAltitude());
+				sb.append('\n');
+
+				sb.append("Accuracy: ");
+				sb.append(loc.getAccuracy());
+				sb.append('\n');
+
+				sb.append("Timestamp: ");
+				sb.append(loc.getTime());
+				sb.append('\n');
+
+				text_view_gpsInfo.setText(sb.toString());
+				
 			}
 
 			currentLatitude = currentLocation.getLatitude();
@@ -1162,6 +1205,9 @@ public class EQForm_MapView extends Activity {
 
 			//textViewLatitude.setText(Double.toString(loc.getLatitude()));
 			//textViewLongitude.setText(Double.toString(loc.getLongitude()));
+
+
+
 		}
 
 		@Override
@@ -1177,13 +1223,14 @@ public class EQForm_MapView extends Activity {
 
 	    					Toast.LENGTH_SHORT ).show();
 			 */
-
+			/*
 			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTimePositionUpdates, minDistPositionUpdates,  mlocListener );
 			} else {
 				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener );
 			} 
+			 */
 		}
 
 
@@ -1200,13 +1247,14 @@ public class EQForm_MapView extends Activity {
 
 	    					Toast.LENGTH_SHORT).show();
 			 */
-
+			/*
 			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);   
 			if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
 			} else {
 				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
 			}
+			 */
 		}
 
 
