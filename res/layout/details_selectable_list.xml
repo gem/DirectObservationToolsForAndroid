@@ -4,9 +4,9 @@
     android:layout_height="fill_parent"
     android:background="@color/highlight_colour"
     android:gravity="left"
-        android:paddingLeft="5dp"
-    android:paddingRight="5dp" 
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp" >
 
     <TextView
         android:layout_width="fill_parent"
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView1"
             android:hint="Enter general building comments"
-            android:lines="9" >
+            android:lines="6" >
         </EditText>
 
         <Button
@@ -57,5 +57,94 @@
             android:text="Cancel this observation"
             android:visibility="gone" />
     </RelativeLayout>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rel5"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel1"
+        android:background="@color/highlight_colour"
+        android:gravity="left"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textViewSlope"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:gravity="left"
+            android:text="Slope"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editTextSlope"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:ems="10"
+            android:hint="slope (degs)"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/textViewBuildingPosition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/editTextSlope"
+            android:layout_marginTop="5dp"
+            android:gravity="left"
+            android:text="Building Position"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinnerBuildingPosition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewBuildingPosition"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:id="@+id/textViewBuildingShape"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/spinnerBuildingPosition"
+            android:layout_marginTop="5dp"
+            android:gravity="left"
+            android:text="Building Shape"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <Spinner
+        android:id="@+id/spinnerBuildingShape"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    
+    
+            <TextView
+            android:id="@+id/textViewNonStructuralExteriorWalls"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/spinnerBuildingShape"
+            android:layout_marginTop="5dp"
+            android:gravity="left"
+            android:text="Non-structural Exterior Walls"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinnerNonStructuralExteriorWalls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewNonStructuralExteriorWalls"
+            android:layout_marginTop="5dp" />
 
 </LinearLayout>

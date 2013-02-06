@@ -119,7 +119,6 @@ public class Roof_Selection_Form extends Activity {
 			spinnerArrayAdapter.setDropDownViewResource(R.layout.simple_spinner_item);
 			spinnerRoofShape.setAdapter(spinnerArrayAdapter);
 
-
 			spinnerRoofShape.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 					//Object item = parent.getItemAtPosition(pos);

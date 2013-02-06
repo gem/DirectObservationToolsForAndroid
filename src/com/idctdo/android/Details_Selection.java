@@ -32,16 +32,19 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 public class Details_Selection extends Activity {
 
-
+	public boolean DEBUG_LOG = true; 
+	
 	private ArrayList list;
 	public ArrayList<DBRecord> lLrsd;
 
@@ -61,7 +64,16 @@ public class Details_Selection extends Activity {
 
 	public EditText editTextSurveyComment;
 
-
+	
+	private String buildingPositionAttributeDictionary = "DIC_POSITION";
+	private String buildingPositionAttributeKey = "POSITION";
+	
+	private String buildingShapeAttributeDictionary = "DIC_PLAN_SHAPE";
+	private String buildingShapeAttributeKey = "PLAN_SHAPE";
+	
+	public Spinner spinnerBuildingPosition;
+	public Spinner spinnerBuildingShape;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -86,6 +98,12 @@ public class Details_Selection extends Activity {
 		if (a.isTabCompleted(tabIndex)) {
 
 		} else {
+			
+			mDbHelper = new GemDbAdapter(getBaseContext()); 
+
+			mDbHelper.createDatabase();      
+			mDbHelper.open();
+			
 			editTextSurveyComment = (EditText) findViewById(R.id.surveyComment);
 			editTextSurveyComment.setOnFocusChangeListener(new OnFocusChangeListener() { 				
 
@@ -98,6 +116,64 @@ public class Details_Selection extends Activity {
 					}
 				}
 			});
+			
+			
+			
+			spinnerBuildingPosition = (Spinner)  findViewById(R.id.spinnerBuildingPosition);
+			final Cursor roofShapeAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(buildingPositionAttributeDictionary);
+			ArrayList<DBRecord> roofShapeAttributesList = GemUtilities.cursorToArrayList(roofShapeAttributeDictionaryCursor);
+			ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,roofShapeAttributesList );
+			spinnerArrayAdapter.setDropDownViewResource(R.layout.simple_spinner_item);
+			spinnerBuildingPosition.setAdapter(spinnerArrayAdapter);
+			spinnerBuildingPosition.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+					//Object item = parent.getItemAtPosition(pos);
+					if (DEBUG_LOG) Log.d("IDCT","spinner selected: " + spinnerBuildingPosition.getSelectedItem().toString());
+					if (DEBUG_LOG) Log.d("IDCT","spinner selected pos: " + pos);
+					
+					//Temporarily disabled 7/1/13					
+					//allAttributeTypesTopLevelCursor.moveToPosition(pos);
+					//Log.d("IDCT","spinner selected pos val: " + allAttributeTypesTopLevelCursor.getString(1));							
+					//surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());
+					DBRecord selected = (DBRecord) spinnerBuildingPosition.getSelectedItem();
+					if (DEBUG_LOG) Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
+					surveyDataObject.putGedData(buildingPositionAttributeKey, selected.getAttributeValue());		
+				}
+				public void onNothingSelected(AdapterView<?> parent) {
+				}
+			});	
+					
+			
+			spinnerBuildingShape = (Spinner)  findViewById(R.id.spinnerBuildingShape);
+			final Cursor buildingShapeAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(buildingShapeAttributeDictionary);
+			ArrayList<DBRecord> buildingShapeAttributesList = GemUtilities.cursorToArrayList(buildingShapeAttributeDictionaryCursor);
+			ArrayAdapter spinnerArrayAdapter2 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,buildingShapeAttributesList);
+			spinnerArrayAdapter.setDropDownViewResource(R.layout.simple_spinner_item);
+			spinnerBuildingShape.setAdapter(spinnerArrayAdapter2);
+			spinnerBuildingShape.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+					//Object item = parent.getItemAtPosition(pos);
+					if (DEBUG_LOG) Log.d("IDCT","spinner selected: " + spinnerBuildingShape.getSelectedItem().toString());
+					if (DEBUG_LOG) Log.d("IDCT","spinner selected pos: " + pos);
+					
+					//Temporarily disabled 7/1/13					
+					//allAttributeTypesTopLevelCursor.moveToPosition(pos);
+					//Log.d("IDCT","spinner selected pos val: " + allAttributeTypesTopLevelCursor.getString(1));							
+					//surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());
+					DBRecord selected = (DBRecord) spinnerBuildingShape.getSelectedItem();
+					if (DEBUG_LOG) Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
+					surveyDataObject.putGedData(buildingShapeAttributeKey, selected.getAttributeValue());		
+				}
+				public void onNothingSelected(AdapterView<?> parent) {
+				}
+			});	
+			
+			
+			
+			
+			
+			roofShapeAttributeDictionaryCursor.close();
+			mDbHelper.close();
 		}
 	}
 
