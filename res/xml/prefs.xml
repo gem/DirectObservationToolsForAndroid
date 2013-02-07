@@ -13,7 +13,7 @@
             android:enabled="true"
             android:key="showPositionDetailsCheckBox"
             android:summary="On/Off"
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:title="Show positioning details" />
     </PreferenceCategory>
     <PreferenceCategory
@@ -40,16 +40,4 @@
             android:summary="Enter hazard name"
             android:title="Enter hazard name" />
     </PreferenceCategory>
-    <PreferenceCategory
-        android:summary="Map Layer Settings"
-        android:title="Map Layer Settings" >
-        <ListPreference
-            android:enabled="false"
-            android:entries="@array/listOptions"
-            android:entryValues="@array/listValues"
-            android:key="listpref"
-            android:summary="List preference example"
-            android:title="List preference" />
-    </PreferenceCategory>
-
 </PreferenceScreen>

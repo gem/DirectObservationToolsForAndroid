@@ -5,4 +5,4 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:textColor="#FF555555"
-    android:textSize="14pt" />
+    android:textSize="12pt" />

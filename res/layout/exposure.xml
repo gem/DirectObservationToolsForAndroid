@@ -4,9 +4,9 @@
     android:layout_height="fill_parent"
     android:background="@color/highlight_colour"
     android:gravity="left"
-        android:paddingLeft="5dp"
-    android:paddingRight="5dp" 
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp" >
 
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,12 +23,14 @@
             android:orientation="vertical" >
 
             <TextView
+                style="@style/AttributeTitleStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textStyle="bold" />
 
             <TextView
+                style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -47,6 +49,7 @@
             </EditText>
 
             <TextView
+                style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Number of Night Occupants"
@@ -61,6 +64,7 @@
 
             <TextView
                 android:id="@+id/textView1"
+                style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Number of Transit Occupants"
@@ -75,6 +79,7 @@
 
             <TextView
                 android:id="@+id/textView2"
+                style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Number of Dwellings"
@@ -89,6 +94,7 @@
 
             <TextView
                 android:id="@+id/textView3"
+                style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Plan Area"
@@ -103,6 +109,7 @@
 
             <TextView
                 android:id="@+id/textView4"
+                style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Replacement Cost"
@@ -114,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="numberDecimal" />
-
+            
             <Spinner
                 android:id="@+id/spinnerCurrency"
                 android:layout_width="match_parent"
@@ -122,6 +129,7 @@
 
             <TextView
                 android:id="@+id/textView5"
+                style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Comments"

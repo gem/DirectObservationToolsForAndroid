@@ -72,6 +72,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -86,6 +87,7 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 
 public class EQForm_MapView extends Activity {
@@ -128,8 +130,9 @@ public class EQForm_MapView extends Activity {
 	public float minDistPositionUpdates = 0; //10f
 
 
-		
+
 	StringBuilder sb;
+	StringBuilder sb2;
 
 	private ProgressDialog progressBar; 
 
@@ -142,7 +145,7 @@ public class EQForm_MapView extends Activity {
 	DecimalFormat dfRounded = new DecimalFormat("#0");
 
 
-	public boolean showGPSDetails = false;
+	public boolean showGPSDetails = true;
 
 	public boolean isEditingPoints = false;
 
@@ -150,19 +153,21 @@ public class EQForm_MapView extends Activity {
 	Button btn_takeCameraPhoto;
 	Button btn_take_survey_photo;
 	Button btn_startSurvey;
+	Button btn_startSurveyFavourite;
+	Button btn_cancelSurveyPoint;	
 	Button btn_selectLayer;
 	Button btn_selectVectorLayer;
 	Button btn_zoomIn;
 	Button btn_zoomOut;
 	Button btn_refreshLayer;
-	Button btn_edit_points;
+	ToggleButton btn_edit_points;
 
 	File vectorsFile;
 	File mapTilesFile;
 	String sdCardPath;
 
 	TextView text_view_gpsInfo;
-
+	TextView text_view_gpsInfo2;
 
 
 	@Override
@@ -223,6 +228,10 @@ public class EQForm_MapView extends Activity {
 			e.printStackTrace();
 		}
 
+
+
+
+
 		//Save the path as a string value
 		String extStorageDirectory = vectorsFile.toString();
 		//SingleMediaScanner scan2 = new SingleMediaScanner(this, vectorsFile);
@@ -245,8 +254,6 @@ public class EQForm_MapView extends Activity {
 
 
 
-
-
 		btn_locateMe = (Button)findViewById(R.id.btn_locate_me);
 		btn_locateMe.setOnClickListener(locateMeListener);
 
@@ -259,8 +266,12 @@ public class EQForm_MapView extends Activity {
 
 		btn_startSurvey =(Button)findViewById(R.id.btn_start_survey);
 		btn_startSurvey.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
-
 		btn_startSurvey.setOnClickListener(startSurveyListener);
+		
+		btn_cancelSurveyPoint =(Button)findViewById(R.id.btn_cancel_survey_point);
+		btn_cancelSurveyPoint.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
+		btn_cancelSurveyPoint.setOnClickListener(cancelSurveyPointListener);
+				
 		btn_selectLayer =(Button)findViewById(R.id.btn_select_layer);
 		btn_selectLayer.setOnClickListener(selectLayerListener);
 
@@ -273,12 +284,12 @@ public class EQForm_MapView extends Activity {
 		btn_zoomOut =(Button)findViewById(R.id.btn_zoom_out);
 		btn_zoomOut.setOnClickListener(zoomOutListener);
 
-
-
-		btn_edit_points =(Button)findViewById(R.id.btn_edit_points); 
+		btn_edit_points =(ToggleButton)findViewById(R.id.btn_edit_points); 
 		btn_edit_points.setOnClickListener(editPointsListener);
 
+
 		text_view_gpsInfo = (TextView)findViewById(R.id.text_view_gpsInfo);
+		text_view_gpsInfo2 = (TextView)findViewById(R.id.text_view_gpsInfo2);
 
 
 		/*
@@ -297,23 +308,24 @@ public class EQForm_MapView extends Activity {
 	@Override
 	public void onResume(){
 		super.onResume();
-
 		if (DEBUG_LOG) Log.d("IDCT","ON RESUME");
-
 
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 		//SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);		
 		showGPSDetails= (settings.getBoolean("showPositionDetailsCheckBox", false));
-
+		
 		
 		if (showGPSDetails) { 
 			text_view_gpsInfo.setVisibility(View.VISIBLE);//
+			text_view_gpsInfo2.setVisibility(View.VISIBLE);//
 		} else {
 			text_view_gpsInfo.setVisibility(View.INVISIBLE);//
+			text_view_gpsInfo2.setVisibility(View.INVISIBLE);//
 		}
-		
 
-		
+
+
+
 		/*
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10f, mlocListener);
 		locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
@@ -338,18 +350,15 @@ public class EQForm_MapView extends Activity {
 		}
 
 
+		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
-		//locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
 
 		//currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-
-
 
 		//drawUpdateCounter = new MyCount(100000000,1000);
 		//drawUpdateCounter.start();
 
-		
+
 
 		mWebView.loadUrl("javascript:clearMyPositions()");
 		loadPrevSurveyPoints();
@@ -359,17 +368,20 @@ public class EQForm_MapView extends Activity {
 		if (DEBUG_LOG) Log.d(TAG,"RESUMING MAP, global vars " + g.getLon()+ " lat: " + g.getLat());
 		mWebView.loadUrl("javascript:locateMe("+ g.getLat()+","+g.getLon()+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");
 
-		
+
 		if (g.unsavedEdits) {
-			
+
 			//Draw a candidate survey point
 			if (DEBUG_LOG) Log.d(TAG,"RESUMING EDITS. DRAWING MOVEABLE POINT, " + g.getLon()+ " lat: " + g.getLat());
 			mWebView.loadUrl("javascript:drawCandidateSurveyPoint("+ g.getLon()+","+g.getLat()+")");
 
 		} else {
 			if (DEBUG_LOG) Log.d(TAG,"NO UNSAVED EDITS. Hide the survey button. , " + g.getLon()+ " lat: " + g.getLat());
+			
+			btn_edit_points.setChecked(false);
+			isEditingPoints = false;
+			
 			runOnUiThread(new Runnable() {
-
 				@Override
 				public void run() {
 					btn_startSurvey.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
@@ -445,21 +457,38 @@ public class EQForm_MapView extends Activity {
 	};
 
 
-
 	private OnClickListener editPointsListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			//addPoint();
-			if (DEBUG_LOG) Log.d(TAG,"locate me button clicked");
+	
+			
+			
+			
+			if (DEBUG_LOG) Log.d(TAG,"Edit points button clicked");
 			if (isEditingPoints) {
 				mWebView.loadUrl("javascript:startEditingMode(false)");
 				isEditingPoints = false;
 			} else {
 				mWebView.loadUrl("javascript:startEditingMode(true)");
 				isEditingPoints = true;
+
 			}
 
-			locateMe(true);
+			
+			//locateMe(true);
+			 /*
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
+			alertDialogBuilder.setMessage("Editing of items is disabled at the moment").setCancelable(false).setPositiveButton("OK",
+					new DialogInterface.OnClickListener(){
+				public void onClick(DialogInterface dialog, int id){
+
+				}
+			});
+
+			AlertDialog alert = alertDialogBuilder.create();
+			alert.show();
+*/
 		}
 	};
 
@@ -479,6 +508,32 @@ public class EQForm_MapView extends Activity {
 			//Start the tabs view
 			Intent ModifiedEMS98 = new Intent (EQForm_MapView.this, MainTabActivity.class);
 			startActivity(ModifiedEMS98);
+		}
+	};
+	
+	
+	
+	  
+	private OnClickListener cancelSurveyPointListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			if (DEBUG_LOG) Log.d(TAG,"Cancel survey point");
+
+			//Stop any geometry editing			
+			mWebView.loadUrl("javascript:startEditingMode(false)");
+			isEditingPoints = false;
+			mWebView.loadUrl("javascript:clearMyPositions()");
+			
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					btn_startSurvey.setVisibility(View.INVISIBLE);//This might be causing issues
+					btn_cancelSurveyPoint.setVisibility(View.INVISIBLE);//This might be causing issues
+					btn_takeCameraPhoto.setBackgroundResource(R.drawable.camera);
+					//btn_take_survey_photo.setVisibility(View.VISIBLE);//Poss Dodgy threading stuff using this
+				}
+			});
+			
 		}
 	};
 
@@ -624,6 +679,7 @@ public class EQForm_MapView extends Activity {
 			@Override
 			public void run() {
 				btn_startSurvey.setVisibility(View.VISIBLE);//This might be causing issues
+				btn_cancelSurveyPoint.setVisibility(View.VISIBLE);//This might be causing issues
 				btn_takeCameraPhoto.setBackgroundResource(R.drawable.camera_green);
 				//btn_take_survey_photo.setVisibility(View.VISIBLE);//Poss Dodgy threading stuff using this
 			}
@@ -1032,7 +1088,6 @@ public class EQForm_MapView extends Activity {
 	}
 
 
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		super.onOptionsItemSelected(item);
@@ -1155,60 +1210,94 @@ public class EQForm_MapView extends Activity {
 		@Override
 		public void onLocationChanged(Location loc)	{
 
-			
 
 			if (isBetterLocation(loc,currentLocation)) {
 				if (DEBUG_LOG) Log.d(TAG,"New location is better. Updating it");
 				currentLocation = loc;
-				
+				currentLatitude = currentLocation.getLatitude();
+				currentLongitude = currentLocation.getLongitude();
+
+				currentLocationAccuracy = currentLocation.getAccuracy();
+				currentBearingFromGPS = currentLocation.getBearing();
+				currentLocationProvider = currentLocation.getProvider();
 				locateMe(false);
 
+				
 				sb = new StringBuilder(512);
 				/* display some of the data in the TextView */
+				sb.append("Best Location:\n");
 
-				sb.append("Londitude: ");
+				sb.append("Lon: ");
 				sb.append(loc.getLongitude());
 				sb.append('\n');
 
-				sb.append("Latitude: ");
+				sb.append("Lat: ");
 				sb.append(loc.getLatitude());
 				sb.append('\n');
 
-				sb.append("Altitiude: ");
+				sb.append("Alt: ");
 				sb.append(loc.getAltitude());
 				sb.append('\n');
 
-				sb.append("Accuracy: ");
+				sb.append("Acc: ");
 				sb.append(loc.getAccuracy());
 				sb.append('\n');
 
-				sb.append("Timestamp: ");
-				sb.append(loc.getTime());
+
+				sb.append("Prov: ");
+				sb.append(loc.getProvider());
 				sb.append('\n');
 
+				sb.append("Time: ");
+				sb.append(DateFormat.format("hh:mm:ssaa", loc.getTime()));
+				sb.append('\n');				
+
 				text_view_gpsInfo.setText(sb.toString());
-				
+			} else {
+				sb2 = new StringBuilder(512);
+				/* display some of the data in the TextView */
+				sb2.append("Discarded location:\n");
+				sb2.append("Lon: ");
+				sb2.append(loc.getLongitude());
+				sb2.append('\n');
+
+				sb2.append("Lat: ");
+				sb2.append(loc.getLatitude());
+				sb2.append('\n');
+
+				sb2.append("Alt: ");
+				sb2.append(loc.getAltitude());
+				sb2.append('\n');
+
+				sb2.append("Acc: ");
+				sb2.append(loc.getAccuracy());
+				sb2.append('\n');
+
+				sb2.append("Prov: ");
+				sb2.append(loc.getProvider());
+				sb2.append('\n');
+
+				sb2.append("Time: ");
+				sb2.append(DateFormat.format("hh:mm:ssaa", loc.getTime()));				
+				sb2.append('\n');				
+
+
+
+				text_view_gpsInfo2.setText(sb2.toString());
+
+
 			}
 
-			currentLatitude = currentLocation.getLatitude();
-			currentLongitude = currentLocation.getLongitude();
-
-			currentLocationAccuracy = currentLocation.getAccuracy();
-			currentBearingFromGPS = currentLocation.getBearing();
-			currentLocationProvider = currentLocation.getProvider();
 			//textViewLocationProvider.setText("Loc. Provider: " + currentLocationProvider);
 			//textViewLocationAccuracy.setText("Loc. Accuracy: " + currentLocationAccuracy);
 
 			if (DEBUG_LOG) Log.d(TAG,"lat: "+loc.getLatitude() + "lng: " + loc.getLongitude() );
 			//mWebView.loadUrl("javascript:locateMe("+ currentLatitude+","+currentLongitude+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");
 
-
 			//textViewLatitude.setText(Double.toString(loc.getLatitude()));
 			//textViewLongitude.setText(Double.toString(loc.getLongitude()));
-
-
-
 		}
+
 
 		@Override
 
@@ -1216,13 +1305,14 @@ public class EQForm_MapView extends Activity {
 
 		{
 			if (DEBUG_LOG) Log.d(TAG,"Provider disabled");
-			/*
-	    			Toast.makeText( getApplicationContext(),
 
-	    					"Gps Disabled",
+			Toast.makeText( getApplicationContext(),
 
-	    					Toast.LENGTH_SHORT ).show();
-			 */
+					provider + " location provider disabled",
+
+					Toast.LENGTH_SHORT ).show();
+
+			
 			/*
 			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -1240,13 +1330,13 @@ public class EQForm_MapView extends Activity {
 
 		{
 			if (DEBUG_LOG) Log.d(TAG,"Provider enabled");
-			/*
-	    			Toast.makeText( Context.getApplicationContext(),
 
-	    					"Gps Enabled",
+			Toast.makeText( getApplicationContext(),
 
-	    					Toast.LENGTH_SHORT).show();
-			 */
+					provider + " location provider disabled",
+
+					Toast.LENGTH_SHORT).show();
+
 			/*
 			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);   
 			if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -1256,6 +1346,8 @@ public class EQForm_MapView extends Activity {
 			}
 			 */
 		}
+
+
 
 
 		@Override
@@ -1288,7 +1380,7 @@ public class EQForm_MapView extends Activity {
 		}
 
 
-		private static final int TWO_MINUTES = 1000 * 60 * 2;
+		private static final int TWO_MINUTES = 1000 * 60 * 3;
 
 		/** Determines whether one Location reading is better than the current Location fix
 		 * @param location  The new Location that you want to evaluate
@@ -1300,6 +1392,12 @@ public class EQForm_MapView extends Activity {
 				return true;
 			}
 
+			/*
+			if (location.getProvider() == "GPS_PROVIDER") {
+				return true;
+			} */
+			
+			
 			// Check whether the new location fix is newer or older
 			long timeDelta = location.getTime() - currentBestLocation.getTime();
 			boolean isSignificantlyNewer = timeDelta > TWO_MINUTES;
@@ -1310,16 +1408,20 @@ public class EQForm_MapView extends Activity {
 			// because the user has likely moved
 			if (isSignificantlyNewer) {
 				return true;
-				// If the new location is more than two minutes older, it must be worse
+				//If the new location is more than two minutes older, it must be worse
+				//Not necessarily, can be different times between networkprovidedLocation.getTime()
+				//and gpsProvidedLocation.getTime();
 			} else if (isSignificantlyOlder) {
-				return false;
+				//return false;
 			}
 
+			
 			// Check whether the new location fix is more or less accurate
 			int accuracyDelta = (int) (location.getAccuracy() - currentBestLocation.getAccuracy());
 			boolean isLessAccurate = accuracyDelta > 0;
 			boolean isMoreAccurate = accuracyDelta < 0;
 			boolean isSignificantlyLessAccurate = accuracyDelta > 200;
+
 
 			// Check if the old and new location are from the same provider
 			boolean isFromSameProvider = isSameProvider(location.getProvider(),

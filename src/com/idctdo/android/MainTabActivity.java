@@ -97,23 +97,28 @@ public class MainTabActivity extends TabActivity {
 			Cursor curCSV = mDbHelper.getObjectByUid(existingId);
 			mDbHelper.close();
 			//if (DEBUG_LOG) Log.d(TAG, "Existing data: " + curCSV.getColumnCount());
-			
+
 			//ArrayList<DBRecord> attributesForEditing = GemUtilities.cursorToArrayList(curCSV);        
 			//if (DEBUG_LOG) Log.d(TAG,"attributesForEditing: " + attributesForEditing.toString());
-		
+
 			if (DEBUG_LOG) Log.d(TAG,"colCount: " + curCSV.getColumnCount());
-	
-			
-			
+
+
+
 			for (int i = 0; i < curCSV.getColumnCount(); i++) {
 				String colName = curCSV.getColumnName(i);
-				if (DEBUG_LOG) Log.d(TAG,"colName : " + colName);
-				String colVal = curCSV.getString(i);
-				if (DEBUG_LOG) Log.d(TAG,"colVal : " + colVal);
-				if (colVal != null) {						
-					surveyDataObject.putData(colName, colVal);
+				if(colName.equals("X")  || colName.equals("Y")) {
+
+					
+				} else {
+					if (DEBUG_LOG) Log.d(TAG,"colName : " + colName);
+					String colVal = curCSV.getString(i);
+					if (DEBUG_LOG) Log.d(TAG,"colVal : " + colVal);
+					if (colVal != null) {						
+						surveyDataObject.putData(colName, colVal);
+					}
 				}
-			}
+			}			
 		}
 
 		ressources = getResources(); 
@@ -121,28 +126,28 @@ public class MainTabActivity extends TabActivity {
 
 		/*
 
-		Intent intentMapView = new Intent().setClass(this, EQForm_MapView.class);
-		TabSpec tabMapView = tabHost
-		.newTabSpec("MapView")
-		.setIndicator("Map", ressources.getDrawable(R.drawable.tab_icon))
+			Intent intentMapView = new Intent().setClass(this, EQForm_MapView.class);
+			TabSpec tabMapView = tabHost
+			.newTabSpec("MapView")
+			.setIndicator("Map", ressources.getDrawable(R.drawable.tab_icon))
 
-		.setContent(intentMapView );
+			.setContent(intentMapView );
 
 
-		// add all tabs 
-		tabHost.addTab(tabMapView);
+			// add all tabs 
+			tabHost.addTab(tabMapView);
 		 */
 
 		generateTabs();
 		/*
-		tabHost.addTab(tabSpecPageOne);
-		tabHost.addTab(tabSpecPageTwo);
-		tabHost.addTab(tabSpecPageThree);
-		tabHost.addTab(tabSpecPageFour);
-		tabHost.addTab(tabSpecPageFive);
-		tabHost.addTab(tabSpecPageSix);
-		tabHost.addTab(tabSpecPageSeven);
-		tabHost.addTab(tabSpecPageEight);
+			tabHost.addTab(tabSpecPageOne);
+			tabHost.addTab(tabSpecPageTwo);
+			tabHost.addTab(tabSpecPageThree);
+			tabHost.addTab(tabSpecPageFour);
+			tabHost.addTab(tabSpecPageFive);
+			tabHost.addTab(tabSpecPageSix);
+			tabHost.addTab(tabSpecPageSeven);
+			tabHost.addTab(tabSpecPageEight);
 		 */
 		//set Windows tab as default (zero based)
 		tabHost.setCurrentTab(0);
@@ -156,9 +161,9 @@ public class MainTabActivity extends TabActivity {
 		//iv.setImageDrawable(getResources().getDrawable(R.drawable.globe));
 
 		/*
-		for(int i=1;i<tabHost.getTabWidget().getChildCount();i++)			{
-			tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#660000")); 			
-		}
+			for(int i=1;i<tabHost.getTabWidget().getChildCount();i++)			{
+				tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#660000")); 			
+			}
 		 */
 
 
@@ -199,17 +204,17 @@ public class MainTabActivity extends TabActivity {
 	public void generateTabs() {
 
 		/*
-		Intent intentPageOne = new Intent().setClass(this,  Material_Selection_Longitudinal_Form.class);
-		TabSpec tabSpecPageOne = tabHost
-		.newTabSpec("Page 1.1")
-		.setIndicator("Mater L", ressources.getDrawable(R.drawable.tab_icon))
-		.setContent(intentPageOne);
+			Intent intentPageOne = new Intent().setClass(this,  Material_Selection_Longitudinal_Form.class);
+			TabSpec tabSpecPageOne = tabHost
+			.newTabSpec("Page 1.1")
+			.setIndicator("Mater L", ressources.getDrawable(R.drawable.tab_icon))
+			.setContent(intentPageOne);
 
-		Intent intentPageOne2 = new Intent().setClass(this,  Material_Selection_Transverse_Form.class);
-		TabSpec tabSpecPageOne2 = tabHost
-		.newTabSpec("Page 1.2")
-		.setIndicator("Mater T", ressources.getDrawable(R.drawable.tab_icon))
-		.setContent(intentPageOne2);		
+			Intent intentPageOne2 = new Intent().setClass(this,  Material_Selection_Transverse_Form.class);
+			TabSpec tabSpecPageOne2 = tabHost
+			.newTabSpec("Page 1.2")
+			.setIndicator("Mater T", ressources.getDrawable(R.drawable.tab_icon))
+			.setContent(intentPageOne2);		
 		 */	
 
 		Intent intentPageOne=new Intent(this, SecondTabsActivity.class);
@@ -292,7 +297,7 @@ public class MainTabActivity extends TabActivity {
 		.setIndicator("Conseq", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageTwelve);
 
-		
+
 		tabHost.addTab(tabSpecPageOne);
 		//tabHost.addTab(tabSpecPageOne2);
 		tabHost.addTab(tabSpecPageTwo);
@@ -325,9 +330,9 @@ public class MainTabActivity extends TabActivity {
 
 	public void removeTabs() {
 		/*
-		Intent intent = getIntent();
-		finish();
-		startActivity(intent);
+			Intent intent = getIntent();
+			finish();
+			startActivity(intent);
 		 */
 
 		if (DEBUG_LOG) Log.d(TAG,"removing tabs " + tabHost.getTabWidget().getChildCount());
@@ -456,24 +461,24 @@ public class MainTabActivity extends TabActivity {
 		return completedTabs[tabIndex];
 	}
 
+	//TODO: User feedback on saving
 	public boolean saveData() {
 		if (DEBUG_LOG) Log.d(TAG, "Saving data");		
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
 
-
 		/*
-		EditText date1 = (EditText)findViewById(R.id.editTextDateVal1);
-		EditText date2 = (EditText)findViewById(R.id.editTextDateVal2);
-		String dateString1 = date1.getText().toString();
-		String dateString2 = date2.getText().toString();
+			EditText date1 = (EditText)findViewById(R.id.editTextDateVal1);
+			EditText date2 = (EditText)findViewById(R.id.editTextDateVal2);
+			String dateString1 = date1.getText().toString();
+			String dateString2 = date2.getText().toString();
 
 
-		//surveyDataObject.putData("D1", dateString1);
-		//surveyDataObject.putData("D2",dateString2);
+			//surveyDataObject.putData("D1", dateString1);
+			//surveyDataObject.putData("D2",dateString2);
 
 
-		EditText surveyComment = (EditText)findViewById(R.id.editTextSurveyComment);
-		String surveyCommentString = surveyComment.getText().toString();
+			EditText surveyComment = (EditText)findViewById(R.id.editTextSurveyComment);
+			String surveyCommentString = surveyComment.getText().toString();
 		 */
 
 		mDbHelper = new GemDbAdapter(getBaseContext());      
@@ -554,6 +559,7 @@ public class MainTabActivity extends TabActivity {
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		menu.add(0,0,0,"Take Picture");
+		menu.add(0,1,0,"Save changes and close");
 		return true;
 	}
 
@@ -587,11 +593,14 @@ public class MainTabActivity extends TabActivity {
 			startActivityForResult(takePic, CAMERA_RESULT);
 
 			/*1
-			Intent PreviousPage = new Intent (EQForm_MapView.this, EQForm_ModifiedEMS_Camera.class);
-			startActivity(PreviousPage);*/
+				Intent PreviousPage = new Intent (EQForm_MapView.this, EQForm_ModifiedEMS_Camera.class);
+				startActivity(PreviousPage);*/
 
 
 			break;
+		case 1: //Save button
+			if (DEBUG_LOG) Log.d(TAG,"Save button class");	
+			backButtonPressed();
 		default:
 			break;
 		}

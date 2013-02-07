@@ -2,6 +2,9 @@
 <resources>
     <!-- Auto generated Strings -->
     <string name="app_name">IDCT DO SURVEY</string>  
+        
+    <string name="editing_toggle_turn_on">Edit Points</string>
+    <string name="editing_toggle_turn_off">Stop Editing</string>
     
     
     <!-- Splash Strings -->

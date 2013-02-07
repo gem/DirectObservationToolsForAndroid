@@ -4,8 +4,8 @@
     android:layout_height="fill_parent"
     android:background="@color/highlight_colour"
     android:gravity="left"
-    android:orientation="vertical" 
-        android:paddingLeft="5dp"
+    android:orientation="vertical"
+    android:paddingLeft="5dp"
     android:paddingRight="5dp" >
 
     <ScrollView
@@ -23,12 +23,14 @@
             android:orientation="vertical" >
 
             <TextView
+                style="@style/AttributeTitleStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textStyle="bold" />
 
             <TextView
+                style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -47,6 +49,7 @@
             </EditText>
 
             <TextView
+                style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Number of Injured"
@@ -61,6 +64,7 @@
 
             <TextView
                 android:id="@+id/textViewConsequences1"
+                style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Number Missing"
@@ -75,6 +79,7 @@
 
             <TextView
                 android:id="@+id/textViewConsequences2"
+                style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Damage Grade"
@@ -90,6 +95,7 @@
 
             <TextView
                 android:id="@+id/textViewConsequences5"
+                style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Comments"

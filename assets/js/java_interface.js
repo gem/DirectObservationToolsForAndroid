@@ -14,12 +14,16 @@ function startEditingMode(startEditing) {
 
 	} else {
 		isEditingPoints = false;
+
+		prevSurveyPointsDragControl.deactivate();
+		prevSurveyPointsSelectControl.deactivate();		
+
 		newSurveyPointSelectControl.activate();
 		newSurveyPointModifyControl.activate();
 		dragControl.activate();
 
-		prevSurveyPointsDragControl.deactivate();
-		prevSurveyPointsSelectControl.deactivate();		
+		
+
 	}
 	
 }

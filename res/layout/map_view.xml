@@ -71,7 +71,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/btn_zoom_out"
-        android:text="Lat: Lon: " />
+        android:text="Best Location:" />
+
+    <TextView
+        android:id="@+id/text_view_gpsInfo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btn_zoom_out"
+        android:text="" />
 
     <Button
         android:id="@+id/btn_locate_me"
@@ -81,13 +89,35 @@
         android:layout_alignParentTop="true"
         android:text="Locate Me" />
 
-    <Button
+    <ToggleButton
         android:id="@+id/btn_edit_points"
         android:layout_width="65dip"
         android:layout_height="65dip"
         android:layout_marginRight="35dp"
         android:layout_toLeftOf="@+id/btn_select_layer"
         android:text="Edit Points"
+        android:textOn="@string/editing_toggle_turn_on"
+        android:textOff="@string/editing_toggle_turn_off"
         android:visibility="visible" />
+
+    <Button
+        android:id="@+id/btn_cancel_survey_point"
+        android:layout_width="85dip"
+        android:layout_height="85dip"
+        android:layout_above="@+id/btn_start_survey"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="184dp"
+        android:background="@drawable/finish_small"
+        android:text="Cancel" />
+
+    <Button
+        android:id="@+id/btn_start_survey_with_favourite"
+        android:layout_width="85dip"
+        android:layout_height="85dip"
+        android:layout_above="@+id/btn_start_survey"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/finish_small"
+        android:text="Favourite" />
+
 
 </RelativeLayout>

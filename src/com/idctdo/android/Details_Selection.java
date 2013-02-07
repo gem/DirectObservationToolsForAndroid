@@ -63,6 +63,10 @@ public class Details_Selection extends Activity {
 	public int tabIndex = 3;
 
 	public EditText editTextSurveyComment;
+	private String commentsAttributeKey = "COMMENTS";
+	
+	public EditText editTextSlope;
+	private String slopeAttributeKey = "SLOPE";
 
 	
 	private String buildingPositionAttributeDictionary = "DIC_POSITION";
@@ -71,8 +75,13 @@ public class Details_Selection extends Activity {
 	private String buildingShapeAttributeDictionary = "DIC_PLAN_SHAPE";
 	private String buildingShapeAttributeKey = "PLAN_SHAPE";
 	
+	private String nonStructuralExteriorWallsDictionary = "DIC_NONSTRUCTURAL_EXTERIOR_WALLS";
+	private String nonStructuralExteriorWallsAttributeKey = "NONSTRCEXW";
+	
 	public Spinner spinnerBuildingPosition;
 	public Spinner spinnerBuildingShape;
+	public Spinner spinnerNonStructuralExteriorWalls;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -105,13 +114,24 @@ public class Details_Selection extends Activity {
 			mDbHelper.open();
 			
 			editTextSurveyComment = (EditText) findViewById(R.id.surveyComment);
-			editTextSurveyComment.setOnFocusChangeListener(new OnFocusChangeListener() { 				
-
+			editTextSurveyComment.setOnFocusChangeListener(new OnFocusChangeListener() {				
 				public void onFocusChange(View v, boolean hasFocus) {
 					if(!hasFocus) {
 						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
 						editTextSurveyComment = (EditText) findViewById(R.id.surveyComment);
-						surveyDataObject.putData("COMMENTS", editTextSurveyComment.getText().toString());
+						surveyDataObject.putData(commentsAttributeKey, editTextSurveyComment.getText().toString());
+						completeThis();
+					}
+				}
+			});
+			
+			editTextSlope = (EditText) findViewById(R.id.editTextSlope);
+			editTextSlope.setOnFocusChangeListener(new OnFocusChangeListener() {				
+				public void onFocusChange(View v, boolean hasFocus) {
+					if(!hasFocus) {
+						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
+						editTextSlope = (EditText) findViewById(R.id.editTextSlope);
+						surveyDataObject.putData(slopeAttributeKey , editTextSlope.getText().toString());
 						completeThis();
 					}
 				}
@@ -137,7 +157,8 @@ public class Details_Selection extends Activity {
 					//surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());
 					DBRecord selected = (DBRecord) spinnerBuildingPosition.getSelectedItem();
 					if (DEBUG_LOG) Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
-					surveyDataObject.putGedData(buildingPositionAttributeKey, selected.getAttributeValue());		
+					surveyDataObject.putData(buildingPositionAttributeKey, selected.getAttributeValue());
+					completeThis();
 				}
 				public void onNothingSelected(AdapterView<?> parent) {
 				}
@@ -148,7 +169,7 @@ public class Details_Selection extends Activity {
 			final Cursor buildingShapeAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(buildingShapeAttributeDictionary);
 			ArrayList<DBRecord> buildingShapeAttributesList = GemUtilities.cursorToArrayList(buildingShapeAttributeDictionaryCursor);
 			ArrayAdapter spinnerArrayAdapter2 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,buildingShapeAttributesList);
-			spinnerArrayAdapter.setDropDownViewResource(R.layout.simple_spinner_item);
+			spinnerArrayAdapter2.setDropDownViewResource(R.layout.simple_spinner_item);
 			spinnerBuildingShape.setAdapter(spinnerArrayAdapter2);
 			spinnerBuildingShape.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -162,12 +183,39 @@ public class Details_Selection extends Activity {
 					//surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());
 					DBRecord selected = (DBRecord) spinnerBuildingShape.getSelectedItem();
 					if (DEBUG_LOG) Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
-					surveyDataObject.putGedData(buildingShapeAttributeKey, selected.getAttributeValue());		
+					surveyDataObject.putData(buildingShapeAttributeKey, selected.getAttributeValue());
+					completeThis();
 				}
 				public void onNothingSelected(AdapterView<?> parent) {
 				}
 			});	
 			
+			
+			spinnerNonStructuralExteriorWalls = (Spinner)  findViewById(R.id.spinnerNonStructuralExteriorWalls);
+			final Cursor nonStructuralExteriorWallsDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(nonStructuralExteriorWallsDictionary);
+			ArrayList<DBRecord> nonStructuralExteriorWallsAttributesList = GemUtilities.cursorToArrayList(nonStructuralExteriorWallsDictionaryCursor);
+			ArrayAdapter spinnerArrayAdapter3 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,nonStructuralExteriorWallsAttributesList);
+			spinnerArrayAdapter3.setDropDownViewResource(R.layout.simple_spinner_item);
+			spinnerNonStructuralExteriorWalls.setAdapter(spinnerArrayAdapter3);
+			spinnerNonStructuralExteriorWalls.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+					//Object item = parent.getItemAtPosition(pos);
+					if (DEBUG_LOG) Log.d("IDCT","spinner selected: " + spinnerNonStructuralExteriorWalls.getSelectedItem().toString());
+					if (DEBUG_LOG) Log.d("IDCT","spinner selected pos: " + pos);
+					
+					//Temporarily disabled 7/1/13					
+					//allAttributeTypesTopLevelCursor.moveToPosition(pos);
+					//Log.d("IDCT","spinner selected pos val: " + allAttributeTypesTopLevelCursor.getString(1));							
+					//surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());
+					DBRecord selected = (DBRecord) spinnerNonStructuralExteriorWalls.getSelectedItem();
+					if (DEBUG_LOG) Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
+					surveyDataObject.putData(nonStructuralExteriorWallsAttributeKey, selected.getAttributeValue());
+					completeThis();
+					
+				}
+				public void onNothingSelected(AdapterView<?> parent) {
+				}
+			});	
 			
 			
 			

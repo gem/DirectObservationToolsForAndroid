@@ -121,7 +121,7 @@ public class Age_Selection_Form extends Activity {
 		editTextAboveGrade1 = (EditText)findViewById(R.id.editTextAboveGrade1);
 		editTextAboveGrade2 = (EditText)findViewById(R.id.editTextAboveGrade2);
 		
-		editTextSlope = (EditText)findViewById(R.id.editTextSlope);
+		//editTextSlope = (EditText)findViewById(R.id.editTextSlope);
 	}
 	
 	@Override
@@ -364,6 +364,8 @@ public class Age_Selection_Form extends Activity {
 					}
 				}
 			});
+			
+			/*removing slope from this form
 			editTextSlope.setOnFocusChangeListener(new OnFocusChangeListener() { 				
 				public void onFocusChange(View v, boolean hasFocus) {
 					if(!hasFocus) {
@@ -372,6 +374,7 @@ public class Age_Selection_Form extends Activity {
 					}
 				}
 			});
+			*/
 		}
 	}	
 
