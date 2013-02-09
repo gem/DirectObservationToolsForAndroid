@@ -9,21 +9,20 @@ function startEditingMode(startEditing) {
 		newSurveyPointModifyControl.deactivate();
 		dragControl.deactivate();
 
-		prevSurveyPointsDragControl.activate();
+		//prevSurveyPointsDragControl.activate();
 		prevSurveyPointsSelectControl.activate();
 
 	} else {
 		isEditingPoints = false;
-
-		prevSurveyPointsDragControl.deactivate();
-		prevSurveyPointsSelectControl.deactivate();		
+		unsavedEditedPoint = false;
 
 		newSurveyPointSelectControl.activate();
 		newSurveyPointModifyControl.activate();
-		dragControl.activate();
-
 		
-
+		dragControl.deactivate(); //Stops old points hanging around
+	
+		//prevSurveyPointsDragControl.deactivate();
+		prevSurveyPointsSelectControl.deactivate();		
 	}
 	
 }
@@ -99,7 +98,7 @@ function loadSurveyPointsOnMap(lon,lat,gemIdString) {
 }
 
 
-//Get the current candidate / new survey point and update Java with it
+//Get the current candidate / new survey point and updates Java with it
 //Calls Java
 function updateSurveyPointPositionFromMap(currentlyEditingPoints) {	
 	var pt = myPositions.features[0].geometry;
@@ -112,6 +111,7 @@ function updateSurveyPointPositionFromMap(currentlyEditingPoints) {
 
     var id;
     if (currentlyEditingPoints) {
+    	console.log("Currently editing points: " + currentlyEditingPoints);
     	id = "0";
 	} else {
 		console.log("updating survey PREVIOUS point: ");

@@ -79,6 +79,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.ConsoleMessage;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -177,12 +179,23 @@ public class EQForm_MapView extends Activity {
 		setContentView(R.layout.map_view);
 
 
+
+
+
 		mContext = this;
 
 		mWebView = (WebView) findViewById(R.id.map_webview);
 		mWebView.getSettings().setAllowFileAccess(true);
 		mWebView.getSettings().setJavaScriptEnabled(true);
 
+		mWebView.setWebChromeClient(new WebChromeClient() {
+			public boolean onConsoleMessage(ConsoleMessage cm) {
+				if (DEBUG_LOG) Log.d(TAG, cm.message() + " -- From line "
+						+ cm.lineNumber() + " of "
+						+ cm.sourceId() );
+				return true;
+			}
+		});
 
 		if (DEBUG_LOG) Log.d(TAG,"adding JS interface");
 		mWebView.addJavascriptInterface(this, "webConnector"); 
@@ -267,11 +280,11 @@ public class EQForm_MapView extends Activity {
 		btn_startSurvey =(Button)findViewById(R.id.btn_start_survey);
 		btn_startSurvey.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
 		btn_startSurvey.setOnClickListener(startSurveyListener);
-		
+
 		btn_cancelSurveyPoint =(Button)findViewById(R.id.btn_cancel_survey_point);
 		btn_cancelSurveyPoint.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
 		btn_cancelSurveyPoint.setOnClickListener(cancelSurveyPointListener);
-				
+
 		btn_selectLayer =(Button)findViewById(R.id.btn_select_layer);
 		btn_selectLayer.setOnClickListener(selectLayerListener);
 
@@ -313,8 +326,8 @@ public class EQForm_MapView extends Activity {
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 		//SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);		
 		showGPSDetails= (settings.getBoolean("showPositionDetailsCheckBox", false));
-		
-		
+
+
 		if (showGPSDetails) { 
 			text_view_gpsInfo.setVisibility(View.VISIBLE);//
 			text_view_gpsInfo2.setVisibility(View.VISIBLE);//
@@ -377,10 +390,10 @@ public class EQForm_MapView extends Activity {
 
 		} else {
 			if (DEBUG_LOG) Log.d(TAG,"NO UNSAVED EDITS. Hide the survey button. , " + g.getLon()+ " lat: " + g.getLat());
-			
+
 			btn_edit_points.setChecked(false);
 			isEditingPoints = false;
-			
+
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
@@ -461,10 +474,9 @@ public class EQForm_MapView extends Activity {
 		@Override
 		public void onClick(View v) {
 			//addPoint();
-	
-			
-			
-			
+
+
+
 			if (DEBUG_LOG) Log.d(TAG,"Edit points button clicked");
 			if (isEditingPoints) {
 				mWebView.loadUrl("javascript:startEditingMode(false)");
@@ -475,9 +487,9 @@ public class EQForm_MapView extends Activity {
 
 			}
 
-			
+
 			//locateMe(true);
-			 /*
+			/*
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
 			alertDialogBuilder.setMessage("Editing of items is disabled at the moment").setCancelable(false).setPositiveButton("OK",
 					new DialogInterface.OnClickListener(){
@@ -488,7 +500,7 @@ public class EQForm_MapView extends Activity {
 
 			AlertDialog alert = alertDialogBuilder.create();
 			alert.show();
-*/
+			 */
 		}
 	};
 
@@ -510,10 +522,10 @@ public class EQForm_MapView extends Activity {
 			startActivity(ModifiedEMS98);
 		}
 	};
-	
-	
-	
-	  
+
+
+
+
 	private OnClickListener cancelSurveyPointListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -523,7 +535,7 @@ public class EQForm_MapView extends Activity {
 			mWebView.loadUrl("javascript:startEditingMode(false)");
 			isEditingPoints = false;
 			mWebView.loadUrl("javascript:clearMyPositions()");
-			
+
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
@@ -533,7 +545,7 @@ public class EQForm_MapView extends Activity {
 					//btn_take_survey_photo.setVisibility(View.VISIBLE);//Poss Dodgy threading stuff using this
 				}
 			});
-			
+
 		}
 	};
 
@@ -647,21 +659,28 @@ public class EQForm_MapView extends Activity {
 	public boolean loadSurveyPoint(final double lon, final double lat,final String gemId) {
 		if (DEBUG_LOG) Log.d(TAG,"edited point location from Openlayers. Lon:" + lon + " lat: " + lat+ " gemId: " + gemId);
 
+
+
 		//mWebView.loadUrl("javascript:locateMe("+ lat+","+lon+","+currentLocationAccuracy+","+true+")");
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
+
+		if (DEBUG_LOG) Log.d(TAG,"Currently got unsaved edits? " + g.unsavedEdits);
 		g.setLon(lon);
 		g.setLat(lat);
-
-
-		if (gemId.equals("0")) {
-			//Generate a uid for this survey point
-			UUID id = UUID.randomUUID();
-			g.setUid(id.toString());
-			g.isExistingRecord = false; 
-		} else {
-			g.setUid(gemId);			
-			g.isExistingRecord = true;
+		if (g.unsavedEdits) {
+			g.isExistingRecord = true;			
+		}  else {
+			if (gemId.equals("0")) {
+				//Generate a uid for this survey point
+				UUID id = UUID.randomUUID();
+				g.setUid(id.toString());
+				g.isExistingRecord = false; 
+			} else {
+				g.setUid(gemId);			
+				g.isExistingRecord = true;
+			}
 		}
+
 
 		g.unsavedEdits = true;
 
@@ -691,6 +710,7 @@ public class EQForm_MapView extends Activity {
 
 
 
+
 	public boolean getSurveyPoint() {
 		if (DEBUG_LOG) Log.d(TAG,"getting point location from Openlayers");
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
@@ -700,6 +720,7 @@ public class EQForm_MapView extends Activity {
 		mWebView.loadUrl("javascript:updateSurveyPointPositionFromMap("+ isEditingPoints+")");
 
 		return false; 		
+
 
 	}
 
@@ -1222,7 +1243,7 @@ public class EQForm_MapView extends Activity {
 				currentLocationProvider = currentLocation.getProvider();
 				locateMe(false);
 
-				
+
 				sb = new StringBuilder(512);
 				/* display some of the data in the TextView */
 				sb.append("Best Location:\n");
@@ -1312,7 +1333,7 @@ public class EQForm_MapView extends Activity {
 
 					Toast.LENGTH_SHORT ).show();
 
-			
+
 			/*
 			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -1396,8 +1417,8 @@ public class EQForm_MapView extends Activity {
 			if (location.getProvider() == "GPS_PROVIDER") {
 				return true;
 			} */
-			
-			
+
+
 			// Check whether the new location fix is newer or older
 			long timeDelta = location.getTime() - currentBestLocation.getTime();
 			boolean isSignificantlyNewer = timeDelta > TWO_MINUTES;
@@ -1415,7 +1436,7 @@ public class EQForm_MapView extends Activity {
 				//return false;
 			}
 
-			
+
 			// Check whether the new location fix is more or less accurate
 			int accuracyDelta = (int) (location.getAccuracy() - currentBestLocation.getAccuracy());
 			boolean isLessAccurate = accuracyDelta > 0;

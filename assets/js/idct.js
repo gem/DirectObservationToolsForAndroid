@@ -6,7 +6,7 @@ var DEBUG_MODE = false;
 var DEBUG_SHOW_DIFF_LAYERS = false;
 var DEBUG_SHOW_MOUSE_POS = false;
 var DEBUG_DISPLAY_OVERVIEW = false;
-var DEBUG_DISPLAY_PANZOOM = false;
+var DEBUG_DISPLAY_PANZOOM = true;
 var DEBUG_FREE_ROTATE = false;
 var DEBUG_SHOW_LAYER_SWITCHER = false;
 
@@ -43,6 +43,7 @@ var prevSurveyPointsSelectControl;
 var prevSurveyPointsModifyControl;
 
 var isEditingPoints = false;
+var unsavedEditedPoint = false;
 var editingPointGemId = 0;
 
 var ll;
@@ -432,31 +433,35 @@ function init(){
 			console.log("PREV SURVEY POINTS UNSELECTED");
 		},
 		onSelect: function(feature) { 
-			console.log("PREV SURVEY POINTS SELECTED");
-			console.log("PREV SURVEY POINTS SELECTED " + feature.attributes.id);
-			debugFeature = feature;
 
-			//Get the coordinates of the selected feature
-			var pt = feature.geometry;
-			var myLocation = new OpenLayers.Geometry.Point(pt.x, pt.y);
-			myLocation.transform(map.getProjectionObject(),new OpenLayers.Projection("EPSG:4326"));
+			if (!unsavedEditedPoint) {			
 
-			//Draw the old feature as a candidate point
-			drawCandidateSurveyPoint(myLocation.x, myLocation.y,feature.attributes.id);			
+				console.log("PREV SURVEY POINTS SELECTED " + feature.attributes.id);
+				debugFeature = feature;
+				//Get the coordinates of the selected feature
+				var pt = feature.geometry;
+				var myLocation = new OpenLayers.Geometry.Point(pt.x, pt.y);
+				myLocation.transform(map.getProjectionObject(),new OpenLayers.Projection("EPSG:4326"));
 
-			//remove the point from the previous points layer
-			prevSurveyPoints.removeFeatures(feature);
-			//feature.destroy();
+				//Draw the old feature as a candidate point
+				drawCandidateSurveyPoint(myLocation.x, myLocation.y,feature.attributes.id);			
 
+				//remove the point from the previous points layer
+				prevSurveyPoints.removeFeatures(feature);
+				unsavedEditedPoint = true;
 
-			//Now reactivate the the survey point controls on the candidate point layer
-			newSurveyPointSelectControl.activate();
-			newSurveyPointModifyControl.activate();
-			dragControl.activate();
+				//Now reactivate the the survey point controls on the candidate point layer
+				newSurveyPointSelectControl.activate();
+				newSurveyPointModifyControl.activate();
+				dragControl.activate();
 
-			//Deactivate the listeners on the existing points
-			//prevSurveyPointsDragControl.deactivate();
-			//prevSurveyPointsSelectControl.deactivate();		
+				//Deactivate the listeners on the existing points to stop further selections
+				//prevSurveyPointsDragControl.deactivate();
+				prevSurveyPointsSelectControl.deactivate();	
+
+			} else {
+				console.log("Previous unsaved edited point to deal with");
+			}
 
 		},
 		onclick : function(feature) {  
@@ -483,7 +488,7 @@ function init(){
 	var click = new OpenLayers.Control.Click( { trigger: function(e) {		
 
 		//if (!isEditingPoints) {
-			console.log("clicked event");		
+			console.log("Click event");		
 			console.log("map click MOBILE");
 			var lonlat = map.getLonLatFromViewPortPx(e.xy);
 			//alert('mousedown');
@@ -594,6 +599,8 @@ function init(){
 
 //Add a single point to the map which can be edited
 function drawCandidateSurveyPoint(lon, lat,idString) {
+		console.log("Drawing Candidate Point");
+
 		var attributes = {id: idString, name: "my position"};		
 		var myLocation = new OpenLayers.Geometry.Point(lon, lat);
 		myLocation.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject() );
