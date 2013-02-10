@@ -678,11 +678,12 @@ public class EQForm_MapView extends Activity {
 			} else {
 				g.setUid(gemId);			
 				g.isExistingRecord = true;
+				g.unsavedEdits = true;
 			}
 		}
 
 
-		g.unsavedEdits = true;
+		
 
 
 		//g.putData("OBJ_UID", id.toString());
@@ -738,6 +739,7 @@ public class EQForm_MapView extends Activity {
 	private void loadPrevSurveyPoints() {
 		if (DEBUG_LOG) Log.d(TAG,"loading PREVIOUS survey points");
 
+		
 		mDbHelper = new GemDbAdapter(getBaseContext());      
 		mDbHelper.createDatabase();      
 		mDbHelper.open();		
