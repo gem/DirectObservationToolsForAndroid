@@ -202,30 +202,33 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 
 				}
 			});
-		}
+			
+			loadPreviousAtttributes(listview2, selectedAdapter2,topLevelAttributeKeyLongitudinal,lLrs);
+			loadPreviousAtttributes(listview3, selectedAdapter3,secondLevelAttributeKeyLongitudinal,lLrsd);
+			loadPreviousAtttributes(listview4, selectedAdapter4,topLevelAttributeKeyTransverse,lLrs);
+			loadPreviousAtttributes(listview5, selectedAdapter5,secondLevelAttributeKeyTransverse,lLrsd);
+			
+		}//End of tab completed check
 
-		loadPreviousAtttributes(listview2, selectedAdapter2);
-		loadPreviousAtttributes(listview3, selectedAdapter3);
-		loadPreviousAtttributes(listview4, selectedAdapter4);
-		loadPreviousAtttributes(listview5, selectedAdapter5);
+
 
 	}
 
 
 		
-	public void loadPreviousAtttributes(ListView lv, SelectedAdapter selectedAdapter) {
+	public void loadPreviousAtttributes(ListView lv, SelectedAdapter selectedAdapterToPopulate, String attributeKey, ArrayList<DBRecord> adapterArrayList) {
 		if (DEBUG_LOG) Log.d(TAG,"About to resume some values");
-		if (surveyDataObject.getSurveyDataValue(topLevelAttributeKeyLongitudinal) != null) {
+		if (surveyDataObject.getSurveyDataValue(attributeKey) != null) {
 			//lLrs.indexOf(object)
-			String attributeValue = surveyDataObject.getSurveyDataValue(topLevelAttributeKeyLongitudinal);
-			if (DEBUG_LOG) Log.d(TAG, topLevelAttributeKeyLongitudinal + " is not null. attributeValue: " + attributeValue);
+			String attributeValue = surveyDataObject.getSurveyDataValue(attributeKey);
+			if (DEBUG_LOG) Log.d(TAG, attributeKey + " is not null. attributeValue: " + attributeValue);
 			int i = 0;
-			for(DBRecord d : lLrs){
+			for(DBRecord d : adapterArrayList){
 				if (DEBUG_LOG) Log.d(TAG, "Looping thring arraylist of selectedAdapter " + i);
 				if (DEBUG_LOG) Log.d(TAG, "val" + d.getAttributeValue());
 				if(d.getAttributeValue().contains(attributeValue)) {
 					if (DEBUG_LOG) Log.d(TAG, "MATCH!" );
-					selectedAdapter.setSelectedPosition(i);
+					selectedAdapterToPopulate.setSelectedPosition(i);
 					lv.setSelection(i);
 				}
 				i++;

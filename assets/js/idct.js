@@ -6,7 +6,7 @@ var DEBUG_MODE = false;
 var DEBUG_SHOW_DIFF_LAYERS = false;
 var DEBUG_SHOW_MOUSE_POS = false;
 var DEBUG_DISPLAY_OVERVIEW = false;
-var DEBUG_DISPLAY_PANZOOM = true;
+var DEBUG_DISPLAY_PANZOOM = false;
 var DEBUG_FREE_ROTATE = false;
 var DEBUG_SHOW_LAYER_SWITCHER = false;
 

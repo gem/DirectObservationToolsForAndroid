@@ -107,8 +107,9 @@ public class MainTabActivity extends TabActivity {
 
 			for (int i = 0; i < curCSV.getColumnCount(); i++) {
 				String colName = curCSV.getColumnName(i);
+				
+				//Check not change the locations back to the old points
 				if(colName.equals("X")  || colName.equals("Y")) {
-
 					
 				} else {
 					if (DEBUG_LOG) Log.d(TAG,"colName : " + colName);
@@ -178,7 +179,7 @@ public class MainTabActivity extends TabActivity {
 			@Override
 			public void onTabChanged(String tabId) {
 				if (DEBUG_LOG) Log.d(TAG, "tab change " + tabId);
-
+				
 				setTabColor();
 			}
 		});
@@ -188,6 +189,18 @@ public class MainTabActivity extends TabActivity {
 	}
 
 
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();		
+		Log.d("IDCT", "Main Tab Activity Pausing .....");
+		
+	}
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Log.d("IDCT", "Main Tab Activity resuming .....");
+	}
 	public static boolean createDirIfNotExists(String path) {
 		boolean ret = true;
 

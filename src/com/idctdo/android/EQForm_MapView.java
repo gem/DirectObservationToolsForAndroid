@@ -284,6 +284,11 @@ public class EQForm_MapView extends Activity {
 		btn_cancelSurveyPoint =(Button)findViewById(R.id.btn_cancel_survey_point);
 		btn_cancelSurveyPoint.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
 		btn_cancelSurveyPoint.setOnClickListener(cancelSurveyPointListener);
+		
+		btn_startSurveyFavourite =(Button)findViewById(R.id.btn_start_survey_with_favourite);
+		btn_startSurveyFavourite.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
+		btn_startSurveyFavourite.setOnClickListener(startSurveyFavouriteListener);
+
 
 		btn_selectLayer =(Button)findViewById(R.id.btn_select_layer);
 		btn_selectLayer.setOnClickListener(selectLayerListener);
@@ -398,8 +403,13 @@ public class EQForm_MapView extends Activity {
 				@Override
 				public void run() {
 					btn_startSurvey.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
+					btn_cancelSurveyPoint.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
+					btn_startSurveyFavourite.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
 					//btn_take_survey_photo.setVisibility(View.INVISIBLE);//Poss Dodgy threading stuff using this
 					btn_takeCameraPhoto.setBackgroundResource(R.drawable.camera);
+					
+					btn_edit_points.setEnabled(true);
+					
 				}
 			});		       
 
@@ -541,6 +551,34 @@ public class EQForm_MapView extends Activity {
 				public void run() {
 					btn_startSurvey.setVisibility(View.INVISIBLE);//This might be causing issues
 					btn_cancelSurveyPoint.setVisibility(View.INVISIBLE);//This might be causing issues
+					btn_startSurveyFavourite.setVisibility(View.INVISIBLE);//This might be causing issues
+					
+					btn_takeCameraPhoto.setBackgroundResource(R.drawable.camera);
+					//btn_take_survey_photo.setVisibility(View.VISIBLE);//Poss Dodgy threading stuff using this
+					
+					btn_edit_points.setEnabled(true);
+				}
+			});
+
+		}
+	};
+	
+	private OnClickListener startSurveyFavouriteListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			if (DEBUG_LOG) Log.d(TAG,"Favourite survey point");
+
+			//Stop any geometry editing			
+			mWebView.loadUrl("javascript:startEditingMode(false)");
+			isEditingPoints = false;
+			mWebView.loadUrl("javascript:clearMyPositions()");
+
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					btn_startSurvey.setVisibility(View.INVISIBLE);//This might be causing issues
+					btn_cancelSurveyPoint.setVisibility(View.INVISIBLE);//This might be causing issues
+					btn_startSurveyFavourite.setVisibility(View.INVISIBLE);//This might be causing issues
 					btn_takeCameraPhoto.setBackgroundResource(R.drawable.camera);
 					//btn_take_survey_photo.setVisibility(View.VISIBLE);//Poss Dodgy threading stuff using this
 				}
@@ -548,6 +586,7 @@ public class EQForm_MapView extends Activity {
 
 		}
 	};
+
 
 	private OnClickListener takePhotoListener = new OnClickListener() {
 		@Override
@@ -700,11 +739,17 @@ public class EQForm_MapView extends Activity {
 			public void run() {
 				btn_startSurvey.setVisibility(View.VISIBLE);//This might be causing issues
 				btn_cancelSurveyPoint.setVisibility(View.VISIBLE);//This might be causing issues
+				btn_startSurveyFavourite.setVisibility(View.VISIBLE);//This might be causing issues
 				btn_takeCameraPhoto.setBackgroundResource(R.drawable.camera_green);
+				
+				
+				btn_edit_points.setEnabled(false);
+
 				//btn_take_survey_photo.setVisibility(View.VISIBLE);//Poss Dodgy threading stuff using this
 			}
 		});
 
+		
 		return false;
 	}	
 

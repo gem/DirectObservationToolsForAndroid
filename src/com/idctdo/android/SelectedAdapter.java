@@ -27,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class SelectedAdapter extends ArrayAdapter<DBRecord>{
@@ -34,10 +35,14 @@ public class SelectedAdapter extends ArrayAdapter<DBRecord>{
 	// used to keep selected position in ListView
 	private int selectedPos = -1;	// init value for not-selected
 
+	private ArrayList<DBRecord> listOfTheseObjects;
+
+
 	private int highlightColour;
 	public SelectedAdapter(Context context, int textViewResourceId,ArrayList<DBRecord> objects) {
 
 		super(context, textViewResourceId, objects);
+		listOfTheseObjects = objects;
 		int highlightColour = context.getResources().getColor(R.color.gem_blue);
 		Log.d("IDCT", "highlight colour: " + highlightColour);
 	}
@@ -51,6 +56,7 @@ public class SelectedAdapter extends ArrayAdapter<DBRecord>{
 	public int getSelectedPosition(){
 		return selectedPos;
 	}
+
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -66,10 +72,10 @@ public class SelectedAdapter extends ArrayAdapter<DBRecord>{
 		TextView label = (TextView)v.findViewById(R.id.txtExample);
 
 		//TextView label2 = (TextView)v.findViewById(R.id.txtExample);		//parent.addView(label2);	
-		
-		
-		
-		
+
+
+
+
 		// change the row color based on selected state
 		if(selectedPos != -1){ 
 			if(selectedPos == position){
@@ -94,4 +100,39 @@ public class SelectedAdapter extends ArrayAdapter<DBRecord>{
 
 		return(v);
 	}
+
+
+	public boolean loadPreviousAtttributes(ListView lv, String attributeKey,String attributeValue) {
+		Log.d("IDCT","About to resume some values for " + attributeKey);
+		if (!isBlank(attributeValue)) {
+			Log.d("IDCT", attributeValue + " is not null. attributeValue: " + attributeValue);
+			int i = 0;
+			for(DBRecord d : listOfTheseObjects){
+				Log.d("IDCT", "Looping thring arraylist of selectedAdapter " + i);
+				Log.d("IDCT", "val" + d.getAttributeValue());
+				if(d.getAttributeValue().contains(attributeValue)) {
+					Log.d("IDCT", "MATCH!" );
+					
+					//selectedAdapterToPopulate.setSelectedPosition(i);
+					this.setSelectedPosition(i);
+					lv.setSelection(i);
+					return true;
+				}
+				i++;
+			}
+		}
+		return false;
+	}
+    public static boolean isBlank(String string) {
+        if (string == null || string.length() == 0)
+            return true;
+
+        int l = string.length();
+        for (int i = 0; i < l; i++) {
+            if (!Character.isWhitespace(string.codePointAt(i)))
+                return false;
+        }
+        return true;
+    }
+
 }
