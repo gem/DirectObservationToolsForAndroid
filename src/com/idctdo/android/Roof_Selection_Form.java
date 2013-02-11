@@ -52,7 +52,7 @@ public class Roof_Selection_Form extends Activity {
 	private String roofShapeAttributeKey = "ROOF_SHAPE";
 
 	private String roofCoverMaterialAttributeDictionary = "DIC_ROOF_COVER_MATERIAL";
-	private String roofCoverMaterialAttributeKey = "ROOF_COVER_MATERIAL";
+	private String roofCoverMaterialAttributeKey = "ROOFCOVMAT";
 
 
 	private String topLevelAttributeDictionary = "DIC_ROOF_SYSTEM_MATERIAL";
@@ -131,12 +131,12 @@ public class Roof_Selection_Form extends Activity {
 					//surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());
 					DBRecord selected = (DBRecord) spinnerRoofShape.getSelectedItem();
 					if (DEBUG_LOG) Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
-					surveyDataObject.putGedData(roofShapeAttributeKey, selected.getAttributeValue());		
+					surveyDataObject.putData(roofShapeAttributeKey, selected.getAttributeValue());		
 				}
 				public void onNothingSelected(AdapterView<?> parent) {
 				}
 			});	
-
+			roofShapeAttributeDictionaryCursor.close();
 			
 			spinnerRoofCoverMaterial = (Spinner)  findViewById(R.id.spinnerRoofCoverMaterial);
 			final Cursor roofCoverMaterialAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(roofCoverMaterialAttributeDictionary);
@@ -157,13 +157,14 @@ public class Roof_Selection_Form extends Activity {
 					//surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());
 					DBRecord selected = (DBRecord) spinnerRoofCoverMaterial.getSelectedItem();
 					if (DEBUG_LOG) Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
-					surveyDataObject.putGedData(roofCoverMaterialAttributeKey, selected.getAttributeValue());		
+					surveyDataObject.putData(roofCoverMaterialAttributeKey, selected.getAttributeValue());		
 				}
 				public void onNothingSelected(AdapterView<?> parent) {
 				}
 			});	
-
-
+			roofShapeAttributeDictionaryCursor.close();
+			
+			
 			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
 			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 			if (DEBUG_LOG) Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
@@ -177,7 +178,6 @@ public class Roof_Selection_Form extends Activity {
 
 			selectedAdapter = new SelectedAdapter(this,0,topLevelAttributesList);
 			selectedAdapter.setNotifyOnChange(true);
-
 			listview = (ListView) findViewById(R.id.listExample);
 			listview.setAdapter(selectedAdapter);        
 
@@ -193,7 +193,6 @@ public class Roof_Selection_Form extends Activity {
 			relativeLayout2.setVisibility(View.INVISIBLE);
 
 
-
 			listview.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView arg0, View view,
@@ -203,20 +202,13 @@ public class Roof_Selection_Form extends Activity {
 					selectedAdapter2.setSelectedPosition(-1);
 
 					surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());
-
-					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
-
 					secondLevelAttributesList.clear();
 
 
 					mDbHelper.open();
-
-
 					//Cursor mCursor = mDbHelper.getAllMaterialTechnologies(selectedAdapter.getItem(position).getJson());
 					if (DEBUG_LOG) Log.d("IDCT", "Going to select by" + secondLevelAttributeKey + " and " + selectedAdapter.getItem(position).getJson());
-
 					Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(secondLevelAttributeDictionary,selectedAdapter.getItem(position).getJson());
-
 					mCursor.moveToFirst();
 					while(!mCursor.isAfterLast()) {
 						//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
@@ -258,7 +250,15 @@ public class Roof_Selection_Form extends Activity {
 
 				}
 			});
-		}		
+			
+			boolean result = false;	
+			result= selectedAdapter.loadPreviousAtttributes(listview, topLevelAttributeKey,surveyDataObject.getSurveyDataValue(topLevelAttributeKey));
+			result= selectedAdapter2.loadPreviousAtttributes(listview2, secondLevelAttributeKey,surveyDataObject.getSurveyDataValue(secondLevelAttributeKey));
+			if (result)  {
+				listview2.setVisibility(View.VISIBLE);
+				findViewById(R.id.rel2).setVisibility(View.VISIBLE);
+			}
+		}//End tab completed check		
 	}
 
 	public void clearThis() {

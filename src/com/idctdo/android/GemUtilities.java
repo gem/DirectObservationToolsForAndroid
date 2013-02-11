@@ -38,5 +38,16 @@ public class GemUtilities {
 		return mArrayList;
 	}
 	
+    public static boolean isBlank(String string) {
+        if (string == null || string.length() == 0)
+            return true;
+
+        int l = string.length();
+        for (int i = 0; i < l; i++) {
+            if (!Character.isWhitespace(string.codePointAt(i)))
+                return false;
+        }
+        return true;
+    }
 	
 }

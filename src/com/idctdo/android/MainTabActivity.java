@@ -120,6 +120,8 @@ public class MainTabActivity extends TabActivity {
 					}
 				}
 			}			
+			curCSV.close();
+				
 		}
 
 		ressources = getResources(); 
@@ -509,8 +511,18 @@ public class MainTabActivity extends TabActivity {
 		return false;
 	}
 
-
-
+	public void saveSelectedAdapterData(String attributeKey,SelectedAdapter selectedAdapter) {
+		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
+		Log.d("IDCT", "selected adapter position " + selectedAdapter.getSelectedPosition());
+		if (selectedAdapter.getSelectedPosition() > -1){
+			Log.d("IDCT", "selected adapter is not empty");
+			surveyDataObject.putData(attributeKey, selectedAdapter.getItem(selectedAdapter.getSelectedPosition()).getAttributeValue());
+		} else {
+			Log.d("IDCT", "selected adapter is empty. Save a null to " + attributeKey);
+			surveyDataObject.putData(attributeKey, null);
+			Log.d("IDCT", "surveyDataObject is " +surveyDataObject.getSurveyDataValue(attributeKey));
+		}
+	}
 
 
 	public void backButtonPressed() {

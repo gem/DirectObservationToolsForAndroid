@@ -42,8 +42,7 @@ import android.widget.Toast;
 
 public class Floor_Selection_Form extends Activity {
 
-	public boolean DEBUG_LOG = false; 
-
+	public boolean DEBUG_LOG = true; 
 
 	public TabActivity tabActivity;
 	public TabHost tabHost;
@@ -65,7 +64,7 @@ public class Floor_Selection_Form extends Activity {
 	private SelectedAdapter selectedAdapter2;
 
 	
-	private ArrayList list;
+	public ArrayList list;
 	public ArrayList<DBRecord> secondLevelAttributesList;
 
 
@@ -88,9 +87,7 @@ public class Floor_Selection_Form extends Activity {
 	protected void onResume() {
 		super.onResume();
 		MainTabActivity a = (MainTabActivity)getParent();
-		surveyDataObject = (GEMSurveyObject)getApplication();
-
-		
+		surveyDataObject = (GEMSurveyObject)getApplication();	
 		
 		
 		if (a.isTabCompleted(tabIndex)) {
@@ -99,9 +96,7 @@ public class Floor_Selection_Form extends Activity {
 			mDbHelper = new GemDbAdapter(getBaseContext());        
 
 			mDbHelper.createDatabase();      
-			mDbHelper.open();
-
-			
+			mDbHelper.open();			
 			
 			spinnerFoundationSystem = (Spinner)  findViewById(R.id.spinnerFoundationSystem);
 			final Cursor foundationSystemAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(foundationSystemAttributeDictionary);
@@ -121,30 +116,31 @@ public class Floor_Selection_Form extends Activity {
 					//surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());
 					DBRecord selected = (DBRecord) spinnerFoundationSystem.getSelectedItem();
 					Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
-					surveyDataObject.putGedData(foundationSystemAttributeKey, selected.getAttributeValue());		
+					surveyDataObject.putData(foundationSystemAttributeKey, selected.getAttributeValue());		
 				}
 				public void onNothingSelected(AdapterView<?> parent) {
 				}
 			});	
-			
+			foundationSystemAttributeDictionaryCursor.close();
 			
 			
 			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
 			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 			if (DEBUG_LOG) Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
-			allAttributeTypesTopLevelCursor.close();
+		
 
-			Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(secondLevelAttributeDictionary,"X");
+			Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(secondLevelAttributeDictionary);
 			secondLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesSecondLevelCursor);
-			allAttributeTypesSecondLevelCursor.close();
-			
+
+			allAttributeTypesTopLevelCursor.close();
+			allAttributeTypesSecondLevelCursor.close();			
 			mDbHelper.close();
 
 			selectedAdapter = new SelectedAdapter(this,0,topLevelAttributesList);
 			selectedAdapter.setNotifyOnChange(true);
 
 			listview = (ListView) findViewById(R.id.listExample);
-			listview.setAdapter(selectedAdapter);        
+			listview.setAdapter(selectedAdapter);      
 
 
 			selectedAdapter2 = new SelectedAdapter(this,0,secondLevelAttributesList);    		
@@ -152,24 +148,20 @@ public class Floor_Selection_Form extends Activity {
 			listview2 = (ListView) findViewById(R.id.listExample2);
 			listview2.setAdapter(selectedAdapter2);        
 
-
 			listview2.setVisibility(View.INVISIBLE);
 			RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel2);
 			relativeLayout.setVisibility(View.INVISIBLE);
-
-
-
+			
 			listview.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView arg0, View view,
 						int position, long id) {
 					// user clicked a list item, make it "selected"
 					selectedAdapter.setSelectedPosition(position);
-					selectedAdapter2.setSelectedPosition(-1);				
+					selectedAdapter2.setSelectedPosition(-1);		
+					
 					surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());
-					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 					secondLevelAttributesList.clear();				
-
 					
 					mDbHelper.open();				
 					//Cursor mCursor = mDbHelper.getAllMaterialTechnologies(selectedAdapter.getItem(position).getJson());
@@ -187,21 +179,17 @@ public class Floor_Selection_Form extends Activity {
 						secondLevelAttributesList.add(o1);
 						mCursor.moveToNext();
 					}
-				
-					mDbHelper.close();    		  				
+											  				
 
-					if (mCursor.getCount() > 0) { 
-						listview2.setVisibility(View.VISIBLE);
-						RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel2);
-						relativeLayout.setVisibility(View.VISIBLE);
-					}
 					mCursor.close();
+					mDbHelper.close();    
+					
+					listview2.setVisibility(View.VISIBLE);
+					RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel2);
+					relativeLayout.setVisibility(View.VISIBLE);		
 					
 					selectedAdapter2.notifyDataSetChanged();       
-
 					completeThis();
-
-
 				}
 			});        
 
@@ -209,16 +197,23 @@ public class Floor_Selection_Form extends Activity {
 				@Override
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
-					selectedAdapter2.setSelectedPosition(position);		
+					selectedAdapter2.setSelectedPosition(position);
+					Log.d("IDCT","selected adapter pos: " + selectedAdapter2.getItem(position).getAttributeValue());
+					
 					surveyDataObject.putData(secondLevelAttributeKey, selectedAdapter2.getItem(position).getAttributeValue());
 					
-					//Toast.makeText(getApplicationContext(), "LV2 click: " + selectedAdapter2.getItem(position).getOrderName() + " " + selectedAdapter2.getItem(position).getOrderStatus() + " " +selectedAdapter2.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
-
-
+			
 				}
 			});
 
-		}		
+			boolean result = false;	
+			result= selectedAdapter.loadPreviousAtttributes(listview, topLevelAttributeKey,surveyDataObject.getSurveyDataValue(topLevelAttributeKey));
+			result= selectedAdapter2.loadPreviousAtttributes(listview2, secondLevelAttributeKey,surveyDataObject.getSurveyDataValue(secondLevelAttributeKey));
+			if (result)  {
+				listview2.setVisibility(View.VISIBLE);
+				findViewById(R.id.rel2).setVisibility(View.VISIBLE);
+			}
+		}		//end of tab completed check
 	}
 
 	public void clearThis() {

@@ -39,9 +39,7 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 
 	private static final String TAG = "IDCT";
 	public boolean DEBUG_LOG = true; 
-
-
-
+	
 	public TabActivity tabActivity;
 	public TabHost tabHost;
 	public int tabIndex = 1;
@@ -202,39 +200,23 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 
 				}
 			});
-			
+			/*
 			loadPreviousAtttributes(listview2, selectedAdapter2,topLevelAttributeKeyLongitudinal,lLrs);
 			loadPreviousAtttributes(listview3, selectedAdapter3,secondLevelAttributeKeyLongitudinal,lLrsd);
 			loadPreviousAtttributes(listview4, selectedAdapter4,topLevelAttributeKeyTransverse,lLrs);
 			loadPreviousAtttributes(listview5, selectedAdapter5,secondLevelAttributeKeyTransverse,lLrsd);
+			*/
+			boolean result = false;			
+			result= selectedAdapter2.loadPreviousAtttributes(listview2, topLevelAttributeKeyLongitudinal,surveyDataObject.getSurveyDataValue(topLevelAttributeKeyLongitudinal));
+			result= selectedAdapter3.loadPreviousAtttributes(listview3, secondLevelAttributeKeyLongitudinal,surveyDataObject.getSurveyDataValue(secondLevelAttributeKeyLongitudinal));
+			result= selectedAdapter4.loadPreviousAtttributes(listview4, topLevelAttributeKeyTransverse,surveyDataObject.getSurveyDataValue(topLevelAttributeKeyTransverse));
+			result= selectedAdapter5.loadPreviousAtttributes(listview5, secondLevelAttributeKeyTransverse,surveyDataObject.getSurveyDataValue(secondLevelAttributeKeyTransverse));
 			
 		}//End of tab completed check
 
-
-
 	}
 
 
-		
-	public void loadPreviousAtttributes(ListView lv, SelectedAdapter selectedAdapterToPopulate, String attributeKey, ArrayList<DBRecord> adapterArrayList) {
-		if (DEBUG_LOG) Log.d(TAG,"About to resume some values");
-		if (surveyDataObject.getSurveyDataValue(attributeKey) != null) {
-			//lLrs.indexOf(object)
-			String attributeValue = surveyDataObject.getSurveyDataValue(attributeKey);
-			if (DEBUG_LOG) Log.d(TAG, attributeKey + " is not null. attributeValue: " + attributeValue);
-			int i = 0;
-			for(DBRecord d : adapterArrayList){
-				if (DEBUG_LOG) Log.d(TAG, "Looping thring arraylist of selectedAdapter " + i);
-				if (DEBUG_LOG) Log.d(TAG, "val" + d.getAttributeValue());
-				if(d.getAttributeValue().contains(attributeValue)) {
-					if (DEBUG_LOG) Log.d(TAG, "MATCH!" );
-					selectedAdapterToPopulate.setSelectedPosition(i);
-					lv.setSelection(i);
-				}
-				i++;
-			}
-		}
-	}
 	
 	
 	public void clearThis() {

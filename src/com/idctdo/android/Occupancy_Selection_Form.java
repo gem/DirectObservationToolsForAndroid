@@ -105,9 +105,9 @@ public class Occupancy_Selection_Form extends Activity {
 			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 			if (DEBUG_LOG) Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
 
-			Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(secondLevelAttributeDictionary,"X");
+			Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(secondLevelAttributeDictionary);
 			secondLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesSecondLevelCursor);
-
+			
 			allAttributeTypesTopLevelCursor.close(); 
 			allAttributeTypesSecondLevelCursor.close(); 
 			mDbHelper.close();
@@ -147,9 +147,7 @@ public class Occupancy_Selection_Form extends Activity {
 
 					Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(secondLevelAttributeDictionary,selectedAdapter.getItem(position).getJson());
 					mCursor.moveToFirst();
-					while(!mCursor.isAfterLast()) {
-						//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-
+					while(!mCursor.isAfterLast()) {			
 						DBRecord o1 = new DBRecord();		
 
 						if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
@@ -181,12 +179,19 @@ public class Occupancy_Selection_Form extends Activity {
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter2.setSelectedPosition(position);
-					surveyDataObject.putData(secondLevelAttributeKey, selectedAdapter2.getItem(position).getAttributeValue());
-					
+					surveyDataObject.putData(secondLevelAttributeKey, selectedAdapter2.getItem(position).getAttributeValue());				
 
 				}
 			});
-		}
+			
+			boolean result = false;	
+			result= selectedAdapter.loadPreviousAtttributes(listview, topLevelAttributeKey,surveyDataObject.getSurveyDataValue(topLevelAttributeKey));
+			result= selectedAdapter2.loadPreviousAtttributes(listview2, secondLevelAttributeKey,surveyDataObject.getSurveyDataValue(secondLevelAttributeKey));
+			if (result)  {
+				listview2.setVisibility(View.VISIBLE);
+				findViewById(R.id.rel2).setVisibility(View.VISIBLE);
+			}
+		}//end tab is compelted check
 	}
 
 	@Override

@@ -103,12 +103,20 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 	}
 
 	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();		
+		Log.d("IDCT", "Tab Pausing .....");
+	}
+
+
+	@Override
 	protected void onResume() {
 		super.onResume();
-		
+
 		SecondTabsActivity a = (SecondTabsActivity)getParent();		
 		surveyDataObject = (GEMSurveyObject)getApplication();	
-		
+
 		if (a.isSecondaryTabCompleted()) {
 			if (DEBUG_LOG) Log.d("JFR","Tab is complete");
 		} else {
@@ -119,11 +127,9 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 			mDbHelper.createDatabase();      
 			mDbHelper.open();
 
-
 			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeType);     
-			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
-			if (DEBUG_LOG) Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
-
+			ArrayList<DBRecord> firstLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
+			if (DEBUG_LOG) Log.d("IDCT","TYPES: " + firstLevelAttributesList.toString());
 
 			Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(secondLevelAttributeType);
 			secondLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesSecondLevelCursor);
@@ -132,10 +138,10 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 			thirdLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesThirdLevelCursor);
 
 			Cursor allAttributeTypesFourthLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(fourthLevelAttributeType);
-			fourthLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesThirdLevelCursor);
+			fourthLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesFourthLevelCursor);
 
 			Cursor allAttributeTypesFifthLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(fifthLevelAttributeType);
-			fifthLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesThirdLevelCursor);
+			fifthLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesFifthLevelCursor);
 
 			allAttributeTypesTopLevelCursor.close();
 			allAttributeTypesSecondLevelCursor.close();
@@ -145,9 +151,8 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 
 			mDbHelper.close();
 
-			selectedAdapter = new SelectedAdapter(this,0,topLevelAttributesList);
+			selectedAdapter = new SelectedAdapter(this,0,firstLevelAttributesList);
 			selectedAdapter.setNotifyOnChange(true);
-
 			listview = (ListView) findViewById(R.id.listExample);
 			listview.setAdapter(selectedAdapter);        
 
@@ -159,7 +164,6 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 			listview2.setVisibility(View.INVISIBLE);
 			RelativeLayout relativeLayout2 = (RelativeLayout) findViewById(R.id.rel2);
 			relativeLayout2.setVisibility(View.INVISIBLE);
-
 
 			selectedAdapter3 = new SelectedAdapter(this,0,thirdLevelAttributesList);    		
 			selectedAdapter3.setNotifyOnChange(true);		
@@ -191,9 +195,11 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 				public void onItemClick(AdapterView arg0, View view,
 						int position, long id) {
 					// user clicked a list item, make it "selected"
-					selectedAdapter.setSelectedPosition(position);
+					selectedAdapter.setSelectedPosition(position);		
 					selectedAdapter2.setSelectedPosition(-1);			
-
+					selectedAdapter3.setSelectedPosition(-1);			
+					selectedAdapter4.setSelectedPosition(-1);			
+					selectedAdapter5.setSelectedPosition(-1);		
 					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();				
 
 					secondLevelAttributesList.clear();
@@ -208,16 +214,10 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 					surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());
 
 					Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(secondLevelAttributeType,selectedAdapter.getItem(position).getJson());
-
 					mCursor.moveToFirst();
 					while(!mCursor.isAfterLast()) {
 						//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-
-						DBRecord o1 = new DBRecord();		
-
-						//if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-						//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
-
+						DBRecord o1 = new DBRecord();	
 						o1.setAttributeDescription(mCursor.getString(0));
 						o1.setAttributeValue(mCursor.getString(1));
 						o1.setJson(mCursor.getString(2));
@@ -227,14 +227,11 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 					mCursor.close();
 					mDbHelper.close();    		          
 
-
 					listview2.setVisibility(View.VISIBLE);
 					RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel2);
 					relativeLayout.setVisibility(View.VISIBLE);
 
-
-
-					completeThisSecondaryTab();
+					//completeThisSecondaryTab();
 
 					selectedAdapter2.notifyDataSetChanged();
 					selectedAdapter3.notifyDataSetChanged();
@@ -248,7 +245,9 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter2.setSelectedPosition(position);
-
+					selectedAdapter3.setSelectedPosition(-1);			
+					selectedAdapter4.setSelectedPosition(-1);			
+					selectedAdapter5.setSelectedPosition(-1);						
 					surveyDataObject.putData(secondLevelAttributeKey, selectedAdapter2.getItem(position).getAttributeValue());
 
 					//Toast.makeText(getApplicationContext(), "LV2 click: " + selectedAdapter2.getItem(position).getOrderName() + " " + selectedAdapter2.getItem(position).getOrderStatus() + " " +selectedAdapter2.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
@@ -285,8 +284,9 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 							relativeLayout3.setVisibility(View.VISIBLE);
 
 						}
-						mCursor.close();
+
 					}
+					mCursor.close();
 					mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(fourthLevelAttributeType,selectedAdapter2.getItem(position).getJson());
 					if (mCursor != null) {
 						if (mCursor.getCount() > 0) {	
@@ -308,8 +308,9 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 							listview4.setVisibility(View.VISIBLE);
 
 						}
-						mCursor.close();
+
 					}
+					mCursor.close();
 					mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(fifthLevelAttributeType,selectedAdapter2.getItem(position).getJson());
 					if (mCursor != null) {
 						if (mCursor.getCount() > 0) {	
@@ -332,10 +333,13 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 							relativeLayout5.setVisibility(View.VISIBLE);
 							listview5.setVisibility(View.VISIBLE);
 						}
-						mCursor.close();
-					}
 
-					mDbHelper.close();    
+					}
+					mCursor.close();
+					mDbHelper.close();  
+
+					updateListViewHeights(2);
+
 					selectedAdapter3.notifyDataSetChanged();
 					selectedAdapter4.notifyDataSetChanged();
 					selectedAdapter5.notifyDataSetChanged();		
@@ -351,6 +355,7 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 					//Toast.makeText(getApplicationContext(), "LV3 click: " + selectedAdapter3.getItem(position).getOrderName() + " " + selectedAdapter3.getItem(position).getOrderStatus() + " " +selectedAdapter3.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 					surveyDataObject.putData(thirdLevelAttributeKey, selectedAdapter3.getItem(position).getAttributeValue());
 
+					storeSurveyVariables();
 				}
 			});
 
@@ -363,6 +368,7 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 					//Toast.makeText(getApplicationContext(), "LV3 click: " + selectedAdapter3.getItem(position).getOrderName() + " " + selectedAdapter3.getItem(position).getOrderStatus() + " " +selectedAdapter3.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 					surveyDataObject.putData(fourthLevelAttributeKey, selectedAdapter4.getItem(position).getAttributeValue());
 
+					storeSurveyVariables();
 				}
 			}); 
 
@@ -374,15 +380,48 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 					//Toast.makeText(getApplicationContext(), "LV3 click: " + selectedAdapter3.getItem(position).getOrderName() + " " + selectedAdapter3.getItem(position).getOrderStatus() + " " +selectedAdapter3.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 					surveyDataObject.putData(fifthLevelAttributeKey, selectedAdapter5.getItem(position).getAttributeValue());
 
+					storeSurveyVariables();					
 				}
 			});            
 
-		}	
-		updateListViewHeights();
+
+
+			boolean result = false;			
+			result= selectedAdapter.loadPreviousAtttributes(listview, topLevelAttributeKey,surveyDataObject.getSurveyDataValue(topLevelAttributeKey));
+			if (result)  {
+				listview.setVisibility(View.VISIBLE);
+				findViewById(R.id.rel1).setVisibility(View.VISIBLE);
+				//completeThisSecondaryTab();
+			}
+			result= selectedAdapter2.loadPreviousAtttributes(listview2, secondLevelAttributeKey,surveyDataObject.getSurveyDataValue(secondLevelAttributeKey));
+			if (result)  {
+				listview2.setVisibility(View.VISIBLE);
+				findViewById(R.id.rel2).setVisibility(View.VISIBLE);
+			}
+			result= selectedAdapter3.loadPreviousAtttributes(listview3, thirdLevelAttributeKey,surveyDataObject.getSurveyDataValue(thirdLevelAttributeKey));
+			if (result)  {
+				listview3.setVisibility(View.VISIBLE);
+				findViewById(R.id.rel3).setVisibility(View.VISIBLE);
+			}	
+
+			result= selectedAdapter4.loadPreviousAtttributes(listview4, fourthLevelAttributeKey,surveyDataObject.getSurveyDataValue(fourthLevelAttributeKey));
+			if (result)  {
+				listview4.setVisibility(View.VISIBLE);
+				findViewById(R.id.rel4).setVisibility(View.VISIBLE);
+			}	
+
+			result= selectedAdapter5.loadPreviousAtttributes(listview5, fifthLevelAttributeKey,surveyDataObject.getSurveyDataValue(fifthLevelAttributeKey));
+			if (result)  {
+				listview5.setVisibility(View.VISIBLE);
+				findViewById(R.id.rel5).setVisibility(View.VISIBLE);
+			}	
+
+		}//End of tab completed check
+		
+		updateListViewHeights(1);
 	}
 
-
-	public void updateListViewHeights() {		
+	public void updateListViewHeights(int layoutCode) {		
 		int measuredWidth = 0;  
 		int measuredHeight = 0;  
 		Point size = new Point();
@@ -396,7 +435,24 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 		int h2  = (int)(measuredHeight * 0.18);
 		int h3 = (int)(measuredHeight * 0.13);
 		int h4 = (int)(measuredHeight * 0.13);
-		int h5 = (int)(measuredHeight * 0.15);	
+		int h5 = (int)(measuredHeight * 0.15);
+
+		/*
+		if (layoutCode == 1) {
+			h1 = (int)(measuredHeight * 0.3);
+			h2  = (int)(measuredHeight * 0.3);
+			h3 = (int)(measuredHeight * 0.1);
+			h4 = (int)(measuredHeight * 0.1);
+			h5 = (int)(measuredHeight * 0.1);	
+		} else if (layoutCode == 2){
+			h1 = (int)(measuredHeight * 0.18);
+			h2  = (int)(measuredHeight * 0.18);
+			h3 = (int)(measuredHeight * 0.2);
+			h4 = (int)(measuredHeight * 0.2);
+			h5 = (int)(measuredHeight * 0.01);	
+		}
+		 */
+
 
 		LayoutParams lp = listview.getLayoutParams();
 		lp.height = h1;	       
@@ -421,9 +477,12 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 		LayoutParams lp5 = listview5.getLayoutParams();
 		lp5.height = h5;	       
 		listview5.setLayoutParams(lp5);
-		listview5.requestLayout();    
+		listview5.requestLayout();   
+
 	}
 
+
+	
 	public void clearThis() {
 		if (DEBUG_LOG) Log.d("IDCT", "clearing stuff");
 		selectedAdapter.setSelectedPosition(-1);
@@ -433,44 +492,19 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 	}
 
 	public void completeThisSecondaryTab() {
-		
 		SecondTabsActivity a = (SecondTabsActivity)getParent();
 		a.completeSecondaryTab();
-		 
 	}
 
 
-	public void saveGlobals(String key, String value) {
-		GEMSurveyObject g = (GEMSurveyObject)getApplication();
-		g.putData(key, value);
-		//Log.d(TAG,"GLOBAL VARS " + g.getLon()+ " lat: " + g.getLat());
+	public void storeSurveyVariables() {
+		SecondTabsActivity a = (SecondTabsActivity)getParent();		
+		MainTabActivity mainTab =a.getMainTab(); 
+		mainTab.saveSelectedAdapterData(topLevelAttributeKey, selectedAdapter);
+		mainTab.saveSelectedAdapterData(secondLevelAttributeKey, selectedAdapter2);
+		mainTab.saveSelectedAdapterData(thirdLevelAttributeKey, selectedAdapter3);
+		mainTab.saveSelectedAdapterData(fourthLevelAttributeKey, selectedAdapter4);
 	}
-
-
-
-	/*
-	// Move selected item "up" in the ViewList.
-	private void moveUp(){
-    	int selectedPos = selectedAdapter.getSelectedPosition();
-    	if (selectedPos > 0 ){
-    		String str = (String) list.remove(selectedPos);
-    		list.add(selectedPos-1, str);
-    		// set selected position in the adapter
-    		selectedAdapter.setSelectedPosition(selectedPos-1);
-    	}
-	}
-
-	// Move selected item "down" in the ViewList.
-	private void moveDown(){
-    	int selectedPos = selectedAdapter.getSelectedPosition();
-    	if (selectedPos < list.size()-1 ){
-    		String str = (String) list.remove(selectedPos);
-    		list.add(selectedPos+1, str);
-    		// set selected position in the adapter
-    		selectedAdapter.setSelectedPosition(selectedPos+1);
-    	}
-	}
-	 */
 
 
 }

@@ -95,7 +95,10 @@ public class SecondTabsActivity extends TabActivity {
 		a.completeTab(tabIndex);
 		 
 	}
-
+	public MainTabActivity getMainTab() {
+		MainTabActivity a = (MainTabActivity)getParent();
+		return a;
+	}
 	public void setTabColor() {
 		for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
 		{

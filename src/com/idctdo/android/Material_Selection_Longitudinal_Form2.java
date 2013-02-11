@@ -111,43 +111,13 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 		// TODO Auto-generated method stub
 		super.onPause();		
 		Log.d("IDCT", "Tab Pausing .....");
-
-
-		//saveSelectedAdapterData(fifthLevelAttributeKey, selectedAdapter5);
-		/*
-		surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(selectedAdapter.getSelectedPosition()).getAttributeValue());
-
-		if (!selectedAdapter2.isEmpty()){
-			Log.d("IDCT", "selected 2 is empty");
-			surveyDataObject.putData(secondLevelAttributeKey, selectedAdapter2.getItem(selectedAdapter2.getSelectedPosition()).getAttributeValue());
-		}
-		surveyDataObject.putData(thirdLevelAttributeKey, selectedAdapter3.getItem(selectedAdapter3.getSelectedPosition()).getAttributeValue());
-
-		if (!selectedAdapter4.isEmpty()){
-			Log.d("IDCT", "selected 4 is empty");
-			surveyDataObject.putData(fourthLevelAttributeKey, selectedAdapter4.getItem(selectedAdapter4.getSelectedPosition()).getAttributeValue());
-		}*/
-
 	}
-	
-	
-	
-	public void saveSelectedAdapterData(String attributeKey,SelectedAdapter selectedAdapter) {
-		Log.d("IDCT", "selected adapter position " + selectedAdapter.getSelectedPosition());
-		if (selectedAdapter.getSelectedPosition() > -1){
-			Log.d("IDCT", "selected adapter is not empty");
-			surveyDataObject.putData(attributeKey, selectedAdapter.getItem(selectedAdapter.getSelectedPosition()).getAttributeValue());
-		} else {
-			Log.d("IDCT", "selected adapter is empty. Save a null to " + attributeKey);
-			surveyDataObject.putData(attributeKey, null);
-			Log.d("IDCT", "surveyDataObject is " +surveyDataObject.getSurveyDataValue(attributeKey));
-		}
-	}
+		
+
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		//MainTabActivity a = (MainTabActivity)getParent();
 
 		SecondTabsActivity a = (SecondTabsActivity)getParent();		
 		surveyDataObject = (GEMSurveyObject)getApplication();	
@@ -272,9 +242,7 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 				relativeLayoutMortar.setVisibility(View.GONE);
 					 */			
 					
-					completeThis();
-					
-					
+					//completeThisSecondaryTab();							
 					
 					selectedAdapter2.notifyDataSetChanged();
 					selectedAdapter3.notifyDataSetChanged();
@@ -366,8 +334,7 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 								o1.setJson(mCursor.getString(2));
 								fifthLevelAttributesList.add(o1);
 								mCursor.moveToNext();
-							}		     
-
+							}		 
 
 							RelativeLayout relativeLayout5 = (RelativeLayout) findViewById(R.id.rel5);
 							relativeLayout5.setVisibility(View.VISIBLE);
@@ -376,17 +343,13 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 						
 					}
 					mCursor.close();
-
 					mDbHelper.close();    
 
-					updateListViewHeights(2);
-
-					
+					updateListViewHeights(2);					
 					
 					selectedAdapter3.notifyDataSetChanged();
 					selectedAdapter4.notifyDataSetChanged();
-					selectedAdapter5.notifyDataSetChanged();	
-					
+					selectedAdapter5.notifyDataSetChanged();						
 					
 					storeSurveyVariables();
 				}
@@ -398,9 +361,7 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter3.setSelectedPosition(position);							
 
-					//Toast.makeText(getApplicationContext(), "LV3 click: " + selectedAdapter3.getItem(position).getOrderName() + " " + selectedAdapter3.getItem(position).getOrderStatus() + " " +selectedAdapter3.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 					surveyDataObject.putData(thirdLevelAttributeKey, selectedAdapter3.getItem(position).getAttributeValue());
-
 					
 					storeSurveyVariables();
 				}
@@ -412,10 +373,9 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter4.setSelectedPosition(position);				
-					//Toast.makeText(getApplicationContext(), "LV3 click: " + selectedAdapter3.getItem(position).getOrderName() + " " + selectedAdapter3.getItem(position).getOrderStatus() + " " +selectedAdapter3.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
+				
 					surveyDataObject.putData(fourthLevelAttributeKey, selectedAdapter4.getItem(position).getAttributeValue());
-					
-					
+										
 					storeSurveyVariables();
 				}
 			}); 
@@ -440,6 +400,7 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 			if (result)  {
 				listview.setVisibility(View.VISIBLE);
 				findViewById(R.id.rel1).setVisibility(View.VISIBLE);
+				//completeThisSecondaryTab();
 			}
 			result= selectedAdapter2.loadPreviousAtttributes(listview2, secondLevelAttributeKey,surveyDataObject.getSurveyDataValue(secondLevelAttributeKey));
 			if (result)  {
@@ -544,30 +505,19 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 		selectedAdapter4.setSelectedPosition(-1);
 	}
 
-	public void completeThis() {
-		/*
-		MainTabActivity a = (MainTabActivity)getParent();
-		a.completeTab(tabIndex);
-		 */
-	}
-
-
-	public void saveGlobals(String key, String value) {
-		/*
-		GEMSurveyObject g = (GEMSurveyObject)getApplication();
-		g.putData(key, value);
-		//Log.d(TAG,"GLOBAL VARS " + g.getLon()+ " lat: " + g.getLat());
-		 
-		 */
-		
+	public void completeThisSecondaryTab() {		
+		SecondTabsActivity a = (SecondTabsActivity)getParent();
+		a.completeSecondaryTab();		 
 	}
 	
 	
 	public void storeSurveyVariables() {
-		saveSelectedAdapterData(topLevelAttributeKey, selectedAdapter);
-		saveSelectedAdapterData(secondLevelAttributeKey, selectedAdapter2);
-		saveSelectedAdapterData(thirdLevelAttributeKey, selectedAdapter3);
-		saveSelectedAdapterData(fourthLevelAttributeKey, selectedAdapter4);
+		SecondTabsActivity a = (SecondTabsActivity)getParent();		
+		MainTabActivity mainTab =a.getMainTab(); 
+		mainTab.saveSelectedAdapterData(topLevelAttributeKey, selectedAdapter);
+		mainTab.saveSelectedAdapterData(secondLevelAttributeKey, selectedAdapter2);
+		mainTab.saveSelectedAdapterData(thirdLevelAttributeKey, selectedAdapter3);
+		mainTab.saveSelectedAdapterData(fourthLevelAttributeKey, selectedAdapter4);
 	}
 
 

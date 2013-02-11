@@ -271,7 +271,15 @@ public class Irregularity_Selection_Form extends Activity {
 					surveyDataObject.putData(thirdLevelAttributeKeySecondary, selectedAdapter5.getItem(position).getAttributeValue());
 				}
 			});
-		}		
+			
+			boolean result = false;		
+			result= selectedAdapter.loadPreviousAtttributes(listview, topLevelAttributeKey,surveyDataObject.getSurveyDataValue(topLevelAttributeKey));			
+			result= selectedAdapter2.loadPreviousAtttributes(listview2, secondLevelAttributeKey,surveyDataObject.getSurveyDataValue(secondLevelAttributeKey));
+			result= selectedAdapter3.loadPreviousAtttributes(listview3, secondLevelAttributeKeySecondary,surveyDataObject.getSurveyDataValue(secondLevelAttributeKeySecondary));
+			result= selectedAdapter4.loadPreviousAtttributes(listview4, thirdLevelAttributeKey,surveyDataObject.getSurveyDataValue(thirdLevelAttributeKey));
+			result= selectedAdapter5.loadPreviousAtttributes(listview5, thirdLevelAttributeKeySecondary,surveyDataObject.getSurveyDataValue(thirdLevelAttributeKeySecondary));
+
+		}	//end of tab completed check	
 	}
 
 	public void clearThis() {
