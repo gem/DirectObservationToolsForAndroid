@@ -141,8 +141,8 @@ public class Details_Selection extends Activity {
 			
 			spinnerBuildingPosition = (Spinner)  findViewById(R.id.spinnerBuildingPosition);
 			final Cursor roofShapeAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(buildingPositionAttributeDictionary);
-			ArrayList<DBRecord> roofShapeAttributesList = GemUtilities.cursorToArrayList(roofShapeAttributeDictionaryCursor);
-			ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,roofShapeAttributesList );
+			ArrayList<DBRecord> buildingPositionAttributesList = GemUtilities.cursorToArrayList(roofShapeAttributeDictionaryCursor);
+			ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,buildingPositionAttributesList );
 			spinnerArrayAdapter.setDropDownViewResource(R.layout.simple_spinner_item);
 			spinnerBuildingPosition.setAdapter(spinnerArrayAdapter);
 			spinnerBuildingPosition.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -215,17 +215,46 @@ public class Details_Selection extends Activity {
 				}
 				public void onNothingSelected(AdapterView<?> parent) {
 				}
-			});	
-			
-			
-			
+			});					
 			
 			roofShapeAttributeDictionaryCursor.close();
 			mDbHelper.close();
-		}
+			
+			
+			editTextSurveyComment.setText(surveyDataObject.getSurveyDataValue(commentsAttributeKey));
+			editTextSlope.setText(surveyDataObject.getSurveyDataValue(slopeAttributeKey));
+			
+			boolean result = false;	
+			result = loadPreviousAtttributesSpinner(spinnerBuildingPosition, buildingPositionAttributesList, buildingPositionAttributeKey,surveyDataObject.getSurveyDataValue(buildingPositionAttributeKey));
+			result = loadPreviousAtttributesSpinner(spinnerBuildingShape, buildingShapeAttributesList, buildingShapeAttributeKey,surveyDataObject.getSurveyDataValue(buildingShapeAttributeKey));
+			result = loadPreviousAtttributesSpinner(spinnerNonStructuralExteriorWalls, nonStructuralExteriorWallsAttributesList, nonStructuralExteriorWallsAttributeKey,surveyDataObject.getSurveyDataValue(nonStructuralExteriorWallsAttributeKey));
+				
+		}//end tab is compelted check
 	}
 
 
+	public boolean loadPreviousAtttributesSpinner(Spinner lv,ArrayList<DBRecord> listOfTheseObjects, String attributeKey,String attributeValue) {
+		Log.d("IDCT","About to resume some values for " + attributeKey);
+		if (!GemUtilities.isBlank(attributeValue)) {
+			Log.d("IDCT", attributeValue + " is not null. attributeValue: " + attributeValue);
+			int i = 0;
+			for(DBRecord d : listOfTheseObjects){
+				Log.d("IDCT", "Looping thring arraylist of selectedAdapter " + i);
+				Log.d("IDCT", "val" + d.getAttributeValue());
+				if(d.getAttributeValue().contains(attributeValue)) {
+					Log.d("IDCT", "MATCH!" );					
+					//selectedAdapterToPopulate.setSelectedPosition(i);
+					//this.setSelectedPosition(i);
+					
+					lv.setSelection(i,true);
+					return true;
+				}
+				i++;
+			}
+		}
+		return false;
+	}
+	
 
 	public void completeThis() {
 		MainTabActivity a = (MainTabActivity)getParent();

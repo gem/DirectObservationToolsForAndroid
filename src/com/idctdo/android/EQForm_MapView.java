@@ -557,6 +557,8 @@ public class EQForm_MapView extends Activity {
 					//btn_take_survey_photo.setVisibility(View.VISIBLE);//Poss Dodgy threading stuff using this
 					
 					btn_edit_points.setEnabled(true);
+										
+					btn_edit_points.setChecked(false);
 				}
 			});
 

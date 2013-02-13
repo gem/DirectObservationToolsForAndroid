@@ -161,6 +161,7 @@ public class Occupancy_Selection_Form extends Activity {
 					}		     
 					mDbHelper.close();
 
+					
 					if (mCursor.getCount() > 0) { 
 						listview2.setVisibility(View.VISIBLE);
 						RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel2);
@@ -173,6 +174,10 @@ public class Occupancy_Selection_Form extends Activity {
 				}
 			});        
 
+			
+			
+			
+			
 
 			listview2.setOnItemClickListener(new OnItemClickListener() {
 				@Override

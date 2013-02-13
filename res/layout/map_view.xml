@@ -108,7 +108,7 @@
         android:layout_above="@+id/btn_start_survey"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="184dp"
-        android:background="@drawable/finish_small"
+        android:background="@drawable/undo"
         android:text="Cancel" />
 
     <Button
@@ -117,7 +117,7 @@
         android:layout_height="85dip"
         android:layout_above="@+id/btn_start_survey"
         android:layout_alignParentRight="true"
-        android:background="@drawable/finish_small"
+        android:background="@drawable/star"
         android:text="Favourite" />
 
 

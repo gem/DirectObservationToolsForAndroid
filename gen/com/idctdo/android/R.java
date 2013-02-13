@@ -81,7 +81,8 @@ public final class R {
         public static final int tab_icon=0x7f02001d;
         public static final int textlines=0x7f02001e;
         public static final int tick_grey=0x7f02001f;
-        public static final int vector_layers_icon=0x7f020020;
+        public static final int undo=0x7f020020;
+        public static final int vector_layers_icon=0x7f020021;
     }
     public static final class id {
         public static final int LinearLayout01=0x7f0b007c;
