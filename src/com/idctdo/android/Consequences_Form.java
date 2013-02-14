@@ -174,7 +174,16 @@ public class Consequences_Form extends Activity {
 			});
 				
 			
-		}
+			//Resume any attributes
+			editTextNumberOfFatalities.setText(surveyDataObject.getSurveyDataValue(attributeKey1));
+			editTextNumberOfInjured.setText(surveyDataObject.getSurveyDataValue(attributeKey2));
+			editTextNumberOfMissing.setText(surveyDataObject.getSurveyDataValue(attributeKey3));
+			editTextConsequencesComments.setText(surveyDataObject.getSurveyDataValue(attributeKey4));
+
+			
+			
+		}//end tab completed check
+		
 	}
 	public void completeThis() {
 		//MainTabActivity a = (MainTabActivity)getParent();

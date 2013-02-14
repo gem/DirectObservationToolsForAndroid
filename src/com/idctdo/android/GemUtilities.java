@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import android.database.Cursor;
 import android.util.Log;
+import android.widget.Spinner;
 
 //Static functions for data processing and the like
 public class GemUtilities {
@@ -49,5 +50,31 @@ public class GemUtilities {
         }
         return true;
     }
+	
+    
+    
+    
+	public static boolean loadPreviousAtttributesSpinner(Spinner lv,ArrayList<DBRecord> listOfTheseObjects, String attributeKey,String attributeValue) {
+		Log.d("IDCT","About to resume some values for " + attributeKey);
+		if (!GemUtilities.isBlank(attributeValue)) {
+			Log.d("IDCT", attributeValue + " is not null. attributeValue: " + attributeValue);
+			int i = 0;
+			for(DBRecord d : listOfTheseObjects){
+				Log.d("IDCT", "Looping thring arraylist of selectedAdapter " + i);
+				Log.d("IDCT", "val" + d.getAttributeValue());
+				if(d.getAttributeValue().contains(attributeValue)) {
+					Log.d("IDCT", "MATCH!" );					
+					//selectedAdapterToPopulate.setSelectedPosition(i);
+					//this.setSelectedPosition(i);
+					
+					lv.setSelection(i,true);
+					return true;
+				}
+				i++;
+			}
+		}
+		return false;
+	}
+	
 	
 }

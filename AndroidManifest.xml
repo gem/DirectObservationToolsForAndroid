@@ -84,9 +84,6 @@
             android:name=".Details_Selection"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Details_Selection2"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Occupancy_Selection_Form"
             android:screenOrientation="portrait" />
         <activity

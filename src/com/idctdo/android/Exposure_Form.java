@@ -174,6 +174,7 @@ public class Exposure_Form extends Activity {
 
 			editTextNumberOfNightOccupants.setOnFocusChangeListener(new OnFocusChangeListener() { 				
 
+				
 				public void onFocusChange(View v, boolean hasFocus) {
 					if(!hasFocus) {
 						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
@@ -183,6 +184,7 @@ public class Exposure_Form extends Activity {
 				}
 			});
 
+			
 			editTextNumberOfTransitOccupants.setOnFocusChangeListener(new OnFocusChangeListener() { 				
 
 				public void onFocusChange(View v, boolean hasFocus) {
@@ -237,7 +239,29 @@ public class Exposure_Form extends Activity {
 					}
 				}
 			});
-		}
+			
+		
+
+			
+			editTextNumberOfDayOccupants.setText(surveyDataObject.getSurveyDataValue(attributeKey1));
+			editTextNumberOfNightOccupants.setText(surveyDataObject.getSurveyDataValue(attributeKey2));
+			editTextNumberOfTransitOccupants.setText(surveyDataObject.getSurveyDataValue(attributeKey3));
+			editTextNumberOfDwellings.setText(surveyDataObject.getSurveyDataValue(attributeKey4));
+			editTextPlanArea.setText(surveyDataObject.getSurveyDataValue(attributeKey5));
+			editTextReplacementCost.setText(surveyDataObject.getSurveyDataValue(attributeKey6));
+			editTextExposureComments.setText(surveyDataObject.getSurveyDataValue(attributeKey8));
+		
+			
+			
+			//boolean result = false;	
+			//result = GemUtilities.loadPreviousAtttributesSpinner(spinnerCurrency, buildingPositionAttributesList, attributeKey7,surveyDataObject.getSurveyDataValue(attributeKey7));
+
+
+			
+			
+			
+		}//End tab completed check
+		
 	}		
 	public void completeThis() {
 		MainTabActivity a = (MainTabActivity)getParent();

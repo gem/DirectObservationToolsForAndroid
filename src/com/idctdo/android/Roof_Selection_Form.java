@@ -250,7 +250,8 @@ public class Roof_Selection_Form extends Activity {
 
 				}
 			});
-			
+
+			//Resume any previous values if editing existing attribute 
 			boolean result = false;	
 			result= selectedAdapter.loadPreviousAtttributes(listview, topLevelAttributeKey,surveyDataObject.getSurveyDataValue(topLevelAttributeKey));
 			result= selectedAdapter2.loadPreviousAtttributes(listview2, secondLevelAttributeKey,surveyDataObject.getSurveyDataValue(secondLevelAttributeKey));
@@ -258,6 +259,11 @@ public class Roof_Selection_Form extends Activity {
 				listview2.setVisibility(View.VISIBLE);
 				findViewById(R.id.rel2).setVisibility(View.VISIBLE);
 			}
+				
+			
+			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerRoofShape, roofShapeAttributesList, roofShapeAttributeKey,surveyDataObject.getSurveyDataValue(roofShapeAttributeKey));
+			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerRoofCoverMaterial, roofCoverMaterialAttributesList, roofCoverMaterialAttributeKey,surveyDataObject.getSurveyDataValue(roofCoverMaterialAttributeKey));
+	
 		}//End tab completed check		
 	}
 

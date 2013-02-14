@@ -213,6 +213,9 @@ public class Floor_Selection_Form extends Activity {
 				listview2.setVisibility(View.VISIBLE);
 				findViewById(R.id.rel2).setVisibility(View.VISIBLE);
 			}
+			
+			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerFoundationSystem, foundationSystemAttributesList , foundationSystemAttributeKey,surveyDataObject.getSurveyDataValue(foundationSystemAttributeKey));
+
 		}		//end of tab completed check
 	}
 

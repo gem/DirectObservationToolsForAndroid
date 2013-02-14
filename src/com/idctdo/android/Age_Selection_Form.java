@@ -375,7 +375,29 @@ public class Age_Selection_Form extends Activity {
 				}
 			});
 			*/
-		}
+			
+			boolean result = false;	
+			result= heightSelectedAdapter.loadPreviousAtttributes(heightListview, heightStoreysAboveGroundQualifierAttributeKey,surveyDataObject.getSurveyDataValue(heightStoreysAboveGroundQualifierAttributeKey));
+			result= heightSelectedAdapter2.loadPreviousAtttributes(heightListview2, heightStoreysBelowGroundQualifierAttributeKey,surveyDataObject.getSurveyDataValue(heightStoreysBelowGroundQualifierAttributeKey));
+			result= heightSelectedAdapter3.loadPreviousAtttributes(heightListview3, heightStoreysAboveGradeQualifierAttributeKey,surveyDataObject.getSurveyDataValue(heightStoreysAboveGradeQualifierAttributeKey));
+			if (result)  {
+				//listview2.setVisibility(View.VISIBLE);
+				//findViewById(R.id.rel2).setVisibility(View.VISIBLE);
+			}
+			
+			editTextAboveGround1.setText(surveyDataObject.getSurveyDataValue(heightStoreysAboveGroundAttributeKey1));
+			editTextAboveGround2.setText(surveyDataObject.getSurveyDataValue(heightStoreysAboveGroundAttributeKey2));
+			
+			editTextBelowGround1.setText(surveyDataObject.getSurveyDataValue(heightStoreysBelowGroundAttributeKey1));
+			editTextBelowGround2.setText(surveyDataObject.getSurveyDataValue(heightStoreysBelowGroundAttributeKey2));
+			
+			editTextAboveGrade1.setText(surveyDataObject.getSurveyDataValue(heightStoreysAboveGradeAttributeKey1));
+			editTextAboveGrade2.setText(surveyDataObject.getSurveyDataValue(heightStoreysAboveGradeAttributeKey2));
+			
+			
+						
+		} //End check tab complete
+		
 	}	
 
 	public void completeThis() {

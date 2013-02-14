@@ -221,39 +221,22 @@ public class Details_Selection extends Activity {
 			mDbHelper.close();
 			
 			
+			
+			//Resume any previous values if editing existing attribute 
 			editTextSurveyComment.setText(surveyDataObject.getSurveyDataValue(commentsAttributeKey));
 			editTextSlope.setText(surveyDataObject.getSurveyDataValue(slopeAttributeKey));
 			
 			boolean result = false;	
-			result = loadPreviousAtttributesSpinner(spinnerBuildingPosition, buildingPositionAttributesList, buildingPositionAttributeKey,surveyDataObject.getSurveyDataValue(buildingPositionAttributeKey));
-			result = loadPreviousAtttributesSpinner(spinnerBuildingShape, buildingShapeAttributesList, buildingShapeAttributeKey,surveyDataObject.getSurveyDataValue(buildingShapeAttributeKey));
-			result = loadPreviousAtttributesSpinner(spinnerNonStructuralExteriorWalls, nonStructuralExteriorWallsAttributesList, nonStructuralExteriorWallsAttributeKey,surveyDataObject.getSurveyDataValue(nonStructuralExteriorWallsAttributeKey));
+			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerBuildingPosition, buildingPositionAttributesList, buildingPositionAttributeKey,surveyDataObject.getSurveyDataValue(buildingPositionAttributeKey));
+			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerBuildingShape, buildingShapeAttributesList, buildingShapeAttributeKey,surveyDataObject.getSurveyDataValue(buildingShapeAttributeKey));
+			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerNonStructuralExteriorWalls, nonStructuralExteriorWallsAttributesList, nonStructuralExteriorWallsAttributeKey,surveyDataObject.getSurveyDataValue(nonStructuralExteriorWallsAttributeKey));
 				
 		}//end tab is compelted check
 	}
 
 
-	public boolean loadPreviousAtttributesSpinner(Spinner lv,ArrayList<DBRecord> listOfTheseObjects, String attributeKey,String attributeValue) {
-		Log.d("IDCT","About to resume some values for " + attributeKey);
-		if (!GemUtilities.isBlank(attributeValue)) {
-			Log.d("IDCT", attributeValue + " is not null. attributeValue: " + attributeValue);
-			int i = 0;
-			for(DBRecord d : listOfTheseObjects){
-				Log.d("IDCT", "Looping thring arraylist of selectedAdapter " + i);
-				Log.d("IDCT", "val" + d.getAttributeValue());
-				if(d.getAttributeValue().contains(attributeValue)) {
-					Log.d("IDCT", "MATCH!" );					
-					//selectedAdapterToPopulate.setSelectedPosition(i);
-					//this.setSelectedPosition(i);
-					
-					lv.setSelection(i,true);
-					return true;
-				}
-				i++;
-			}
-		}
-		return false;
-	}
+
+	
 	
 
 	public void completeThis() {
