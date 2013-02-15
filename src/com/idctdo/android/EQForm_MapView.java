@@ -284,7 +284,7 @@ public class EQForm_MapView extends Activity {
 		btn_cancelSurveyPoint =(Button)findViewById(R.id.btn_cancel_survey_point);
 		btn_cancelSurveyPoint.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
 		btn_cancelSurveyPoint.setOnClickListener(cancelSurveyPointListener);
-		
+
 		btn_startSurveyFavourite =(Button)findViewById(R.id.btn_start_survey_with_favourite);
 		btn_startSurveyFavourite.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
 		btn_startSurveyFavourite.setOnClickListener(startSurveyFavouriteListener);
@@ -388,7 +388,6 @@ public class EQForm_MapView extends Activity {
 
 
 		if (g.unsavedEdits) {
-
 			//Draw a candidate survey point
 			if (DEBUG_LOG) Log.d(TAG,"RESUMING EDITS. DRAWING MOVEABLE POINT, " + g.getLon()+ " lat: " + g.getLat());
 			mWebView.loadUrl("javascript:drawCandidateSurveyPoint("+ g.getLon()+","+g.getLat()+")");
@@ -407,9 +406,9 @@ public class EQForm_MapView extends Activity {
 					btn_startSurveyFavourite.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
 					//btn_take_survey_photo.setVisibility(View.INVISIBLE);//Poss Dodgy threading stuff using this
 					btn_takeCameraPhoto.setBackgroundResource(R.drawable.camera);
-					
+
 					btn_edit_points.setEnabled(true);
-					
+
 				}
 			});		       
 
@@ -536,35 +535,39 @@ public class EQForm_MapView extends Activity {
 
 
 
+
 	private OnClickListener cancelSurveyPointListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			if (DEBUG_LOG) Log.d(TAG,"Cancel survey point");
 
-			//Stop any geometry editing			
-			mWebView.loadUrl("javascript:startEditingMode(false)");
-			isEditingPoints = false;
-			mWebView.loadUrl("javascript:clearMyPositions()");
+			if (!btn_edit_points.isChecked()) {
+				//Stop any geometry editing			
+				mWebView.loadUrl("javascript:startEditingMode(false)");
+				isEditingPoints = false;
 
-			runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					btn_startSurvey.setVisibility(View.INVISIBLE);//This might be causing issues
-					btn_cancelSurveyPoint.setVisibility(View.INVISIBLE);//This might be causing issues
-					btn_startSurveyFavourite.setVisibility(View.INVISIBLE);//This might be causing issues
-					
-					btn_takeCameraPhoto.setBackgroundResource(R.drawable.camera);
-					//btn_take_survey_photo.setVisibility(View.VISIBLE);//Poss Dodgy threading stuff using this
-					
-					btn_edit_points.setEnabled(true);
-										
-					btn_edit_points.setChecked(false);
-				}
-			});
+				mWebView.loadUrl("javascript:clearMyPositions()");
 
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						btn_startSurvey.setVisibility(View.INVISIBLE);//This might be causing issues
+						btn_cancelSurveyPoint.setVisibility(View.INVISIBLE);//This might be causing issues
+						btn_startSurveyFavourite.setVisibility(View.INVISIBLE);//This might be causing issues
+						btn_takeCameraPhoto.setBackgroundResource(R.drawable.camera);
+						//btn_take_survey_photo.setVisibility(View.VISIBLE);//Poss Dodgy threading stuff using this
+						btn_edit_points.setEnabled(true);
+						btn_edit_points.setChecked(false);
+					}
+				});
+			} else {
+				//promptForSavingEdits();
+			}
 		}
+
+
 	};
-	
+
 	private OnClickListener startSurveyFavouriteListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -634,7 +637,6 @@ public class EQForm_MapView extends Activity {
 					AlertDialog.Builder alert = new AlertDialog.Builder(this);
 					alert.setTitle("Photo Comment");
 					alert.setMessage("Add a comment to this photo");
-
 					// Set an EditText view to get user input 
 					final EditText input = new EditText(this);
 					alert.setView(input);
@@ -699,12 +701,8 @@ public class EQForm_MapView extends Activity {
 	//Can then mark the map tab as complete
 	public boolean loadSurveyPoint(final double lon, final double lat,final String gemId) {
 		if (DEBUG_LOG) Log.d(TAG,"edited point location from Openlayers. Lon:" + lon + " lat: " + lat+ " gemId: " + gemId);
-
-
-
 		//mWebView.loadUrl("javascript:locateMe("+ lat+","+lon+","+currentLocationAccuracy+","+true+")");
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
-
 		if (DEBUG_LOG) Log.d(TAG,"Currently got unsaved edits? " + g.unsavedEdits);
 		g.setLon(lon);
 		g.setLat(lat);
@@ -724,7 +722,7 @@ public class EQForm_MapView extends Activity {
 		}
 
 
-		
+
 
 
 		//g.putData("OBJ_UID", id.toString());
@@ -743,22 +741,84 @@ public class EQForm_MapView extends Activity {
 				btn_cancelSurveyPoint.setVisibility(View.VISIBLE);//This might be causing issues
 				btn_startSurveyFavourite.setVisibility(View.VISIBLE);//This might be causing issues
 				btn_takeCameraPhoto.setBackgroundResource(R.drawable.camera_green);
-				
-				
 				btn_edit_points.setEnabled(false);
 
 				//btn_take_survey_photo.setVisibility(View.VISIBLE);//Poss Dodgy threading stuff using this
 			}
 		});
 
-		
+
 		return false;
 	}	
 
 
 
+	public void promptForSavingEdits() {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		
+		// set title
+		alertDialogBuilder.setTitle("Unsaved Survey Observation");
 
+		// set dialog message
+		alertDialogBuilder
+		.setMessage("Do you want to save this observation?")
+		.setCancelable(false)
+		.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog,int id) {
+				// if this button is clicked, close
+				// current activity
+				//MainActivity.this.finish();
+				dialog.cancel();
+			}
+		})
+		.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog,int id) {
+				// if this button is clicked, close
+				// current activity
+				//This is needed to trigger the focus changed events of EditText fields
+				//tabHost.setCurrentTab(0);
+				saveData();
+			}
+		})
+		.setNegativeButton("No",new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog,int id) {
+				// if this button is clicked, just close
+				// the dialog box and do nothing
+				/*
+				GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
+				surveyDataObject.clearGemSurveyObject();
+				surveyDataObject.unsavedEdits = false;
+				MainTabActivity.this.finish();
+				*/
+			}
+		});
 
+		// create alert dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		// show it
+		alertDialog.show();
+
+	}
+
+	
+	//Duplicated in MainTabAcitivty, should be moved elsewhere really	
+	public boolean saveData() {
+		if (DEBUG_LOG) Log.d(TAG, "Saving data");		
+		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
+
+		mDbHelper = new GemDbAdapter(getBaseContext());      
+		mDbHelper.createDatabase();      
+		mDbHelper.open();		
+
+		mDbHelper.insertGemData(surveyDataObject);
+		//Should really try / catch this
+
+		mDbHelper.close();
+		//Toast.makeText(getApplicationContext(), "Survey data saved", Toast.LENGTH_SHORT).show();
+		surveyDataObject.clearGemSurveyObject();
+		surveyDataObject.unsavedEdits = false;
+		return false;
+	}
 	public boolean getSurveyPoint() {
 		if (DEBUG_LOG) Log.d(TAG,"getting point location from Openlayers");
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
@@ -786,7 +846,7 @@ public class EQForm_MapView extends Activity {
 	private void loadPrevSurveyPoints() {
 		if (DEBUG_LOG) Log.d(TAG,"loading PREVIOUS survey points");
 
-		
+
 		mDbHelper = new GemDbAdapter(getBaseContext());      
 		mDbHelper.createDatabase();      
 		mDbHelper.open();		

@@ -37,6 +37,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 
+
+
 public class GemDbAdapter 
 {
 	public boolean DEBUG_LOG = true; 
@@ -215,6 +217,45 @@ public class GemDbAdapter
 		}
 	}
 
+	public Cursor getGedObjectByUid(String uid)
+	{
+		try
+		{
+			String sql ="select * FROM GED WHERE GEMOBJ_UID = '"+ uid + "'";
+
+			Cursor mCur = mDb.rawQuery(sql, null);
+			if (mCur!=null)
+			{
+				mCur.moveToNext();
+			}
+			return mCur;
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+			throw mSQLException;
+		}
+	}
+	
+	public Cursor getConsequencesObjectByUid(String uid)
+	{
+		try
+		{
+			String sql ="select * FROM CONSEQUENCES WHERE GEMOBJ_UID = '"+ uid + "'";
+
+			Cursor mCur = mDb.rawQuery(sql, null);
+			if (mCur!=null)
+			{
+				mCur.moveToNext();
+			}
+			return mCur;
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+			throw mSQLException;
+		}
+	}
 	public Cursor getAllAttributeTypes()
 	{
 		try
@@ -555,8 +596,7 @@ public class GemDbAdapter
 				if (DEBUG_LOG) Log.d(TAG,"updating record in db " + gemGlobalVariables.getUid());	
 				String columnName= "OBJ_UID";
 				mDb.update("GEM_OBJECT", cv, columnName+"=?", new String[] {gemGlobalVariables.getUid()});
-			}  else {
-				
+			}  else {				
 				if (DEBUG_LOG) Log.d(TAG,"inserting record in db " + gemGlobalVariables.getUid());	
 				mDb.insert("GEM_OBJECT", null, cv);
 			}
@@ -626,9 +666,18 @@ public class GemDbAdapter
 				cv.put(key, value);
 			}
 
-
 			Log.d(TAG, "GED ContentValues: " + cv.toString());
-			mDb.insert("GED", null, cv);
+			if (gemGlobalVariables.isExistingRecord) { 
+				if (DEBUG_LOG) Log.d(TAG,"updating GED record in db " + gemGlobalVariables.getUid());	
+				String columnName= "GEMOBJ_UID";
+				mDb.update("GED", cv, columnName+"=?", new String[] {gemGlobalVariables.getUid()});
+			}  else {				
+				if (DEBUG_LOG) Log.d(TAG,"inserting record in db " + gemGlobalVariables.getUid());	
+				mDb.insert("GED", null, cv);
+			}
+			
+			
+			//mDb.insert("GED", null, cv);
 			String feedbackMsg = "GED Data saved\n ";
 			//Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
 		}
@@ -660,7 +709,17 @@ public class GemDbAdapter
 
 
 			Log.d(TAG, "CONSQ ContentValues: " + cv.toString());
-			mDb.insert("CONSEQUENCES", null, cv);
+			if (gemGlobalVariables.isExistingRecord) { 
+				if (DEBUG_LOG) Log.d(TAG,"updating CONSEQUENCES record in db " + gemGlobalVariables.getUid());	
+				String columnName= "GEMOBJ_UID";
+				mDb.update("CONSEQUENCES", cv, columnName+"=?", new String[] {gemGlobalVariables.getUid()});
+			}  else {				
+				if (DEBUG_LOG) Log.d(TAG,"inserting record in db " + gemGlobalVariables.getUid());	
+				mDb.insert("CONSEQUENCES", null, cv);
+			}
+			
+			
+			//mDb.insert("CONSEQUENCES", null, cv);
 			String feedbackMsg = "CONSEQUENCES Data saved\n";
 			//Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
 		}

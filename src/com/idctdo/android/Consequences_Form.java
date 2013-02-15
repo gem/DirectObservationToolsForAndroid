@@ -44,21 +44,18 @@ public class Consequences_Form extends Activity {
 	
 	public TabActivity tabActivity;
 	public TabHost tabHost;
-	public int tabIndex = 10;
-
-	
+	public int tabIndex = 9;
 	
 
 	public EditText editTextNumberOfFatalities;
 	public EditText editTextNumberOfInjured;	
 	public EditText editTextNumberOfMissing;	
 	public EditText editTextConsequencesComments;
-	
 
 	
-	private String topLevelAttributeDictionary = "DIC_DAMAGE";
-	private String topLevelAttributeKey = "DAMAGE";
+	private String topLevelAttributeDictionary = "DIC_DAMAGE";	
 	
+	private String topLevelAttributeKey = "DAMAGE";	
 	private String attributeKey1 = "FATALITIES";
 	private String attributeKey2 = "INJURED";
 	private String attributeKey3 = "MISSING";
@@ -175,10 +172,13 @@ public class Consequences_Form extends Activity {
 				
 			
 			//Resume any attributes
-			editTextNumberOfFatalities.setText(surveyDataObject.getSurveyDataValue(attributeKey1));
-			editTextNumberOfInjured.setText(surveyDataObject.getSurveyDataValue(attributeKey2));
-			editTextNumberOfMissing.setText(surveyDataObject.getSurveyDataValue(attributeKey3));
-			editTextConsequencesComments.setText(surveyDataObject.getSurveyDataValue(attributeKey4));
+			editTextNumberOfFatalities.setText(surveyDataObject.getConsequencesDataValue(attributeKey1));
+			editTextNumberOfInjured.setText(surveyDataObject.getConsequencesDataValue(attributeKey2));
+			editTextNumberOfMissing.setText(surveyDataObject.getConsequencesDataValue(attributeKey3));
+			editTextConsequencesComments.setText(surveyDataObject.getConsequencesDataValue(attributeKey4));
+
+			boolean result = false;	
+			result= selectedAdapter.loadPreviousAtttributes(listview, topLevelAttributeKey,surveyDataObject.getSurveyDataValue(topLevelAttributeKey));
 
 			
 			

@@ -22,6 +22,9 @@ package com.idctdo.android;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import android.app.Activity;
@@ -94,94 +97,77 @@ public class MainTabActivity extends TabActivity {
 			mDbHelper = new GemDbAdapter(getBaseContext());
 			mDbHelper.open();	
 			if (DEBUG_LOG) Log.d(TAG, "Existing id " + existingId);		
-			Cursor curCSV = mDbHelper.getObjectByUid(existingId);
+			Cursor surveyDataCursor = mDbHelper.getObjectByUid(existingId);
+			Cursor gedDataCursor = mDbHelper.getGedObjectByUid(existingId);
+			Cursor consequencesDataCursor = mDbHelper.getConsequencesObjectByUid(existingId);
 			mDbHelper.close();
-			//if (DEBUG_LOG) Log.d(TAG, "Existing data: " + curCSV.getColumnCount());
-
-			//ArrayList<DBRecord> attributesForEditing = GemUtilities.cursorToArrayList(curCSV);        
-			//if (DEBUG_LOG) Log.d(TAG,"attributesForEditing: " + attributesForEditing.toString());
-
-			if (DEBUG_LOG) Log.d(TAG,"colCount: " + curCSV.getColumnCount());
-
-
-
-			for (int i = 0; i < curCSV.getColumnCount(); i++) {
-				String colName = curCSV.getColumnName(i);
-				
+			//if (DEBUG_LOG) Log.d(TAG, "Existing data: " + surveyDataCursor.getColumnCount());
+			if (DEBUG_LOG) Log.d(TAG,"colCount: " + surveyDataCursor.getColumnCount());
+			for (int i = 0; i < surveyDataCursor.getColumnCount(); i++) {
+				String colName = surveyDataCursor.getColumnName(i);
 				//Check not change the locations back to the old points
 				if(colName.equals("X")  || colName.equals("Y")) {
-					
 				} else {
 					if (DEBUG_LOG) Log.d(TAG,"colName : " + colName);
-					String colVal = curCSV.getString(i);
+					String colVal = surveyDataCursor.getString(i);
 					if (DEBUG_LOG) Log.d(TAG,"colVal : " + colVal);
 					if (colVal != null) {						
 						surveyDataObject.putData(colName, colVal);
 					}
 				}
 			}			
-			curCSV.close();
-				
+			surveyDataCursor.close();
+
+
+			if (DEBUG_LOG) Log.d(TAG,"Ged colCount: " + gedDataCursor.getColumnCount());
+			for (int i = 0; i < gedDataCursor.getColumnCount(); i++) {
+				String colName = gedDataCursor.getColumnName(i);
+				//Check not change the locations back to the old points
+
+				if (DEBUG_LOG) Log.d(TAG,"ged colName : " + colName);
+				String colVal = gedDataCursor.getString(i);
+				if (DEBUG_LOG) Log.d(TAG,"ged colVal : " + colVal);
+				if (colVal != null) {						
+					surveyDataObject.putGedData(colName, colVal);
+				}
+			}			
+			gedDataCursor.close();
+
+
+			
+			//Consequences data
+			if (DEBUG_LOG) Log.d(TAG,"consequences colCount: " + consequencesDataCursor.getColumnCount());
+			for (int i = 0; i < consequencesDataCursor.getColumnCount(); i++) {
+				String colName = consequencesDataCursor.getColumnName(i);
+				//Check not change the locations back to the old points
+
+				if (DEBUG_LOG) Log.d(TAG,"consequences colName : " + colName);
+				String colVal = consequencesDataCursor.getString(i);
+				if (DEBUG_LOG) Log.d(TAG,"consequences  colVal : " + colVal);
+				if (colVal != null) {						
+					surveyDataObject.putConsequencesData(colName, colVal);
+				}
+			}			
+			consequencesDataCursor.close();
 		}
 
 		ressources = getResources(); 
 		tabHost = getTabHost(); 
 
-		/*
-
-			Intent intentMapView = new Intent().setClass(this, EQForm_MapView.class);
-			TabSpec tabMapView = tabHost
-			.newTabSpec("MapView")
-			.setIndicator("Map", ressources.getDrawable(R.drawable.tab_icon))
-
-			.setContent(intentMapView );
-
-
-			// add all tabs 
-			tabHost.addTab(tabMapView);
-		 */
-
+		
+		
 		generateTabs();
-		/*
-			tabHost.addTab(tabSpecPageOne);
-			tabHost.addTab(tabSpecPageTwo);
-			tabHost.addTab(tabSpecPageThree);
-			tabHost.addTab(tabSpecPageFour);
-			tabHost.addTab(tabSpecPageFive);
-			tabHost.addTab(tabSpecPageSix);
-			tabHost.addTab(tabSpecPageSeven);
-			tabHost.addTab(tabSpecPageEight);
-		 */
+
+		
 		//set Windows tab as default (zero based)
 		tabHost.setCurrentTab(0);
 
-		//tabHost.getTabWidget().setEnabled(false);
-		//tabHost.setEnabled(false);
-
-
-		//Set the globe icon for the map icon view
-		//ImageView iv = (ImageView)tabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.icon);
-		//iv.setImageDrawable(getResources().getDrawable(R.drawable.globe));
-
-		/*
-			for(int i=1;i<tabHost.getTabWidget().getChildCount();i++)			{
-				tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#660000")); 			
-			}
-		 */
-
-
-		//tabHost.getTabWidget().setVisibility(View.GONE);
-
-
-
-
-
-
+		
 		tabHost.setOnTabChangedListener(new OnTabChangeListener(){
 			@Override
 			public void onTabChanged(String tabId) {
 				if (DEBUG_LOG) Log.d(TAG, "tab change " + tabId);
-				
+
 				setTabColor();
 			}
 		});
@@ -196,7 +182,7 @@ public class MainTabActivity extends TabActivity {
 		// TODO Auto-generated method stub
 		super.onPause();		
 		Log.d("IDCT", "Main Tab Activity Pausing .....");
-		
+
 	}
 	@Override
 	protected void onResume() {
@@ -216,21 +202,9 @@ public class MainTabActivity extends TabActivity {
 		return ret;
 	}
 
+	//Sets up the screens that go into the tabs
+	//Also colours the tab with any values that have been filled out  
 	public void generateTabs() {
-
-		/*
-			Intent intentPageOne = new Intent().setClass(this,  Material_Selection_Longitudinal_Form.class);
-			TabSpec tabSpecPageOne = tabHost
-			.newTabSpec("Page 1.1")
-			.setIndicator("Mater L", ressources.getDrawable(R.drawable.tab_icon))
-			.setContent(intentPageOne);
-
-			Intent intentPageOne2 = new Intent().setClass(this,  Material_Selection_Transverse_Form.class);
-			TabSpec tabSpecPageOne2 = tabHost
-			.newTabSpec("Page 1.2")
-			.setIndicator("Mater T", ressources.getDrawable(R.drawable.tab_icon))
-			.setContent(intentPageOne2);		
-		 */	
 
 		Intent intentPageOne=new Intent(this, SecondTabsActivity.class);
 		TabSpec tabSpecPageOne = tabHost
@@ -319,8 +293,6 @@ public class MainTabActivity extends TabActivity {
 		tabHost.addTab(tabSpecPageFive);
 		tabHost.addTab(tabSpecPageEight);
 
-
-
 		tabHost.addTab(tabSpecPageThree);
 		tabHost.addTab(tabSpecPageFour);
 
@@ -335,21 +307,42 @@ public class MainTabActivity extends TabActivity {
 
 		//tabHost.addTab(tabHost.newTabSpec("tab_test1").setIndicator("TAB 1").setContent(tabs2));
 
-
-
 		initTabIcons(tabHost);
 		setTabColor();
 		completedTabs = new boolean[20];
 		unlockTabIcons(tabHost);
+
+
+		//Chuck all the survey data that is going to be edited together
+		HashMap<String,String> keyVals = new HashMap();		
+		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
+		HashMap<String,String> gemObjects = surveyDataObject.getKeyValuePairsMap();
+		HashMap<String,String> gedObjects = surveyDataObject.getGedKeyValuePairsMap();
+		HashMap<String,String> consequencesObjects = surveyDataObject.getConsequencesKeyValuePairsMap();
+		
+		keyVals.putAll(gemObjects);
+		keyVals.putAll(gedObjects);
+		keyVals.putAll(consequencesObjects);
+		
+		//Check which of the tabs should be coloured as completed
+		for (Map.Entry<String, String> entry : keyVals.entrySet()) {
+			String key = entry.getKey();
+			String value = entry.getValue();
+			if (DEBUG_LOG) Log.d(TAG,"Check key " + key);
+			if (!GemUtilities.isBlank(value)) {
+				int tabIdToComplete = findFormWithThisElement(key);
+				if (DEBUG_LOG) Log.d(TAG,"Should complete tab " + tabIdToComplete);
+				//Mark the tab colour as completed.
+				if (tabIdToComplete > -1) {
+					ImageView iv2 = (ImageView)tabHost.getTabWidget().getChildAt(tabIdToComplete).findViewById(android.R.id.icon);
+					iv2.setImageDrawable(getResources().getDrawable(R.drawable.finish_small));
+				}
+			}
+		}
 	}
 
-	public void removeTabs() {
-		/*
-			Intent intent = getIntent();
-			finish();
-			startActivity(intent);
-		 */
 
+	public void removeTabs() {
 		if (DEBUG_LOG) Log.d(TAG,"removing tabs " + tabHost.getTabWidget().getChildCount());
 		//tabHost.clearAllTabs();
 
@@ -358,22 +351,17 @@ public class MainTabActivity extends TabActivity {
 			((Material_Selection_Longitudinal_Form) currentActivity).clearThis();
 		}
 
-
 		int count = tabHost.getTabWidget().getChildCount();
 		int i = tabHost.getTabWidget().getChildCount();
 		while(tabHost.getTabWidget().getChildCount()>1)
 		{
-			//String currentActivityId = getLocalActivityManager().getCurrentId();
-			//if (DEBUG_LOG) Log.d(TAG,"REMOVING SOMETHING CALLED: " + currentActivityId);
-			//Activity currentActivity = getLocalActivityManager().getActivity(currentActivityId)
-
+			
 			tabHost.getTabWidget().removeView(tabHost.getTabWidget().getChildTabViewAt(i));
 
 			i--;
 
 		}
 		generateTabs();
-
 
 	}
 
@@ -394,13 +382,11 @@ public class MainTabActivity extends TabActivity {
 		tabHost.setEnabled(true);
 		for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)			{
 			//tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#000000"));
-
 			ImageView iv2 = (ImageView)tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.icon);
 			iv2.setImageDrawable(getResources().getDrawable(R.drawable.tick_grey));
 
 		}		 
 	}
-
 
 	public void next() {
 		if (tabHost.getCurrentTab()<10){
@@ -466,10 +452,12 @@ public class MainTabActivity extends TabActivity {
 
 	public void completeTab(int tabIndex) {
 		//tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#000000"));
+
 		ImageView iv2 = (ImageView)tabHost.getTabWidget().getChildAt(tabIndex).findViewById(android.R.id.icon);
 		iv2.setImageDrawable(getResources().getDrawable(R.drawable.finish_small));
 		completedTabs[tabIndex] = true;
 		if (DEBUG_LOG) Log.d(TAG, "completd tab " + completedTabs[tabIndex]);
+
 	}
 
 	public boolean isTabCompleted(int tabIndex) {
@@ -477,24 +465,10 @@ public class MainTabActivity extends TabActivity {
 	}
 
 	//TODO: User feedback on saving
+	//Duplicated in MapActivity, should be moved elsewhere really
 	public boolean saveData() {
 		if (DEBUG_LOG) Log.d(TAG, "Saving data");		
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
-
-		/*
-			EditText date1 = (EditText)findViewById(R.id.editTextDateVal1);
-			EditText date2 = (EditText)findViewById(R.id.editTextDateVal2);
-			String dateString1 = date1.getText().toString();
-			String dateString2 = date2.getText().toString();
-
-
-			//surveyDataObject.putData("D1", dateString1);
-			//surveyDataObject.putData("D2",dateString2);
-
-
-			EditText surveyComment = (EditText)findViewById(R.id.editTextSurveyComment);
-			String surveyCommentString = surveyComment.getText().toString();
-		 */
 
 		mDbHelper = new GemDbAdapter(getBaseContext());      
 		mDbHelper.createDatabase();      
@@ -507,7 +481,6 @@ public class MainTabActivity extends TabActivity {
 		//Toast.makeText(getApplicationContext(), "Survey data saved", Toast.LENGTH_SHORT).show();
 		surveyDataObject.clearGemSurveyObject();
 		surveyDataObject.unsavedEdits = false;
-
 		return false;
 	}
 
@@ -528,7 +501,7 @@ public class MainTabActivity extends TabActivity {
 	public void backButtonPressed() {
 		// do something on back.
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
+		
 		// set title
 		alertDialogBuilder.setTitle("Unsaved Survey Observation");
 
@@ -548,10 +521,8 @@ public class MainTabActivity extends TabActivity {
 			public void onClick(DialogInterface dialog,int id) {
 				// if this button is clicked, close
 				// current activity
-
 				//This is needed to trigger the focus changed events of EditText fields
 				tabHost.setCurrentTab(0);
-
 				saveData();
 				MainTabActivity.this.finish();
 
@@ -564,7 +535,6 @@ public class MainTabActivity extends TabActivity {
 				GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
 				surveyDataObject.clearGemSurveyObject();
 				surveyDataObject.unsavedEdits = false;
-
 				MainTabActivity.this.finish();
 			}
 		});
@@ -580,6 +550,43 @@ public class MainTabActivity extends TabActivity {
 
 
 
+
+
+	//Checks the arrays.xml to determine which forms hold which attributes
+	public int findFormWithThisElement(String attributeKey) {
+		Resources res = getResources();
+		String[] attribKeys0a = res.getStringArray(R.array.formAttributeKeys0a);
+		String[] attribKeys0b = res.getStringArray(R.array.formAttributeKeys0b);
+		String[] attribKeys1 = res.getStringArray(R.array.formAttributeKeys1);
+		String[] attribKeys2 = res.getStringArray(R.array.formAttributeKeys2);
+		String[] attribKeys3 = res.getStringArray(R.array.formAttributeKeys3);
+		String[] attribKeys4 = res.getStringArray(R.array.formAttributeKeys4);
+		String[] attribKeys5 = res.getStringArray(R.array.formAttributeKeys5);
+		String[] attribKeys6 = res.getStringArray(R.array.formAttributeKeys6);
+		String[] attribKeys7 = res.getStringArray(R.array.formAttributeKeys7);
+		String[] attribKeys8 = res.getStringArray(R.array.formAttributeKeys8);
+		String[] attribKeys9 = res.getStringArray(R.array.formAttributeKeys9);
+		int a = -1;
+
+		a = Arrays.asList(attribKeys0a).contains(attributeKey)? 0 :
+			Arrays.asList(attribKeys0b).contains(attributeKey)? 0:
+				Arrays.asList(attribKeys1).contains(attributeKey)? 1:
+					Arrays.asList(attribKeys2).contains(attributeKey)? 2:
+						Arrays.asList(attribKeys3).contains(attributeKey)? 3:
+							Arrays.asList(attribKeys4).contains(attributeKey)? 4:
+								Arrays.asList(attribKeys5).contains(attributeKey)? 5:
+									Arrays.asList(attribKeys6).contains(attributeKey)? 6:
+										Arrays.asList(attribKeys7).contains(attributeKey)? 7:
+											Arrays.asList(attribKeys8).contains(attributeKey)? 8:
+												Arrays.asList(attribKeys9).contains(attributeKey)? 9:
+												-1;				
+
+		if (DEBUG_LOG) Log.d(TAG,"finding form with attribute: " + attributeKey + " in form attribs: " + a);
+
+
+		return a;
+
+	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{

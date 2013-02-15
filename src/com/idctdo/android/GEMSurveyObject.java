@@ -33,8 +33,7 @@ public class GEMSurveyObject extends Application {
 	private double currentSurveyPointLon = 0;
 	private double currentSurveyPointLat = 0;	
 	
-	public HashMap<String, String> surveyData = new HashMap<String, String>();
-	
+	public HashMap<String, String> surveyData = new HashMap<String, String>();	
 	public HashMap<String, String> gedData = new HashMap<String, String>();
 	public HashMap<String, String> consequencesData = new HashMap<String, String>();	
 	
@@ -90,6 +89,15 @@ public class GEMSurveyObject extends Application {
 	public String getSurveyDataValue(String key) {			
 		//Log.d("IDCT","HASHMAP : " + surveyData.toString());
 		return surveyData.get(key);
+	}
+	
+	public String getGedDataValue(String key) {			
+		//Log.d("IDCT","HASHMAP : " + surveyData.toString());
+		return gedData.get(key);
+	}
+	public String getConsequencesDataValue(String key) {			
+		//Log.d("IDCT","HASHMAP : " + surveyData.toString());
+		return consequencesData.get(key);
 	}
 	
 	public boolean putGedData(String key, String value) {		

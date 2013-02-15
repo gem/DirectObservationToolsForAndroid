@@ -17,6 +17,7 @@ public class SecondTabsActivity extends TabActivity {
 	public TabHost tabHost;
 	public int tabIndex = 0;
 
+	public boolean isCompleted = false;
 	
 	public int unselectedTabColour = Color.parseColor("#000000");
 	public int selectedTabColour = Color.parseColor("#eeeeee");
@@ -90,10 +91,11 @@ public class SecondTabsActivity extends TabActivity {
 	}
 	
 	public void completeSecondaryTab() {
-		
-		MainTabActivity a = (MainTabActivity)getParent();
-		a.completeTab(tabIndex);
-		 
+		if (!isCompleted) {
+			isCompleted = true;
+			MainTabActivity a = (MainTabActivity)getParent();
+			a.completeTab(tabIndex);			
+		}
 	}
 	public MainTabActivity getMainTab() {
 		MainTabActivity a = (MainTabActivity)getParent();

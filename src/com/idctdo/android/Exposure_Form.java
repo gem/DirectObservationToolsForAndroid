@@ -49,7 +49,7 @@ public class Exposure_Form extends Activity {
 
 	public TabActivity tabActivity;
 	public TabHost tabHost;
-	public int tabIndex = 9;
+	public int tabIndex = 8;
 
 	ListView listview;
 	ListView listview2;
@@ -243,22 +243,21 @@ public class Exposure_Form extends Activity {
 		
 
 			
-			editTextNumberOfDayOccupants.setText(surveyDataObject.getSurveyDataValue(attributeKey1));
-			editTextNumberOfNightOccupants.setText(surveyDataObject.getSurveyDataValue(attributeKey2));
-			editTextNumberOfTransitOccupants.setText(surveyDataObject.getSurveyDataValue(attributeKey3));
-			editTextNumberOfDwellings.setText(surveyDataObject.getSurveyDataValue(attributeKey4));
-			editTextPlanArea.setText(surveyDataObject.getSurveyDataValue(attributeKey5));
-			editTextReplacementCost.setText(surveyDataObject.getSurveyDataValue(attributeKey6));
-			editTextExposureComments.setText(surveyDataObject.getSurveyDataValue(attributeKey8));
-		
 			
+			editTextNumberOfDayOccupants.setText(surveyDataObject.getGedDataValue(attributeKey1));
+			editTextNumberOfNightOccupants.setText(surveyDataObject.getGedDataValue(attributeKey2));
+			editTextNumberOfTransitOccupants.setText(surveyDataObject.getGedDataValue(attributeKey3));
+			editTextNumberOfDwellings.setText(surveyDataObject.getGedDataValue(attributeKey4));
+			editTextPlanArea.setText(surveyDataObject.getGedDataValue(attributeKey5));
+			editTextReplacementCost.setText(surveyDataObject.getGedDataValue(attributeKey6));
+			editTextExposureComments.setText(surveyDataObject.getGedDataValue(attributeKey8));
+					
 			
-			//boolean result = false;	
-			//result = GemUtilities.loadPreviousAtttributesSpinner(spinnerCurrency, buildingPositionAttributesList, attributeKey7,surveyDataObject.getSurveyDataValue(attributeKey7));
+			boolean result = false;	
+			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerCurrency, topLevelAttributesList, attributeKey7,surveyDataObject.getSurveyDataValue(attributeKey7));
 
 
-			
-			
+					
 			
 		}//End tab completed check
 		

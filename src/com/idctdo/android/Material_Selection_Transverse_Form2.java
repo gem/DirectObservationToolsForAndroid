@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Point;
@@ -91,6 +92,16 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.material_selectable_list2);
+		
+		Resources res = getResources();
+		String[] attribKeys = res.getStringArray(R.array.formAttributeKeys0b);
+		topLevelAttributeKey = attribKeys[0];
+		secondLevelAttributeKey = attribKeys[1];
+		thirdLevelAttributeKey =  attribKeys[2];
+		fourthLevelAttributeKey =  attribKeys[3];
+		fifthLevelAttributeKey =  attribKeys[4];
+		
+		
 		tabActivity = (TabActivity) getParent();
 		tabHost = tabActivity.getTabHost();
 	}
@@ -230,7 +241,8 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 					listview2.setVisibility(View.VISIBLE);
 					RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel2);
 					relativeLayout.setVisibility(View.VISIBLE);
-
+				
+					
 					//completeThisSecondaryTab();
 
 					selectedAdapter2.notifyDataSetChanged();
