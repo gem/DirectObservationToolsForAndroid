@@ -133,9 +133,9 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 		SecondTabsActivity a = (SecondTabsActivity)getParent();		
 		surveyDataObject = (GEMSurveyObject)getApplication();	
 
-		if (a.isSecondaryTabCompleted()) {
-			if (DEBUG_LOG) Log.d("JFR","Tab is complete");
-		} else {
+		//if (a.isSecondaryTabCompleted()) {
+		//	if (DEBUG_LOG) Log.d("JFR","Tab is complete");
+		//} else {
 
 			if (DEBUG_LOG) Log.d("JFR","creating material");
 			mDbHelper = new GemDbAdapter(getBaseContext());        
@@ -253,7 +253,7 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 				relativeLayoutMortar.setVisibility(View.GONE);
 					 */			
 
-					//completeThisSecondaryTab();							
+					completeThisSecondaryTab();							
 
 					selectedAdapter2.notifyDataSetChanged();
 					selectedAdapter3.notifyDataSetChanged();
@@ -435,11 +435,11 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 				listview5.setVisibility(View.VISIBLE);
 				findViewById(R.id.rel5).setVisibility(View.VISIBLE);
 			}	
-		}//End of tab completed check
+		//}//End of tab completed check
 
 
 
-		updateListViewHeights(1);
+		//updateListViewHeights(1);
 
 
 

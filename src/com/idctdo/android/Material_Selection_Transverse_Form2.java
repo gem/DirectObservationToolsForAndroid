@@ -128,9 +128,10 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 		SecondTabsActivity a = (SecondTabsActivity)getParent();		
 		surveyDataObject = (GEMSurveyObject)getApplication();	
 
-		if (a.isSecondaryTabCompleted()) {
-			if (DEBUG_LOG) Log.d("JFR","Tab is complete");
-		} else {
+		
+		//if (a.isSecondaryTabCompleted()) {
+		//	if (DEBUG_LOG) Log.d("JFR","Tab is complete");
+		//} else {
 
 			if (DEBUG_LOG) Log.d("JFR","creating material");
 			mDbHelper = new GemDbAdapter(getBaseContext());        
@@ -153,7 +154,7 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 
 			Cursor allAttributeTypesFifthLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(fifthLevelAttributeType);
 			fifthLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesFifthLevelCursor);
-
+			
 			allAttributeTypesTopLevelCursor.close();
 			allAttributeTypesSecondLevelCursor.close();
 			allAttributeTypesThirdLevelCursor.close();
@@ -243,7 +244,7 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 					relativeLayout.setVisibility(View.VISIBLE);
 				
 					
-					//completeThisSecondaryTab();
+					completeThisSecondaryTab();
 
 					selectedAdapter2.notifyDataSetChanged();
 					selectedAdapter3.notifyDataSetChanged();
@@ -428,11 +429,13 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 				findViewById(R.id.rel5).setVisibility(View.VISIBLE);
 			}	
 
-		}//End of tab completed check
+		//}//End of tab completed check
 		
-		updateListViewHeights(1);
+		//updateListViewHeights(1);
+		
 	}
 
+	
 	public void updateListViewHeights(int layoutCode) {		
 		int measuredWidth = 0;  
 		int measuredHeight = 0;  

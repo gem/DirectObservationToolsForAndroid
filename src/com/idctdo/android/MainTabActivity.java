@@ -21,6 +21,7 @@ package com.idctdo.android;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -32,6 +33,7 @@ import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -49,6 +51,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -134,7 +138,7 @@ public class MainTabActivity extends TabActivity {
 			gedDataCursor.close();
 
 
-			
+
 			//Consequences data
 			if (DEBUG_LOG) Log.d(TAG,"consequences colCount: " + consequencesDataCursor.getColumnCount());
 			for (int i = 0; i < consequencesDataCursor.getColumnCount(); i++) {
@@ -154,15 +158,15 @@ public class MainTabActivity extends TabActivity {
 		ressources = getResources(); 
 		tabHost = getTabHost(); 
 
-		
-		
+
+
 		generateTabs();
 
-		
+
 		//set Windows tab as default (zero based)
 		tabHost.setCurrentTab(0);
 
-		
+
 		tabHost.setOnTabChangedListener(new OnTabChangeListener(){
 			@Override
 			public void onTabChanged(String tabId) {
@@ -319,11 +323,11 @@ public class MainTabActivity extends TabActivity {
 		HashMap<String,String> gemObjects = surveyDataObject.getKeyValuePairsMap();
 		HashMap<String,String> gedObjects = surveyDataObject.getGedKeyValuePairsMap();
 		HashMap<String,String> consequencesObjects = surveyDataObject.getConsequencesKeyValuePairsMap();
-		
+
 		keyVals.putAll(gemObjects);
 		keyVals.putAll(gedObjects);
 		keyVals.putAll(consequencesObjects);
-		
+
 		//Check which of the tabs should be coloured as completed
 		for (Map.Entry<String, String> entry : keyVals.entrySet()) {
 			String key = entry.getKey();
@@ -355,7 +359,7 @@ public class MainTabActivity extends TabActivity {
 		int i = tabHost.getTabWidget().getChildCount();
 		while(tabHost.getTabWidget().getChildCount()>1)
 		{
-			
+
 			tabHost.getTabWidget().removeView(tabHost.getTabWidget().getChildTabViewAt(i));
 
 			i--;
@@ -501,7 +505,7 @@ public class MainTabActivity extends TabActivity {
 	public void backButtonPressed() {
 		// do something on back.
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		
+
 		// set title
 		alertDialogBuilder.setTitle("Unsaved Survey Observation");
 
@@ -579,10 +583,9 @@ public class MainTabActivity extends TabActivity {
 										Arrays.asList(attribKeys7).contains(attributeKey)? 7:
 											Arrays.asList(attribKeys8).contains(attributeKey)? 8:
 												Arrays.asList(attribKeys9).contains(attributeKey)? 9:
-												-1;				
+													-1;				
 
 		if (DEBUG_LOG) Log.d(TAG,"finding form with attribute: " + attributeKey + " in form attribs: " + a);
-
 
 		return a;
 
@@ -592,6 +595,8 @@ public class MainTabActivity extends TabActivity {
 	{
 		menu.add(0,0,0,"Take Picture");
 		menu.add(0,1,0,"Save changes and close");
+		menu.add(0,2,0,"Add as Favourite");
+		menu.add(0,3,0,"Help");
 		return true;
 	}
 
@@ -633,6 +638,14 @@ public class MainTabActivity extends TabActivity {
 		case 1: //Save button
 			if (DEBUG_LOG) Log.d(TAG,"Save button class");	
 			backButtonPressed();
+			break;
+		case 2: //Add as favourite
+			if (DEBUG_LOG) Log.d(TAG,"Add this as a favourite");
+			addAsFavourite();
+			break;
+		case 3: //Help
+			if (DEBUG_LOG) Log.d(TAG,"Quick, send help");	
+			showHelp();
 		default:
 			break;
 		}
@@ -640,8 +653,99 @@ public class MainTabActivity extends TabActivity {
 		return false;
 	}
 
+	//Checks the arrays.xml to determine which forms hold which attributes
+	public void addAsFavourite() {
+
+	}
+
+	public void loadHelpFileNames(String strToCheck) {
+		File folder = new File("file:///android_asset/glossary");
+		if (DEBUG_LOG) Log.d(TAG,"help loading");
+		try {
+			String[] elements = listFiles("glossary","nothing");
+			int d = 0;
+			int lowestD = 1000;
+			int lowestIndex = -1;
+			String matched = "";
+			for( int i = 0; i < elements.length - 1; i++)
+			{
+			   String element = elements[i].substring(0, elements[i].lastIndexOf('.'));	    
+	
+			   d = GemUtilities.getLevenshteinDistance(strToCheck.toLowerCase(), element.toLowerCase());			   
+			   
+			   if (DEBUG_LOG) Log.d(TAG,"LevShtein: " + d + " i: "+ i  );
+			   if (DEBUG_LOG) Log.d(TAG,"str: " +  strToCheck + " element.toString(): "+element.toString() );
+			 
+			   if (d < lowestD) {
+				   lowestD = d;
+				   lowestIndex = i;
+				   matched = element;
+			   }
+			}
+
+			 if (DEBUG_LOG) Log.d(TAG,"Matched index: " + elements[lowestIndex]);
+			 if (DEBUG_LOG) Log.d(TAG,"Match: " + lowestIndex);
+			 if (DEBUG_LOG) Log.d(TAG,"Match: " + matched);
+			 if (DEBUG_LOG) Log.d(TAG,"Query string: " + strToCheck);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 
+	private String[] listFiles(String dirFrom, String dirTo) throws IOException {
+		Resources res = getResources(); //if you are in an activity
+		AssetManager am = res.getAssets();
+		String fileList[] = am.list(dirFrom);
+
+		if (fileList != null)
+		{   
+			for ( int i = 0;i<fileList.length;i++)
+			{
+
+				if (DEBUG_LOG) Log.d(TAG,fileList[i]);
+			}
+		}
+		return fileList;
+	}
+
+	
+	public void showHelp() {
+		GEMSurveyObject g = (GEMSurveyObject)getApplication();
+		if (DEBUG_LOG) Log.d(TAG,"Last edited att " + g.lastEditedAttribute);
+
+		loadHelpFileNames("Steel");
+
+		//tabHost.getCurrentTab();
+
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+		WebView wv = new WebView(this);
+
+		wv.loadUrl("http:\\www.google.com");
+
+		wv.setWebViewClient(new WebViewClient()
+		{
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url)
+			{
+				view.loadUrl(url);
+
+				return true;
+			}
+		});
+
+		alert.setView(wv);
+		alert.setNegativeButton("Close", new DialogInterface.OnClickListener()
+		{
+			@Override
+			public void onClick(DialogInterface dialog, int id)
+			{
+			}
+		});
+		alert.show();
+	}
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		//super.onActivityResult(requestCode, resultCode, data);

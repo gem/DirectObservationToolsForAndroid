@@ -29,6 +29,7 @@ public class GEMSurveyObject extends Application {
 	
 	public boolean isExistingRecord = false;
 	
+	public String lastEditedAttribute = "";
 	
 	private double currentSurveyPointLon = 0;
 	private double currentSurveyPointLat = 0;	
@@ -80,9 +81,12 @@ public class GEMSurveyObject extends Application {
 	
 	
 
-	public boolean putData(String key, String value) {		
+	public boolean putData(String key, String value) {
+		if (!GemUtilities.isBlank(value)) {
+			lastEditedAttribute = value;
+		}
 		surveyData.put(key, value);
-		//Log.d("IDCT","HASHMAP : " + surveyData.toString());
+		Log.d("IDCT","HASHMAP : " + surveyData.toString());
 		return true;
 	}
 	
