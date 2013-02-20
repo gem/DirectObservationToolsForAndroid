@@ -170,6 +170,8 @@ public class Irregularity_Selection_Form extends Activity {
 					// user clicked a list item, make it "selected"
 					selectedAdapter.setSelectedPosition(position);
 					//selectedAdapter2.setSelectedPosition(-1);			
+					SelectedAdapter a = (SelectedAdapter) arg0.getAdapter();
+					surveyDataObject.lastEditedAttribute = a.getItem(position).getAttributeDescription();
 					surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());
 					
 					
@@ -230,6 +232,8 @@ public class Irregularity_Selection_Form extends Activity {
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter2.setSelectedPosition(position);
+					SelectedAdapter a = (SelectedAdapter) arg0.getAdapter();
+					surveyDataObject.lastEditedAttribute = a.getItem(position).getAttributeDescription();
 					surveyDataObject.putData(secondLevelAttributeKey, selectedAdapter2.getItem(position).getAttributeValue());
 				}
 			});
@@ -239,7 +243,8 @@ public class Irregularity_Selection_Form extends Activity {
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter3.setSelectedPosition(position);
-					
+					SelectedAdapter a = (SelectedAdapter) arg0.getAdapter();
+					surveyDataObject.lastEditedAttribute = a.getItem(position).getAttributeDescription();
 					//Broken as the column name doesn't map, columen should be strhvi not strvi
 					surveyDataObject.putData(secondLevelAttributeKeySecondary, selectedAdapter3.getItem(position).getAttributeValue());
 					
@@ -254,7 +259,8 @@ public class Irregularity_Selection_Form extends Activity {
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter4.setSelectedPosition(position);
-					
+					SelectedAdapter a = (SelectedAdapter) arg0.getAdapter();
+					surveyDataObject.lastEditedAttribute = a.getItem(position).getAttributeDescription();
 					//Broken as the column name doesn't map, columen should be strhvi not strvi
 					surveyDataObject.putData(thirdLevelAttributeKey, selectedAdapter4.getItem(position).getAttributeValue());
 				}
@@ -266,7 +272,8 @@ public class Irregularity_Selection_Form extends Activity {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter5.setSelectedPosition(position);
 					
-					
+					SelectedAdapter a = (SelectedAdapter) arg0.getAdapter();
+					surveyDataObject.lastEditedAttribute = a.getItem(position).getAttributeDescription();
 					//Broken as the column name doesn't map, columen should be strhvi not strvi
 					surveyDataObject.putData(thirdLevelAttributeKeySecondary, selectedAdapter5.getItem(position).getAttributeValue());
 				}

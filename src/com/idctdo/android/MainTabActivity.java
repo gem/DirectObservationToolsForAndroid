@@ -21,7 +21,11 @@ package com.idctdo.android;
 
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -658,9 +662,11 @@ public class MainTabActivity extends TabActivity {
 
 	}
 
-	public void loadHelpFileNames(String strToCheck) {
+	
+	public String loadHelpFileNames(String strToCheck) {
 		File folder = new File("file:///android_asset/glossary");
 		if (DEBUG_LOG) Log.d(TAG,"help loading");
+		String pageToLoad = "";
 		try {
 			String[] elements = listFiles("glossary","nothing");
 			int d = 0;
@@ -668,13 +674,13 @@ public class MainTabActivity extends TabActivity {
 			int lowestIndex = -1;
 			String matched = "";
 			for( int i = 0; i < elements.length - 1; i++)
-			{
-			   String element = elements[i].substring(0, elements[i].lastIndexOf('.'));	    
-	
+			{				
+			   String element = elements[i].substring(0, elements[i].lastIndexOf('.'));    
+
 			   d = GemUtilities.getLevenshteinDistance(strToCheck.toLowerCase(), element.toLowerCase());			   
 			   
-			   if (DEBUG_LOG) Log.d(TAG,"LevShtein: " + d + " i: "+ i  );
-			   if (DEBUG_LOG) Log.d(TAG,"str: " +  strToCheck + " element.toString(): "+element.toString() );
+			   //if (DEBUG_LOG) Log.d(TAG,"LevShtein: " + d + " i: "+ i  );
+			   //if (DEBUG_LOG) Log.d(TAG,"str: " +  strToCheck + " element.toString(): "+element.toString() );
 			 
 			   if (d < lowestD) {
 				   lowestD = d;
@@ -685,12 +691,16 @@ public class MainTabActivity extends TabActivity {
 
 			 if (DEBUG_LOG) Log.d(TAG,"Matched index: " + elements[lowestIndex]);
 			 if (DEBUG_LOG) Log.d(TAG,"Match: " + lowestIndex);
-			 if (DEBUG_LOG) Log.d(TAG,"Match: " + matched);
+			 if (DEBUG_LOG) Log.d(TAG,"Match Val: " + lowestD);
 			 if (DEBUG_LOG) Log.d(TAG,"Query string: " + strToCheck);
+			 if (lowestD < 10) {
+				 pageToLoad = elements[lowestIndex];
+			 }
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return pageToLoad;
 	}
 
 
@@ -704,26 +714,57 @@ public class MainTabActivity extends TabActivity {
 			for ( int i = 0;i<fileList.length;i++)
 			{
 
-				if (DEBUG_LOG) Log.d(TAG,fileList[i]);
+				//if (DEBUG_LOG) Log.d(TAG,fileList[i]);
 			}
 		}
 		return fileList;
 	}
 
 	
+	public void fileCopy(String srcStr, String dstStr) throws IOException {
+		File src =  new File(srcStr );
+	    File dst = new File(dstStr);
+	    InputStream in = new FileInputStream(src);
+	    OutputStream out = new FileOutputStream(dst);
+
+	    // Transfer bytes from in to out
+	    byte[] buf = new byte[1024];
+	    int len;
+	    while ((len = in.read(buf)) > 0) {
+	        out.write(buf, 0, len);
+	    }
+	    in.close();
+	    out.close();
+	}
+	
+	
 	public void showHelp() {
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
+
+		String pageToLoad = g.lastEditedAttribute + ".html";
+		/*
 		if (DEBUG_LOG) Log.d(TAG,"Last edited att " + g.lastEditedAttribute);
-
-		loadHelpFileNames("Steel");
-
+		String pageToLoad = loadHelpFileNames(g.lastEditedAttribute);		
 		//tabHost.getCurrentTab();
+		try {
+			String sdcardpath = Environment.getExternalStorageDirectory().toString()+ "/idctdo/glossary/";
+			String dst= Environment.getExternalStorageDirectory().toString()+ "/idctdo/glossary_cleaned/";
+			String newName = g.lastEditedAttribute.toString();
+			fileCopy(sdcardpath + pageToLoad, dst + newName + ".html");
+			if (DEBUG_LOG) Log.d(TAG,"Sucess copying " + newName + ".html");
 
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		*/
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		WebView wv = new WebView(this);
 
-		wv.loadUrl("http:\\www.google.com");
+		
+		wv.loadUrl("file:///android_asset/glossary/glossary_cleaned/" + pageToLoad);
 
 		wv.setWebViewClient(new WebViewClient()
 		{
@@ -731,7 +772,6 @@ public class MainTabActivity extends TabActivity {
 			public boolean shouldOverrideUrlLoading(WebView view, String url)
 			{
 				view.loadUrl(url);
-
 				return true;
 			}
 		});

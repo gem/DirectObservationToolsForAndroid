@@ -37,6 +37,7 @@ public class SelectedAdapter extends ArrayAdapter<DBRecord>{
 
 	private ArrayList<DBRecord> listOfTheseObjects;
 
+	public String attributeKey;
 
 	private int highlightColour;
 	public SelectedAdapter(Context context, int textViewResourceId,ArrayList<DBRecord> objects) {

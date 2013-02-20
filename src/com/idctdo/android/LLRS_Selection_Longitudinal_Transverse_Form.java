@@ -161,6 +161,9 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter2.setSelectedPosition(position);
+					SelectedAdapter a = (SelectedAdapter) arg0.getAdapter();
+					surveyDataObject.lastEditedAttribute = a.getItem(position).getAttributeDescription();
+					if (DEBUG_LOG) Log.d(TAG,"Description " + a.getItem(position).getAttributeDescription())	;
 					surveyDataObject.putData(topLevelAttributeKeyLongitudinal, selectedAdapter2.getItem(position).getAttributeValue());					
 					//Toast.makeText(getApplicationContext(), "LV2 click: " + selectedAdapter2.getItem(position).getOrderName() + " " + selectedAdapter2.getItem(position).getOrderStatus() + " " +selectedAdapter2.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 					completeThis();		
@@ -173,10 +176,12 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter3.setSelectedPosition(position);
+					SelectedAdapter a = (SelectedAdapter) arg0.getAdapter();
+					surveyDataObject.lastEditedAttribute = a.getItem(position).getAttributeDescription();
 					surveyDataObject.putData(secondLevelAttributeKeyLongitudinal, selectedAdapter3.getItem(position).getAttributeValue());					
 					//Toast.makeText(getApplicationContext(), "LV2 click: " + selectedAdapter2.getItem(position).getOrderName() + " " + selectedAdapter2.getItem(position).getOrderStatus() + " " +selectedAdapter2.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 					completeThis();		
-
+					
 				}
 			});
 			listview4.setOnItemClickListener(new OnItemClickListener() {
@@ -184,8 +189,10 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter4.setSelectedPosition(position);
+					SelectedAdapter a = (SelectedAdapter) arg0.getAdapter();
+					surveyDataObject.lastEditedAttribute = a.getItem(position).getAttributeDescription();
 					surveyDataObject.putData(topLevelAttributeKeyTransverse, selectedAdapter4.getItem(position).getAttributeValue());					
-
+					
 
 				}
 			});
@@ -194,6 +201,8 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter5.setSelectedPosition(position);
+					SelectedAdapter a = (SelectedAdapter) arg0.getAdapter();
+					surveyDataObject.lastEditedAttribute = a.getItem(position).getAttributeDescription();
 					surveyDataObject.putData(secondLevelAttributeKeyTransverse, selectedAdapter5.getItem(position).getAttributeValue());					
 					//Toast.makeText(getApplicationContext(), "LV2 click: " + selectedAdapter2.getItem(position).getOrderName() + " " + selectedAdapter2.getItem(position).getOrderStatus() + " " +selectedAdapter2.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 					completeThis();		

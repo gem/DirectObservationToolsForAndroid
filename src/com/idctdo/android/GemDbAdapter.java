@@ -15,8 +15,12 @@
  ******************************************************************************/
 package com.idctdo.android;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Array;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -29,6 +33,8 @@ import java.util.UUID;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -433,7 +439,7 @@ public class GemDbAdapter
 	}
 
 
-
+	
 	public Cursor getAttributeValuesByDictionaryTable(String dictionaryTable)
 	{
 		try
@@ -447,6 +453,9 @@ public class GemDbAdapter
 			{
 				mCur.moveToNext();
 				Log.e(TAG, "mCur not null " + mCur.getColumnCount());
+						
+				//generateCleanGlossary(mCur.getString(0),mCur.getString(1));
+			
 			}
 			return mCur;
 		}
@@ -457,6 +466,10 @@ public class GemDbAdapter
 		}
 	}
 		
+	
+	
+
+	
 	public Cursor getAttributeValuesByDictionaryTableAndScope(String dictionaryTable, String attributeScope)
 	{
 		try
@@ -470,6 +483,8 @@ public class GemDbAdapter
 			{
 				mCur.moveToNext();
 				Log.e(TAG, "mCur not null " + mCur.getColumnCount());
+				
+				//generateCleanGlossary(mCur.getString(0),mCur.getString(1));
 			}
 			return mCur;
 		}
@@ -479,8 +494,6 @@ public class GemDbAdapter
 			throw mSQLException;
 		}
 	}
-
-
 
 
 

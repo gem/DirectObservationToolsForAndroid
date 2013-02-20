@@ -84,8 +84,10 @@ public class GEMSurveyObject extends Application {
 	public boolean putData(String key, String value) {
 		if (!GemUtilities.isBlank(value)) {
 			lastEditedAttribute = value;
+			Log.d("IDCT","lastEdited: " + lastEditedAttribute.toString());
 		}
 		surveyData.put(key, value);
+	
 		Log.d("IDCT","HASHMAP : " + surveyData.toString());
 		return true;
 	}
