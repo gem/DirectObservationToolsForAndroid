@@ -49,7 +49,7 @@ public class GemDbAdapter
 {
 	public boolean DEBUG_LOG = true; 
 
-	protected static final String TAG = "DataAdapter";
+	protected static final String TAG = "IDCT";
 
 	private final Context mContext;
 	private SQLiteDatabase mDb;
@@ -612,12 +612,11 @@ public class GemDbAdapter
 
 
 
-	public void insertGemData(GEMSurveyObject gemGlobalVariables)
+	public void insertOrUpdateGemData(GEMSurveyObject gemGlobalVariables)
 	{		
-		Log.d(TAG, "Trying to insert Gem data");
+		Log.d(TAG, "Trying to insert/update Gem data");
 		try
 		{								
-			//Cursor mCur = mDb.execSQL(sql, null);		
 			ContentValues cv = new ContentValues();
 			cv.put("OBJ_UID", gemGlobalVariables.getUid());					
 			UUID id = UUID.randomUUID();
@@ -642,11 +641,12 @@ public class GemDbAdapter
 				String columnName= "OBJ_UID";
 				mDb.update("GEM_OBJECT", cv, columnName+"=?", new String[] {gemGlobalVariables.getUid()});
 			}  else {				
-				if (DEBUG_LOG) Log.d(TAG,"inserting record in db " + gemGlobalVariables.getUid());	
+				if (DEBUG_LOG) Log.d(TAG,"inserting record in db " + gemGlobalVariables.getUid());
+				if (DEBUG_LOG) Log.d(TAG,"favourite template id: " + gemGlobalVariables.favouriteRecord);
 				mDb.insert("GEM_OBJECT", null, cv);
 			}
 
-			String feedbackMsg = "Survey Data saved\n " + "Lat: " + Double.toString(gemGlobalVariables.getLat()) + "\nLon: " + Double.toString(gemGlobalVariables.getLon());
+			String feedbackMsg = "Survey Data saved\n " + "Lat: " + Double.toString(gemGlobalVariables.getLat()) + "\nLon: " + Double.toString(gemGlobalVariables.getLon()) + "\nID:" + gemGlobalVariables.getUid().toString();
 			Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
 		}
 		catch (SQLException mSQLException) 
@@ -680,7 +680,7 @@ public class GemDbAdapter
 					cv.put(key, value);
 				}
 				Log.d(TAG, "GEM Media DetailValues: " + cv.toString());
-				Toast.makeText(this.mContext.getApplicationContext(), "Photos were sucessfully linked in the database", Toast.LENGTH_LONG).show();
+				Toast.makeText(this.mContext.getApplicationContext(), "Photos were sucessfully linked in the database", Toast.LENGTH_SHORT).show();
 				mDb.insert("MEDIA_DETAIL", null, cv);	
 
 			}

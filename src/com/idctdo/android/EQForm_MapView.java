@@ -588,10 +588,8 @@ public class EQForm_MapView extends Activity {
 
 			//final Cursor roofShapeAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(favouritesCursor);
 			ArrayList<DBRecord> buildingPositionAttributesList = GemUtilities.cursorToArrayList(favouritesCursor);
-			final ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(mContext,android.R.layout.simple_spinner_item,buildingPositionAttributesList );
-		
-			
-			
+			final ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(mContext,android.R.layout.simple_list_item_1,buildingPositionAttributesList );
+								
 			builder.setAdapter(spinnerArrayAdapter , new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog,	int which) {
@@ -659,10 +657,8 @@ public class EQForm_MapView extends Activity {
 			//addPoint();
 			if (DEBUG_LOG) Log.d(TAG,"camera class");
 
+			
 			getSurveyPoint();
-
-
-
 			GEMSurveyObject g = (GEMSurveyObject)getApplication();
 			UUID mediaId = UUID.randomUUID();
 			FILENAME = "" + mediaId.toString();	
@@ -694,11 +690,12 @@ public class EQForm_MapView extends Activity {
 			if (resultCode == Activity.RESULT_OK) {
 				GEMSurveyObject g = (GEMSurveyObject)getApplication();
 				if (g.unsavedEdits) {					
-					AlertDialog.Builder alert = new AlertDialog.Builder(this);
+					AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
+
 					alert.setTitle("Photo Comment");
 					alert.setMessage("Add a comment to this photo");
 					// Set an EditText view to get user input 
-					final EditText input = new EditText(this);
+					final EditText input = new EditText(mContext);
 					alert.setView(input);
 
 					alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -730,7 +727,6 @@ public class EQForm_MapView extends Activity {
 									"COMMENTS", "no comment entered",
 									"FILENAME", FILENAME + ".jpg"
 							);						
-
 
 						}
 					});
@@ -797,10 +793,10 @@ public class EQForm_MapView extends Activity {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				btn_startSurvey.setVisibility(View.VISIBLE);//This might be causing issues
-				btn_cancelSurveyPoint.setVisibility(View.VISIBLE);//This might be causing issues
-				btn_startSurveyFavourite.setVisibility(View.VISIBLE);//This might be causing issues
-				btn_takeCameraPhoto.setBackgroundResource(R.drawable.camera_green);
+				btn_startSurvey.setVisibility(View.VISIBLE);
+				btn_cancelSurveyPoint.setVisibility(View.VISIBLE);
+				btn_startSurveyFavourite.setVisibility(View.VISIBLE);
+				//btn_takeCameraPhoto.setBackgroundResource(R.drawable.camera_green); //Disabled due to linking photo problem 21/02/13 
 				btn_edit_points.setEnabled(false);
 
 				//btn_take_survey_photo.setVisibility(View.VISIBLE);//Poss Dodgy threading stuff using this
@@ -870,7 +866,7 @@ public class EQForm_MapView extends Activity {
 		mDbHelper.createDatabase();      
 		mDbHelper.open();		
 
-		mDbHelper.insertGemData(surveyDataObject);
+		mDbHelper.insertOrUpdateGemData(surveyDataObject);
 		//Should really try / catch this
 
 		mDbHelper.close();

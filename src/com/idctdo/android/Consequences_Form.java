@@ -78,7 +78,7 @@ public class Consequences_Form extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.consequences);
-		
+		Log.d("IDCT","onCreate conseq form");
 		editTextNumberOfFatalities = (EditText) findViewById(R.id.editTextNumberOfFatalities);
 		editTextNumberOfInjured = (EditText) findViewById(R.id.editTextNumberOfInjured);
 		editTextNumberOfMissing = (EditText) findViewById(R.id.editTextNumberOfMissing );
@@ -93,9 +93,10 @@ public class Consequences_Form extends Activity {
 		MainTabActivity a = (MainTabActivity)getParent();
 		surveyDataObject = (GEMSurveyObject)getApplication();
 		
-		if (a.isTabCompleted(tabIndex)) {
+		//if (a.isTabCompleted(tabIndex)) {
 
-		} else {
+		//} else {
+			Log.d("IDCT","Resuming consequences form.");
 			mDbHelper = new GemDbAdapter(getBaseContext());      
 
 			mDbHelper.createDatabase();      
@@ -182,7 +183,7 @@ public class Consequences_Form extends Activity {
 
 			
 			
-		}//end tab completed check
+		//}//end tab completed check
 		
 	}
 	public void completeThis() {

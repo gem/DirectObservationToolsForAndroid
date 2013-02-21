@@ -89,7 +89,7 @@ public class Exposure_Form extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.exposure);
-
+		Log.d("IDCT","onCreate exposure form");
 		editTextNumberOfDayOccupants = (EditText) findViewById(R.id.editTextNumberOfDayOccupants);
 		editTextNumberOfNightOccupants = (EditText) findViewById(R.id.editTextNumberOfNightOccupants);
 		editTextNumberOfTransitOccupants = (EditText) findViewById(R.id.editTextNumberOfTransitOccupants );
@@ -116,9 +116,9 @@ public class Exposure_Form extends Activity {
 		MainTabActivity a = (MainTabActivity)getParent();
 		surveyDataObject = (GEMSurveyObject)getApplication();
 
-		if (a.isTabCompleted(tabIndex)) {
+		//if (a.isTabCompleted(tabIndex)) {
 
-		} else {
+		//} else {
 
 			Log.d("IDCT","Resuming exposure form.");
 			mDbHelper = new GemDbAdapter(getBaseContext());        
@@ -243,7 +243,7 @@ public class Exposure_Form extends Activity {
 		
 
 			
-			
+			Log.d("IDCT", "getting Ged val for resume: " + surveyDataObject.getGedDataValue(attributeKey1));
 			editTextNumberOfDayOccupants.setText(surveyDataObject.getGedDataValue(attributeKey1));
 			editTextNumberOfNightOccupants.setText(surveyDataObject.getGedDataValue(attributeKey2));
 			editTextNumberOfTransitOccupants.setText(surveyDataObject.getGedDataValue(attributeKey3));
@@ -251,15 +251,14 @@ public class Exposure_Form extends Activity {
 			editTextPlanArea.setText(surveyDataObject.getGedDataValue(attributeKey5));
 			editTextReplacementCost.setText(surveyDataObject.getGedDataValue(attributeKey6));
 			editTextExposureComments.setText(surveyDataObject.getGedDataValue(attributeKey8));
-					
+				
+			
 			
 			boolean result = false;	
 			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerCurrency, topLevelAttributesList, attributeKey7,surveyDataObject.getSurveyDataValue(attributeKey7));
-
-
-					
+				
 			
-		}//End tab completed check
+		//}//End tab completed check
 		
 	}		
 	public void completeThis() {

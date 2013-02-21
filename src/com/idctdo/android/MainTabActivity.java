@@ -101,8 +101,15 @@ public class MainTabActivity extends TabActivity {
 
 
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
-		if (surveyDataObject.isExistingRecord || (!GemUtilities.isBlank(surveyDataObject.favouriteRecord))) {
-			
+		boolean isFavourite=false;
+		if (GemUtilities.isBlank(surveyDataObject.favouriteRecord)) {
+			isFavourite = false;
+		} else { 
+			isFavourite = true;
+		}
+		if (surveyDataObject.isExistingRecord || isFavourite) {
+
+
 			if (DEBUG_LOG) Log.d(TAG, "Editing existing record or starting from favourite. Going to get vars.");
 			String idToLoad =  "";
 			if (surveyDataObject.isExistingRecord) { 
@@ -111,10 +118,11 @@ public class MainTabActivity extends TabActivity {
 			} else {
 				idToLoad = surveyDataObject.favouriteRecord;
 				if (DEBUG_LOG) Log.d(TAG, "Using favourite as a template.");
+				
 			}
 			mDbHelper = new GemDbAdapter(getBaseContext());
 			mDbHelper.open();	
-			if (DEBUG_LOG) Log.d(TAG, "Existing id " + idToLoad);		
+			if (DEBUG_LOG) Log.d(TAG, "Id of record to load data from: " + idToLoad);		
 			Cursor surveyDataCursor = mDbHelper.getObjectByUid(idToLoad);
 			Cursor gedDataCursor = mDbHelper.getGedObjectByUid(idToLoad);
 			Cursor consequencesDataCursor = mDbHelper.getConsequencesObjectByUid(idToLoad);
@@ -124,11 +132,11 @@ public class MainTabActivity extends TabActivity {
 			for (int i = 0; i < surveyDataCursor.getColumnCount(); i++) {
 				String colName = surveyDataCursor.getColumnName(i);
 				//Check not change the locations back to the old points
-				if(colName.equals("X")  || colName.equals("Y")) {
+				if(colName.equals("X")  || colName.equals("Y") || colName.equals("OBJ_UID")) {
 				} else {
-					if (DEBUG_LOG) Log.d(TAG,"colName : " + colName);
+					//if (DEBUG_LOG) Log.d(TAG,"colName : " + colName);
 					String colVal = surveyDataCursor.getString(i);
-					if (DEBUG_LOG) Log.d(TAG,"colVal : " + colVal);
+					//if (DEBUG_LOG) Log.d(TAG,"colVal : " + colVal);
 					if (colVal != null) {						
 						surveyDataObject.putData(colName, colVal);
 					}
@@ -136,34 +144,66 @@ public class MainTabActivity extends TabActivity {
 			}			
 			surveyDataCursor.close();
 
-
+			//Load in the exposure data
 			if (DEBUG_LOG) Log.d(TAG,"Ged colCount: " + gedDataCursor.getColumnCount());
 			for (int i = 0; i < gedDataCursor.getColumnCount(); i++) {
 				String colName = gedDataCursor.getColumnName(i);
 				//Check not change the locations back to the old points
-
-				if (DEBUG_LOG) Log.d(TAG,"ged colName : " + colName);
-				String colVal = gedDataCursor.getString(i);
-				if (DEBUG_LOG) Log.d(TAG,"ged colVal : " + colVal);
-				if (colVal != null) {						
-					surveyDataObject.putGedData(colName, colVal);
+				if (DEBUG_LOG) Log.d(TAG,"GED values");
+				if(isFavourite) {
+					if(colName.equals("GEMOBJ_UID")) {
+						surveyDataObject.putGedData(colName, surveyDataObject.getUid());
+					} else if (colName.equals("GED_UID") ) {
+						//Do nothing, we'll get a new uid for GED later
+					} else {
+						//Put the favourite / template attributes into the object
+						if (DEBUG_LOG) Log.d(TAG,"ged colName : " + gedDataCursor.getColumnCount());
+						String colVal = gedDataCursor.getString(i);
+						//if (DEBUG_LOG) Log.d(TAG,"ged colVal : " + colVal);
+						if (colVal != null) {						
+							surveyDataObject.putGedData(colName, colVal);
+						}
+					}
+				} else {				
+					if (DEBUG_LOG) Log.d(TAG,"ged colName : " + gedDataCursor.getColumnCount());
+					String colVal = gedDataCursor.getString(i);
+					//if (DEBUG_LOG) Log.d(TAG,"ged colVal : " + colVal);
+					if (colVal != null) {						
+						surveyDataObject.putGedData(colName, colVal);
+					}
 				}
 			}			
 			gedDataCursor.close();
 
-
+			
+			
+			if (DEBUG_LOG) Log.d(TAG,"consequences colCount: " + consequencesDataCursor.getColumnCount());
 
 			//Consequences data
 			if (DEBUG_LOG) Log.d(TAG,"consequences colCount: " + consequencesDataCursor.getColumnCount());
 			for (int i = 0; i < consequencesDataCursor.getColumnCount(); i++) {
 				String colName = consequencesDataCursor.getColumnName(i);
 				//Check not change the locations back to the old points
-
-				if (DEBUG_LOG) Log.d(TAG,"consequences colName : " + colName);
-				String colVal = consequencesDataCursor.getString(i);
-				if (DEBUG_LOG) Log.d(TAG,"consequences  colVal : " + colVal);
-				if (colVal != null) {						
-					surveyDataObject.putConsequencesData(colName, colVal);
+				if(isFavourite) {
+					if(colName.equals("GEMOBJ_UID")) {
+						surveyDataObject.putConsequencesData(colName, surveyDataObject.getUid());
+					} else if (colName.equals("CONSEQ_UID")) {	
+						
+					} else {
+						if (DEBUG_LOG) Log.d(TAG,"ged colName : " + gedDataCursor.getColumnCount());
+						String colVal = consequencesDataCursor.getString(i);
+						//if (DEBUG_LOG) Log.d(TAG,"ged colVal : " + colVal);
+						if (colVal != null) {						
+							surveyDataObject.putConsequencesData(colName, colVal);
+						}
+					}
+				} else {				
+					if (DEBUG_LOG) Log.d(TAG,"CONSEQ colName : " + consequencesDataCursor.getColumnCount());
+					String colVal = consequencesDataCursor.getString(i);
+					//if (DEBUG_LOG) Log.d(TAG,"ged colVal : " + colVal);
+					if (colVal != null) {						
+						surveyDataObject.putConsequencesData(colName, colVal);
+					}
 				}
 			}			
 			consequencesDataCursor.close();
@@ -482,6 +522,7 @@ public class MainTabActivity extends TabActivity {
 		return completedTabs[tabIndex];
 	}
 
+
 	//TODO: User feedback on saving
 	//Duplicated in MapActivity, should be moved elsewhere really
 	public boolean saveData() {
@@ -490,7 +531,7 @@ public class MainTabActivity extends TabActivity {
 		mDbHelper = new GemDbAdapter(getBaseContext());      
 		mDbHelper.createDatabase();      
 		mDbHelper.open();		
-		mDbHelper.insertGemData(surveyDataObject);
+		mDbHelper.insertOrUpdateGemData(surveyDataObject);
 		//Should really try / catch this
 		mDbHelper.close();
 		//Toast.makeText(getApplicationContext(), "Survey data saved", Toast.LENGTH_SHORT).show();
@@ -605,7 +646,7 @@ public class MainTabActivity extends TabActivity {
 	{
 		menu.add(0,0,0,"Take Picture");
 		menu.add(0,1,0,"Save changes and close");
-		menu.add(0,2,0,"Add as Favourite");
+		menu.add(0,2,0,"Save changes and favourite");
 		menu.add(0,3,0,"Help");
 		return true;
 	}
@@ -668,25 +709,27 @@ public class MainTabActivity extends TabActivity {
 		if (DEBUG_LOG) Log.d(TAG,"ADDING AS FAVOURITE");
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
 		String uidToFavourite = surveyDataObject.getUid();
-		
+
 		if (DEBUG_LOG) Log.d(TAG,"Uid is for favouriting: " + uidToFavourite);
-		
-		saveData();		
-		
+
+		//saveData();		
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
 		Date currentDate = new Date(System.currentTimeMillis());
 		String currentDateandTime = sdf.format(currentDate);
 		String name = "IDCT_favourite_" + currentDateandTime.toString();
-		
+
 		mDbHelper = new GemDbAdapter(getBaseContext());      
 		mDbHelper.createDatabase();      
 		mDbHelper.open();
 		mDbHelper.insertFavourite(name,uidToFavourite);
 		//Should really try / catch this
 		mDbHelper.close();		
+
+		backButtonPressed();
 	}
 
-	
+
 	public String loadHelpFileNames(String strToCheck) {
 		File folder = new File("file:///android_asset/glossary");
 		if (DEBUG_LOG) Log.d(TAG,"help loading");
@@ -699,27 +742,27 @@ public class MainTabActivity extends TabActivity {
 			String matched = "";
 			for( int i = 0; i < elements.length - 1; i++)
 			{				
-			   String element = elements[i].substring(0, elements[i].lastIndexOf('.'));    
+				String element = elements[i].substring(0, elements[i].lastIndexOf('.'));    
 
-			   d = GemUtilities.getLevenshteinDistance(strToCheck.toLowerCase(), element.toLowerCase());			   
-			   
-			   //if (DEBUG_LOG) Log.d(TAG,"LevShtein: " + d + " i: "+ i  );
-			   //if (DEBUG_LOG) Log.d(TAG,"str: " +  strToCheck + " element.toString(): "+element.toString() );
-			 
-			   if (d < lowestD) {
-				   lowestD = d;
-				   lowestIndex = i;
-				   matched = element;
-			   }
+				d = GemUtilities.getLevenshteinDistance(strToCheck.toLowerCase(), element.toLowerCase());			   
+
+				//if (DEBUG_LOG) Log.d(TAG,"LevShtein: " + d + " i: "+ i  );
+				//if (DEBUG_LOG) Log.d(TAG,"str: " +  strToCheck + " element.toString(): "+element.toString() );
+
+				if (d < lowestD) {
+					lowestD = d;
+					lowestIndex = i;
+					matched = element;
+				}
 			}
 
-			 if (DEBUG_LOG) Log.d(TAG,"Matched index: " + elements[lowestIndex]);
-			 if (DEBUG_LOG) Log.d(TAG,"Match: " + lowestIndex);
-			 if (DEBUG_LOG) Log.d(TAG,"Match Val: " + lowestD);
-			 if (DEBUG_LOG) Log.d(TAG,"Query string: " + strToCheck);
-			 if (lowestD < 10) {
-				 pageToLoad = elements[lowestIndex];
-			 }
+			if (DEBUG_LOG) Log.d(TAG,"Matched index: " + elements[lowestIndex]);
+			if (DEBUG_LOG) Log.d(TAG,"Match: " + lowestIndex);
+			if (DEBUG_LOG) Log.d(TAG,"Match Val: " + lowestD);
+			if (DEBUG_LOG) Log.d(TAG,"Query string: " + strToCheck);
+			if (lowestD < 10) {
+				pageToLoad = elements[lowestIndex];
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -744,24 +787,24 @@ public class MainTabActivity extends TabActivity {
 		return fileList;
 	}
 
-	
+
 	public void fileCopy(String srcStr, String dstStr) throws IOException {
 		File src =  new File(srcStr );
-	    File dst = new File(dstStr);
-	    InputStream in = new FileInputStream(src);
-	    OutputStream out = new FileOutputStream(dst);
+		File dst = new File(dstStr);
+		InputStream in = new FileInputStream(src);
+		OutputStream out = new FileOutputStream(dst);
 
-	    // Transfer bytes from in to out
-	    byte[] buf = new byte[1024];
-	    int len;
-	    while ((len = in.read(buf)) > 0) {
-	        out.write(buf, 0, len);
-	    }
-	    in.close();
-	    out.close();
+		// Transfer bytes from in to out
+		byte[] buf = new byte[1024];
+		int len;
+		while ((len = in.read(buf)) > 0) {
+			out.write(buf, 0, len);
+		}
+		in.close();
+		out.close();
 	}
-	
-	
+
+
 	public void showHelp() {
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
 
@@ -781,13 +824,13 @@ public class MainTabActivity extends TabActivity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		*/
+
+		 */
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		WebView wv = new WebView(this);		
 		wv.loadUrl("file:///android_asset/glossary/glossary_cleaned/" + pageToLoad);
-		
+
 		wv.setWebViewClient(new WebViewClient()
 		{
 			@Override
@@ -808,12 +851,16 @@ public class MainTabActivity extends TabActivity {
 		});
 		alert.show();
 	}
+	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		//super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == CAMERA_RESULT) {
 			//ShowMessage(outputFileUri.toString());
 			if (resultCode == Activity.RESULT_OK) {
+				
+				/* Disabled linking photos in map view 21 Feb 13
+				 * Doesn't seem to work on Samsung Galaxy S2
 				GEMSurveyObject g = (GEMSurveyObject)getApplication();
 				if (g.unsavedEdits) {
 					AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -858,9 +905,11 @@ public class MainTabActivity extends TabActivity {
 
 					alert.show();
 				}
+				
+				*/
 			} else {
 				Toast.makeText(this, "Camera cancelled", Toast.LENGTH_SHORT).show();
-			}
+			}						
 		}
 	}
 

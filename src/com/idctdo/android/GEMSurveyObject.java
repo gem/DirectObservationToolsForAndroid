@@ -148,6 +148,8 @@ public class GEMSurveyObject extends Application {
 	
 	public void clearGemSurveyObject() {
 		surveyData = new HashMap<String, String>();
+		isExistingRecord = false;
+		favouriteRecord = "";
 		mediaDetailDataList = new ArrayList<HashMap<String, String>>();
 		gedData = new HashMap<String, String>();
 		consequencesData = new HashMap<String, String>();
