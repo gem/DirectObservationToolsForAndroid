@@ -120,6 +120,27 @@ public class GemDbAdapter
 			throw mSQLException;
 		}
 	}
+	
+	
+	
+	public Cursor getGemFavourites()
+	{
+		try
+		{
+			String sql ="SELECT * FROM SETTINGS";
+			Cursor mCur = mDb.rawQuery(sql, null);
+			if (mCur!=null)
+			{
+				mCur.moveToNext();
+			}
+			return mCur;
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "getFavouritesData >>"+ mSQLException.toString());
+			throw mSQLException;
+		}
+	}
 
 	public void exportGemTableToCsv(){
 
@@ -200,8 +221,8 @@ public class GemDbAdapter
 			throw mSQLException;
 		}
 	}
-	
-	
+
+
 
 	public Cursor getObjectByUid(String uid)
 	{
@@ -242,7 +263,7 @@ public class GemDbAdapter
 			throw mSQLException;
 		}
 	}
-	
+
 	public Cursor getConsequencesObjectByUid(String uid)
 	{
 		try
@@ -439,7 +460,7 @@ public class GemDbAdapter
 	}
 
 
-	
+
 	public Cursor getAttributeValuesByDictionaryTable(String dictionaryTable)
 	{
 		try
@@ -453,9 +474,9 @@ public class GemDbAdapter
 			{
 				mCur.moveToNext();
 				Log.e(TAG, "mCur not null " + mCur.getColumnCount());
-						
+
 				//generateCleanGlossary(mCur.getString(0),mCur.getString(1));
-			
+
 			}
 			return mCur;
 		}
@@ -465,11 +486,11 @@ public class GemDbAdapter
 			throw mSQLException;
 		}
 	}
-		
-	
-	
 
-	
+
+
+
+
 	public Cursor getAttributeValuesByDictionaryTableAndScope(String dictionaryTable, String attributeScope)
 	{
 		try
@@ -483,7 +504,7 @@ public class GemDbAdapter
 			{
 				mCur.moveToNext();
 				Log.e(TAG, "mCur not null " + mCur.getColumnCount());
-				
+
 				//generateCleanGlossary(mCur.getString(0),mCur.getString(1));
 			}
 			return mCur;
@@ -550,7 +571,6 @@ public class GemDbAdapter
 	{		
 		try
 		{					
-
 			//Cursor mCur = mDb.execSQL(sql, null);
 			ContentValues cv = new ContentValues();
 			UUID id = UUID.randomUUID();
@@ -562,9 +582,26 @@ public class GemDbAdapter
 			cv.put("EPSG_CODE", "4326");	
 			cv.put("SOURCE", "FIELD");	
 			mDb.insert("GEM_OBJECT", null, cv);
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "insertTestData >>"+ mSQLException.toString());
+			throw mSQLException;
+		}
+	}
 
 
-
+	public void insertFavourite(String favouriteName, String uidString)
+	{		
+		try
+		{					
+			ContentValues cv = new ContentValues();
+			UUID id = UUID.randomUUID();
+			cv.put("KEY", favouriteName.toString());
+			cv.put("VALUE", uidString.toString());
+			mDb.insert("SETTINGS", null, cv);
+			String feedbackMsg = "Favourite saved\n " + favouriteName;
+			Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
 		}
 		catch (SQLException mSQLException) 
 		{
@@ -575,21 +612,17 @@ public class GemDbAdapter
 
 
 
-
 	public void insertGemData(GEMSurveyObject gemGlobalVariables)
 	{		
-		Log.d(TAG, "Trying to insert Gem data");		
-
+		Log.d(TAG, "Trying to insert Gem data");
 		try
 		{								
 			//Cursor mCur = mDb.execSQL(sql, null);		
-
 			ContentValues cv = new ContentValues();
-			cv.put("OBJ_UID", gemGlobalVariables.getUid());		
-			
+			cv.put("OBJ_UID", gemGlobalVariables.getUid());					
 			UUID id = UUID.randomUUID();
 			cv.put("PROJ_UID", id.toString()); //This should be a proj uid, define in a preferences thing
-			
+
 			cv.put("X", Double.toString(gemGlobalVariables.getLon()));
 			cv.put("Y",  Double.toString(gemGlobalVariables.getLat()));
 			//cv.put("EPSG_CODE", "4326"); //Should get this from the db
@@ -601,7 +634,6 @@ public class GemDbAdapter
 				String value = entry.getValue();
 				cv.put(key, value);
 			}
-
 
 			Log.d(TAG, "GEM ContentValues: " + cv.toString());
 
@@ -688,8 +720,8 @@ public class GemDbAdapter
 				if (DEBUG_LOG) Log.d(TAG,"inserting record in db " + gemGlobalVariables.getUid());	
 				mDb.insert("GED", null, cv);
 			}
-			
-			
+
+
 			//mDb.insert("GED", null, cv);
 			String feedbackMsg = "GED Data saved\n ";
 			//Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
@@ -730,8 +762,8 @@ public class GemDbAdapter
 				if (DEBUG_LOG) Log.d(TAG,"inserting record in db " + gemGlobalVariables.getUid());	
 				mDb.insert("CONSEQUENCES", null, cv);
 			}
-			
-			
+
+
 			//mDb.insert("CONSEQUENCES", null, cv);
 			String feedbackMsg = "CONSEQUENCES Data saved\n";
 			//Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
@@ -832,5 +864,4 @@ public class GemDbAdapter
 			e.printStackTrace();
 		}
 	}
-
 }

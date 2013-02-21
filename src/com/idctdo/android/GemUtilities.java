@@ -41,15 +41,12 @@ public class GemUtilities {
 			DBRecord o1 = new DBRecord();		
 			o1.setAttributeDescription(mCursor.getString(0));
 			o1.setAttributeValue(mCursor.getString(1));
-			o1.setJson(mCursor.getString(2));
+			if (mCursor.getColumnCount() > 2) {
+				o1.setJson(mCursor.getString(2));
+			}
 			mArrayList.add(o1);
-
 			//generateCleanGlossary(mCursor.getString(0),mCursor.getString(1));
-
-
 			mCursor.moveToNext();
-
-
 		}
 
 

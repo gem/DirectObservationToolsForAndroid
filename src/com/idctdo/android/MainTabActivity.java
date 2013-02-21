@@ -26,6 +26,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -99,15 +101,23 @@ public class MainTabActivity extends TabActivity {
 
 
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
-		if (surveyDataObject.isExistingRecord) {
-			if (DEBUG_LOG) Log.d(TAG, "Editing existing record. Going to get vars.");	
-			String existingId = surveyDataObject.getUid();
+		if (surveyDataObject.isExistingRecord || (!GemUtilities.isBlank(surveyDataObject.favouriteRecord))) {
+			
+			if (DEBUG_LOG) Log.d(TAG, "Editing existing record or starting from favourite. Going to get vars.");
+			String idToLoad =  "";
+			if (surveyDataObject.isExistingRecord) { 
+				idToLoad = surveyDataObject.getUid();
+				if (DEBUG_LOG) Log.d(TAG, "Editing exisiting record.");
+			} else {
+				idToLoad = surveyDataObject.favouriteRecord;
+				if (DEBUG_LOG) Log.d(TAG, "Using favourite as a template.");
+			}
 			mDbHelper = new GemDbAdapter(getBaseContext());
 			mDbHelper.open();	
-			if (DEBUG_LOG) Log.d(TAG, "Existing id " + existingId);		
-			Cursor surveyDataCursor = mDbHelper.getObjectByUid(existingId);
-			Cursor gedDataCursor = mDbHelper.getGedObjectByUid(existingId);
-			Cursor consequencesDataCursor = mDbHelper.getConsequencesObjectByUid(existingId);
+			if (DEBUG_LOG) Log.d(TAG, "Existing id " + idToLoad);		
+			Cursor surveyDataCursor = mDbHelper.getObjectByUid(idToLoad);
+			Cursor gedDataCursor = mDbHelper.getGedObjectByUid(idToLoad);
+			Cursor consequencesDataCursor = mDbHelper.getConsequencesObjectByUid(idToLoad);
 			mDbHelper.close();
 			//if (DEBUG_LOG) Log.d(TAG, "Existing data: " + surveyDataCursor.getColumnCount());
 			if (DEBUG_LOG) Log.d(TAG,"colCount: " + surveyDataCursor.getColumnCount());
@@ -477,14 +487,11 @@ public class MainTabActivity extends TabActivity {
 	public boolean saveData() {
 		if (DEBUG_LOG) Log.d(TAG, "Saving data");		
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
-
 		mDbHelper = new GemDbAdapter(getBaseContext());      
 		mDbHelper.createDatabase();      
 		mDbHelper.open();		
-
 		mDbHelper.insertGemData(surveyDataObject);
 		//Should really try / catch this
-
 		mDbHelper.close();
 		//Toast.makeText(getApplicationContext(), "Survey data saved", Toast.LENGTH_SHORT).show();
 		surveyDataObject.clearGemSurveyObject();
@@ -546,7 +553,6 @@ public class MainTabActivity extends TabActivity {
 				MainTabActivity.this.finish();
 			}
 		});
-
 		// create alert dialog
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		// show it
@@ -659,7 +665,25 @@ public class MainTabActivity extends TabActivity {
 
 	//Checks the arrays.xml to determine which forms hold which attributes
 	public void addAsFavourite() {
-
+		if (DEBUG_LOG) Log.d(TAG,"ADDING AS FAVOURITE");
+		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
+		String uidToFavourite = surveyDataObject.getUid();
+		
+		if (DEBUG_LOG) Log.d(TAG,"Uid is for favouriting: " + uidToFavourite);
+		
+		saveData();		
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+		Date currentDate = new Date(System.currentTimeMillis());
+		String currentDateandTime = sdf.format(currentDate);
+		String name = "IDCT_favourite_" + currentDateandTime.toString();
+		
+		mDbHelper = new GemDbAdapter(getBaseContext());      
+		mDbHelper.createDatabase();      
+		mDbHelper.open();
+		mDbHelper.insertFavourite(name,uidToFavourite);
+		//Should really try / catch this
+		mDbHelper.close();		
 	}
 
 	
@@ -761,11 +785,9 @@ public class MainTabActivity extends TabActivity {
 		*/
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-		WebView wv = new WebView(this);
-
-		
+		WebView wv = new WebView(this);		
 		wv.loadUrl("file:///android_asset/glossary/glossary_cleaned/" + pageToLoad);
-
+		
 		wv.setWebViewClient(new WebViewClient()
 		{
 			@Override

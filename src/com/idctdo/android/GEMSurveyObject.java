@@ -28,6 +28,7 @@ public class GEMSurveyObject extends Application {
 	public boolean unsavedEdits = false;
 	
 	public boolean isExistingRecord = false;
+	public String favouriteRecord = "";
 	
 	public String lastEditedAttribute = "";
 	

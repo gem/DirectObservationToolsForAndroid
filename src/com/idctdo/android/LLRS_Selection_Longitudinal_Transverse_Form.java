@@ -89,12 +89,11 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 		if (a.isTabCompleted(tabIndex)) {
 
 		} else {
-
-			mDbHelper = new GemDbAdapter(getBaseContext());        
+			mDbHelper = new GemDbAdapter(getBaseContext());       
 
 			mDbHelper.createDatabase();      
 			mDbHelper.open();
-
+			
 			Cursor allLLRSCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);        
 			lLrs = GemUtilities.cursorToArrayList(allLLRSCursor);        
 			if (DEBUG_LOG) Log.d(TAG,"lLrs: " + lLrs.toString());

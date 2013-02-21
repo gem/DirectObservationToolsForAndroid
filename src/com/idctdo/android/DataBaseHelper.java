@@ -55,9 +55,7 @@ public class DataBaseHelper extends SQLiteOpenHelper
 
 	public void createDataBase() throws IOException
 	{		
-
 		//If database not exists copy it from the assets
-
 		boolean mDataBaseExist = checkDataBase();
 		if(!mDataBaseExist)
 		{

@@ -83,6 +83,7 @@ import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -177,8 +178,6 @@ public class EQForm_MapView extends Activity {
 		super.onCreate(savedInstanceState);
 		if (DEBUG_LOG) Log.d(TAG,"ON CREATE");
 		setContentView(R.layout.map_view);
-
-
 
 
 
@@ -287,8 +286,7 @@ public class EQForm_MapView extends Activity {
 
 		btn_startSurveyFavourite =(Button)findViewById(R.id.btn_start_survey_with_favourite);
 		btn_startSurveyFavourite.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
-		btn_startSurveyFavourite.setOnClickListener(startSurveyFavouriteListener);
-
+		btn_startSurveyFavourite.setOnClickListener(selectFavouriteListener);
 
 		btn_selectLayer =(Button)findViewById(R.id.btn_select_layer);
 		btn_selectLayer.setOnClickListener(selectLayerListener);
@@ -406,9 +404,7 @@ public class EQForm_MapView extends Activity {
 					btn_startSurveyFavourite.setVisibility(View.INVISIBLE);//Dodgy threading stuff using this
 					//btn_take_survey_photo.setVisibility(View.INVISIBLE);//Poss Dodgy threading stuff using this
 					btn_takeCameraPhoto.setBackgroundResource(R.drawable.camera);
-
 					btn_edit_points.setEnabled(true);
-
 				}
 			});		       
 
@@ -564,14 +560,78 @@ public class EQForm_MapView extends Activity {
 				//promptForSavingEdits();
 			}
 		}
-
-
 	};
 
-	private OnClickListener startSurveyFavouriteListener = new OnClickListener() {
+	private OnClickListener selectFavouriteListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			if (DEBUG_LOG) Log.d(TAG,"Favourite survey point");
+
+			Log.i(TAG, "show Dialog ButtonClick");
+			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+			builder.setTitle("Select a Favourite");			
+			mDbHelper = new GemDbAdapter(getBaseContext());       
+
+			mDbHelper.createDatabase();      
+			mDbHelper.open();
+			Cursor favouritesCursor = mDbHelper.getGemFavourites();
+			ArrayList favesList =GemUtilities.cursorToArrayList(favouritesCursor);  
+			mDbHelper.close();			
+			//final CharSequence[] baseMaps = {"OpenStreetMap","Bing Hybrid","Bing Roads","Bing Aerial"};
+			//final CharSequence[] localBaseMaps = getLocalBaseMapLayers();
+			//if (DEBUG_LOG) Log.d(TAG,"LOCAL BASEMAPS " + localBaseMaps.toString());
+
+			//final CharSequence[] choiceList = new CharSequence[baseMaps.length + localBaseMaps.length];
+			//System.arraycopy(baseMaps, 0, choiceList, 0, baseMaps.length);
+			//System.arraycopy(localBaseMaps, 0, choiceList, baseMaps.length, localBaseMaps.length);
+			int selected = -1; // does not select anything			
+
+			//final Cursor roofShapeAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(favouritesCursor);
+			ArrayList<DBRecord> buildingPositionAttributesList = GemUtilities.cursorToArrayList(favouritesCursor);
+			final ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(mContext,android.R.layout.simple_spinner_item,buildingPositionAttributesList );
+		
+			
+			
+			builder.setAdapter(spinnerArrayAdapter , new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog,	int which) {
+					DBRecord r = (DBRecord) spinnerArrayAdapter.getItem(which);
+					if (DEBUG_LOG) Log.d(TAG,"selected favourite "+r.getAttributeValue());
+					GEMSurveyObject g = (GEMSurveyObject)getApplication();
+					g.isExistingRecord = false;		
+					g.favouriteRecord = r.getAttributeValue();
+					//g.setUid(r.getAttributeValue());			
+					g.unsavedEdits = true;		
+					
+					if (DEBUG_LOG) Log.d(TAG,"next survey form");
+
+					//Stop any geometry editing			
+					mWebView.loadUrl("javascript:startEditingMode(false)");
+					isEditingPoints = false;
+					//Get the most recent point geometry
+					getSurveyPoint();
+					//Start the tabs view
+					Intent ModifiedEMS98 = new Intent (EQForm_MapView.this, MainTabActivity.class);
+					startActivity(ModifiedEMS98);
+				
+				}
+			});
+
+			
+			/*
+			builder.setSingleChoiceItems(
+					choiceList, 
+					selected, 
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,	int which) {
+							if (DEBUG_LOG) Log.d(TAG,"selected favourite "+choiceList[which]);
+						}
+					});
+			 */
+			AlertDialog alert = builder.create();
+
+			alert.show();
 
 			//Stop any geometry editing			
 			mWebView.loadUrl("javascript:startEditingMode(false)");
@@ -755,7 +815,7 @@ public class EQForm_MapView extends Activity {
 
 	public void promptForSavingEdits() {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		
+
 		// set title
 		alertDialogBuilder.setTitle("Unsaved Survey Observation");
 
@@ -789,7 +849,7 @@ public class EQForm_MapView extends Activity {
 				surveyDataObject.clearGemSurveyObject();
 				surveyDataObject.unsavedEdits = false;
 				MainTabActivity.this.finish();
-				*/
+				 */
 			}
 		});
 
@@ -800,7 +860,7 @@ public class EQForm_MapView extends Activity {
 
 	}
 
-	
+
 	//Duplicated in MainTabAcitivty, should be moved elsewhere really	
 	public boolean saveData() {
 		if (DEBUG_LOG) Log.d(TAG, "Saving data");		
@@ -1106,7 +1166,6 @@ public class EQForm_MapView extends Activity {
 
 								File extStore = Environment.getExternalStorageDirectory();
 								File xmlFile = new File(extStore.getAbsolutePath() + "/idctdo/maptiles/" + choiceList[which] +"/tilemapresource.xml");
-
 
 								if (DEBUG_LOG) Log.d(TAG,"possible tms xml path:" + xmlFile.getPath());
 								if (xmlFile.isFile()) {		
