@@ -31,7 +31,7 @@ import android.widget.Spinner;
 //Static functions for data processing and the like
 public class GemUtilities {
 
-	public static boolean DEBUG_LOG = true; 
+	public static boolean DEBUG_LOG = false; 
 	protected static final String TAG = "GemUtilities";
 
 	public static ArrayList cursorToArrayList(Cursor mCursor) {

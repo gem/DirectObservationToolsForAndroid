@@ -179,7 +179,8 @@ public class Age_Selection_Form extends Activity {
 						date2.setVisibility(View.INVISIBLE);
 						date1.setVisibility(View.VISIBLE);
 					}					
-					surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());				
+					surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());
+					completeThis();
 				}
 			});    
 			
@@ -365,25 +366,19 @@ public class Age_Selection_Form extends Activity {
 				}
 			});
 			
-			/*removing slope from this form
-			editTextSlope.setOnFocusChangeListener(new OnFocusChangeListener() { 				
-				public void onFocusChange(View v, boolean hasFocus) {
-					if(!hasFocus) {
-						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
-						surveyDataObject.putData(slope,editTextSlope.getText().toString());
-					}
-				}
-			});
-			*/
-			
-			boolean result = false;	
-			result= heightSelectedAdapter.loadPreviousAtttributes(heightListview, heightStoreysAboveGroundQualifierAttributeKey,surveyDataObject.getSurveyDataValue(heightStoreysAboveGroundQualifierAttributeKey));
+
+			boolean result = false;
+			result= selectedAdapter.loadPreviousAtttributes(listview, topLevelAttributeKey,surveyDataObject.getSurveyDataValue(topLevelAttributeKey));
+			result= heightSelectedAdapter.loadPreviousAtttributes(heightListview, heightStoreysAboveGroundQualifierAttributeKey,surveyDataObject.getSurveyDataValue(heightStoreysAboveGroundQualifierAttributeKey));	
 			result= heightSelectedAdapter2.loadPreviousAtttributes(heightListview2, heightStoreysBelowGroundQualifierAttributeKey,surveyDataObject.getSurveyDataValue(heightStoreysBelowGroundQualifierAttributeKey));
 			result= heightSelectedAdapter3.loadPreviousAtttributes(heightListview3, heightStoreysAboveGradeQualifierAttributeKey,surveyDataObject.getSurveyDataValue(heightStoreysAboveGradeQualifierAttributeKey));
 			if (result)  {
 				//listview2.setVisibility(View.VISIBLE);
 				//findViewById(R.id.rel2).setVisibility(View.VISIBLE);
 			}
+			
+			date1.setText(surveyDataObject.getSurveyDataValue(topLevelAttributeKey2));
+			date2.setText(surveyDataObject.getSurveyDataValue(topLevelAttributeKey3));
 			
 			editTextAboveGround1.setText(surveyDataObject.getSurveyDataValue(heightStoreysAboveGroundAttributeKey1));
 			editTextAboveGround2.setText(surveyDataObject.getSurveyDataValue(heightStoreysAboveGroundAttributeKey2));
