@@ -22,6 +22,7 @@ package com.idctdo.android;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,6 +38,7 @@ import java.util.UUID;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.TabActivity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -100,6 +102,7 @@ public class MainTabActivity extends TabActivity {
 		setContentView(R.layout.main_tab_activity);
 
 
+
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
 		boolean isFavourite=false;
 		if (GemUtilities.isBlank(surveyDataObject.favouriteRecord)) {
@@ -107,6 +110,10 @@ public class MainTabActivity extends TabActivity {
 		} else { 
 			isFavourite = true;
 		}
+
+		//Ensure that 
+		surveyDataObject.unsavedEdits = true;
+
 		if (surveyDataObject.isExistingRecord || isFavourite) {
 
 
@@ -118,7 +125,7 @@ public class MainTabActivity extends TabActivity {
 			} else {
 				idToLoad = surveyDataObject.favouriteRecord;
 				if (DEBUG_LOG) Log.d(TAG, "Using favourite as a template.");
-				
+
 			}
 			mDbHelper = new GemDbAdapter(getBaseContext());
 			mDbHelper.open();	
@@ -175,8 +182,8 @@ public class MainTabActivity extends TabActivity {
 			}			
 			gedDataCursor.close();
 
-			
-			
+
+
 			if (DEBUG_LOG) Log.d(TAG,"consequences colCount: " + consequencesDataCursor.getColumnCount());
 
 			//Consequences data
@@ -188,7 +195,7 @@ public class MainTabActivity extends TabActivity {
 					if(colName.equals("GEMOBJ_UID")) {
 						surveyDataObject.putConsequencesData(colName, surveyDataObject.getUid());
 					} else if (colName.equals("CONSEQ_UID")) {	
-						
+
 					} else {
 						if (DEBUG_LOG) Log.d(TAG,"ged colName : " + gedDataCursor.getColumnCount());
 						String colVal = consequencesDataCursor.getString(i);
@@ -229,6 +236,7 @@ public class MainTabActivity extends TabActivity {
 				setTabColor();
 			}
 		});
+
 
 
 
@@ -804,63 +812,78 @@ public class MainTabActivity extends TabActivity {
 		out.close();
 	}
 
+	/**
+	 * Check if an asset exists. This will fail if the asset has a size < 1 byte.
+	 * @param context
+	 * @param path
+	 * @return TRUE if the asset exists and FALSE otherwise
+	 */
+	public static boolean assetExists(Context context, String pathInAssets) {
+	    boolean bAssetOk = false;
+	    AssetManager mg = context.getAssets();
 
+	    try {
+	      mg.open(pathInAssets);
+	      bAssetOk = true;
+
+	    } catch (IOException ex) {
+	      ex.printStackTrace();
+	    }
+	    return bAssetOk;
+	}
+	
 	public void showHelp() {
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
 
-		String pageToLoad = g.lastEditedAttribute + ".html";
-		/*
-		if (DEBUG_LOG) Log.d(TAG,"Last edited att " + g.lastEditedAttribute);
-		String pageToLoad = loadHelpFileNames(g.lastEditedAttribute);		
-		//tabHost.getCurrentTab();
-		try {
-			String sdcardpath = Environment.getExternalStorageDirectory().toString()+ "/idctdo/glossary/";
-			String dst= Environment.getExternalStorageDirectory().toString()+ "/idctdo/glossary_cleaned/";
-			String newName = g.lastEditedAttribute.toString();
-			fileCopy(sdcardpath + pageToLoad, dst + newName + ".html");
-			if (DEBUG_LOG) Log.d(TAG,"Sucess copying " + newName + ".html");
+		if (!GemUtilities.isBlank(g.lastEditedAttribute)) { 
+			String pageToLoad = g.lastEditedAttribute + ".html";
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//File file = new File("file:///android_asset/glossary/glossary_cleaned/" + pageToLoad);
+			if (assetExists(getBaseContext(),"glossary/glossary_cleaned/" + pageToLoad)) {
+				AlertDialog.Builder alert = new AlertDialog.Builder(this);
+				WebView wv = new WebView(this);			
+				wv.loadUrl("file:///android_asset/glossary/glossary_cleaned/" + pageToLoad);
+				wv.setWebViewClient(new WebViewClient()
+				{
+					@Override
+					public boolean shouldOverrideUrlLoading(WebView view, String url)
+					{
+						view.loadUrl(url);
+						return true;
+					}
+				});
+
+				alert.setView(wv);
+				alert.setNegativeButton("Close", new DialogInterface.OnClickListener()
+				{
+					@Override
+					public void onClick(DialogInterface dialog, int id)
+					{
+					}
+				});
+				alert.show();
+			} else {
+				Toast.makeText(this, "There is no help associated with the item", Toast.LENGTH_SHORT).show();				
+			}
+		} else {
+			Toast.makeText(this, "There is no help associated with the item", Toast.LENGTH_SHORT).show();			
 		}
 
-		 */
-		AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-		WebView wv = new WebView(this);		
-		wv.loadUrl("file:///android_asset/glossary/glossary_cleaned/" + pageToLoad);
-
-		wv.setWebViewClient(new WebViewClient()
-		{
-			@Override
-			public boolean shouldOverrideUrlLoading(WebView view, String url)
-			{
-				view.loadUrl(url);
-				return true;
-			}
-		});
-
-		alert.setView(wv);
-		alert.setNegativeButton("Close", new DialogInterface.OnClickListener()
-		{
-			@Override
-			public void onClick(DialogInterface dialog, int id)
-			{
-			}
-		});
-		alert.show();
 	}
-	
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		//super.onActivityResult(requestCode, resultCode, data);
+		if (DEBUG_LOG) Log.d("IDCT","CAMERA callback. requestCode:" +  requestCode + " resultCode: " + resultCode);
+
 		if (requestCode == CAMERA_RESULT) {
+			if (DEBUG_LOG) Log.d("IDCT","CAMERA callback. requestCode is CAMERA_RESULT");
 			//ShowMessage(outputFileUri.toString());
 			if (resultCode == Activity.RESULT_OK) {
-				
+				if (DEBUG_LOG) Log.d("IDCT","CAMERA callback. Result is ok");
+
 				/* Disabled linking photos in map view 21 Feb 13
-				 * Doesn't seem to work on Samsung Galaxy S2
+				 * Doesn't seem to work on Samsung Galaxy S2*/
 				GEMSurveyObject g = (GEMSurveyObject)getApplication();
 				if (g.unsavedEdits) {
 					AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -904,9 +927,11 @@ public class MainTabActivity extends TabActivity {
 					});
 
 					alert.show();
+				} else {
+					if (DEBUG_LOG) Log.d("IDCT","CAMERA callback. No unsaved edits");
 				}
-				
-				*/
+
+
 			} else {
 				Toast.makeText(this, "Camera cancelled", Toast.LENGTH_SHORT).show();
 			}						

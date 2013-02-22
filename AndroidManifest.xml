@@ -13,11 +13,10 @@
 
     <application
         android:name=".GEMSurveyObject"
+        android:hardwareAccelerated="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/MyTheme" 
-        android:hardwareAccelerated="false"
-        >
+        android:theme="@style/MyTheme" >
         <activity
             android:name=".EQForm_MapView"
             android:label="@string/app_name"
@@ -47,7 +46,7 @@
         <activity
             android:name=".Material_Selection_Transverse_Form"
             android:screenOrientation="portrait" />
-                <activity
+        <activity
             android:name=".Material_Selection_Transverse_Form2"
             android:screenOrientation="portrait" />
         <activity
@@ -100,6 +99,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Consequences_Form"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Project_Settings"
             android:screenOrientation="portrait" />
         <activity
             android:name=".PrefsActivity"

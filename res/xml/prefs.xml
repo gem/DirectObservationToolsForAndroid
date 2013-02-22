@@ -9,11 +9,12 @@
             android:key="checkBox"
             android:summary="On/Off"
             android:title="Auto-Update position" />
+        
         <CheckBoxPreference
             android:enabled="true"
             android:key="showPositionDetailsCheckBox"
             android:summary="On/Off"
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:title="Show positioning details" />
     </PreferenceCategory>
     <PreferenceCategory
@@ -21,23 +22,10 @@
         android:title="Project Details" >
         <EditTextPreference
             android:name="EditText"
-            android:defaultValue="[Enter your name ]"
-            android:key="surveyorNameTextPref"
-            android:summary="Enter your name"
-            android:title="Enter your name" />
-
-        <ListPreference
-            android:entries="@array/hazardOptions"
-            android:entryValues="@array/hazardListValues"
-            android:key="hazardTypePref"
-            android:summary="List preference example"
-            android:title="Hazard Type" />
-
-        <EditTextPreference
-            android:name="hazardName"
             android:defaultValue=""
-            android:key="hazardNameTextPref"
-            android:summary="Enter hazard name"
-            android:title="Enter hazard name" />
+            android:key="projectIdTextPref"
+            android:summary="Unique Project ID for this survey."
+            android:title="Project / Survey ID" />
+
     </PreferenceCategory>
 </PreferenceScreen>

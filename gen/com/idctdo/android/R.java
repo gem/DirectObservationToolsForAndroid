@@ -85,14 +85,14 @@ public final class R {
     public static final class id {
         public static final int LinearLayout01=0x7f0b007d;
         public static final int LinearLayout03=0x7f0b008d;
-        public static final int MainSplashText=0x7f0b00b6;
+        public static final int MainSplashText=0x7f0b00ba;
         public static final int ScrollView=0x7f0b005e;
         public static final int ScrollView01=0x7f0b0008;
         public static final int ScrollViewConsequences=0x7f0b0019;
         public static final int ScrollViewDetails=0x7f0b0022;
-        public static final int SplashAuthor=0x7f0b00b8;
-        public static final int SplashTitle=0x7f0b00b7;
-        public static final int SplashVersion=0x7f0b00b9;
+        public static final int SplashAuthor=0x7f0b00bc;
+        public static final int SplashTitle=0x7f0b00bb;
+        public static final int SplashVersion=0x7f0b00bd;
         public static final int about=0x7f0b005b;
         public static final int about_text=0x7f0b0002;
         public static final int additional_edit=0x7f0b009e;
@@ -105,8 +105,8 @@ public final class R {
         public static final int back_about=0x7f0b0001;
         public static final int back_camera=0x7f0b00aa;
         public static final int back_help=0x7f0b003e;
-        public static final int back_settings=0x7f0b00b3;
-        public static final int background=0x7f0b00ba;
+        public static final int back_settings=0x7f0b00b7;
+        public static final int background=0x7f0b00be;
         public static final int beam_main_reo=0x7f0b009a;
         public static final int beam_main_reo_number=0x7f0b009b;
         public static final int beam_shear=0x7f0b009c;
@@ -126,14 +126,15 @@ public final class R {
         public static final int btn_zoom_in=0x7f0b0064;
         public static final int btn_zoom_out=0x7f0b0063;
         public static final int camera_image=0x7f0b00a8;
-        public static final int clear_settings=0x7f0b00b4;
+        public static final int clear_settings=0x7f0b00b8;
         public static final int column_confining_reo=0x7f0b0098;
         public static final int column_confining_reo_spacing=0x7f0b0099;
         public static final int column_main_reo=0x7f0b0096;
         public static final int column_main_reo_number=0x7f0b0097;
         public static final int damage_level=0x7f0b0090;
-        public static final int date=0x7f0b00b1;
-        public static final int date_title=0x7f0b00b0;
+        public static final int date=0x7f0b00b5;
+        public static final int datePicker1=0x7f0b00ae;
+        public static final int date_title=0x7f0b00b4;
         public static final int editText3=0x7f0b003c;
         public static final int editText4=0x7f0b003d;
         public static final int editTextAboveGrade1=0x7f0b0017;
@@ -205,6 +206,8 @@ public final class R {
         public static final int other_occupancy=0x7f0b0082;
         public static final int other_soil=0x7f0b0086;
         public static final int other_system=0x7f0b0095;
+        public static final int projectName=0x7f0b00ac;
+        public static final int projectSummary=0x7f0b00ad;
         public static final int reassess=0x7f0b008c;
         public static final int rel1=0x7f0b0003;
         public static final int rel2=0x7f0b0009;
@@ -218,18 +221,18 @@ public final class R {
         public static final int secondary=0x7f0b008a;
         public static final int settings=0x7f0b0057;
         public static final int settings_1=0x7f0b007a;
-        public static final int settings_earthquake=0x7f0b00ae;
-        public static final int settings_survey_name=0x7f0b00b2;
-        public static final int settings_surveyor=0x7f0b00af;
+        public static final int settings_earthquake=0x7f0b00b2;
+        public static final int settings_survey_name=0x7f0b00b6;
+        public static final int settings_surveyor=0x7f0b00b3;
         public static final int soil_type=0x7f0b0085;
         public static final int spinnerBuildingPosition=0x7f0b0029;
         public static final int spinnerBuildingShape=0x7f0b002b;
         public static final int spinnerCurrency=0x7f0b0037;
         public static final int spinnerFoundationSystem=0x7f0b003a;
         public static final int spinnerNonStructuralExteriorWalls=0x7f0b002d;
-        public static final int spinnerRoofCoverMaterial=0x7f0b00ac;
-        public static final int spinnerRoofShape=0x7f0b00ab;
-        public static final int spinnerTarget=0x7f0b00b5;
+        public static final int spinnerRoofCoverMaterial=0x7f0b00b0;
+        public static final int spinnerRoofShape=0x7f0b00af;
+        public static final int spinnerTarget=0x7f0b00b9;
         public static final int spinnerTarget2=0x7f0b004a;
         public static final int spinner_reg_elev=0x7f0b0089;
         public static final int spinner_reg_plan=0x7f0b0088;
@@ -240,6 +243,7 @@ public final class R {
         public static final int strut=0x7f0b004f;
         public static final int strut2=0x7f0b0052;
         public static final int surveyComment=0x7f0b0023;
+        public static final int surveyorName=0x7f0b00ab;
         public static final int take_image=0x7f0b00a6;
         public static final int textView1=0x7f0b0004;
         public static final int textView2=0x7f0b0031;
@@ -268,7 +272,7 @@ public final class R {
         public static final int textview3=0x7f0b004d;
         public static final int time=0x7f0b0076;
         public static final int time_stamp=0x7f0b0077;
-        public static final int txtExample=0x7f0b00ad;
+        public static final int txtExample=0x7f0b00b1;
         public static final int txtExample2=0x7f0b004e;
     }
     public static final class layout {
@@ -303,12 +307,13 @@ public final class R {
         public static final int modified_ems98_6=0x7f03001c;
         public static final int modified_ems98_camera=0x7f03001d;
         public static final int occupancy_selectable_list=0x7f03001e;
-        public static final int roof_selectable_list=0x7f03001f;
-        public static final int selected_row=0x7f030020;
-        public static final int settings=0x7f030021;
-        public static final int simple_spinner_item=0x7f030022;
-        public static final int splash=0x7f030023;
-        public static final int structure=0x7f030024;
+        public static final int project_settings=0x7f03001f;
+        public static final int roof_selectable_list=0x7f030020;
+        public static final int selected_row=0x7f030021;
+        public static final int settings=0x7f030022;
+        public static final int simple_spinner_item=0x7f030023;
+        public static final int splash=0x7f030024;
+        public static final int structure=0x7f030025;
     }
     public static final class raw {
         public static final int about=0x7f050000;

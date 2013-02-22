@@ -33,12 +33,14 @@ import java.util.UUID;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -142,6 +144,47 @@ public class GemDbAdapter
 		}
 	}
 
+	
+
+	public Cursor getGemProjects()
+	{
+		try
+		{
+			String sql ="SELECT PROJ_NAME, PROJ_UID FROM GEM_PROJECT";
+			Cursor mCur = mDb.rawQuery(sql, null);
+			if (mCur!=null)
+			{
+				mCur.moveToNext();
+			}
+			return mCur;
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "getFavouritesData >>"+ mSQLException.toString());
+			throw mSQLException;
+		}
+	}
+	
+	public Cursor getGemProjectById(String uid)
+	{
+		try
+		{
+			String sql ="SELECT * FROM GEM_PROJECT WHERE PROJ_UID = '"+ uid + "'";
+			Cursor mCur = mDb.rawQuery(sql, null);
+			if (mCur!=null)
+			{
+				mCur.moveToNext();
+			}
+			return mCur;
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "getFavouritesData >>"+ mSQLException.toString());
+			throw mSQLException;
+		}
+	}
+	
+	
 	public void exportGemTableToCsv(){
 
 		File sd = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/db_snapshots");
@@ -605,12 +648,38 @@ public class GemDbAdapter
 		}
 		catch (SQLException mSQLException) 
 		{
-			Log.e(TAG, "insertTestData >>"+ mSQLException.toString());
+			Log.e(TAG, "insertFavourite >>"+ mSQLException.toString());
 			throw mSQLException;
 		}
 	}
 
 
+	
+	public void insertProject(String projectName, String surveyorName, String projectSummary, Date date)
+	{		
+		try
+		{					
+			ContentValues cv = new ContentValues();
+			UUID id = UUID.randomUUID();
+			cv.put("PROJ_UID", id.toString());
+			cv.put("PROJ_NAME", projectName.toString());
+			//cv.put("PROJ_DATE", surveyDate.toString());
+			cv.put("USER_MADE", surveyorName.toString());
+			cv.put("PROJ_SUMRY", projectSummary.toString());
+			cv.put("PROJ_DATE", date.toString());
+			
+			mDb.insert("GEM_PROJECT", null, cv);
+			String feedbackMsg = "Project saved\n " + projectName;
+			Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "insertProject >>"+ mSQLException.toString());
+			throw mSQLException;
+		}
+	}
+
+	
 
 	public void insertOrUpdateGemData(GEMSurveyObject gemGlobalVariables)
 	{		
@@ -618,9 +687,17 @@ public class GemDbAdapter
 		try
 		{								
 			ContentValues cv = new ContentValues();
-			cv.put("OBJ_UID", gemGlobalVariables.getUid());					
-			UUID id = UUID.randomUUID();
-			cv.put("PROJ_UID", id.toString()); //This should be a proj uid, define in a preferences thing
+			cv.put("OBJ_UID", gemGlobalVariables.getUid());		
+			
+			String projId = UUID.randomUUID().toString();
+			try {
+				SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this.mContext.getApplicationContext());
+				projId = settings.getString("projectIdTextPref", "0");
+			} catch (SQLException mSQLException) {
+				Toast.makeText(this.mContext.getApplicationContext(), "There was a problem getting a project id. Ensure a project ID is defined in the settings.", Toast.LENGTH_LONG).show();
+			}
+			
+			cv.put("PROJ_UID", projId.toString()); 
 
 			cv.put("X", Double.toString(gemGlobalVariables.getLon()));
 			cv.put("Y",  Double.toString(gemGlobalVariables.getLat()));
@@ -651,7 +728,7 @@ public class GemDbAdapter
 		}
 		catch (SQLException mSQLException) 
 		{
-			Log.e(TAG, "insertTestData >>"+ mSQLException.toString());
+			Log.e(TAG, "insert / Update GEM Object>>"+ mSQLException.toString());
 			Toast.makeText(this.mContext.getApplicationContext(), "There was a problem saving the GEM survey data", Toast.LENGTH_LONG).show();
 			throw mSQLException;
 		}		
@@ -686,7 +763,7 @@ public class GemDbAdapter
 			}
 			catch (SQLException mSQLException) 
 			{
-				Log.e(TAG, "insertTestData >>"+ mSQLException.toString());
+				Log.e(TAG, "insertMediaDetails >>"+ mSQLException.toString());
 				Toast.makeText(this.mContext.getApplicationContext(), "There was a problem saving the Media Detail", Toast.LENGTH_LONG).show();
 				throw mSQLException;
 			}
@@ -728,7 +805,7 @@ public class GemDbAdapter
 		}
 		catch (SQLException mSQLException) 
 		{
-			Log.e(TAG, "insertTestData >>"+ mSQLException.toString());
+			Log.e(TAG, "insertGEDData >>"+ mSQLException.toString());
 			Toast.makeText(this.mContext.getApplicationContext(), "There was a problem saving the GEM survey data", Toast.LENGTH_LONG).show();
 			throw mSQLException;
 		}
@@ -770,7 +847,7 @@ public class GemDbAdapter
 		}
 		catch (SQLException mSQLException) 
 		{
-			Log.e(TAG, "insertTestData >>"+ mSQLException.toString());
+			Log.e(TAG, "insertConseqData >>"+ mSQLException.toString());
 			Toast.makeText(this.mContext.getApplicationContext(), "There was a problem saving the GEM survey data", Toast.LENGTH_LONG).show();
 			throw mSQLException;
 		}

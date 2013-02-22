@@ -83,6 +83,7 @@ import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -148,7 +149,7 @@ public class EQForm_MapView extends Activity {
 	DecimalFormat dfRounded = new DecimalFormat("#0");
 
 
-	public boolean showGPSDetails = true;
+	public boolean showGPSDetails;
 
 	public boolean isEditingPoints = false;
 
@@ -585,11 +586,10 @@ public class EQForm_MapView extends Activity {
 			//System.arraycopy(baseMaps, 0, choiceList, 0, baseMaps.length);
 			//System.arraycopy(localBaseMaps, 0, choiceList, baseMaps.length, localBaseMaps.length);
 			int selected = -1; // does not select anything			
-
 			//final Cursor roofShapeAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(favouritesCursor);
 			ArrayList<DBRecord> buildingPositionAttributesList = GemUtilities.cursorToArrayList(favouritesCursor);
 			final ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(mContext,android.R.layout.simple_list_item_1,buildingPositionAttributesList );
-								
+
 			builder.setAdapter(spinnerArrayAdapter , new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog,	int which) {
@@ -599,10 +599,9 @@ public class EQForm_MapView extends Activity {
 					g.isExistingRecord = false;		
 					g.favouriteRecord = r.getAttributeValue();
 					//g.setUid(r.getAttributeValue());			
-					g.unsavedEdits = true;		
-					
-					if (DEBUG_LOG) Log.d(TAG,"next survey form");
+					g.unsavedEdits = true;
 
+					if (DEBUG_LOG) Log.d(TAG,"next survey form");
 					//Stop any geometry editing			
 					mWebView.loadUrl("javascript:startEditingMode(false)");
 					isEditingPoints = false;
@@ -611,11 +610,13 @@ public class EQForm_MapView extends Activity {
 					//Start the tabs view
 					Intent ModifiedEMS98 = new Intent (EQForm_MapView.this, MainTabActivity.class);
 					startActivity(ModifiedEMS98);
-				
+
+				}
+				public void onNothingSelected(AdapterView<?> parent) {
 				}
 			});
 
-			
+
 			/*
 			builder.setSingleChoiceItems(
 					choiceList, 
@@ -657,7 +658,7 @@ public class EQForm_MapView extends Activity {
 			//addPoint();
 			if (DEBUG_LOG) Log.d(TAG,"camera class");
 
-			
+
 			getSurveyPoint();
 			GEMSurveyObject g = (GEMSurveyObject)getApplication();
 			UUID mediaId = UUID.randomUUID();
@@ -763,22 +764,22 @@ public class EQForm_MapView extends Activity {
 		g.setLon(lon);
 		g.setLat(lat);
 		if (g.unsavedEdits) {
+			if (DEBUG_LOG) Log.d(TAG,"Unsaved edits. Setting existing record = true");
 			g.isExistingRecord = true;			
-		}  else {
+		}  else {			
 			if (gemId.equals("0")) {
+				if (DEBUG_LOG) Log.d(TAG,"gemId from map is 0. Generate a new UID");	
 				//Generate a uid for this survey point
 				UUID id = UUID.randomUUID();
 				g.setUid(id.toString());
 				g.isExistingRecord = false; 
 			} else {
+				if (DEBUG_LOG) Log.d(TAG,"Using gemId from map");
 				g.setUid(gemId);			
 				g.isExistingRecord = true;
 				g.unsavedEdits = true;
 			}
 		}
-
-
-
 
 
 		//g.putData("OBJ_UID", id.toString());
@@ -790,12 +791,18 @@ public class EQForm_MapView extends Activity {
 		prevSurveyPointLon = lon; 
 		prevSurveyPointLat = lat;
 
+
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				btn_startSurvey.setVisibility(View.VISIBLE);
-				btn_cancelSurveyPoint.setVisibility(View.VISIBLE);
-				btn_startSurveyFavourite.setVisibility(View.VISIBLE);
+				
+				//Only allow cancel and favouriting if not editing a point
+				if (!btn_edit_points.isChecked()) {
+					btn_cancelSurveyPoint.setVisibility(View.VISIBLE);	
+					btn_startSurveyFavourite.setVisibility(View.VISIBLE);
+				}
+				
 				//btn_takeCameraPhoto.setBackgroundResource(R.drawable.camera_green); //Disabled due to linking photo problem 21/02/13 
 				btn_edit_points.setEnabled(false);
 
@@ -1268,7 +1275,7 @@ public class EQForm_MapView extends Activity {
 		menu.add(0,1,0,"Settings");
 		menu.add(0,2,0,"Export DB Snapshot to SDCard");
 		menu.add(0,3,0,"Export CSV to SDCard");
-
+		menu.add(0,4,0,"Project / Survey Set Up");
 		return true;
 	}
 
@@ -1302,7 +1309,11 @@ public class EQForm_MapView extends Activity {
 			Toast.makeText(this, "Exporting Survey Data to CSV SDCard", Toast.LENGTH_SHORT).show();
 			mDbHelper.exportGemTableToCsv();
 			mDbHelper.close();
+			break;
+		case 4: //Export data 
 
+			Intent intent2 = new Intent(EQForm_MapView.this,Project_Settings.class);
+			startActivity(intent2);
 			break;
 		default:
 			break;
