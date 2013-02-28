@@ -36,6 +36,7 @@ import android.widget.Toast;
 
 
 
+
 public class DataBaseHelper extends SQLiteOpenHelper
 {	
 	private static String TAG = "DataBaseHelper"; // Tag just for the LogCat window
@@ -153,6 +154,21 @@ public class DataBaseHelper extends SQLiteOpenHelper
 		return mDataBase != null;
 
 	}
+	
+	public boolean deleteRecords() throws SQLException
+	{
+		String mPath = DB_PATH + DB_NAME;
+		Log.e(TAG, "deleting records");
+		mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.CREATE_IF_NECESSARY);
+		mDataBase.delete("GEM_OBJECT", null, null);
+		mDataBase.delete("GED", null, null);
+		mDataBase.delete("CONSEQUENCES", null, null);
+		mDataBase.delete("SETTINGS", null, null);
+		//mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+		Toast.makeText(this.mContext.getApplicationContext(), "Deleting records", Toast.LENGTH_LONG).show();
+		return true;
+
+	}
 
 	@Override
 	public synchronized void close() 
@@ -161,6 +177,7 @@ public class DataBaseHelper extends SQLiteOpenHelper
 			mDataBase.close();
 		super.close();
 	}
+	
 
 	@Override
 	public void onCreate(SQLiteDatabase arg0) {

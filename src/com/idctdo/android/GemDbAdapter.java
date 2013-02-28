@@ -185,6 +185,14 @@ public class GemDbAdapter
 	}
 	
 	
+
+	public void deleteRecords()
+	{
+		mDbHelper.openDataBase();
+		mDbHelper.deleteRecords();
+		mDbHelper.close();
+	}
+	
 	public void exportGemTableToCsv(){
 
 		File sd = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/db_snapshots");
@@ -664,7 +672,7 @@ public class GemDbAdapter
 			cv.put("PROJ_UID", id.toString());
 			cv.put("PROJ_NAME", projectName.toString());
 			//cv.put("PROJ_DATE", surveyDate.toString());
-			cv.put("USER_MADE", surveyorName.toString());
+			//cv.put("USER_MADE", surveyorName.toString());
 			cv.put("PROJ_SUMRY", projectSummary.toString());
 			cv.put("PROJ_DATE", date.toString());
 			
@@ -677,6 +685,41 @@ public class GemDbAdapter
 			Log.e(TAG, "insertProject >>"+ mSQLException.toString());
 			throw mSQLException;
 		}
+		
+		try
+		{					
+			ContentValues cv = new ContentValues();
+			UUID id = UUID.randomUUID();
+			cv.put("KEY", "CURRENT_USER");
+			cv.put("VALUE",surveyorName.toString());
+			mDb.insert("SETTINGS", null, cv);
+			String feedbackMsg = "Current User:\n " + surveyorName.toString();
+			Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "There was a problem inserting the current user into the database"+ mSQLException.toString());
+			throw mSQLException;
+		}
+		
+		try
+		{					
+			ContentValues cv = new ContentValues();
+			UUID id = UUID.randomUUID();
+			cv.put("KEY", "GEM_VERSION");
+			cv.put("VALUE","Android_2.0.1");
+			mDb.insert("SETTINGS", null, cv);
+			//String feedbackMsg = "Using GEM :\n " + surveyorName.toString();
+			//Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "There was a problem inserting the tool version into the database >>"+ mSQLException.toString());
+			throw mSQLException;
+		}
+		
+		
+		
 	}
 
 	

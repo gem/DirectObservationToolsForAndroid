@@ -38,8 +38,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 
-
-
 public class Height_Selection_Form extends Activity {
 	public boolean DEBUG_LOG = false; 
 	

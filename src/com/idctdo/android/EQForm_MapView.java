@@ -88,6 +88,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -319,6 +320,38 @@ public class EQForm_MapView extends Activity {
 		//mWebView.loadUrl("javascript:clearMyPositions()");
 
 		loadPrevSurveyPoints();
+	}
+
+
+	@Override
+	public void onBackPressed() {
+		// do something on back.
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		// set title
+		alertDialogBuilder.setTitle("Exit IDCT?");
+
+		// set dialog message
+		alertDialogBuilder
+		.setMessage("Are you sure you want to close this application?")
+		.setCancelable(false)
+		.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog,int id) {
+				EQForm_MapView.this.finish();
+			}
+		})
+		.setNegativeButton("No",new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog,int id) {
+				// if this button is clicked, just close
+				// the dialog box and do nothing
+
+			}
+		});
+		// create alert dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		// show it
+		alertDialog.show();
+
+		return;
 	}
 
 
@@ -616,21 +649,10 @@ public class EQForm_MapView extends Activity {
 				}
 			});
 
-
-			/*
-			builder.setSingleChoiceItems(
-					choiceList, 
-					selected, 
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog,	int which) {
-							if (DEBUG_LOG) Log.d(TAG,"selected favourite "+choiceList[which]);
-						}
-					});
-			 */
 			AlertDialog alert = builder.create();
 
 			alert.show();
+			favouritesCursor.close();
 
 			//Stop any geometry editing			
 			mWebView.loadUrl("javascript:startEditingMode(false)");
@@ -796,13 +818,13 @@ public class EQForm_MapView extends Activity {
 			@Override
 			public void run() {
 				btn_startSurvey.setVisibility(View.VISIBLE);
-				
+
 				//Only allow cancel and favouriting if not editing a point
 				if (!btn_edit_points.isChecked()) {
 					btn_cancelSurveyPoint.setVisibility(View.VISIBLE);	
 					btn_startSurveyFavourite.setVisibility(View.VISIBLE);
 				}
-				
+
 				//btn_takeCameraPhoto.setBackgroundResource(R.drawable.camera_green); //Disabled due to linking photo problem 21/02/13 
 				btn_edit_points.setEnabled(false);
 
@@ -1276,6 +1298,7 @@ public class EQForm_MapView extends Activity {
 		menu.add(0,2,0,"Export DB Snapshot to SDCard");
 		menu.add(0,3,0,"Export CSV to SDCard");
 		menu.add(0,4,0,"Project / Survey Set Up");
+		menu.add(0,5,0,"Clear Database");
 		return true;
 	}
 
@@ -1315,6 +1338,11 @@ public class EQForm_MapView extends Activity {
 			Intent intent2 = new Intent(EQForm_MapView.this,Project_Settings.class);
 			startActivity(intent2);
 			break;
+
+		case 5: //Delete record
+
+			deleteRecords();
+			break;
 		default:
 			break;
 		}
@@ -1322,6 +1350,65 @@ public class EQForm_MapView extends Activity {
 		return false;
 	}
 
+	public void deleteRecords(){
+		if (DEBUG_LOG) Log.d(TAG,"Deleting records");
+
+
+		// do something on back.
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+		// set title
+		alertDialogBuilder.setTitle("Clear database");
+		sb = new StringBuilder(512);
+		/* display some of the data in the TextView */
+		sb.append("This will clear the database of all survey data");
+		sb.append("\n\nProject details, favourites, building survey information, exposure, consequences and photograph links will be deleted.");
+		sb.append("\n\nOffline map tiles, photographs, database exports will be kept.");
+		sb.append("\n\nIf you want to proceed enter the word 'delete' in the text box and hit yes");
+		// set dialog message
+		alertDialogBuilder.setMessage(sb.toString());
+		// Use an EditText view to get user input.
+		final EditText input = new EditText(this);
+		//input.setId(TEXT_ID);
+		alertDialogBuilder.setView(input);
+
+		alertDialogBuilder
+		.setCancelable(false)
+		.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog,int id) {
+				// if this button is clicked, close
+				// current activity
+				//This is needed to trigger the focus changed events of EditText fields
+
+				String value = input.getText().toString();
+
+				if (value.equals("delete")) {
+
+					mDbHelper = new GemDbAdapter(getBaseContext());    
+					mDbHelper.open();	
+					//Toast.makeText(this, "Deleting Records", Toast.LENGTH_SHORT).show();
+					mDbHelper.deleteRecords();
+					mDbHelper.close();
+				} else {
+					Toast.makeText(getBaseContext(), "Entered wrong check value. Database not cleared.", Toast.LENGTH_SHORT).show();
+				}
+
+
+			}
+		})
+		.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog,int id) {
+				// if this button is clicked, just close
+				// the dialog box and do nothing
+				dialog.cancel();
+			}
+		});
+
+		// create alert dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		// show it
+		alertDialog.show();
+	}
 
 	public void HandleButton (View v){
 		if (DEBUG_LOG) Log.d(TAG,"pressed button");
