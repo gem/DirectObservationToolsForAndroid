@@ -1372,6 +1372,7 @@ public class EQForm_MapView extends Activity {
 		//input.setId(TEXT_ID);
 		alertDialogBuilder.setView(input);
 
+		
 		alertDialogBuilder
 		.setCancelable(false)
 		.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
@@ -1379,9 +1380,7 @@ public class EQForm_MapView extends Activity {
 				// if this button is clicked, close
 				// current activity
 				//This is needed to trigger the focus changed events of EditText fields
-
 				String value = input.getText().toString();
-
 				if (value.equals("delete")) {
 
 					mDbHelper = new GemDbAdapter(getBaseContext());    
@@ -1389,6 +1388,10 @@ public class EQForm_MapView extends Activity {
 					//Toast.makeText(this, "Deleting Records", Toast.LENGTH_SHORT).show();
 					mDbHelper.deleteRecords();
 					mDbHelper.close();
+					// Refresh main activity upon close of dialog box
+					Intent refresh = new Intent(EQForm_MapView.this, EQForm_MapView.class);
+					startActivity(refresh);
+					EQForm_MapView.this.finish();
 				} else {
 					Toast.makeText(getBaseContext(), "Entered wrong check value. Database not cleared.", Toast.LENGTH_SHORT).show();
 				}

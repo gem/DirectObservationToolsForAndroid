@@ -122,9 +122,9 @@ public class GemDbAdapter
 			throw mSQLException;
 		}
 	}
-	
-	
-	
+
+
+
 	public Cursor getGemFavourites()
 	{
 		try
@@ -144,7 +144,7 @@ public class GemDbAdapter
 		}
 	}
 
-	
+
 
 	public Cursor getGemProjects()
 	{
@@ -164,7 +164,7 @@ public class GemDbAdapter
 			throw mSQLException;
 		}
 	}
-	
+
 	public Cursor getGemProjectById(String uid)
 	{
 		try
@@ -183,8 +183,8 @@ public class GemDbAdapter
 			throw mSQLException;
 		}
 	}
-	
-	
+
+
 
 	public void deleteRecords()
 	{
@@ -192,7 +192,7 @@ public class GemDbAdapter
 		mDbHelper.deleteRecords();
 		mDbHelper.close();
 	}
-	
+
 	public void exportGemTableToCsv(){
 
 		File sd = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/db_snapshots");
@@ -219,25 +219,33 @@ public class GemDbAdapter
 			CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
 			//SQLiteDatabase db = dbhelper.getReadableDatabase();
 			Cursor curCSV = getGemObjects();
-			csvWrite.writeNext(curCSV.getColumnNames());
-			while(curCSV.moveToNext())
-			{
-				//Which column you want to exprort
-				//String arrStr[] ={curCSV.getString(0),curCSV.getString(1), curCSV.getString(2),curCSV.getString(3),curCSV.getString(4), curCSV.getString(5)};
-				int x  = 0;
-				String[] arrStr = new String[curCSV.getColumnCount()];
-				//String[] arrStr; // elements are Strings
-				//arrStr = new String[]
-				//while( x < curCSV.getColumnCount()-2 ){
-				//	arrStr[x] =  curCSV.getString(x);
-				// }
 
-				for (int i = 0; i < curCSV.getColumnCount(); i = i + 1) {
+			Log.d("IDCT","IDCT DB Export cursor count: " + curCSV.getCount());
+			if (curCSV != null) {
+				csvWrite.writeNext(curCSV.getColumnNames());
+				curCSV.moveToFirst();				
+				if (curCSV.getCount() > 0 ){
+					//Write the first record in the cursor as .writeNext will end up skipping a record
+					String[] arrStr = new String[curCSV.getColumnCount()];
+					for (int i = 0; i < curCSV.getColumnCount(); i = i + 1) {
+						arrStr[i] = curCSV.getString(i);
+					}
+					csvWrite.writeNext(arrStr);
+					
+					//Now loop over the rest of the cursor
+					curCSV.moveToFirst();	
+					while(curCSV.moveToNext())
+					{
 
-					arrStr[i] = curCSV.getString(i);
+						String[] arrStr2 = new String[curCSV.getColumnCount()];
+						for (int i = 0; i < curCSV.getColumnCount(); i = i + 1) {
+							arrStr2[i] = curCSV.getString(i);
+						}
+						csvWrite.writeNext(arrStr2);
+						Log.d("IDCT","IDCT DB Export" + Arrays.toString(arrStr2));
+					}
 				}
-				csvWrite.writeNext(arrStr);
-				Log.d("IDCT","IDCT DB Export" + Arrays.toString(arrStr));
+
 			}
 			csvWrite.close();
 			curCSV.close();
@@ -662,7 +670,7 @@ public class GemDbAdapter
 	}
 
 
-	
+
 	public void insertProject(String projectName, String surveyorName, String projectSummary, Date date)
 	{		
 		try
@@ -675,7 +683,7 @@ public class GemDbAdapter
 			//cv.put("USER_MADE", surveyorName.toString());
 			cv.put("PROJ_SUMRY", projectSummary.toString());
 			cv.put("PROJ_DATE", date.toString());
-			
+
 			mDb.insert("GEM_PROJECT", null, cv);
 			String feedbackMsg = "Project saved\n " + projectName;
 			Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
@@ -685,7 +693,7 @@ public class GemDbAdapter
 			Log.e(TAG, "insertProject >>"+ mSQLException.toString());
 			throw mSQLException;
 		}
-		
+
 		try
 		{					
 			ContentValues cv = new ContentValues();
@@ -701,7 +709,7 @@ public class GemDbAdapter
 			Log.e(TAG, "There was a problem inserting the current user into the database"+ mSQLException.toString());
 			throw mSQLException;
 		}
-		
+
 		try
 		{					
 			ContentValues cv = new ContentValues();
@@ -717,12 +725,12 @@ public class GemDbAdapter
 			Log.e(TAG, "There was a problem inserting the tool version into the database >>"+ mSQLException.toString());
 			throw mSQLException;
 		}
-		
-		
-		
+
+
+
 	}
 
-	
+
 
 	public void insertOrUpdateGemData(GEMSurveyObject gemGlobalVariables)
 	{		
@@ -731,7 +739,7 @@ public class GemDbAdapter
 		{								
 			ContentValues cv = new ContentValues();
 			cv.put("OBJ_UID", gemGlobalVariables.getUid());		
-			
+
 			String projId = UUID.randomUUID().toString();
 			try {
 				SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this.mContext.getApplicationContext());
@@ -739,7 +747,7 @@ public class GemDbAdapter
 			} catch (SQLException mSQLException) {
 				Toast.makeText(this.mContext.getApplicationContext(), "There was a problem getting a project id. Ensure a project ID is defined in the settings.", Toast.LENGTH_LONG).show();
 			}
-			
+
 			cv.put("PROJ_UID", projId.toString()); 
 
 			cv.put("X", Double.toString(gemGlobalVariables.getLon()));
