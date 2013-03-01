@@ -1396,7 +1396,6 @@ public class EQForm_MapView extends Activity {
 					Toast.makeText(getBaseContext(), "Entered wrong check value. Database not cleared.", Toast.LENGTH_SHORT).show();
 				}
 
-
 			}
 		})
 		.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {

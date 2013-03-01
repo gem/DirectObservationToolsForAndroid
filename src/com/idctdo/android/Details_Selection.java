@@ -140,8 +140,8 @@ public class Details_Selection extends Activity {
 			
 			
 			spinnerBuildingPosition = (Spinner)  findViewById(R.id.spinnerBuildingPosition);
-			final Cursor roofShapeAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(buildingPositionAttributeDictionary);
-			ArrayList<DBRecord> buildingPositionAttributesList = GemUtilities.cursorToArrayList(roofShapeAttributeDictionaryCursor);
+			final Cursor buildingPositionAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(buildingPositionAttributeDictionary);
+			ArrayList<DBRecord> buildingPositionAttributesList = GemUtilities.cursorToArrayList(buildingPositionAttributeDictionaryCursor);
 			ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,buildingPositionAttributesList );
 			spinnerArrayAdapter.setDropDownViewResource(R.layout.simple_spinner_item);
 			spinnerBuildingPosition.setAdapter(spinnerArrayAdapter);
@@ -163,7 +163,7 @@ public class Details_Selection extends Activity {
 				public void onNothingSelected(AdapterView<?> parent) {
 				}
 			});	
-					
+			buildingPositionAttributeDictionaryCursor.close();
 			
 			spinnerBuildingShape = (Spinner)  findViewById(R.id.spinnerBuildingShape);
 			final Cursor buildingShapeAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(buildingShapeAttributeDictionary);
@@ -189,7 +189,7 @@ public class Details_Selection extends Activity {
 				public void onNothingSelected(AdapterView<?> parent) {
 				}
 			});	
-			
+			buildingShapeAttributeDictionaryCursor.close();
 			
 			spinnerNonStructuralExteriorWalls = (Spinner)  findViewById(R.id.spinnerNonStructuralExteriorWalls);
 			final Cursor nonStructuralExteriorWallsDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(nonStructuralExteriorWallsDictionary);
@@ -216,8 +216,9 @@ public class Details_Selection extends Activity {
 				public void onNothingSelected(AdapterView<?> parent) {
 				}
 			});					
+			nonStructuralExteriorWallsDictionaryCursor.close();
 			
-			roofShapeAttributeDictionaryCursor.close();
+			
 			mDbHelper.close();
 			
 			

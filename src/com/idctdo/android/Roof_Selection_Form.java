@@ -162,7 +162,8 @@ public class Roof_Selection_Form extends Activity {
 				public void onNothingSelected(AdapterView<?> parent) {
 				}
 			});	
-			roofShapeAttributeDictionaryCursor.close();
+			roofCoverMaterialAttributeDictionaryCursor.close();
+		
 			
 			
 			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
