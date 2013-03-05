@@ -49,8 +49,8 @@ import android.widget.Toast;
 
 public class GemDbAdapter 
 {
-	public boolean DEBUG_LOG = false; 
-
+	public boolean DEBUG_LOG = true; 
+	
 	protected static final String TAG = "IDCT";
 
 	private final Context mContext;
@@ -821,7 +821,7 @@ public class GemDbAdapter
 		}
 
 
-		Log.d(TAG, "Trying to insert GED data");
+		Log.d(TAG, "Trying to insert/update GED data");
 
 		try
 		{								
@@ -862,7 +862,7 @@ public class GemDbAdapter
 		}
 
 
-		Log.d(TAG, "Trying to insert CONSEQUENCES data");
+		Log.d(TAG, "Trying to insert/update CONSEQUENCES data");
 
 		try
 		{								

@@ -72,7 +72,7 @@ import android.widget.Toast;
 
 public class MainTabActivity extends TabActivity {
 	private static final String TAG = "IDCT";
-	public boolean DEBUG_LOG = false; 
+	public boolean DEBUG_LOG = true; 
 
 	public TabHost tabHost;
 
@@ -101,8 +101,7 @@ public class MainTabActivity extends TabActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_tab_activity);
 
-
-
+		
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
 		boolean isFavourite=false;
 		if (GemUtilities.isBlank(surveyDataObject.favouriteRecord)) {
@@ -115,16 +114,14 @@ public class MainTabActivity extends TabActivity {
 		surveyDataObject.unsavedEdits = true;
 
 		if (surveyDataObject.isExistingRecord || isFavourite) {
-
-
-			if (DEBUG_LOG) Log.d(TAG, "Editing existing record or starting from favourite. Going to get vars.");
+			if (DEBUG_LOG) Log.d(TAG, "EDITING EXISTING RECORD OR USING FAVOURITE");
 			String idToLoad =  "";
 			if (surveyDataObject.isExistingRecord) { 
 				idToLoad = surveyDataObject.getUid();
-				if (DEBUG_LOG) Log.d(TAG, "Editing exisiting record.");
+				if (DEBUG_LOG) Log.d(TAG, "EDITING EXISTING RECORD");
 			} else {
 				idToLoad = surveyDataObject.favouriteRecord;
-				if (DEBUG_LOG) Log.d(TAG, "Using favourite as a template.");
+				if (DEBUG_LOG) Log.d(TAG, "SING FAVOURITE AS TEMPLATE");
 
 			}
 			mDbHelper = new GemDbAdapter(getBaseContext());
@@ -214,6 +211,9 @@ public class MainTabActivity extends TabActivity {
 				}
 			}			
 			consequencesDataCursor.close();
+			
+		} else {
+			if (DEBUG_LOG) Log.d(TAG,"STARTING FRESH SURVEY FORMS");
 		}
 
 		ressources = getResources(); 
@@ -242,7 +242,7 @@ public class MainTabActivity extends TabActivity {
 
 	}
 
-
+/*
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
@@ -250,11 +250,15 @@ public class MainTabActivity extends TabActivity {
 		Log.d("IDCT", "Main Tab Activity Pausing .....");
 
 	}
+	*/
+	
+	/*
 	@Override
 	protected void onResume() {
 		super.onResume();
 		Log.d("IDCT", "Main Tab Activity resuming .....");
 	}
+	*/
 	public static boolean createDirIfNotExists(String path) {
 		boolean ret = true;
 
@@ -565,7 +569,6 @@ public class MainTabActivity extends TabActivity {
 	public void backButtonPressed() {
 		// do something on back.
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
 		// set title
 		alertDialogBuilder.setTitle("Unsaved Survey Observation");
 
@@ -588,8 +591,9 @@ public class MainTabActivity extends TabActivity {
 				//This is needed to trigger the focus changed events of EditText fields
 				tabHost.setCurrentTab(0);
 				saveData();
+				if (DEBUG_LOG) Log.d(TAG, "SAVE DATA FINISHED. Finish the activity");		
 				MainTabActivity.this.finish();
-
+				if (DEBUG_LOG) Log.d(TAG, "Acitivity should be finished");	
 			}
 		})
 		.setNegativeButton("No",new DialogInterface.OnClickListener() {

@@ -172,6 +172,7 @@ function init(){
    
 	
 	
+	/*
     var gphy = new OpenLayers.Layer.Google(
         "Google Physical",
         {type: google.maps.MapTypeId.TERRAIN}
@@ -189,7 +190,7 @@ function init(){
         {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
     );
 	
-	
+	*/
 	
 	var bingRoads = new OpenLayers.Layer.Bing({
 		key: bingApiKey,
@@ -357,6 +358,18 @@ function init(){
 	if (DEBUG_DISPLAY_PANZOOM) {
 		map.addControl(new OpenLayers.Control.PanZoomBar());
 	}
+
+
+	if (DEBUG_SHOW_MOUSE_POS) {
+		map.events.on({
+		        "moveend":function(){
+				//alert(map.getCenter().toString());
+					var a = document.getElementById("mapCenterCoords");
+					a.innerHTML = map.getCenter().transform(map.getProjectionObject(),new OpenLayers.Projection("EPSG:4326")).toString();
+		        }
+		    });
+	}
+		 
 		 
 	 
 	map.addControl( new OpenLayers.Control.LoadingPanel());

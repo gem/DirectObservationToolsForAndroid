@@ -17,6 +17,7 @@ package com.idctdo.android;
 
 
 
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -1494,8 +1495,6 @@ public class EQForm_MapView extends Activity {
 	public class MyLocationListener implements LocationListener	{
 		@Override
 		public void onLocationChanged(Location loc)	{
-
-
 			if (isBetterLocation(loc,currentLocation)) {
 				if (DEBUG_LOG) Log.d(TAG,"New location is better. Updating it");
 				currentLocation = loc;
@@ -1564,9 +1563,7 @@ public class EQForm_MapView extends Activity {
 
 				sb2.append("Time: ");
 				sb2.append(DateFormat.format("hh:mm:ssaa", loc.getTime()));				
-				sb2.append('\n');				
-
-
+				sb2.append('\n');			
 
 				text_view_gpsInfo2.setText(sb2.toString());
 
@@ -1700,7 +1697,10 @@ public class EQForm_MapView extends Activity {
 				//return false;
 			}
 
-
+			
+			
+			
+			
 			// Check whether the new location fix is more or less accurate
 			int accuracyDelta = (int) (location.getAccuracy() - currentBestLocation.getAccuracy());
 			boolean isLessAccurate = accuracyDelta > 0;
