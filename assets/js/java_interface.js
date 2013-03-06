@@ -178,6 +178,7 @@ function nextLayer(index) {
 function setMapLayer(index) {
 	var layers = map.layers;
 	map.setBaseLayer(layers[index]);
+	
 }
 
 
@@ -192,10 +193,6 @@ function addOfflineBaseMap(tileLocationPath,zoom) {
 	var sdtiles = new OpenLayers.Layer.XYZ(
 		"OpenStreetMap (cached)",
 		[
-			//"file:////mnt/sdcard/maptiles/mapnik/${z}/${x}/${y}.png.tile"
-			//"file:////mnt/sdcard/maptiles/binghybrid/${z}/${x}/${y}.png.tile"
-			//"tiles/${z}/${x}/${y}.png.tile"
-			//"file:////mnt/sdcard/idctdo/maptiles2/sdtiles/${z}/${x}/${y}.png.tile"
 			tileLocationPath + "${z}/${x}/${y}.png.tile"
 		], {
 
@@ -205,7 +202,7 @@ function addOfflineBaseMap(tileLocationPath,zoom) {
 			sphericalMercator: true,
 			transitionEffect: "resize",
 			buffer: 1,
-			numZoomLevels: 17
+			numZoomLevels: 18
 		}
 	);	
 	map.addLayer(sdtiles);

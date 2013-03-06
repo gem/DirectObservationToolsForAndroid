@@ -50,7 +50,7 @@ import android.widget.Toast;
 public class GemDbAdapter 
 {
 	public boolean DEBUG_LOG = true; 
-	
+
 	protected static final String TAG = "IDCT";
 
 	private final Context mContext;
@@ -231,7 +231,7 @@ public class GemDbAdapter
 						arrStr[i] = curCSV.getString(i);
 					}
 					csvWrite.writeNext(arrStr);
-					
+
 					//Now loop over the rest of the cursor
 					curCSV.moveToFirst();	
 					while(curCSV.moveToNext())
@@ -734,7 +734,8 @@ public class GemDbAdapter
 
 	public void insertOrUpdateGemData(GEMSurveyObject gemGlobalVariables)
 	{		
-		Log.d(TAG, "Trying to insert/update Gem data");
+		Log.d(TAG, "TRYING TO INSERT OR UPDATE GEM DATA");
+		if (DEBUG_LOG) Log.d(TAG,"gemGlobalVariables.isExistingRecord: " + gemGlobalVariables.isExistingRecord);	
 		try
 		{								
 			ContentValues cv = new ContentValues();

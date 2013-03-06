@@ -3,12 +3,12 @@ var obj;
 var testll;
 
 var DEBUG_MODE = false;
-var DEBUG_SHOW_DIFF_LAYERS = false;
-var DEBUG_SHOW_MOUSE_POS = false;
+var DEBUG_SHOW_DIFF_LAYERS = true;
+var DEBUG_SHOW_MOUSE_POS = true;
 var DEBUG_DISPLAY_OVERVIEW = false;
-var DEBUG_DISPLAY_PANZOOM = false;
+var DEBUG_DISPLAY_PANZOOM = true;
 var DEBUG_FREE_ROTATE = false;
-var DEBUG_SHOW_LAYER_SWITCHER = false;
+var DEBUG_SHOW_LAYER_SWITCHER = true;
 
 var DEBUG_USE_BROWSER_CACHING = false;
 
@@ -21,8 +21,7 @@ var mapMaxZoom = 20;
 
 // avoid pink tiles
 OpenLayers.IMAGE_RELOAD_ATTEMPTS = 3;
-
- OpenLayers.Util.onImageLoadErrorColor = "transparent";
+//OpenLayers.Util.onImageLoadErrorColor = "transparent";
 
 var map, vectors, myPositions, locationPointLayer, prevSurveyPoints, vectorEditing, controls;
 
@@ -128,9 +127,7 @@ OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {
 			
 
 function init(){
-    var apiKey = "AqTGBsziZHIJYYxgivLBf0hVdrAk9mWO5cQcb8Yux8sW5M8c8opEC2lZqKR1ZZXf";
 
-	
 	map = new OpenLayers.Map({
 		div: "map",
 		projection: new OpenLayers.Projection("EPSG:900913"),
@@ -153,9 +150,6 @@ function init(){
 		map.addControl(new OpenLayers.Control.LayerSwitcher({ roundedCornerColor : '#000000' }));
     }
 	
-	//var mapnik = new OpenLayers.Layer.OSM();
-		
-
             
 	 var mapnik =   new OpenLayers.Layer.OSM("OpenStreetMap", 
             [
@@ -218,24 +212,6 @@ function init(){
 	//myVectorLayer.addFeatures(GetFeaturesFromKMLString( ));
 	
 
-	var streets = new OpenLayers.Layer.XYZ(
-		"MapBox Streets",
-		[
-			"http://a.tiles.mapbox.com/v3/mapbox.mapbox-streets/${z}/${x}/${y}.png",
-			"http://b.tiles.mapbox.com/v3/mapbox.mapbox-streets/${z}/${x}/${y}.png",
-			"http://c.tiles.mapbox.com/v3/mapbox.mapbox-streets/${z}/${x}/${y}.png",
-			"http://d.tiles.mapbox.com/v3/mapbox.mapbox-streets/${z}/${x}/${y}.png"
-		], {
-			attribution: "Tiles © <a href='http://mapbox.com/'>MapBox</a> | " + 
-				"Data © <a href='http://www.openstreetmap.org/'>OpenStreetMap</a> " +
-				"and contributors, CC-BY-SA",
-			sphericalMercator: true,
-			transitionEffect: "resize",
-			buffer: 1,
-			numZoomLevels: 16
-		}
-	);
-
 
 	var cached = new OpenLayers.Layer.XYZ(
 		"tiles 2",
@@ -248,7 +224,7 @@ function init(){
 			sphericalMercator: true,
 			transitionEffect: "resize",
 			buffer: 1,
-			numZoomLevels: 16
+			numZoomLevels: 18
 		}
 	);
 	
@@ -267,25 +243,9 @@ function init(){
 			sphericalMercator: true,
 			transitionEffect: "resize",
 			buffer: 1,
-			numZoomLevels: 16
+			numZoomLevels: 18
 		}
 	);
-	
-	var bingHybridCached = new OpenLayers.Layer.XYZ(
-		"Bing Aerial With Labels Cached",
-		[
-			"file:////mnt/sdcard/maptiles/binghybrid/${z}/${x}/${y}.png.tile"
-		], {
-			attribution: "Tiles © " + 
-				"Data © Microsoft" +
-				" ",
-			sphericalMercator: true,
-			transitionEffect: "resize",
-			buffer: 1,
-			numZoomLevels: 16
-		}
-	);
-	  
 					  
 
 	var tiles3 = new OpenLayers.Layer.XYZ(
@@ -297,17 +257,15 @@ function init(){
 	);
 
 					
-	var localTMSTiles = new OpenLayers.Layer.XYZ("OpenLayers.Layer.XYZ",
+	var localTMSTiles = new OpenLayers.Layer.XYZ("Local TMS Tiles",
 	"tiles/",
 	{ 
 		type: 'png', 
 		getURL: xyz_getTileURL, 
 		alpha: true, 
-		isBaseLayer: false,
+		isBaseLayer: true,
 		numZoomLevels: 18	
 	});
-
-			
 			
 
 
@@ -351,25 +309,22 @@ function init(){
 	    cacheRead = new OpenLayers.Control.CacheRead();
 	    map.addControl(cacheRead);    
 	}
-    
    
-	
 	
 	if (DEBUG_DISPLAY_PANZOOM) {
 		map.addControl(new OpenLayers.Control.PanZoomBar());
 	}
-
 
 	if (DEBUG_SHOW_MOUSE_POS) {
 		map.events.on({
 		        "moveend":function(){
 				//alert(map.getCenter().toString());
 					var a = document.getElementById("mapCenterCoords");
-					a.innerHTML = map.getCenter().transform(map.getProjectionObject(),new OpenLayers.Projection("EPSG:4326")).toString();
+					var ll = map.getCenter().transform(map.getProjectionObject(),new OpenLayers.Projection("EPSG:4326"));
+					a.innerHTML = "Lat: " + Math.round(ll.lat*1000)/1000  + " , lon:" + Math.round(ll.lon*1000)/1000 + " Zoom: " + map.getZoom();
 		        }
 		    });
-	}
-		 
+	}	 
 		 
 	 
 	map.addControl( new OpenLayers.Control.LoadingPanel());
@@ -379,8 +334,6 @@ function init(){
 	for (var i=map.layers.length-1; i>=0; --i) {
 		map.layers[i].animationEnabled = true;
 	}
-
-
 	
     // Google.v3 uses EPSG:900913 as projection, so we have to
     // transform our coordinates
@@ -430,7 +383,6 @@ function init(){
 	});	
 	map.addControl(newSurveyPointModifyControl);
 	newSurveyPointModifyControl.activate();
-
 
 
 
@@ -568,9 +520,7 @@ function init(){
     ), 5);
     
 	
-	
-	//locateMe(52.95185706277731, -1.182725429534912,50,true);
-	
+		
 	var defaultLL = new OpenLayers.LonLat(-1.182725429534912,52.95185706277731);
 	defaultLL.transform(	new OpenLayers.Projection("EPSG:4326"),	map.getProjectionObject());
 	map.setCenter(defaultLL, 6);

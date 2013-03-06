@@ -549,7 +549,7 @@ public class MainTabActivity extends TabActivity {
 		//Toast.makeText(getApplicationContext(), "Survey data saved", Toast.LENGTH_SHORT).show();
 		surveyDataObject.clearGemSurveyObject();
 		surveyDataObject.unsavedEdits = false;
-		return false;
+		return true;
 	}
 
 	public void saveSelectedAdapterData(String attributeKey,SelectedAdapter selectedAdapter) {
@@ -591,7 +591,10 @@ public class MainTabActivity extends TabActivity {
 				//This is needed to trigger the focus changed events of EditText fields
 				tabHost.setCurrentTab(0);
 				saveData();
-				if (DEBUG_LOG) Log.d(TAG, "SAVE DATA FINISHED. Finish the activity");		
+				if (DEBUG_LOG) Log.d(TAG, "SAVE DATA FINISHED. Finish the activity");
+				GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
+				surveyDataObject.clearGemSurveyObject();
+				surveyDataObject.unsavedEdits = false;
 				MainTabActivity.this.finish();
 				if (DEBUG_LOG) Log.d(TAG, "Acitivity should be finished");	
 			}

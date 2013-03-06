@@ -98,7 +98,7 @@ import android.widget.ToggleButton;
 
 public class EQForm_MapView extends Activity {
 
-	public boolean DEBUG_LOG = false; 
+	public boolean DEBUG_LOG = true; 
 
 	WebView mWebView;
 	/** Called when the activity is first created. */
@@ -123,7 +123,7 @@ public class EQForm_MapView extends Activity {
 
 	public Location currentLocation; 
 	public LocationManager locationManager; 
-	public LocationListener mlocListener = new MyLocationListener();
+	public LocationListener mlocListener;
 	public double currentLatitude;
 	public double currentLongitude;
 	public double currentLocationAccuracy;
@@ -261,12 +261,9 @@ public class EQForm_MapView extends Activity {
 		PreferenceManager.getDefaultSharedPreferences(this);
 		//SharedPreferences settings = getSharedPreferences("R.xml.prefs"), 0);
 
-
-
-
+		mlocListener = new MyLocationListener();
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
 
 
 		btn_locateMe = (Button)findViewById(R.id.btn_locate_me);
@@ -393,15 +390,18 @@ public class EQForm_MapView extends Activity {
 		 */
 
 
-
+		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		
 		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
 			Toast.makeText(this, "GPS is Enabled in your device", Toast.LENGTH_SHORT).show();
 		}else{
 			showGPSDisabledAlertToUser();
 		}
 
-
+		if (DEBUG_LOG) Log.d("IDCT","Requesting location updates for network");
+		
 		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
+		if (DEBUG_LOG) Log.d("IDCT","Requesting location updates for GPS");
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
 
 		//currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -413,12 +413,17 @@ public class EQForm_MapView extends Activity {
 
 		mWebView.loadUrl("javascript:clearMyPositions()");
 		loadPrevSurveyPoints();
-
+		
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
 		//g.putData("OBJ_UID", id.toString());
 		if (DEBUG_LOG) Log.d(TAG,"RESUMING MAP, global vars " + g.getLon()+ " lat: " + g.getLat());
-		mWebView.loadUrl("javascript:locateMe("+ g.getLat()+","+g.getLon()+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");
-
+		
+		if (g.getLat() == 0 && g.getLon() == 0) {  
+			//mWebView.loadUrl("javascript:locateMe("+ g.getLat()+","+g.getLon()+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");
+			
+		}else {
+			mWebView.loadUrl("javascript:locateMe("+ g.getLat()+","+g.getLon()+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");			
+		}
 
 		if (g.unsavedEdits) {
 			//Draw a candidate survey point
@@ -473,6 +478,7 @@ public class EQForm_MapView extends Activity {
 		super.onRestart();
 		if (DEBUG_LOG) Log.d(TAG, "On Restart .....");
 	}
+	
 
 
 	private OnClickListener zoomInListener = new OnClickListener() {
@@ -772,9 +778,6 @@ public class EQForm_MapView extends Activity {
 
 
 
-
-
-
 	//Called from JS with point location of survey
 	//This point forms the survey point and should be saved in the db
 	//It could be a new survey point or a new geom of an exisiting one 
@@ -786,17 +789,32 @@ public class EQForm_MapView extends Activity {
 		if (DEBUG_LOG) Log.d(TAG,"Currently got unsaved edits? " + g.unsavedEdits);
 		g.setLon(lon);
 		g.setLat(lat);
+		
+		
 		if (g.unsavedEdits) {
-			if (DEBUG_LOG) Log.d(TAG,"Unsaved edits. Setting existing record = true");
-			g.isExistingRecord = true;			
-		}  else {			
+			if (DEBUG_LOG) Log.d(TAG,"Got unsaved edits");	
+			//Check if we're editing a point i.e. we've clicked it and got its id. If we are then keep the uid. Else generate new one			
+			//if (gemId.equals("0")) {
+			if (!g.isExistingRecord) {
+				if (DEBUG_LOG) Log.d(TAG,"Got unsaved edits but generate a new UID");	
+				//Generate a uid for this survey point
+				UUID id = UUID.randomUUID();
+				g.setUid(id.toString());
+				g.isExistingRecord = false; 
+			} else {
+				if (DEBUG_LOG) Log.d(TAG,"Unsaved edits. Setting existing record = true");
+				g.isExistingRecord = true;
+			}
+		}  else {		
+			if (DEBUG_LOG) Log.d(TAG,"Not got unsaved edits");			
 			if (gemId.equals("0")) {
 				if (DEBUG_LOG) Log.d(TAG,"gemId from map is 0. Generate a new UID");	
 				//Generate a uid for this survey point
 				UUID id = UUID.randomUUID();
 				g.setUid(id.toString());
 				g.isExistingRecord = false; 
-			} else {
+				
+			} else { //Then we've tapped existing point. Set it's id, flag as existing record 
 				if (DEBUG_LOG) Log.d(TAG,"Using gemId from map");
 				g.setUid(gemId);			
 				g.isExistingRecord = true;
@@ -906,7 +924,7 @@ public class EQForm_MapView extends Activity {
 		return false;
 	}
 	public boolean getSurveyPoint() {
-		if (DEBUG_LOG) Log.d(TAG,"getting point location from Openlayers");
+		if (DEBUG_LOG) Log.d(TAG,"getting point location from Openlayer. isEditingPoints: s + isEditingPoints");
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
 		int data=surveyDataObject.getData();
 		if (DEBUG_LOG) Log.d(TAG,"TEST GLOBALS: " + data);
@@ -939,7 +957,7 @@ public class EQForm_MapView extends Activity {
 		Cursor mCursor = mDbHelper.getGemObjectsForMap();
 		mDbHelper.close();
 
-		if (DEBUG_LOG) Log.d("IDCT","Gem Map Objects cursor " + DatabaseUtils.dumpCursorToString(mCursor));
+		//if (DEBUG_LOG) Log.d("IDCT","Gem Map Objects cursor " + DatabaseUtils.dumpCursorToString(mCursor));
 		//ArrayList<DBRecord> gemObjectsList = GemUtilities.cursorToArrayList(gemObjects);
 		//Log.d("IDCT","Gem Map Objects List " + gemObjectsList.get(gemObjectsList.size()-1));
 		mCursor.moveToFirst();
@@ -947,7 +965,7 @@ public class EQForm_MapView extends Activity {
 		mWebView.loadUrl("javascript:clearMySurveyPoints()");//Inefficient	
 
 		while(!mCursor.isAfterLast()) {
-			if (DEBUG_LOG) Log.d("IDCT","Gem Map Objects cursor " + mCursor.getDouble(1) + " , " + mCursor.getDouble(2) + " , " + mCursor.getString(0));
+			//if (DEBUG_LOG) Log.d("IDCT","Gem Map Objects cursor " + mCursor.getDouble(1) + " , " + mCursor.getDouble(2) + " , " + mCursor.getString(0));
 
 			mWebView.loadUrl("javascript:loadSurveyPointsOnMap("+ mCursor.getDouble(1)+","+mCursor.getDouble(2)+", \"" + mCursor.getString(0) +"\")");
 			mCursor.moveToNext();			
@@ -1185,11 +1203,12 @@ public class EQForm_MapView extends Activity {
 						public void onClick(DialogInterface dialog,	int which) {
 							if (DEBUG_LOG) Log.d(TAG,"selected "+choiceList[which]);
 							int index = 1;
-							if (which > 3) {
+							if (which > 3) { //If not one of the standard OSM or Bing web access layers								
 								//String tileLocationPath = "file:////mnt/sdcard/idctdo/maptiles/laquila_mapquest/";
 								String tileLocationPath = sdCardPath +  "idctdo/maptiles/" + choiceList[which] +"/";
-								String zoomLevel = "17";						
+								String zoomLevel = "18";				
 
+								
 								File extStore = Environment.getExternalStorageDirectory();
 								File xmlFile = new File(extStore.getAbsolutePath() + "/idctdo/maptiles/" + choiceList[which] +"/tilemapresource.xml");
 
@@ -1201,7 +1220,9 @@ public class EQForm_MapView extends Activity {
 									if (DEBUG_LOG) Log.d(TAG,"No TMS Resource file. Try loading zxy tiles");
 									mWebView.loadUrl("javascript:addOfflineBaseMap(\""+ tileLocationPath + "\" , \"" + zoomLevel +"\")");
 								}
-							} else {
+							} else {							
+								
+								
 								mWebView.loadUrl("javascript:setMapLayer("+ which +")");
 							}
 						}
@@ -1373,7 +1394,7 @@ public class EQForm_MapView extends Activity {
 		//input.setId(TEXT_ID);
 		alertDialogBuilder.setView(input);
 
-		
+
 		alertDialogBuilder
 		.setCancelable(false)
 		.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
@@ -1582,11 +1603,10 @@ public class EQForm_MapView extends Activity {
 
 
 		@Override
-
 		public void onProviderDisabled(String provider)
 
 		{
-			if (DEBUG_LOG) Log.d(TAG,"Provider disabled");
+			if (DEBUG_LOG) Log.d(TAG,"Provider disabled: " + provider );
 
 			Toast.makeText( getApplicationContext(),
 
@@ -1615,7 +1635,7 @@ public class EQForm_MapView extends Activity {
 
 			Toast.makeText( getApplicationContext(),
 
-					provider + " location provider disabled",
+					provider + " location provider enabled",
 
 					Toast.LENGTH_SHORT).show();
 
@@ -1629,33 +1649,31 @@ public class EQForm_MapView extends Activity {
 			 */
 		}
 
-
-
+		
 
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
 			/* This is called when the GPS status alters */
+			if (DEBUG_LOG) Log.d(TAG, "GPS status changed");
 			switch (status) {
 			case LocationProvider.OUT_OF_SERVICE:
 				if (DEBUG_LOG) Log.d(TAG, "Status Changed: Out of Service");
-				//Toast.makeText(getApplicationContext(), "Status Changed: Out of Service",	Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), provider + " location provider status Changed: Out of Service",	Toast.LENGTH_SHORT).show();
 				//textGpsStatus.setText("Provider:" + provider + " status: " + status);
 				break;
 			case LocationProvider.TEMPORARILY_UNAVAILABLE:
 				if (DEBUG_LOG) Log.d(TAG, "Status Changed: Temporarily Unavailable");
 				//textGpsStatus.setText("Provider:" + provider + " status: " + status);
-				//Toast.makeText(getApplicationContext(), "Status Changed: Temporarily Unavailable",Toast.LENGTH_SHORT).show();
-				break;
+				Toast.makeText(getApplicationContext(), provider + " location provider status Changed: TEMPORARILY_UNAVAILABLE",	Toast.LENGTH_SHORT).show();
+								break;
 			case LocationProvider.AVAILABLE:
-
-
 
 				if (DEBUG_LOG) Log.d(TAG, "Status Changed: Available");
 
 				//textGpsStatus.setText("Provider:" + provider + " status: " + status);
 
-
-
+				Toast.makeText(getApplicationContext(), provider + " location provider status Changed: AVAILABLE",	Toast.LENGTH_SHORT).show();
+				
 				//Toast.makeText(getApplicationContext(), "Status Changed: Available",Toast.LENGTH_SHORT).show();
 				break;
 			}
@@ -1697,10 +1715,10 @@ public class EQForm_MapView extends Activity {
 				//return false;
 			}
 
-			
-			
-			
-			
+
+
+
+
 			// Check whether the new location fix is more or less accurate
 			int accuracyDelta = (int) (location.getAccuracy() - currentBestLocation.getAccuracy());
 			boolean isLessAccurate = accuracyDelta > 0;
