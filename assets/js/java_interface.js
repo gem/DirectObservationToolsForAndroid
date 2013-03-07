@@ -263,6 +263,18 @@ function addLocalKmlLayer(localFilePath) {
 //Add KML to the map
 //Called from Java
 function addKmlStringToMap(kmlString) {
+	console.log("adding kml to map");
+	var layer = new OpenLayers.Layer.Vector("KML");
+    layer.addFeatures(GetFeaturesFromKMLString(kmlString));
+    map.addLayer(layer);
+}
+
+//Add KML to the map
+//Called from Java
+function addKmlStringToMap2(lon,lat,kmlString) {
+	console.log("adding kml to map");
+	console.log("gemIdString:" + kmlString);
+	
 	var layer = new OpenLayers.Layer.Vector("KML");
     layer.addFeatures(GetFeaturesFromKMLString(kmlString));
     map.addLayer(layer);

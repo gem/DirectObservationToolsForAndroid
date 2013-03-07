@@ -4,7 +4,6 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    
     <WebView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/map_webview"
@@ -47,14 +46,6 @@
         android:textSize="40dp"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/btn_select_vector_layer"
-        android:layout_width="65dip"
-        android:layout_height="65dip"
-        android:layout_marginRight="21dp"
-        android:layout_toLeftOf="@+id/btn_select_layer"
-        android:background="@drawable/vector_layers_icon"
-        android:visibility="invisible" />
 
     <Button
         android:id="@+id/btn_zoom_in"
@@ -97,8 +88,8 @@
         android:layout_marginRight="35dp"
         android:layout_toLeftOf="@+id/btn_select_layer"
         android:text="Edit Points"
-        android:textOn="@string/editing_toggle_turn_on"
         android:textOff="@string/editing_toggle_turn_off"
+        android:textOn="@string/editing_toggle_turn_on"
         android:visibility="visible" />
 
     <Button
@@ -120,5 +111,13 @@
         android:background="@drawable/star"
         android:text="Favourite" />
 
+    <Button
+        android:id="@+id/btn_select_vector_layer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_zoom_in"
+        android:layout_alignBottom="@+id/btn_zoom_in"
+        android:layout_alignParentRight="true"
+        android:text="Button" />
 
 </RelativeLayout>

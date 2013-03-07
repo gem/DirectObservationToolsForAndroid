@@ -42,6 +42,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -260,12 +261,11 @@ public class EQForm_MapView extends Activity {
 		// Restore preferences
 		PreferenceManager.getDefaultSharedPreferences(this);
 		//SharedPreferences settings = getSharedPreferences("R.xml.prefs"), 0);
-
+		
 		mlocListener = new MyLocationListener();
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-
+		
 		btn_locateMe = (Button)findViewById(R.id.btn_locate_me);
 		btn_locateMe.setOnClickListener(locateMeListener);
 
@@ -1114,7 +1114,8 @@ public class EQForm_MapView extends Activity {
 		AssetManager am = EQForm_MapView.this.getBaseContext().getAssets();
 		InputStream inputStream = null;
 		try {
-			inputStream = am.open("kml/prevSurveyPointsSmall.kml");
+			//inputStream = am.open("kml/prevSurveyPointsSmall.kml");
+			inputStream = am.open("kml/sundials.kml");
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			Log.d("JFR", "PROBLEM READING SUNDIALS");
@@ -1279,17 +1280,30 @@ public class EQForm_MapView extends Activity {
 
 
 			//String egg = readFileToString();
-			String egg = null;
+			String kmlString = null;
 			try {
-				egg = readTxt();
+				kmlString = readTxt();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
+				if (DEBUG_LOG) Log.d(TAG,"problmen getting kml ");
 				e.printStackTrace();
 			} 
+			
+			
+			String testString = "a test string ";
+			String escaped = StringEscapeUtils.escapeJava(kmlString);
+			String temp;
+			//temp = kmlString.replaceAll('""','\\\\"');
+			
+			int intA= 1;
+			int intB= 1;
+			mWebView.loadUrl("javascript:addKmlStringToMap2("+ intA +","+ intB +", \"" +  escaped+"\")");
+			//mWebView.loadUrl("javascript:loadSurveyPointsOnMap("+ mCursor.getDouble(1)+","+mCursor.getDouble(2)+", \"" + mCursor.getString(0) +"\")");
 
-			mWebView.loadUrl("javascript:addKmlStringToMap("+ egg +")");
-
-
+			//mWebView.loadUrl("javascript:addKmlStringToMap('\'"+ testString + "\')");
+			
+			//mWebView.loadUrl("javascript:addKmlStringToMap('\'"+ kmlString + "\')");
+			//onClick="requestConversationPage(\''+ activityNotification.request.toString() + '\')"
 			int selected = -1; // does not select anything
 			final CharSequence[] choiceList = getVectorLayers();
 			builder.setSingleChoiceItems(
@@ -1311,6 +1325,7 @@ public class EQForm_MapView extends Activity {
 		}
 	};
 
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
