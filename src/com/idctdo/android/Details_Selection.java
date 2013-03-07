@@ -48,7 +48,6 @@ public class Details_Selection extends Activity {
 	private ArrayList list;
 	public ArrayList<DBRecord> lLrsd;
 
-
 	ListView listview;
 	ListView listview2;
 

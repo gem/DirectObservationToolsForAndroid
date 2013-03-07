@@ -261,11 +261,11 @@ public class EQForm_MapView extends Activity {
 		// Restore preferences
 		PreferenceManager.getDefaultSharedPreferences(this);
 		//SharedPreferences settings = getSharedPreferences("R.xml.prefs"), 0);
-		
+
 		mlocListener = new MyLocationListener();
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		
+
 		btn_locateMe = (Button)findViewById(R.id.btn_locate_me);
 		btn_locateMe.setOnClickListener(locateMeListener);
 
@@ -391,7 +391,7 @@ public class EQForm_MapView extends Activity {
 
 
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		
+
 		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
 			Toast.makeText(this, "GPS is Enabled in your device", Toast.LENGTH_SHORT).show();
 		}else{
@@ -399,28 +399,22 @@ public class EQForm_MapView extends Activity {
 		}
 
 		if (DEBUG_LOG) Log.d("IDCT","Requesting location updates for network");
-		
+
 		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
 		if (DEBUG_LOG) Log.d("IDCT","Requesting location updates for GPS");
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
-
-		//currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-		//drawUpdateCounter = new MyCount(100000000,1000);
-		//drawUpdateCounter.start();
 
 
 
 		mWebView.loadUrl("javascript:clearMyPositions()");
 		loadPrevSurveyPoints();
-		
+
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
 		//g.putData("OBJ_UID", id.toString());
 		if (DEBUG_LOG) Log.d(TAG,"RESUMING MAP, global vars " + g.getLon()+ " lat: " + g.getLat());
-		
+
 		if (g.getLat() == 0 && g.getLon() == 0) {  
-			//mWebView.loadUrl("javascript:locateMe("+ g.getLat()+","+g.getLon()+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");
-			
+			Toast.makeText(this, "Waiting for location", Toast.LENGTH_SHORT).show();
 		}else {
 			mWebView.loadUrl("javascript:locateMe("+ g.getLat()+","+g.getLon()+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");			
 		}
@@ -478,7 +472,7 @@ public class EQForm_MapView extends Activity {
 		super.onRestart();
 		if (DEBUG_LOG) Log.d(TAG, "On Restart .....");
 	}
-	
+
 
 
 	private OnClickListener zoomInListener = new OnClickListener() {
@@ -789,8 +783,8 @@ public class EQForm_MapView extends Activity {
 		if (DEBUG_LOG) Log.d(TAG,"Currently got unsaved edits? " + g.unsavedEdits);
 		g.setLon(lon);
 		g.setLat(lat);
-		
-		
+
+
 		if (g.unsavedEdits) {
 			if (DEBUG_LOG) Log.d(TAG,"Got unsaved edits");	
 			//Check if we're editing a point i.e. we've clicked it and got its id. If we are then keep the uid. Else generate new one			
@@ -813,7 +807,7 @@ public class EQForm_MapView extends Activity {
 				UUID id = UUID.randomUUID();
 				g.setUid(id.toString());
 				g.isExistingRecord = false; 
-				
+
 			} else { //Then we've tapped existing point. Set it's id, flag as existing record 
 				if (DEBUG_LOG) Log.d(TAG,"Using gemId from map");
 				g.setUid(gemId);			
@@ -1011,7 +1005,7 @@ public class EQForm_MapView extends Activity {
 		alert.show();
 	}
 
-	
+
 	public String convertXMLFileToString(InputStream inputStream) 
 	{ 
 		try{ 
@@ -1027,7 +1021,7 @@ public class EQForm_MapView extends Activity {
 		} 
 		return null; 
 	}
-	
+
 	private String readTxt(String filePath) throws IOException{
 		//AssetManager am = EQForm_MapView.this.getBaseContext().getAssets();
 		InputStream inputStream = null;		
@@ -1067,6 +1061,8 @@ public class EQForm_MapView extends Activity {
 				}
 			});
 
+
+
 			builder.setSingleChoiceItems(
 					choiceList, 
 					selected, 
@@ -1078,23 +1074,21 @@ public class EQForm_MapView extends Activity {
 							if (which > 3) { //If not one of the standard OSM or Bing web access layers								
 								//String tileLocationPath = "file:////mnt/sdcard/idctdo/maptiles/laquila_mapquest/";
 								String tileLocationPath = sdCardPath +  "idctdo/maptiles/" + choiceList[which] +"/";
-								String zoomLevel = "18";				
+								String zoomLevel = "18";			
 
-								
+
 								File extStore = Environment.getExternalStorageDirectory();
 								File xmlFile = new File(extStore.getAbsolutePath() + "/idctdo/maptiles/" + choiceList[which] +"/tilemapresource.xml");
-
+								String layerNameString = choiceList[which].toString();
 								if (DEBUG_LOG) Log.d(TAG,"possible tms xml path:" + xmlFile.getPath());
 								if (xmlFile.isFile()) {		
 									if (DEBUG_LOG) Log.d(TAG,"Tile resource File is there");
-									mWebView.loadUrl("javascript:addOfflineTMSMap(\""+ tileLocationPath + "\" , \"" + zoomLevel +"\")");
+									mWebView.loadUrl("javascript:addOfflineTMSMap(\""+ layerNameString +  "\" , \"" +  tileLocationPath + "\" , \"" + zoomLevel +"\")");
 								} else {
 									if (DEBUG_LOG) Log.d(TAG,"No TMS Resource file. Try loading zxy tiles");
-									mWebView.loadUrl("javascript:addOfflineBaseMap(\""+ tileLocationPath + "\" , \"" + zoomLevel +"\")");
+									mWebView.loadUrl("javascript:addOfflineBaseMap(\""+ layerNameString + "\" , \"" + tileLocationPath + "\" , \"" + zoomLevel +"\")");
 								}
-							} else {							
-								
-								
+							} else {		
 								mWebView.loadUrl("javascript:setMapLayer("+ which +")");
 							}
 						}
@@ -1163,39 +1157,44 @@ public class EQForm_MapView extends Activity {
 			int packingVar1= 1;
 			int packingVar2= 1;
 			mWebView.loadUrl("javascript:addKmlStringToMap2("+packingVar1 +","+ packingVar2 +", \"" +  escaped+"\")");
-*/
-			
-			
+			 */
+
+
 			int selected = -1; // does not select anything
 			final CharSequence[] choiceList = getVectorLayers();
-			builder.setSingleChoiceItems(
+			boolean[] checked = new boolean[choiceList.length];
+
+			builder.setMultiChoiceItems(
 					choiceList, 
-					selected, 
-					new DialogInterface.OnClickListener() {
+					checked, 
+					new DialogInterface.OnMultiChoiceClickListener() {
 						@Override
-						public void onClick(DialogInterface dialog,	int which) {
-							//String kmlPath = sdCardPath +  "idctdo/kml/" + choiceList[which];
-							//if (DEBUG_LOG) Log.d(TAG,"selected " + kmlPath);
-							int index = 1;
-							File extStore = Environment.getExternalStorageDirectory();
-							String kmlPath = extStore.getAbsolutePath() + "/idctdo/kml/" + choiceList[which];
-							File xmlFile = new File(extStore.getAbsolutePath() + "/idctdo/kml/" + choiceList[which]);
-							if (DEBUG_LOG) Log.d(TAG,"selected " + kmlPath);
-							//mWebView.loadUrl("javascript:addKmlStringToMap2("+packingVar1 +","+ packingVar2 +", \"" +  escaped+"\")");					
-							
-							String kmlString = null;
-							try {
-								kmlString = readTxt(kmlPath);
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								if (DEBUG_LOG) Log.d(TAG,"problem getting kml file");
-								e.printStackTrace();
-							} 			
-							//Escape the string
-							String escaped = StringEscapeUtils.escapeJava(kmlString);
-							int packingVar1= 1;
-							int packingVar2= 1;
-							mWebView.loadUrl("javascript:addKmlStringToMap2("+packingVar1 +","+ packingVar2 +", \"" +  escaped+"\")");												
+						public void onClick(DialogInterface dialog, int which, boolean b) {
+
+							if (b) { //add the layer
+								int index = 1;
+								File extStore = Environment.getExternalStorageDirectory();
+								String kmlPath = extStore.getAbsolutePath() + "/idctdo/kml/" + choiceList[which];
+								File xmlFile = new File(extStore.getAbsolutePath() + "/idctdo/kml/" + choiceList[which]);
+								String layerFileName = choiceList[which].toString();
+								if (DEBUG_LOG) Log.d(TAG,"selected " + kmlPath);
+								String kmlString = null;
+								try {
+									kmlString = readTxt(kmlPath);
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									if (DEBUG_LOG) Log.d(TAG,"problem getting kml file");
+									e.printStackTrace();
+								} 			
+								//Escape the string
+								String escaped = StringEscapeUtils.escapeJava(kmlString);
+								int packingVar1= 1;
+								int packingVar2= 1;
+								mWebView.loadUrl("javascript:addKmlStringToMap2("+packingVar1 +","+ packingVar2 +", \"" +  escaped+"\")");
+
+							} else {//remove the layer
+
+							}
 						}
 					});
 			AlertDialog alert = builder.create();
@@ -1203,7 +1202,7 @@ public class EQForm_MapView extends Activity {
 		}
 	};
 
-	
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
@@ -1542,7 +1541,7 @@ public class EQForm_MapView extends Activity {
 			 */
 		}
 
-		
+
 
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -1558,7 +1557,7 @@ public class EQForm_MapView extends Activity {
 				if (DEBUG_LOG) Log.d(TAG, "Status Changed: Temporarily Unavailable");
 				//textGpsStatus.setText("Provider:" + provider + " status: " + status);
 				Toast.makeText(getApplicationContext(), provider + " location provider status Changed: TEMPORARILY_UNAVAILABLE",	Toast.LENGTH_SHORT).show();
-								break;
+				break;
 			case LocationProvider.AVAILABLE:
 
 				if (DEBUG_LOG) Log.d(TAG, "Status Changed: Available");
@@ -1566,7 +1565,7 @@ public class EQForm_MapView extends Activity {
 				//textGpsStatus.setText("Provider:" + provider + " status: " + status);
 
 				Toast.makeText(getApplicationContext(), provider + " location provider status Changed: AVAILABLE",	Toast.LENGTH_SHORT).show();
-				
+
 				//Toast.makeText(getApplicationContext(), "Status Changed: Available",Toast.LENGTH_SHORT).show();
 				break;
 			}

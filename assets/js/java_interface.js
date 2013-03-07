@@ -179,14 +179,14 @@ function setMapLayer(index) {
 
 //Add an offline base map to the map
 //Called from Java
-function addOfflineBaseMap(tileLocationPath,zoom) {
+function addOfflineBaseMap(layerNameString,tileLocationPath,zoom) {
 	var zoomLevel = parseInt(zoomLevel);
 	var layers = map.layers;	
 	//Remove the last layer i.e. the offline map layer
-	map.removeLayer(layers[layers.length-1]);
+	//map.removeLayer(layers[layers.length-1]);
 	
 	var sdtiles = new OpenLayers.Layer.XYZ(
-		"OpenStreetMap (cached)",
+		layerNameString,
 		[
 			tileLocationPath + "${z}/${x}/${y}.png.tile"
 		], {
@@ -202,20 +202,21 @@ function addOfflineBaseMap(tileLocationPath,zoom) {
 	);	
 	map.addLayer(sdtiles);
 	var layers = map.layers;
-	map.setBaseLayer(layers[layers.length-1]);
+	//map.setBaseLayer(layers[layers.length-1]);
+	map.setBaseLayer(sdtiles);
 }
 
 
 //Add an offline map based on the TMS tiling scheme
 //Called from Java
-function addOfflineTMSMap(tileLocationPath,zoom) {
+function addOfflineTMSMap(layerNameString,tileLocationPath,zoom) {
 
 	var zoomLevel = parseInt(zoomLevel);
 	var layers = map.layers;	
 	//Remove the last layer i.e. the offline map layer
-	map.removeLayer(layers[layers.length-1]);
+	//map.removeLayer(layers[layers.length-1]);
 	
-	var localTMSTiles = new OpenLayers.Layer.XYZ("OpenLayers.Layer.XYZ",
+	var localTMSTiles = new OpenLayers.Layer.XYZ(layerNameString,
 	tileLocationPath,
 	{ 
 		type: 'png', 
@@ -227,7 +228,8 @@ function addOfflineTMSMap(tileLocationPath,zoom) {
 
 	map.addLayer(localTMSTiles);
 	var layers = map.layers;
-	map.setBaseLayer(layers[layers.length-1]);
+	//map.setBaseLayer(layers[layers.length-1]);
+	map.setBaseLayer(localTMSTiles);
 }
 
 
@@ -251,3 +253,12 @@ function addKmlStringToMap2(lon,lat,kmlString) {
     map.addLayer(layer);
 }
 
+
+
+function removeOverlay(layerNameString) {
+	var myLayer = map.getLayersByName(layerNameString);
+	if (myLayer.length > 0) {
+		map.removeLayer(myLayer[0]);
+	}
+
+}
