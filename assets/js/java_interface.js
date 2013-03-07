@@ -8,7 +8,6 @@ function startEditingMode(startEditing) {
 		newSurveyPointSelectControl.deactivate();
 		newSurveyPointModifyControl.deactivate();
 		dragControl.deactivate();
-
 		//prevSurveyPointsDragControl.activate();
 		prevSurveyPointsSelectControl.activate();
 
@@ -23,11 +22,8 @@ function startEditingMode(startEditing) {
 	
 		//prevSurveyPointsDragControl.deactivate();
 		prevSurveyPointsSelectControl.deactivate();		
-	}
-	
+	}	
 }
-
-
 
 //Draw positioning point and accuracy circle on map
 //Called from Java
@@ -62,7 +58,6 @@ function locateMe(latitude,longitude,locationAccuracy,setCentre) {
 	locationPointLayer.addFeatures([circleFeature,feature]);
 	locationPointLayer.redraw();
 }
-
 
 
 //Remove the position and accuracy markers
@@ -235,30 +230,6 @@ function addOfflineTMSMap(tileLocationPath,zoom) {
 	map.setBaseLayer(layers[layers.length-1]);
 }
 
-
-//Add KML to the map
-//Called from Java
-function addLocalKmlLayer(localFilePath) {
-
-/*
-   var sundials = new OpenLayers.Layer.Vector("KML", {
-			projection: map.displayProjection,
-			strategies: [new OpenLayers.Strategy.Fixed()],
-			protocol: new OpenLayers.Protocol.HTTP({
-				url: "http://dev.openlayers.org/releases/OpenLayers-2.12/examples/kml/sundials.kml",
-				//url: localFilePath,
-				format: new OpenLayers.Format.KML({
-					extractStyles: true,
-					extractAttributes: true
-				})
-			})
-		});
-		
-	map.addLayers([sundials]);
-	*/
-	
-
-}
 
 //Add KML to the map
 //Called from Java

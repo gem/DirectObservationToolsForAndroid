@@ -23,7 +23,7 @@
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,9 +31,7 @@
             android:name=".MainTabActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".EQForm_Help"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".EQForm_Settings"
             android:screenOrientation="portrait" />
@@ -75,9 +73,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Irregularity_Selection_Secondary_Form"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".EQForm_About"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Details_Selection"

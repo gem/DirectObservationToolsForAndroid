@@ -26,7 +26,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/layers_icon"
-        android:text="Switch Layer" />
+        android:text="Base Layers" />
 
     <Button
         android:id="@+id/btn_take_photo"
@@ -45,7 +45,6 @@
         android:text="-"
         android:textSize="40dp"
         android:textStyle="bold" />
-
 
     <Button
         android:id="@+id/btn_zoom_in"
@@ -113,11 +112,10 @@
 
     <Button
         android:id="@+id/btn_select_vector_layer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btn_zoom_in"
-        android:layout_alignBottom="@+id/btn_zoom_in"
-        android:layout_alignParentRight="true"
-        android:text="Button" />
+        android:layout_width="65dip"
+        android:layout_height="65dip"
+        android:layout_alignTop="@+id/btn_zoom_in"
+        android:layout_toRightOf="@+id/btn_edit_points"
+        android:text="KML Layers" />
 
 </RelativeLayout>

@@ -928,24 +928,12 @@ public class EQForm_MapView extends Activity {
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
 		int data=surveyDataObject.getData();
 		if (DEBUG_LOG) Log.d(TAG,"TEST GLOBALS: " + data);
-
 		mWebView.loadUrl("javascript:updateSurveyPointPositionFromMap("+ isEditingPoints+")");
 
 		return false; 		
 
 
 	}
-
-
-	/*
-	private void loadSurveyPoints(double lon, double lat) {
-		if (DEBUG_LOG) Log.d(TAG,"loading survey points");
-		if (DEBUG_LOG) Log.d(TAG,"loading survey points into Java" + lon + " " + lat);
-
-		mWebView.loadUrl("javascript:loadSurveyPointsOnMap(-1.1662567,52.9470582)");
-	}
-	 */
-
 
 	private void loadPrevSurveyPoints() {
 		if (DEBUG_LOG) Log.d(TAG,"loading PREVIOUS survey points");
@@ -972,22 +960,9 @@ public class EQForm_MapView extends Activity {
 		}
 		mCursor.close();
 
-
-
-		/*
-		if (prevSurveyPointLat != 0) { 
-			mWebView.loadUrl("javascript:loadSurveyPointsOnMap("+ prevSurveyPointLon+","+prevSurveyPointLat+")");
-		}
-		 */
 	}
 
-	/*
-	private void drawPreviousSurveyPoints() {
-		if (DEBUG_LOG) Log.d(TAG,"loading survey points");
-		if (DEBUG_LOG) Log.d(TAG,"loading survey points into Java" + lon + " " + lat);
 
-		mWebView.loadUrl("javascript:loadSurveyPointsOnMap(-1.1662567,52.9470582)");
-	}*/
 
 
 
@@ -1036,61 +1011,7 @@ public class EQForm_MapView extends Activity {
 		alert.show();
 	}
 
-	/*
-
-	@Override
-	public void onBackPressed() {
-		Log.d("IDCT","back button pressed");
-		//MainTabActivity a = (MainTabActivity)getParent();
-		//a.backButtonPressed();
-	}
-	 */
-
-	public void completeThis() {
-		//MainTabActivity a = (MainTabActivity)getParent();
-		//a.completeTab(tabIndex);
-	}
-
-
-
-
-
-
-	public String readFileToString() {
-
-		String fileName = "file:////android_asset/kml/sundials.kml";
-		StringBuilder ReturnString = new StringBuilder();
-		InputStream fIn = null;
-		InputStreamReader isr = null;
-		BufferedReader input = null;
-		try {
-			fIn = EQForm_MapView.this.getBaseContext().getResources().getAssets()
-			.open(fileName, EQForm_MapView.this.getBaseContext().MODE_WORLD_READABLE);
-			isr = new InputStreamReader(fIn);
-			input = new BufferedReader(isr);
-			String line = "";
-			while ((line = input.readLine()) != null) {
-				ReturnString.append(line);
-			}
-		} catch (Exception e) {
-			e.getMessage();
-		} finally {
-			try {
-				if (isr != null)
-					isr.close();
-				if (fIn != null)
-					fIn.close();
-				if (input != null)
-					input.close();
-			} catch (Exception e2) {
-				e2.getMessage();
-			}
-		}
-		Log.d("JFR", "KML is: " + ReturnString.toString());
-		return ReturnString.toString();
-
-	}
-
+	
 	public String convertXMLFileToString(InputStream inputStream) 
 	{ 
 		try{ 
@@ -1105,72 +1026,22 @@ public class EQForm_MapView extends Activity {
 			e.printStackTrace(); 
 		} 
 		return null; 
-
 	}
-
-
-	private String readTxt() throws IOException{
-
-		AssetManager am = EQForm_MapView.this.getBaseContext().getAssets();
-		InputStream inputStream = null;
+	
+	private String readTxt(String filePath) throws IOException{
+		//AssetManager am = EQForm_MapView.this.getBaseContext().getAssets();
+		InputStream inputStream = null;		
 		try {
-			//inputStream = am.open("kml/prevSurveyPointsSmall.kml");
-			inputStream = am.open("kml/sundials.kml");
+			inputStream = new FileInputStream( filePath);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			Log.d("JFR", "PROBLEM READING SUNDIALS");
+			if (DEBUG_LOG) Log.d("JFR", "PROBLEM READING KML");
 			e1.printStackTrace();			
 		}
-
-		//InputStream inputStream = getResources().openRawResource(R.raw.);
-		//	     InputStream inputStream = getResources().openRawResource(R.raw.internals);
-		System.out.println(inputStream);
-
-
 		String kml = convertXMLFileToString(inputStream);
-		Log.d("JFR", "KML INPUTSTREAM is: " + kml.toString());
+		if (DEBUG_LOG) Log.d(TAG, "KML INPUTSTREAM is: " + kml.toString());
 		return kml;
-		/*
-
-		InputStreamReader is = new InputStreamReader(inputStream);
-		StringBuilder sb=new StringBuilder();
-		BufferedReader br = new BufferedReader(is);
-		String read = br.readLine();
-
-		while(read != null) {
-			//System.out.println(read);
-			sb.append(read);
-			read =br.readLine();
-
-		}
-		Log.d("JFR", "KML is: " + sb.toString());
-
-		return sb.toString();
-		 */
-
-
-		/*
-		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
-		int i;
-		try {
-			i = inputStream.read();
-			while (i != -1)
-			{
-				byteArrayOutputStream.write(i);
-				i = inputStream.read();
-			}
-			inputStream.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		Log.d("JFR", "KML is: " + byteArrayOutputStream.toString());
-		return byteArrayOutputStream.toString();
-		 */
 	}
-
 
 
 	private OnClickListener selectLayerListener = new OnClickListener() {
@@ -1276,34 +1147,25 @@ public class EQForm_MapView extends Activity {
 		public void onClick(View v) {
 			Log.i(TAG, "show Dialog ButtonClick");
 			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-			builder.setTitle("Select Vector Layer To Show");		
+			builder.setTitle("Select Vector Layer To Show");	
 
-
-			//String egg = readFileToString();
+			/*
 			String kmlString = null;
 			try {
-				kmlString = readTxt();
+				kmlString = readTxt("kml/sundials.kml");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				if (DEBUG_LOG) Log.d(TAG,"problmen getting kml ");
+				if (DEBUG_LOG) Log.d(TAG,"problem getting kml file");
 				e.printStackTrace();
-			} 
-			
-			
-			String testString = "a test string ";
+			} 			
+			//Escape the string
 			String escaped = StringEscapeUtils.escapeJava(kmlString);
-			String temp;
-			//temp = kmlString.replaceAll('""','\\\\"');
+			int packingVar1= 1;
+			int packingVar2= 1;
+			mWebView.loadUrl("javascript:addKmlStringToMap2("+packingVar1 +","+ packingVar2 +", \"" +  escaped+"\")");
+*/
 			
-			int intA= 1;
-			int intB= 1;
-			mWebView.loadUrl("javascript:addKmlStringToMap2("+ intA +","+ intB +", \"" +  escaped+"\")");
-			//mWebView.loadUrl("javascript:loadSurveyPointsOnMap("+ mCursor.getDouble(1)+","+mCursor.getDouble(2)+", \"" + mCursor.getString(0) +"\")");
-
-			//mWebView.loadUrl("javascript:addKmlStringToMap('\'"+ testString + "\')");
 			
-			//mWebView.loadUrl("javascript:addKmlStringToMap('\'"+ kmlString + "\')");
-			//onClick="requestConversationPage(\''+ activityNotification.request.toString() + '\')"
 			int selected = -1; // does not select anything
 			final CharSequence[] choiceList = getVectorLayers();
 			builder.setSingleChoiceItems(
@@ -1312,16 +1174,32 @@ public class EQForm_MapView extends Activity {
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog,	int which) {
-							String kmlPath = sdCardPath +  "idctdo/kml/" + choiceList[which];
-							if (DEBUG_LOG) Log.d(TAG,"selected " + kmlPath);
+							//String kmlPath = sdCardPath +  "idctdo/kml/" + choiceList[which];
+							//if (DEBUG_LOG) Log.d(TAG,"selected " + kmlPath);
 							int index = 1;
-							mWebView.loadUrl("javascript:addLocalKmlLayer("+ kmlPath +")");
+							File extStore = Environment.getExternalStorageDirectory();
+							String kmlPath = extStore.getAbsolutePath() + "/idctdo/kml/" + choiceList[which];
+							File xmlFile = new File(extStore.getAbsolutePath() + "/idctdo/kml/" + choiceList[which]);
+							if (DEBUG_LOG) Log.d(TAG,"selected " + kmlPath);
+							//mWebView.loadUrl("javascript:addKmlStringToMap2("+packingVar1 +","+ packingVar2 +", \"" +  escaped+"\")");					
+							
+							String kmlString = null;
+							try {
+								kmlString = readTxt(kmlPath);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								if (DEBUG_LOG) Log.d(TAG,"problem getting kml file");
+								e.printStackTrace();
+							} 			
+							//Escape the string
+							String escaped = StringEscapeUtils.escapeJava(kmlString);
+							int packingVar1= 1;
+							int packingVar2= 1;
+							mWebView.loadUrl("javascript:addKmlStringToMap2("+packingVar1 +","+ packingVar2 +", \"" +  escaped+"\")");												
 						}
 					});
 			AlertDialog alert = builder.create();
 			alert.show();
-
-
 		}
 	};
 
