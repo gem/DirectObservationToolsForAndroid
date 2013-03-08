@@ -584,7 +584,8 @@ function drawCandidateSurveyPoint(lon, lat,idString) {
 function GetFeaturesFromKMLString(strKML) {
 	var format = new OpenLayers.Format.KML({
 		'internalProjection': map.baseLayer.projection,
-		'externalProjection': new OpenLayers.Projection("EPSG:4326")
+		'externalProjection': new OpenLayers.Projection("EPSG:4326"),
+		renderers: ["Canvas", "SVG", "VML"]
 	});
 	return format.read(strKML);
 };

@@ -116,6 +116,8 @@
         android:layout_height="65dip"
         android:layout_alignTop="@+id/btn_zoom_in"
         android:layout_toRightOf="@+id/btn_edit_points"
-        android:text="KML Layers" />
+        android:text="KML Layers"
+         android:visibility="invisible"
+          />
 
 </RelativeLayout>

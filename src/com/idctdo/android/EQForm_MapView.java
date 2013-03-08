@@ -99,7 +99,7 @@ import android.widget.ToggleButton;
 
 public class EQForm_MapView extends Activity {
 
-	public boolean DEBUG_LOG = true; 
+	public boolean DEBUG_LOG = false; 
 
 	WebView mWebView;
 	/** Called when the activity is first created. */
@@ -751,7 +751,7 @@ public class EQForm_MapView extends Activity {
 									"COMMENTS", "no comment entered",
 									"FILENAME", FILENAME + ".jpg"
 							);						
-
+							
 						}
 					});
 
@@ -978,9 +978,17 @@ public class EQForm_MapView extends Activity {
 	}
 
 
+
+	
+
 	private void locateMe(boolean setAsCentre) {
 		if (DEBUG_LOG) Log.d(TAG,"locateMe. SetAsCentre " + setAsCentre);
-		mWebView.loadUrl("javascript:locateMe("+ currentLatitude+","+currentLongitude+","+currentLocationAccuracy+"," + setAsCentre + ")");
+
+		if (currentLatitude == 0 && currentLongitude== 0) {  
+			Toast.makeText(this, "Waiting for location", Toast.LENGTH_SHORT).show();
+		}else {
+			mWebView.loadUrl("javascript:locateMe("+ currentLatitude+","+currentLongitude+","+currentLocationAccuracy+"," + setAsCentre + ")");
+		}
 	}
 
 
@@ -1158,6 +1166,10 @@ public class EQForm_MapView extends Activity {
 			int packingVar2= 1;
 			mWebView.loadUrl("javascript:addKmlStringToMap2("+packingVar1 +","+ packingVar2 +", \"" +  escaped+"\")");
 			 */
+
+
+
+
 
 
 			int selected = -1; // does not select anything
