@@ -244,18 +244,20 @@ function addKmlStringToMap(kmlString) {
 
 //Add KML to the map
 //Called from Java
-function addKmlStringToMap2(lon,lat,kmlString) {
+function addKmlStringToMap2(lon,layerNameString,kmlString) {
 	console.log("adding kml to map");
 	console.log("gemIdString:" + kmlString);
 	
-	var layer = new OpenLayers.Layer.Vector("KML");
+	var layer = new OpenLayers.Layer.Vector(layerNameString,
+		{ strategies: [new OpenLayers.Strategy.BBOX({resFactor: 1})]}
+	);
     layer.addFeatures(GetFeaturesFromKMLString(kmlString));
     map.addLayer(layer);
 }
 
 
 
-function removeOverlay(layerNameString) {
+function removeOverlay(lat,lon,layerNameString) {
 	var myLayer = map.getLayersByName(layerNameString);
 	if (myLayer.length > 0) {
 		map.removeLayer(myLayer[0]);

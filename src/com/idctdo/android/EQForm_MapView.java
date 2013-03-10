@@ -173,6 +173,9 @@ public class EQForm_MapView extends Activity {
 	File mapTilesFile;
 	String sdCardPath;
 
+	boolean[] vectorsListDisplayState = null; 
+	
+	
 	TextView text_view_gpsInfo;
 	TextView text_view_gpsInfo2;
 
@@ -203,11 +206,10 @@ public class EQForm_MapView extends Activity {
 		if (DEBUG_LOG) Log.d(TAG,"adding JS interface");
 		mWebView.addJavascriptInterface(this, "webConnector"); 
 
+		
 		mWebView.loadUrl("file:///android_asset/idct_map.html");
+		//mWebView.loadUrl("http://swingley.appspot.com/maps/olpts");		
 		mWebView.setWebViewClient(new MapWebViewClient());
-
-
-
 		progressBar = new ProgressDialog(EQForm_MapView.this);
 		progressBar.setMessage("Loading maps...");
 		progressBar.setCancelable(false);
@@ -308,15 +310,7 @@ public class EQForm_MapView extends Activity {
 		text_view_gpsInfo2 = (TextView)findViewById(R.id.text_view_gpsInfo2);
 
 
-		/*
-		tabActivity = (TabActivity) getParent();
-		tabHost = tabActivity.getTabHost();
-		//tabHost.setEnabled(false);
-
-		 */
-
-		//mWebView.loadUrl("javascript:clearMyPositions()");
-
+		//Load any of the previous survey points
 		loadPrevSurveyPoints();
 	}
 
@@ -341,7 +335,6 @@ public class EQForm_MapView extends Activity {
 			public void onClick(DialogInterface dialog,int id) {
 				// if this button is clicked, just close
 				// the dialog box and do nothing
-
 			}
 		});
 		// create alert dialog
@@ -404,32 +397,28 @@ public class EQForm_MapView extends Activity {
 		if (DEBUG_LOG) Log.d("IDCT","Requesting location updates for GPS");
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
 
-
-
 		mWebView.loadUrl("javascript:clearMyPositions()");
 		loadPrevSurveyPoints();
 
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
-		//g.putData("OBJ_UID", id.toString());
 		if (DEBUG_LOG) Log.d(TAG,"RESUMING MAP, global vars " + g.getLon()+ " lat: " + g.getLat());
-
 		if (g.getLat() == 0 && g.getLon() == 0) {  
 			Toast.makeText(this, "Waiting for location", Toast.LENGTH_SHORT).show();
 		}else {
 			mWebView.loadUrl("javascript:locateMe("+ g.getLat()+","+g.getLon()+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");			
 		}
 
+		//If there is unsaved edits draw the current candidate survey point
 		if (g.unsavedEdits) {
 			//Draw a candidate survey point
 			if (DEBUG_LOG) Log.d(TAG,"RESUMING EDITS. DRAWING MOVEABLE POINT, " + g.getLon()+ " lat: " + g.getLat());
 			mWebView.loadUrl("javascript:drawCandidateSurveyPoint("+ g.getLon()+","+g.getLat()+")");
 
 		} else {
+			//Set the screen up to be ready for user drawing a new survey point
 			if (DEBUG_LOG) Log.d(TAG,"NO UNSAVED EDITS. Hide the survey button. , " + g.getLon()+ " lat: " + g.getLat());
-
 			btn_edit_points.setChecked(false);
 			isEditingPoints = false;
-
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
@@ -441,9 +430,7 @@ public class EQForm_MapView extends Activity {
 					btn_edit_points.setEnabled(true);
 				}
 			});		       
-
 		}
-
 	}
 
 
@@ -452,18 +439,16 @@ public class EQForm_MapView extends Activity {
 		// TODO Auto-generated method stub
 		super.onStart();
 		if (DEBUG_LOG) Log.d(TAG, "On Start .....");
-
 	}
+	
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
 		Log.d("IDCT", "On Pause .....");
-
+		//Stop receiving location updates to save battery when app pauses
 		locationManager.removeUpdates(mlocListener);
-
 		//drawUpdateCounter.cancel();
-
 	}
 
 	@Override
@@ -473,16 +458,21 @@ public class EQForm_MapView extends Activity {
 		if (DEBUG_LOG) Log.d(TAG, "On Restart .....");
 	}
 
-
+	
+	
+	
+	
+	
+	/***********************************************************
+	 * MAP UI BUTTON CLICK LISTENERS
+	 * ********************************************************/
 
 	private OnClickListener zoomInListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			mWebView.loadUrl("javascript:map.zoomIn()");
-			//loadSurveyPoints();
 		}
 	};
-
 
 	private OnClickListener zoomOutListener  = new OnClickListener() {
 		@Override
@@ -498,7 +488,6 @@ public class EQForm_MapView extends Activity {
 		}
 	};
 
-
 	private OnClickListener locateMeListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -513,10 +502,6 @@ public class EQForm_MapView extends Activity {
 	private OnClickListener editPointsListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			//addPoint();
-
-
-
 			if (DEBUG_LOG) Log.d(TAG,"Edit points button clicked");
 			if (isEditingPoints) {
 				mWebView.loadUrl("javascript:startEditingMode(false)");
@@ -524,23 +509,7 @@ public class EQForm_MapView extends Activity {
 			} else {
 				mWebView.loadUrl("javascript:startEditingMode(true)");
 				isEditingPoints = true;
-
 			}
-
-
-			//locateMe(true);
-			/*
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
-			alertDialogBuilder.setMessage("Editing of items is disabled at the moment").setCancelable(false).setPositiveButton("OK",
-					new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface dialog, int id){
-
-				}
-			});
-
-			AlertDialog alert = alertDialogBuilder.create();
-			alert.show();
-			 */
 		}
 	};
 
@@ -549,7 +518,6 @@ public class EQForm_MapView extends Activity {
 		@Override
 		public void onClick(View v) {
 			if (DEBUG_LOG) Log.d(TAG,"next survey form");
-
 			//Stop any geometry editing			
 			mWebView.loadUrl("javascript:startEditingMode(false)");
 			isEditingPoints = false;
@@ -563,40 +531,42 @@ public class EQForm_MapView extends Activity {
 		}
 	};
 
-
-
-
-
+	//Cancel adding a new survey point
 	private OnClickListener cancelSurveyPointListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			if (DEBUG_LOG) Log.d(TAG,"Cancel survey point");
 
+			//If we're not editing points i.e. we're in the adding a new survey point state
 			if (!btn_edit_points.isChecked()) {
 				//Stop any geometry editing			
 				mWebView.loadUrl("javascript:startEditingMode(false)");
 				isEditingPoints = false;
-
+				
+				//Clear the temporary/proposal survey points
 				mWebView.loadUrl("javascript:clearMyPositions()");
 
+				//Reset the buttons / icons to initial graphics/states
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						btn_startSurvey.setVisibility(View.INVISIBLE);//This might be causing issues
-						btn_cancelSurveyPoint.setVisibility(View.INVISIBLE);//This might be causing issues
-						btn_startSurveyFavourite.setVisibility(View.INVISIBLE);//This might be causing issues
+						btn_startSurvey.setVisibility(View.INVISIBLE);
+						btn_cancelSurveyPoint.setVisibility(View.INVISIBLE);
+						btn_startSurveyFavourite.setVisibility(View.INVISIBLE);
 						btn_takeCameraPhoto.setBackgroundResource(R.drawable.camera);
-						//btn_take_survey_photo.setVisibility(View.VISIBLE);//Poss Dodgy threading stuff using this
 						btn_edit_points.setEnabled(true);
 						btn_edit_points.setChecked(false);
 					}
 				});
+				
+			//Is in editing state, could prompt to save these changes	
 			} else {
 				//promptForSavingEdits();
 			}
 		}
 	};
 
+	//User wants to add this point and load a favourite/template into the forms
 	private OnClickListener selectFavouriteListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -604,23 +574,18 @@ public class EQForm_MapView extends Activity {
 
 			Log.i(TAG, "show Dialog ButtonClick");
 			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-			builder.setTitle("Select a Favourite");			
+			builder.setTitle("Select a Favourite");		
+			
+			//Get the favourite / template list from the db
 			mDbHelper = new GemDbAdapter(getBaseContext());       
-
 			mDbHelper.createDatabase();      
 			mDbHelper.open();
 			Cursor favouritesCursor = mDbHelper.getGemFavourites();
 			ArrayList favesList =GemUtilities.cursorToArrayList(favouritesCursor);  
-			mDbHelper.close();			
-			//final CharSequence[] baseMaps = {"OpenStreetMap","Bing Hybrid","Bing Roads","Bing Aerial"};
-			//final CharSequence[] localBaseMaps = getLocalBaseMapLayers();
-			//if (DEBUG_LOG) Log.d(TAG,"LOCAL BASEMAPS " + localBaseMaps.toString());
+			mDbHelper.close();	
 
-			//final CharSequence[] choiceList = new CharSequence[baseMaps.length + localBaseMaps.length];
-			//System.arraycopy(baseMaps, 0, choiceList, 0, baseMaps.length);
-			//System.arraycopy(localBaseMaps, 0, choiceList, baseMaps.length, localBaseMaps.length);
+			
 			int selected = -1; // does not select anything			
-			//final Cursor roofShapeAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(favouritesCursor);
 			ArrayList<DBRecord> buildingPositionAttributesList = GemUtilities.cursorToArrayList(favouritesCursor);
 			final ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(mContext,android.R.layout.simple_list_item_1,buildingPositionAttributesList );
 
@@ -705,7 +670,305 @@ public class EQForm_MapView extends Activity {
 			startActivity(PreviousPage);*/
 		}
 	};
+	
+	private OnClickListener selectLayerListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Log.i(TAG, "show Dialog ButtonClick");
+			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+			builder.setTitle("Select Base Map");			
 
+			final CharSequence[] baseMaps = {"OpenStreetMap","Bing Hybrid","Bing Roads","Bing Aerial"};
+			final CharSequence[] localBaseMaps = getLocalBaseMapLayers();
+			if (DEBUG_LOG) Log.d(TAG,"LOCAL BASEMAPS " + localBaseMaps.toString());
+
+			final CharSequence[] choiceList = new CharSequence[baseMaps.length + localBaseMaps.length];
+			System.arraycopy(baseMaps, 0, choiceList, 0, baseMaps.length);
+			System.arraycopy(localBaseMaps, 0, choiceList, baseMaps.length, localBaseMaps.length);
+			int selected = -1; // does not select anything			
+
+			builder.setPositiveButton("Ok",
+					new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					//dismiss the dialog  
+				}
+			});
+
+
+
+			builder.setSingleChoiceItems(
+					choiceList, 
+					selected, 
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,	int which) {
+							if (DEBUG_LOG) Log.d(TAG,"selected "+choiceList[which]);
+							int index = 1;
+							if (which > 3) { //If not one of the standard OSM or Bing web access layers								
+								//String tileLocationPath = "file:////mnt/sdcard/idctdo/maptiles/laquila_mapquest/";
+								String tileLocationPath = sdCardPath +  "idctdo/maptiles/" + choiceList[which] +"/";
+								String zoomLevel = "18";			
+
+
+								File extStore = Environment.getExternalStorageDirectory();
+								File xmlFile = new File(extStore.getAbsolutePath() + "/idctdo/maptiles/" + choiceList[which] +"/tilemapresource.xml");
+								String layerNameString = choiceList[which].toString();
+								if (DEBUG_LOG) Log.d(TAG,"possible tms xml path:" + xmlFile.getPath());
+								if (xmlFile.isFile()) {		
+									if (DEBUG_LOG) Log.d(TAG,"Tile resource File is there");
+									mWebView.loadUrl("javascript:addOfflineTMSMap(\""+ layerNameString +  "\" , \"" +  tileLocationPath + "\" , \"" + zoomLevel +"\")");
+								} else {
+									if (DEBUG_LOG) Log.d(TAG,"No TMS Resource file. Try loading zxy tiles");
+									mWebView.loadUrl("javascript:addOfflineBaseMap(\""+ layerNameString + "\" , \"" + tileLocationPath + "\" , \"" + zoomLevel +"\")");
+								}
+							} else {		
+								mWebView.loadUrl("javascript:setMapLayer("+ which +")");
+							}
+						}
+					});
+			AlertDialog alert = builder.create();
+
+			alert.show();
+		}
+	};
+	
+
+	private OnClickListener selectVectorLayerListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Log.i(TAG, "show Dialog ButtonClick");
+			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+			builder.setTitle("Select Vector Layer To Show");	
+
+			/*
+			String kmlString = null;
+			try {
+				kmlString = readTxt("kml/sundials.kml");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				if (DEBUG_LOG) Log.d(TAG,"problem getting kml file");
+				e.printStackTrace();
+			} 			
+			//Escape the string
+			String escaped = StringEscapeUtils.escapeJava(kmlString);
+			int packingVar1= 1;
+			int packingVar2= 1;
+			mWebView.loadUrl("javascript:addKmlStringToMap2("+packingVar1 +","+ packingVar2 +", \"" +  escaped+"\")");
+			 */
+
+
+			int selected = -1; // does not select anything
+			final CharSequence[] choiceList = getVectorLayers();
+			if (vectorsListDisplayState == null) { 
+				vectorsListDisplayState = new boolean[choiceList.length];
+			}
+			
+			builder.setMultiChoiceItems(
+					choiceList, 
+					vectorsListDisplayState, 
+					new DialogInterface.OnMultiChoiceClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+							String layerFileName = choiceList[which].toString();
+							if (isChecked) { //add the layer
+								int index = 1;
+								File extStore = Environment.getExternalStorageDirectory();
+								String kmlPath = extStore.getAbsolutePath() + "/idctdo/kml/" + choiceList[which];
+								File xmlFile = new File(extStore.getAbsolutePath() + "/idctdo/kml/" + choiceList[which]);
+								if (DEBUG_LOG) Log.d(TAG,"selected " + kmlPath);
+								String kmlString = null;
+								try {
+									kmlString = readTxt(kmlPath);
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									if (DEBUG_LOG) Log.d(TAG,"problem getting kml file");
+									e.printStackTrace();
+								} 			
+								
+								//Escape the string
+								String escaped = StringEscapeUtils.escapeJava(kmlString);
+								int packingVar1= 1;
+								int packingVar2= 1;
+								mWebView.loadUrl("javascript:addKmlStringToMap2("+packingVar1 +", \"" +   layerFileName +"\", \"" +  escaped+ "\")");
+
+							} else {//remove the layer
+								Toast.makeText(getBaseContext(), "Removing KML", Toast.LENGTH_SHORT).show();
+								int packingVar1= 1;
+								int packingVar2= 1;
+								mWebView.loadUrl("javascript:removeOverlay("+packingVar1 +","+ packingVar2 +", \"" +  layerFileName +"\")");
+
+							}
+						}
+					});
+			builder.setPositiveButton("Ok",
+					new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					//dismiss the dialog  
+				}
+			});
+
+			
+			AlertDialog alert = builder.create();
+			alert.show();
+		}
+	};
+
+
+	
+	/***********************************************************
+	 * END OF UI BUTTON CLICK LISTENERS
+	 * ********************************************************/
+
+	
+	
+	/***********************************************************
+	 * JAVA / JAVASCRIPT INTERFACE HELPER FUNCTION
+	 * Contains various general functions for calling high level functionality
+	 * in the map view (javascript) for map drawing, editing, getting locations
+	 * ********************************************************/
+	
+	public boolean getSurveyPoint() {
+		if (DEBUG_LOG) Log.d(TAG,"getting point location from Openlayer. isEditingPoints: s + isEditingPoints");
+		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
+		int data=surveyDataObject.getData();
+		if (DEBUG_LOG) Log.d(TAG,"TEST GLOBALS: " + data);
+		mWebView.loadUrl("javascript:updateSurveyPointPositionFromMap("+ isEditingPoints+")");
+		return false; 		
+	}	
+	
+	private void loadPrevSurveyPoints() {
+		if (DEBUG_LOG) Log.d(TAG,"loading PREVIOUS survey points");
+		mDbHelper = new GemDbAdapter(getBaseContext());      
+		mDbHelper.createDatabase();      
+		mDbHelper.open();		
+		Cursor mCursor = mDbHelper.getGemObjectsForMap();
+		mDbHelper.close();
+
+		//if (DEBUG_LOG) Log.d("IDCT","Gem Map Objects cursor " + DatabaseUtils.dumpCursorToString(mCursor));
+		//ArrayList<DBRecord> gemObjectsList = GemUtilities.cursorToArrayList(gemObjects);
+		//Log.d("IDCT","Gem Map Objects List " + gemObjectsList.get(gemObjectsList.size()-1));
+		mCursor.moveToFirst();
+
+		mWebView.loadUrl("javascript:clearMySurveyPoints()");//Inefficient	
+
+		while(!mCursor.isAfterLast()) {
+			//if (DEBUG_LOG) Log.d("IDCT","Gem Map Objects cursor " + mCursor.getDouble(1) + " , " + mCursor.getDouble(2) + " , " + mCursor.getString(0));
+
+			mWebView.loadUrl("javascript:loadSurveyPointsOnMap("+ mCursor.getDouble(1)+","+mCursor.getDouble(2)+", \"" + mCursor.getString(0) +"\")");
+			mCursor.moveToNext();			
+		}
+		mCursor.close();
+
+	}
+
+	//Called from JS with geoJson of Openlayers features
+	public JSONObject getCurrentLocation() {
+		JSONObject object=new JSONObject();
+		try {
+			object.put("latitude",currentLocation.getLatitude());
+			object.put("longitude",currentLocation.getLongitude());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (DEBUG_LOG) Log.d(TAG,"returning current location: " + object);
+		return object; 		
+	}
+
+	//Called from JS with geoJson of Openlayers features
+	public boolean loadLayerNames(final String layerNamesJson) {
+		if (DEBUG_LOG) Log.d(TAG,"loading layer names");
+		if (DEBUG_LOG) Log.d(TAG,"layers are: " + layerNamesJson);
+		return false; 	
+	}
+
+	//Called from JS with point location of survey
+	//This point forms the survey point and should be saved in the db
+	//It could be a new survey point or a new geom of an exisiting one 
+	//Can then mark the map tab as complete
+	public boolean loadSurveyPoint(final double lon, final double lat,final String gemId) {
+		if (DEBUG_LOG) Log.d(TAG,"edited point location from Openlayers. Lon:" + lon + " lat: " + lat+ " gemId: " + gemId);
+		//mWebView.loadUrl("javascript:locateMe("+ lat+","+lon+","+currentLocationAccuracy+","+true+")");
+		GEMSurveyObject g = (GEMSurveyObject)getApplication();
+		if (DEBUG_LOG) Log.d(TAG,"Currently got unsaved edits? " + g.unsavedEdits);
+		g.setLon(lon);
+		g.setLat(lat);
+
+		if (g.unsavedEdits) {
+			if (DEBUG_LOG) Log.d(TAG,"Got unsaved edits");	
+			//Check if we're editing a point i.e. we've clicked it and got its id. If we are then keep the uid. Else generate new one			
+			//if (gemId.equals("0")) {
+			if (!g.isExistingRecord) {
+				if (DEBUG_LOG) Log.d(TAG,"Got unsaved edits but generate a new UID");	
+				//Generate a uid for this survey point
+				UUID id = UUID.randomUUID();
+				g.setUid(id.toString());
+				g.isExistingRecord = false; 
+			} else {
+				if (DEBUG_LOG) Log.d(TAG,"Unsaved edits. Setting existing record = true");
+				g.isExistingRecord = true;
+			}
+		}  else {		
+			if (DEBUG_LOG) Log.d(TAG,"Not got unsaved edits");			
+			if (gemId.equals("0")) {
+				if (DEBUG_LOG) Log.d(TAG,"gemId from map is 0. Generate a new UID");	
+				//Generate a uid for this survey point
+				UUID id = UUID.randomUUID();
+				g.setUid(id.toString());
+				g.isExistingRecord = false; 
+
+			} else { //Then we've tapped existing point. Set it's id, flag as existing record 
+				if (DEBUG_LOG) Log.d(TAG,"Using gemId from map");
+				g.setUid(gemId);			
+				g.isExistingRecord = true;
+				g.unsavedEdits = true;
+			}
+		}
+		//g.putData("OBJ_UID", id.toString());
+		if (DEBUG_LOG) Log.d(TAG,"GLOBAL VARS UID " + g.getUid());	
+		if (DEBUG_LOG) Log.d(TAG,"GLOBAL VARS " + g.getLon()+ " lat: " + g.getLat());
+		if (DEBUG_LOG) Log.d(TAG,"GLOBAL VARS ISEXISTINGRECORD: " + g.isExistingRecord);
+		g.setData(1);
+
+		prevSurveyPointLon = lon; 
+		prevSurveyPointLat = lat;
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				btn_startSurvey.setVisibility(View.VISIBLE);
+
+				//Only allow cancel and favouriting if not editing a point
+				if (!btn_edit_points.isChecked()) {
+					btn_cancelSurveyPoint.setVisibility(View.VISIBLE);	
+					btn_startSurveyFavourite.setVisibility(View.VISIBLE);
+				}
+
+				//btn_takeCameraPhoto.setBackgroundResource(R.drawable.camera_green); //Disabled due to linking photo problem 21/02/13 
+				btn_edit_points.setEnabled(false);
+
+				//btn_take_survey_photo.setVisibility(View.VISIBLE);//Poss Dodgy threading stuff using this
+			}
+		});
+		return false;
+	}	
+
+	
+	private void locateMe(boolean setAsCentre) {
+		if (DEBUG_LOG) Log.d(TAG,"locateMe. SetAsCentre " + setAsCentre);
+		if (currentLatitude == 0 && currentLongitude== 0) {  
+			Toast.makeText(this, "Waiting for location", Toast.LENGTH_SHORT).show();
+		}else {
+			mWebView.loadUrl("javascript:locateMe("+ currentLatitude+","+currentLongitude+","+currentLocationAccuracy+"," + setAsCentre + ")");
+		}
+	}
+
+	
+	/***********************************************************
+	 * END OF JAVA / JAVASCRIPT INTERFACE HELPER FUNCTIONS
+	 * ********************************************************/
+	
+	
+	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		//super.onActivityResult(requestCode, resultCode, data);
@@ -750,8 +1013,7 @@ public class EQForm_MapView extends Activity {
 									"MEDIA_TYPE", "PHOTOGRAPH",
 									"COMMENTS", "no comment entered",
 									"FILENAME", FILENAME + ".jpg"
-							);						
-							
+							);												
 						}
 					});
 
@@ -763,91 +1025,6 @@ public class EQForm_MapView extends Activity {
 		}
 	}
 
-	//Called from JS with geoJson of Openlayers features
-	public boolean loadLayerNames(final String layerNamesJson) {
-		if (DEBUG_LOG) Log.d(TAG,"loading layer names");
-		if (DEBUG_LOG) Log.d(TAG,"layers are: " + layerNamesJson);
-		return false; 	
-	}
-
-
-
-	//Called from JS with point location of survey
-	//This point forms the survey point and should be saved in the db
-	//It could be a new survey point or a new geom of an exisiting one 
-	//Can then mark the map tab as complete
-	public boolean loadSurveyPoint(final double lon, final double lat,final String gemId) {
-		if (DEBUG_LOG) Log.d(TAG,"edited point location from Openlayers. Lon:" + lon + " lat: " + lat+ " gemId: " + gemId);
-		//mWebView.loadUrl("javascript:locateMe("+ lat+","+lon+","+currentLocationAccuracy+","+true+")");
-		GEMSurveyObject g = (GEMSurveyObject)getApplication();
-		if (DEBUG_LOG) Log.d(TAG,"Currently got unsaved edits? " + g.unsavedEdits);
-		g.setLon(lon);
-		g.setLat(lat);
-
-
-		if (g.unsavedEdits) {
-			if (DEBUG_LOG) Log.d(TAG,"Got unsaved edits");	
-			//Check if we're editing a point i.e. we've clicked it and got its id. If we are then keep the uid. Else generate new one			
-			//if (gemId.equals("0")) {
-			if (!g.isExistingRecord) {
-				if (DEBUG_LOG) Log.d(TAG,"Got unsaved edits but generate a new UID");	
-				//Generate a uid for this survey point
-				UUID id = UUID.randomUUID();
-				g.setUid(id.toString());
-				g.isExistingRecord = false; 
-			} else {
-				if (DEBUG_LOG) Log.d(TAG,"Unsaved edits. Setting existing record = true");
-				g.isExistingRecord = true;
-			}
-		}  else {		
-			if (DEBUG_LOG) Log.d(TAG,"Not got unsaved edits");			
-			if (gemId.equals("0")) {
-				if (DEBUG_LOG) Log.d(TAG,"gemId from map is 0. Generate a new UID");	
-				//Generate a uid for this survey point
-				UUID id = UUID.randomUUID();
-				g.setUid(id.toString());
-				g.isExistingRecord = false; 
-
-			} else { //Then we've tapped existing point. Set it's id, flag as existing record 
-				if (DEBUG_LOG) Log.d(TAG,"Using gemId from map");
-				g.setUid(gemId);			
-				g.isExistingRecord = true;
-				g.unsavedEdits = true;
-			}
-		}
-
-
-		//g.putData("OBJ_UID", id.toString());
-		if (DEBUG_LOG) Log.d(TAG,"GLOBAL VARS UID " + g.getUid());	
-		if (DEBUG_LOG) Log.d(TAG,"GLOBAL VARS " + g.getLon()+ " lat: " + g.getLat());
-		if (DEBUG_LOG) Log.d(TAG,"GLOBAL VARS ISEXISTINGRECORD: " + g.isExistingRecord);
-		g.setData(1);
-
-		prevSurveyPointLon = lon; 
-		prevSurveyPointLat = lat;
-
-
-		runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				btn_startSurvey.setVisibility(View.VISIBLE);
-
-				//Only allow cancel and favouriting if not editing a point
-				if (!btn_edit_points.isChecked()) {
-					btn_cancelSurveyPoint.setVisibility(View.VISIBLE);	
-					btn_startSurveyFavourite.setVisibility(View.VISIBLE);
-				}
-
-				//btn_takeCameraPhoto.setBackgroundResource(R.drawable.camera_green); //Disabled due to linking photo problem 21/02/13 
-				btn_edit_points.setEnabled(false);
-
-				//btn_take_survey_photo.setVisibility(View.VISIBLE);//Poss Dodgy threading stuff using this
-			}
-		});
-
-
-		return false;
-	}	
 
 
 
@@ -917,79 +1094,10 @@ public class EQForm_MapView extends Activity {
 		surveyDataObject.unsavedEdits = false;
 		return false;
 	}
-	public boolean getSurveyPoint() {
-		if (DEBUG_LOG) Log.d(TAG,"getting point location from Openlayer. isEditingPoints: s + isEditingPoints");
-		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
-		int data=surveyDataObject.getData();
-		if (DEBUG_LOG) Log.d(TAG,"TEST GLOBALS: " + data);
-		mWebView.loadUrl("javascript:updateSurveyPointPositionFromMap("+ isEditingPoints+")");
-
-		return false; 		
-
-
-	}
-
-	private void loadPrevSurveyPoints() {
-		if (DEBUG_LOG) Log.d(TAG,"loading PREVIOUS survey points");
-
-
-		mDbHelper = new GemDbAdapter(getBaseContext());      
-		mDbHelper.createDatabase();      
-		mDbHelper.open();		
-		Cursor mCursor = mDbHelper.getGemObjectsForMap();
-		mDbHelper.close();
-
-		//if (DEBUG_LOG) Log.d("IDCT","Gem Map Objects cursor " + DatabaseUtils.dumpCursorToString(mCursor));
-		//ArrayList<DBRecord> gemObjectsList = GemUtilities.cursorToArrayList(gemObjects);
-		//Log.d("IDCT","Gem Map Objects List " + gemObjectsList.get(gemObjectsList.size()-1));
-		mCursor.moveToFirst();
-
-		mWebView.loadUrl("javascript:clearMySurveyPoints()");//Inefficient	
-
-		while(!mCursor.isAfterLast()) {
-			//if (DEBUG_LOG) Log.d("IDCT","Gem Map Objects cursor " + mCursor.getDouble(1) + " , " + mCursor.getDouble(2) + " , " + mCursor.getString(0));
-
-			mWebView.loadUrl("javascript:loadSurveyPointsOnMap("+ mCursor.getDouble(1)+","+mCursor.getDouble(2)+", \"" + mCursor.getString(0) +"\")");
-			mCursor.moveToNext();			
-		}
-		mCursor.close();
-
-	}
-
-
-
-
-
-	//Called from JS with geoJson of Openlayers features
-	public JSONObject getCurrentLocation() {
-		JSONObject object=new JSONObject();
-		try {
-			object.put("latitude",currentLocation.getLatitude());
-			object.put("longitude",currentLocation.getLongitude());
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-
-		}
-		if (DEBUG_LOG) Log.d(TAG,"returning current location: " + object);
-		return object; 		
-
-	}
-
-
+	
 
 	
 
-	private void locateMe(boolean setAsCentre) {
-		if (DEBUG_LOG) Log.d(TAG,"locateMe. SetAsCentre " + setAsCentre);
-
-		if (currentLatitude == 0 && currentLongitude== 0) {  
-			Toast.makeText(this, "Waiting for location", Toast.LENGTH_SHORT).show();
-		}else {
-			mWebView.loadUrl("javascript:locateMe("+ currentLatitude+","+currentLongitude+","+currentLocationAccuracy+"," + setAsCentre + ")");
-		}
-	}
 
 
 
@@ -1046,66 +1154,9 @@ public class EQForm_MapView extends Activity {
 	}
 
 
-	private OnClickListener selectLayerListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			Log.i(TAG, "show Dialog ButtonClick");
-			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-			builder.setTitle("Select Base Map");			
 
-			final CharSequence[] baseMaps = {"OpenStreetMap","Bing Hybrid","Bing Roads","Bing Aerial"};
-			final CharSequence[] localBaseMaps = getLocalBaseMapLayers();
-			if (DEBUG_LOG) Log.d(TAG,"LOCAL BASEMAPS " + localBaseMaps.toString());
-
-			final CharSequence[] choiceList = new CharSequence[baseMaps.length + localBaseMaps.length];
-			System.arraycopy(baseMaps, 0, choiceList, 0, baseMaps.length);
-			System.arraycopy(localBaseMaps, 0, choiceList, baseMaps.length, localBaseMaps.length);
-			int selected = -1; // does not select anything			
-
-			builder.setPositiveButton("Ok",
-					new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					//dismiss the dialog  
-				}
-			});
-
-
-
-			builder.setSingleChoiceItems(
-					choiceList, 
-					selected, 
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog,	int which) {
-							if (DEBUG_LOG) Log.d(TAG,"selected "+choiceList[which]);
-							int index = 1;
-							if (which > 3) { //If not one of the standard OSM or Bing web access layers								
-								//String tileLocationPath = "file:////mnt/sdcard/idctdo/maptiles/laquila_mapquest/";
-								String tileLocationPath = sdCardPath +  "idctdo/maptiles/" + choiceList[which] +"/";
-								String zoomLevel = "18";			
-
-
-								File extStore = Environment.getExternalStorageDirectory();
-								File xmlFile = new File(extStore.getAbsolutePath() + "/idctdo/maptiles/" + choiceList[which] +"/tilemapresource.xml");
-								String layerNameString = choiceList[which].toString();
-								if (DEBUG_LOG) Log.d(TAG,"possible tms xml path:" + xmlFile.getPath());
-								if (xmlFile.isFile()) {		
-									if (DEBUG_LOG) Log.d(TAG,"Tile resource File is there");
-									mWebView.loadUrl("javascript:addOfflineTMSMap(\""+ layerNameString +  "\" , \"" +  tileLocationPath + "\" , \"" + zoomLevel +"\")");
-								} else {
-									if (DEBUG_LOG) Log.d(TAG,"No TMS Resource file. Try loading zxy tiles");
-									mWebView.loadUrl("javascript:addOfflineBaseMap(\""+ layerNameString + "\" , \"" + tileLocationPath + "\" , \"" + zoomLevel +"\")");
-								}
-							} else {		
-								mWebView.loadUrl("javascript:setMapLayer("+ which +")");
-							}
-						}
-					});
-			AlertDialog alert = builder.create();
-
-			alert.show();
-		}
-	};
+	
+	
 	private CharSequence[] getLocalBaseMapLayers() {
 		mapTilesFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/maptiles");
 		String file;
@@ -1144,77 +1195,8 @@ public class EQForm_MapView extends Activity {
 		final CharSequence[] choiceListFinal = choiceList.toArray(new CharSequence[choiceList.size()]);
 		return choiceListFinal;
 	}
-	private OnClickListener selectVectorLayerListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			Log.i(TAG, "show Dialog ButtonClick");
-			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-			builder.setTitle("Select Vector Layer To Show");	
-
-			/*
-			String kmlString = null;
-			try {
-				kmlString = readTxt("kml/sundials.kml");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				if (DEBUG_LOG) Log.d(TAG,"problem getting kml file");
-				e.printStackTrace();
-			} 			
-			//Escape the string
-			String escaped = StringEscapeUtils.escapeJava(kmlString);
-			int packingVar1= 1;
-			int packingVar2= 1;
-			mWebView.loadUrl("javascript:addKmlStringToMap2("+packingVar1 +","+ packingVar2 +", \"" +  escaped+"\")");
-			 */
-
-
-
-
-
-
-			int selected = -1; // does not select anything
-			final CharSequence[] choiceList = getVectorLayers();
-			boolean[] checked = new boolean[choiceList.length];
-
-			builder.setMultiChoiceItems(
-					choiceList, 
-					checked, 
-					new DialogInterface.OnMultiChoiceClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which, boolean b) {
-
-							if (b) { //add the layer
-								int index = 1;
-								File extStore = Environment.getExternalStorageDirectory();
-								String kmlPath = extStore.getAbsolutePath() + "/idctdo/kml/" + choiceList[which];
-								File xmlFile = new File(extStore.getAbsolutePath() + "/idctdo/kml/" + choiceList[which]);
-								String layerFileName = choiceList[which].toString();
-								if (DEBUG_LOG) Log.d(TAG,"selected " + kmlPath);
-								String kmlString = null;
-								try {
-									kmlString = readTxt(kmlPath);
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									if (DEBUG_LOG) Log.d(TAG,"problem getting kml file");
-									e.printStackTrace();
-								} 			
-								//Escape the string
-								String escaped = StringEscapeUtils.escapeJava(kmlString);
-								int packingVar1= 1;
-								int packingVar2= 1;
-								mWebView.loadUrl("javascript:addKmlStringToMap2("+packingVar1 +","+ packingVar2 +", \"" +  escaped+"\")");
-
-							} else {//remove the layer
-
-							}
-						}
-					});
-			AlertDialog alert = builder.create();
-			alert.show();
-		}
-	};
-
-
+	
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
@@ -1278,8 +1260,6 @@ public class EQForm_MapView extends Activity {
 
 	public void deleteRecords(){
 		if (DEBUG_LOG) Log.d(TAG,"Deleting records");
-
-
 		// do something on back.
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
@@ -1361,7 +1341,6 @@ public class EQForm_MapView extends Activity {
 			Toast.makeText(this, "selecting layer", Toast.LENGTH_SHORT).show();
 			//showDialogButtonClick();
 		}
-
 	}
 
 	//countdowntimer is an abstract class, so extend it and fill in methods
@@ -1494,15 +1473,8 @@ public class EQForm_MapView extends Activity {
 
 
 			}
-
-			//textViewLocationProvider.setText("Loc. Provider: " + currentLocationProvider);
-			//textViewLocationAccuracy.setText("Loc. Accuracy: " + currentLocationAccuracy);
-
 			if (DEBUG_LOG) Log.d(TAG,"lat: "+loc.getLatitude() + "lng: " + loc.getLongitude() );
-			//mWebView.loadUrl("javascript:locateMe("+ currentLatitude+","+currentLongitude+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");
 
-			//textViewLatitude.setText(Double.toString(loc.getLatitude()));
-			//textViewLongitude.setText(Double.toString(loc.getLongitude()));
 		}
 
 
@@ -1513,12 +1485,8 @@ public class EQForm_MapView extends Activity {
 			if (DEBUG_LOG) Log.d(TAG,"Provider disabled: " + provider );
 
 			Toast.makeText( getApplicationContext(),
-
 					provider + " location provider disabled",
-
 					Toast.LENGTH_SHORT ).show();
-
-
 			/*
 			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -1533,14 +1501,10 @@ public class EQForm_MapView extends Activity {
 		@Override
 
 		public void onProviderEnabled(String provider)
-
 		{
 			if (DEBUG_LOG) Log.d(TAG,"Provider enabled");
-
 			Toast.makeText( getApplicationContext(),
-
 					provider + " location provider enabled",
-
 					Toast.LENGTH_SHORT).show();
 
 			/*
@@ -1618,10 +1582,6 @@ public class EQForm_MapView extends Activity {
 			} else if (isSignificantlyOlder) {
 				//return false;
 			}
-
-
-
-
 
 			// Check whether the new location fix is more or less accurate
 			int accuracyDelta = (int) (location.getAccuracy() - currentBestLocation.getAccuracy());
