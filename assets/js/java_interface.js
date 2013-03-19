@@ -177,7 +177,8 @@ function setMapLayer(index) {
 }
 
 
-//Add an offline base map to the map
+
+//Add an offline base map to the map. This loads OSM type tiles e.g. from MOBAC
 //Called from Java
 function addOfflineBaseMap(layerNameString,tileLocationPath,zoom) {
 	var zoomLevel = parseInt(zoomLevel);
@@ -222,7 +223,7 @@ function addOfflineTMSMap(layerNameString,tileLocationPath,zoom) {
 		type: 'png', 
 		getURL: xyz_getTileURL, 
 		alpha: true, 
-		isBaseLayer: false,
+		isBaseLayer: true,
 		numZoomLevels: 18	
 	});
 
@@ -262,5 +263,4 @@ function removeOverlay(lat,lon,layerNameString) {
 	if (myLayer.length > 0) {
 		map.removeLayer(myLayer[0]);
 	}
-
 }

@@ -8,7 +8,7 @@ var DEBUG_SHOW_MOUSE_POS = true;
 var DEBUG_DISPLAY_OVERVIEW = false;
 var DEBUG_DISPLAY_PANZOOM = false;
 var DEBUG_FREE_ROTATE = false;
-var DEBUG_SHOW_LAYER_SWITCHER = true;
+var DEBUG_SHOW_LAYER_SWITCHER = false;
 
 var DEBUG_USE_BROWSER_CACHING = false;
 
@@ -248,14 +248,6 @@ function init(){
 	);
 					  
 
-	var tiles3 = new OpenLayers.Layer.XYZ(
-	        "Cached Tiles 3",
-	         "tiles2/${z}/${x}/${y}.png.tile",
-	        {
-            sphericalMercator: true
-        }
-	);
-
 					
 	var localTMSTiles = new OpenLayers.Layer.XYZ("Local TMS Tiles",
 	"tiles/",
@@ -282,15 +274,7 @@ function init(){
 		styleMap:  surveyPointStyleMap
 	});
 	
-	/*
-    map.addLayers([bingHybrid,myPositions,bingRoads,bingAerial,layer,mapnik,streets,cached,tiles3,sdtiles,gphy, gmap, ghyb, gsat,prevSurveyPoints]);
-	*/
 	
-	//map.addLayers([sdtiles,bingHybrid,mapnik,bingRoads,bingAerial,gmap, ghyb, gsat,myPositions,locationPointLayer,prevSurveyPoints]);
-	//map.addLayers([bingHybrid,sdtiles,mapnik,bingRoads,bingAerial,gmap, ghyb, gsat,myPositions,locationPointLayer,prevSurveyPoints]);
-	
-
-					
 	map.addLayers([mapnik,bingHybrid,bingRoads,bingAerial,myPositions,locationPointLayer,prevSurveyPoints,sdtiles,localTMSTiles]);	
 	
 	/* Causing issues at the moment*/
@@ -316,14 +300,21 @@ function init(){
 	}
 
 	if (DEBUG_SHOW_MOUSE_POS) {
-		map.events.on({
-		        "moveend":function(){
-				//alert(map.getCenter().toString());
-					var a = document.getElementById("mapCenterCoords");
-					var ll = map.getCenter().transform(map.getProjectionObject(),new OpenLayers.Projection("EPSG:4326"));
-					a.innerHTML = "Lat: " + Math.round(ll.lat*1000)/1000  + " , lon:" + Math.round(ll.lon*1000)/1000 + " Zoom: " + map.getZoom();
-		        }
+		map.events.register("move", map, function(){
+		        updateScreenDetails();		        
 		    });
+		    
+		map.events.register("zoomend", map, function(){
+		        updateScreenDetails();
+
+		    });
+		    
+		 function updateScreenDetails() {
+			var a = document.getElementById("mapCenterCoords");
+			var ll = map.getCenter().transform(map.getProjectionObject(),new OpenLayers.Projection("EPSG:4326"));
+			a.innerHTML = "Lat: " + Math.round(ll.lat*1000)/1000  + " , lon:" + Math.round(ll.lon*1000)/1000 + " Zoom: " + map.getZoom();
+		         	
+		 }
 	}	 
 		 
 	 
@@ -575,8 +566,6 @@ function drawCandidateSurveyPoint(lon, lat,idString) {
 		        
 		updateSurveyPointPositionFromMap(false);
 }
-
-
 
 
 

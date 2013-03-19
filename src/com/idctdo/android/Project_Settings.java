@@ -230,8 +230,7 @@ public class Project_Settings extends Activity {
 			Date date = new Date(datePicker.getYear() - 1900, datePicker.getMonth(), datePicker.getDayOfMonth());
 			
 			mDbHelper.insertProject(projectName.getText().toString(), surveyorName.getText().toString(), projectSummary.getText().toString(),date);
-			mDbHelper.close();
-			
+			mDbHelper.close();			
 			
 			setUpPreferenceList();
 			

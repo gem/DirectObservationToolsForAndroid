@@ -682,7 +682,7 @@ public class GemDbAdapter
 			//cv.put("PROJ_DATE", surveyDate.toString());
 			//cv.put("USER_MADE", surveyorName.toString());
 			cv.put("PROJ_SUMRY", projectSummary.toString());
-			cv.put("PROJ_DATE", date.toString());
+			cv.put("PROJ_DATE", date.getTime());
 
 			mDb.insert("GEM_PROJECT", null, cv);
 			String feedbackMsg = "Project saved\n " + projectName;

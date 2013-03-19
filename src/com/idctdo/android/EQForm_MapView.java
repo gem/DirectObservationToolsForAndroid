@@ -1516,7 +1516,8 @@ public class EQForm_MapView extends Activity {
 			}
 			 */
 		}
-
+		
+		
 
 
 		@Override
