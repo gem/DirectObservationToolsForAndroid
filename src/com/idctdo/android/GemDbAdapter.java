@@ -670,7 +670,6 @@ public class GemDbAdapter
 	}
 
 
-
 	public void insertProject(String projectName, String surveyorName, String projectSummary, Date date)
 	{		
 		try
@@ -682,7 +681,9 @@ public class GemDbAdapter
 			//cv.put("PROJ_DATE", surveyDate.toString());
 			//cv.put("USER_MADE", surveyorName.toString());
 			cv.put("PROJ_SUMRY", projectSummary.toString());
-			cv.put("PROJ_DATE", date.getTime());
+			
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			cv.put("PROJ_DATE", dateFormat.format(date));
 
 			mDb.insert("GEM_PROJECT", null, cv);
 			String feedbackMsg = "Project saved\n " + projectName;

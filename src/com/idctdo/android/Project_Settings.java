@@ -20,6 +20,7 @@ import android.app.TabActivity;
 import android.os.Bundle;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -228,6 +229,8 @@ public class Project_Settings extends Activity {
 			int year = datePicker.getYear();
 			
 			Date date = new Date(datePicker.getYear() - 1900, datePicker.getMonth(), datePicker.getDayOfMonth());
+			
+			//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			
 			mDbHelper.insertProject(projectName.getText().toString(), surveyorName.getText().toString(), projectSummary.getText().toString(),date);
 			mDbHelper.close();			

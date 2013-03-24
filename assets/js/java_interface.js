@@ -243,17 +243,17 @@ function addKmlStringToMap(kmlString) {
     map.addLayer(layer);
 }
 
+
 //Add KML to the map
 //Called from Java
 function addKmlStringToMap2(lon,layerNameString,kmlString) {
 	console.log("adding kml to map");
 	console.log("gemIdString:" + kmlString);
 	
-	var layer = new OpenLayers.Layer.Vector(layerNameString,
-		{ strategies: [new OpenLayers.Strategy.BBOX({resFactor: 1})]}
-	);
+	var layer = new OpenLayers.Layer.Vector(layerNameString);
     layer.addFeatures(GetFeaturesFromKMLString(kmlString));
     map.addLayer(layer);
+    
 }
 
 
