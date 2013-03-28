@@ -60,7 +60,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Structural Horizontal Irregularity"
+            android:text="Plan Irregularity"
             android:textStyle="bold" />
 
         <TextView
@@ -120,7 +120,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Structural Vertical Irregularity"
+            android:text="Vertical Irregularity"
             android:textStyle="bold" />
 
         <TextView

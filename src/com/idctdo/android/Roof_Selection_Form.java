@@ -60,14 +60,19 @@ public class Roof_Selection_Form extends Activity {
 
 	private String secondLevelAttributeDictionary = "DIC_ROOF_SYSTEM_TYPE";
 	private String secondLevelAttributeKey = "ROOFSYSTYP";
-
+	
+	private String roofConnectionAttributeDictionary = "DIC_ROOF_CONNECTION";
+	private String roofConnectionAttributeKey = "ROOF_CONN";
+	
 	public Spinner spinnerRoofShape;
 	public Spinner spinnerRoofCoverMaterial;
+	public Spinner spinnerRoofConnection;
 
-
+	
 	private SelectedAdapter selectedAdapter;
 	private SelectedAdapter selectedAdapter2;
 	private SelectedAdapter selectedAdapter3;
+	private SelectedAdapter selectedAdapter4;
 
 	private ArrayList list;
 	public ArrayList<DBRecord> secondLevelAttributesList;
@@ -164,6 +169,35 @@ public class Roof_Selection_Form extends Activity {
 			});	
 			roofCoverMaterialAttributeDictionaryCursor.close();
 		
+			
+			
+
+
+			spinnerRoofConnection = (Spinner)  findViewById(R.id.spinnerRoofConnection);
+			final Cursor roofConnectionAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(roofConnectionAttributeDictionary);
+			ArrayList<DBRecord> roofConnectionAttributesList = GemUtilities.cursorToArrayList(roofConnectionAttributeDictionaryCursor);
+			ArrayAdapter spinnerArrayAdapter4 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,roofConnectionAttributesList );
+			spinnerArrayAdapter4.setDropDownViewResource(R.layout.simple_spinner_item);
+			spinnerRoofConnection.setAdapter(spinnerArrayAdapter4);
+			spinnerRoofConnection.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+					//Object item = parent.getItemAtPosition(pos);
+					if (DEBUG_LOG) Log.d("IDCT","spinner selected: " + spinnerRoofConnection.getSelectedItem().toString());
+					if (DEBUG_LOG) Log.d("IDCT","spinner selected pos: " + pos);
+					DBRecord selected = (DBRecord) spinnerRoofConnection.getSelectedItem();
+					if (DEBUG_LOG) Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
+					surveyDataObject.putData(roofConnectionAttributeKey, selected.getAttributeValue());		
+				}
+				public void onNothingSelected(AdapterView<?> parent) {
+				}
+			});	
+			roofConnectionAttributeDictionaryCursor.close();
+			
+			
+			
+			
+			
+			
 			
 			
 			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
@@ -264,7 +298,8 @@ public class Roof_Selection_Form extends Activity {
 			
 			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerRoofShape, roofShapeAttributesList, roofShapeAttributeKey,surveyDataObject.getSurveyDataValue(roofShapeAttributeKey));
 			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerRoofCoverMaterial, roofCoverMaterialAttributesList, roofCoverMaterialAttributeKey,surveyDataObject.getSurveyDataValue(roofCoverMaterialAttributeKey));
-	
+			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerRoofConnection, roofConnectionAttributesList, roofConnectionAttributeKey,surveyDataObject.getSurveyDataValue(roofConnectionAttributeKey));
+			
 		}//End tab completed check		
 	}
 

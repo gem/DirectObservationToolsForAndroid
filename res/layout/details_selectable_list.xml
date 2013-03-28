@@ -113,7 +113,7 @@
                     android:layout_below="@+id/editTextSlope"
                     android:layout_marginTop="5dp"
                     android:gravity="left"
-                    android:text="Building Position"
+                    android:text="Position Within Block"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
@@ -133,7 +133,7 @@
                     android:layout_below="@+id/spinnerBuildingPosition"
                     android:layout_marginTop="5dp"
                     android:gravity="left"
-                    android:text="Building Shape"
+                    android:text="Plan Shape"
                     android:textSize="20dp"
                     android:textStyle="bold" />
             </RelativeLayout>
@@ -152,7 +152,7 @@
                 android:layout_below="@+id/spinnerBuildingShape"
                 android:layout_marginTop="5dp"
                 android:gravity="left"
-                android:text="Non-structural Exterior Walls"
+                android:text="Material Of Exterior Walls"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 

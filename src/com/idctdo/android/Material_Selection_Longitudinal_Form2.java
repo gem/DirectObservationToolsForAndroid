@@ -248,11 +248,7 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 					RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel2);
 					relativeLayout.setVisibility(View.VISIBLE);
 
-					/*
-				RelativeLayout relativeLayoutMortar = (RelativeLayout) findViewById(R.id.relMortar);
-				relativeLayoutMortar.setVisibility(View.GONE);
-					 */			
-
+					
 					completeThisSecondaryTab();							
 
 					selectedAdapter2.notifyDataSetChanged();
@@ -303,7 +299,6 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 							relativeLayout3.setVisibility(View.VISIBLE);
 							listview3.setVisibility(View.VISIBLE);
 						}
-
 					}
 					mCursor.close();
 					mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(fourthLevelAttributeType,selectedAdapter2.getItem(position).getJson());
@@ -326,7 +321,6 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 							listview4.setVisibility(View.VISIBLE);
 							RelativeLayout relativeLayout4 = (RelativeLayout) findViewById(R.id.rel4);
 							relativeLayout4.setVisibility(View.VISIBLE);
-
 						}
 
 					}
@@ -370,10 +364,8 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 				@Override
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
-					selectedAdapter3.setSelectedPosition(position);							
-
+					selectedAdapter3.setSelectedPosition(position);						
 					surveyDataObject.putData(thirdLevelAttributeKey, selectedAdapter3.getItem(position).getAttributeValue());
-
 					storeSurveyVariables();
 				}
 			});
@@ -383,10 +375,8 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 				@Override
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
-					selectedAdapter4.setSelectedPosition(position);				
-
+					selectedAdapter4.setSelectedPosition(position);			
 					surveyDataObject.putData(fourthLevelAttributeKey, selectedAdapter4.getItem(position).getAttributeValue());
-
 					storeSurveyVariables();
 				}
 			}); 

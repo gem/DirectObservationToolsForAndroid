@@ -45,7 +45,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Age (YYYY)"
+                    android:text="Year of Construction/Retrofit (yyyy)"
                     android:textStyle="bold" />
 
                 <ListView
@@ -234,7 +234,7 @@
                     android:layout_below="@+id/editTextAboveGrade1"
                     android:ems="10"
                     android:hint="height 2"
-                    android:inputType="number"
+                    android:inputType="number|numberDecimal"
                     android:visibility="invisible" />
 
                 <EditText
@@ -245,7 +245,7 @@
                     android:layout_below="@+id/textViewHeightAboveGrade"
                     android:ems="10"
                     android:hint="height 1"
-                    android:inputType="number" />
+                    android:inputType="number|numberDecimal" />
             </RelativeLayout>
 
             <RelativeLayout

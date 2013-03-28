@@ -555,16 +555,12 @@ public class GemDbAdapter
 		try
 		{
 			String sql = "select DESCRIPTION, CODE, SCOPE from '"+ dictionaryTable + "' where SCOPE = '"+ attributeScope + "'";
-
 			if (DEBUG_LOG) Log.d("IDCT", "running sql " + sql);
-
 			Cursor mCur = mDb.rawQuery(sql, null);
 			if (mCur!=null)
 			{
 				mCur.moveToNext();
 				Log.e(TAG, "mCur not null " + mCur.getColumnCount());
-
-				//generateCleanGlossary(mCur.getString(0),mCur.getString(1));
 			}
 			return mCur;
 		}
