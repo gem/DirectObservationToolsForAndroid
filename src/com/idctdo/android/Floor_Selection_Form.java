@@ -56,12 +56,17 @@ public class Floor_Selection_Form extends Activity {
 		
 	private String foundationSystemAttributeDictionary = "DIC_FOUNDATION_SYSTEM";
 	private String foundationSystemAttributeKey = "FOUNDN_SYS";
+
+	private String floorConnectionAttributeDictionary = "DIC_FLOOR_CONNECTION";
+	private String floorConnectionAttributeKey = "FLOOR_CONN";
 	
 
 	public Spinner spinnerFoundationSystem;
+	public Spinner spinnerFloorConnection;
 	
 	private SelectedAdapter selectedAdapter;
 	private SelectedAdapter selectedAdapter2;
+
 
 	
 	public ArrayList list;
@@ -124,10 +129,36 @@ public class Floor_Selection_Form extends Activity {
 			foundationSystemAttributeDictionaryCursor.close();
 			
 			
+			
+			
+			
+			//Floor connection data loading
+			spinnerFloorConnection = (Spinner)  findViewById(R.id.spinnerFloorConnection);
+			final Cursor floorConnectionAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(floorConnectionAttributeDictionary);
+			ArrayList<DBRecord> floorConnectionAttributesList = GemUtilities.cursorToArrayList(floorConnectionAttributeDictionaryCursor);
+			ArrayAdapter spinnerArrayAdapter3 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,floorConnectionAttributesList);
+			spinnerArrayAdapter2.setDropDownViewResource(R.layout.simple_spinner_item);
+			spinnerFloorConnection.setAdapter(spinnerArrayAdapter3);				
+			spinnerFloorConnection.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+					//Object item = parent.getItemAtPosition(pos);
+					Log.d("IDCT","spinner selected: " + spinnerFloorConnection.getSelectedItem().toString());
+					Log.d("IDCT","spinner selected pos: " + pos);
+					DBRecord selected = (DBRecord) spinnerFloorConnection.getSelectedItem();
+					Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
+					surveyDataObject.putData(floorConnectionAttributeKey, selected.getAttributeValue());		
+				}
+				public void onNothingSelected(AdapterView<?> parent) {
+				}
+			});	
+			floorConnectionAttributeDictionaryCursor.close();
+			
+			
+			
+			
 			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
 			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 			if (DEBUG_LOG) Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
-		
 
 			Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(secondLevelAttributeDictionary);
 			secondLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesSecondLevelCursor);
@@ -215,6 +246,7 @@ public class Floor_Selection_Form extends Activity {
 			}
 			
 			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerFoundationSystem, foundationSystemAttributesList , foundationSystemAttributeKey,surveyDataObject.getSurveyDataValue(foundationSystemAttributeKey));
+			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerFloorConnection, floorConnectionAttributesList , foundationSystemAttributeKey,surveyDataObject.getSurveyDataValue(floorConnectionAttributeKey));
 
 		}		//end of tab completed check
 	}

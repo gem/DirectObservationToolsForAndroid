@@ -727,8 +727,8 @@ public class MainTabActivity extends TabActivity {
 
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Hello User");
-		builder.setMessage("What is your name:");
+		builder.setTitle("Name this favourite");
+		builder.setMessage("Enter a name for this favourite");
 		// Use an EditText view to get user input.
 		final EditText input = new EditText(this);
 		input.setId(TEXT_ID_FOR_DIALOG);
@@ -738,7 +738,7 @@ public class MainTabActivity extends TabActivity {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String value = input.getText().toString();
-				Log.d(TAG, "User name: " + value);
+				Log.d(TAG, "Favourite name: " + value);
 				
 				GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
 				String uidToFavourite = surveyDataObject.getUid();

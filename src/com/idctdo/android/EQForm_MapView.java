@@ -57,6 +57,7 @@ import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
@@ -136,6 +137,9 @@ public class EQForm_MapView extends Activity {
 	public long minTimePositionUpdates = 0; //30000
 	public float minDistPositionUpdates = 0; //10f
 
+	private int mProgressStatus = 0;
+	private ProgressDialog mProgressDialog;
+	private ProgressBarAsync mProgressbarAsync;
 
 
 	StringBuilder sb;
@@ -174,8 +178,8 @@ public class EQForm_MapView extends Activity {
 	String sdCardPath;
 
 	boolean[] vectorsListDisplayState = null; 
-	
-	
+
+
 	TextView text_view_gpsInfo;
 	TextView text_view_gpsInfo2;
 
@@ -206,7 +210,7 @@ public class EQForm_MapView extends Activity {
 		if (DEBUG_LOG) Log.d(TAG,"adding JS interface");
 		mWebView.addJavascriptInterface(this, "webConnector"); 
 
-		
+
 		mWebView.loadUrl("file:///android_asset/idct_map.html");
 		//mWebView.loadUrl("http://swingley.appspot.com/maps/olpts");		
 		mWebView.setWebViewClient(new MapWebViewClient());
@@ -247,7 +251,22 @@ public class EQForm_MapView extends Activity {
 		}
 
 
-
+	     /** Creating a progress dialog window */
+        mProgressDialog = new ProgressDialog(this);
+ 
+        /** Close the dialog window on pressing back button */
+        mProgressDialog.setCancelable(true);
+ 
+        /** Setting a horizontal style progress bar */
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+ 
+        /** Setting a message for this progress dialog
+        * Use the method setTitle(), for setting a title
+        * for the dialog window
+        *  */
+        mProgressDialog.setMessage("Work in Progress ...");
+        
+        
 
 
 		//Save the path as a string value
@@ -440,7 +459,7 @@ public class EQForm_MapView extends Activity {
 		super.onStart();
 		if (DEBUG_LOG) Log.d(TAG, "On Start .....");
 	}
-	
+
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
@@ -458,11 +477,11 @@ public class EQForm_MapView extends Activity {
 		if (DEBUG_LOG) Log.d(TAG, "On Restart .....");
 	}
 
-	
-	
-	
-	
-	
+
+
+
+
+
 	/***********************************************************
 	 * MAP UI BUTTON CLICK LISTENERS
 	 * ********************************************************/
@@ -542,7 +561,7 @@ public class EQForm_MapView extends Activity {
 				//Stop any geometry editing			
 				mWebView.loadUrl("javascript:startEditingMode(false)");
 				isEditingPoints = false;
-				
+
 				//Clear the temporary/proposal survey points
 				mWebView.loadUrl("javascript:clearMyPositions()");
 
@@ -558,8 +577,8 @@ public class EQForm_MapView extends Activity {
 						btn_edit_points.setChecked(false);
 					}
 				});
-				
-			//Is in editing state, could prompt to save these changes	
+
+				//Is in editing state, could prompt to save these changes	
 			} else {
 				//promptForSavingEdits();
 			}
@@ -575,7 +594,7 @@ public class EQForm_MapView extends Activity {
 			Log.i(TAG, "show Dialog ButtonClick");
 			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 			builder.setTitle("Select a Favourite");		
-			
+
 			//Get the favourite / template list from the db
 			mDbHelper = new GemDbAdapter(getBaseContext());       
 			mDbHelper.createDatabase();      
@@ -584,7 +603,7 @@ public class EQForm_MapView extends Activity {
 			ArrayList favesList =GemUtilities.cursorToArrayList(favouritesCursor);  
 			mDbHelper.close();	
 
-			
+
 			int selected = -1; // does not select anything			
 			ArrayList<DBRecord> buildingPositionAttributesList = GemUtilities.cursorToArrayList(favouritesCursor);
 			final ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(mContext,android.R.layout.simple_list_item_1,buildingPositionAttributesList );
@@ -670,7 +689,7 @@ public class EQForm_MapView extends Activity {
 			startActivity(PreviousPage);*/
 		}
 	};
-	
+
 	private OnClickListener selectLayerListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -731,7 +750,7 @@ public class EQForm_MapView extends Activity {
 			alert.show();
 		}
 	};
-	
+
 
 	private OnClickListener selectVectorLayerListener = new OnClickListener() {
 		@Override
@@ -745,7 +764,7 @@ public class EQForm_MapView extends Activity {
 			if (vectorsListDisplayState == null) { 
 				vectorsListDisplayState = new boolean[choiceList.length];
 			}
-			
+
 			builder.setMultiChoiceItems(
 					choiceList, 
 					vectorsListDisplayState, 
@@ -754,26 +773,28 @@ public class EQForm_MapView extends Activity {
 						public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 							String layerFileName = choiceList[which].toString();
 							if (isChecked) { //add the layer
+								
+								
+	
+								
+								
 								int index = 1;
 								File extStore = Environment.getExternalStorageDirectory();
 								String kmlPath = extStore.getAbsolutePath() + "/idctdo/kml/" + choiceList[which];
-								File xmlFile = new File(extStore.getAbsolutePath() + "/idctdo/kml/" + choiceList[which]);
-								if (DEBUG_LOG) Log.d(TAG,"selected " + kmlPath);
-								String kmlString = null;
-								try {
-									kmlString = readTxt(kmlPath);
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									if (DEBUG_LOG) Log.d(TAG,"problem getting kml file");
-									e.printStackTrace();
-								} 			
 								
-								//Escape the string
-								String escaped = StringEscapeUtils.escapeJava(kmlString);
-								int packingVar1= 1;
-								int packingVar2= 1;
-								mWebView.loadUrl("javascript:addKmlStringToMap2("+packingVar1 +", \"" +   layerFileName +"\", \"" +  escaped+ "\")");
+								//File xmlFile = new File(extStore.getAbsolutePath() + "/idctdo/kml/" + choiceList[which]);
+								if (DEBUG_LOG) Log.d(TAG,"selected " + kmlPath);
 
+						         /** Show the progress dialog window */
+				                mProgressDialog.show();				 
+				                /** Creating an instance of ProgressBarAsync */
+				                mProgressbarAsync = new ProgressBarAsync();				 
+				                /** ProgressBar starts its execution */
+				                mProgressbarAsync.execute(kmlPath, layerFileName);
+				                
+				                
+				                
+								
 							} else {//remove the layer
 								Toast.makeText(getBaseContext(), "Removing KML", Toast.LENGTH_SHORT).show();
 								int packingVar1= 1;
@@ -790,26 +811,26 @@ public class EQForm_MapView extends Activity {
 				}
 			});
 
-			
+
 			AlertDialog alert = builder.create();
 			alert.show();
 		}
 	};
 
 
-	
+
 	/***********************************************************
 	 * END OF UI BUTTON CLICK LISTENERS
 	 * ********************************************************/
 
-	
-	
+
+
 	/***********************************************************
 	 * JAVA / JAVASCRIPT INTERFACE HELPER FUNCTION
 	 * Contains various general functions for calling high level functionality
 	 * in the map view (javascript) for map drawing, editing, getting locations
 	 * ********************************************************/
-	
+
 	public boolean getSurveyPoint() {
 		if (DEBUG_LOG) Log.d(TAG,"getting point location from Openlayer. isEditingPoints: s + isEditingPoints");
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
@@ -818,7 +839,7 @@ public class EQForm_MapView extends Activity {
 		mWebView.loadUrl("javascript:updateSurveyPointPositionFromMap("+ isEditingPoints+")");
 		return false; 		
 	}	
-	
+
 	private void loadPrevSurveyPoints() {
 		if (DEBUG_LOG) Log.d(TAG,"loading PREVIOUS survey points");
 		mDbHelper = new GemDbAdapter(getBaseContext());      
@@ -935,7 +956,7 @@ public class EQForm_MapView extends Activity {
 		return false;
 	}	
 
-	
+
 	private void locateMe(boolean setAsCentre) {
 		if (DEBUG_LOG) Log.d(TAG,"locateMe. SetAsCentre " + setAsCentre);
 		if (currentLatitude == 0 && currentLongitude== 0) {  
@@ -945,13 +966,13 @@ public class EQForm_MapView extends Activity {
 		}
 	}
 
-	
+
 	/***********************************************************
 	 * END OF JAVA / JAVASCRIPT INTERFACE HELPER FUNCTIONS
 	 * ********************************************************/
-	
-	
-	
+
+
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		//super.onActivityResult(requestCode, resultCode, data);
@@ -1077,9 +1098,9 @@ public class EQForm_MapView extends Activity {
 		surveyDataObject.unsavedEdits = false;
 		return false;
 	}
-	
 
-	
+
+
 
 
 
@@ -1138,8 +1159,8 @@ public class EQForm_MapView extends Activity {
 
 
 
-	
-	
+
+
 	private CharSequence[] getLocalBaseMapLayers() {
 		mapTilesFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/maptiles");
 		String file;
@@ -1178,8 +1199,8 @@ public class EQForm_MapView extends Activity {
 		final CharSequence[] choiceListFinal = choiceList.toArray(new CharSequence[choiceList.size()]);
 		return choiceListFinal;
 	}
-	
-	
+
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
@@ -1325,6 +1346,63 @@ public class EQForm_MapView extends Activity {
 			//showDialogButtonClick();
 		}
 	}
+
+	private class ProgressBarAsync extends AsyncTask<String, String, Void> {
+		 private ProgressDialog dialog = new ProgressDialog(EQForm_MapView.this);
+		 
+		/** This callback method is invoked, before starting the background process */
+		@Override
+		protected void onPreExecute() {
+
+			 this.dialog.setMessage("Please wait");
+		        this.dialog.show();
+		}
+
+		/** This callback method is invoked on calling execute() method
+		 * on an instance of this class */
+		@Override
+		protected Void doInBackground(String... params) {	
+					String kmlPath2 = params[0];
+					String layerFileName = params[1];
+					String kmlString = null;
+					try {
+						kmlString = readTxt(kmlPath2);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						if (DEBUG_LOG) Log.d(TAG,"problem getting kml file");
+						e.printStackTrace();
+					} 			
+
+					//Escape the string
+					String escaped = StringEscapeUtils.escapeJava(kmlString);
+					int packingVar1= 1;
+					int packingVar2= 1;
+					mWebView.loadUrl("javascript:addKmlStringToMap2("+packingVar1 +", \"" +   layerFileName +"\", \"" +  escaped+ "\")");
+
+
+					/** Sleeps this thread for 100ms */
+					//Thread.sleep(100);
+
+			
+			return null;
+		}
+
+
+
+		/** This callback method is invoked when the background function
+		 * doInBackground() is executed completely */
+		@Override
+		protected void onPostExecute(Void result) {
+			   if (dialog.isShowing()) {
+		            dialog.dismiss();		            
+		        }
+			   if (mProgressDialog.isShowing()) {
+			   		mProgressDialog.dismiss();
+			   }
+		}
+	}
+
+
 
 	//countdowntimer is an abstract class, so extend it and fill in methods
 	public class MyCount extends CountDownTimer{
@@ -1499,8 +1577,8 @@ public class EQForm_MapView extends Activity {
 			}
 			 */
 		}
-		
-		
+
+
 
 
 		@Override
