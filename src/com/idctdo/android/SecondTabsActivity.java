@@ -30,11 +30,6 @@ public class SecondTabsActivity extends TabActivity {
 
 		tabHost = getTabHost();
 
-
-		//Intent intentPageOne = new Intent().setClass(this,  Material_Selection_Transverse_Form.class);
-		//Intent intentPageTwo = new Intent().setClass(this,  LLRS_Selection_Longitudinal_Transverse_Form.class);
-
-
 		Intent tabIntent1=new Intent(this, Material_Selection_Longitudinal_Form2.class);
 		TabSpec tabSpec1 = tabHost
 		.newTabSpec("Longitudinal")

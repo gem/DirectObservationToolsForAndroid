@@ -226,6 +226,7 @@ function addOfflineTMSMap(layerNameString,tileLocationPath,zoom) {
 		isBaseLayer: true,
 		numZoomLevels: 18	
 	});
+	
 
 	map.addLayer(localTMSTiles);
 	var layers = map.layers;

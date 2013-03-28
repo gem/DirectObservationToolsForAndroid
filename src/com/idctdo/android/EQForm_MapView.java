@@ -99,7 +99,7 @@ import android.widget.ToggleButton;
 
 public class EQForm_MapView extends Activity {
 
-	public boolean DEBUG_LOG = false; 
+	public boolean DEBUG_LOG = true; 
 
 	WebView mWebView;
 	/** Called when the activity is first created. */
@@ -739,23 +739,6 @@ public class EQForm_MapView extends Activity {
 			Log.i(TAG, "show Dialog ButtonClick");
 			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 			builder.setTitle("Select Vector Layer To Show");	
-
-			/*
-			String kmlString = null;
-			try {
-				kmlString = readTxt("kml/sundials.kml");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				if (DEBUG_LOG) Log.d(TAG,"problem getting kml file");
-				e.printStackTrace();
-			} 			
-			//Escape the string
-			String escaped = StringEscapeUtils.escapeJava(kmlString);
-			int packingVar1= 1;
-			int packingVar2= 1;
-			mWebView.loadUrl("javascript:addKmlStringToMap2("+packingVar1 +","+ packingVar2 +", \"" +  escaped+"\")");
-			 */
-
 
 			int selected = -1; // does not select anything
 			final CharSequence[] choiceList = getVectorLayers();

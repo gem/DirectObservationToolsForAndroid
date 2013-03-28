@@ -92,7 +92,8 @@ public class MainTabActivity extends TabActivity {
 	String FILENAME;
 	String Filename;
 
-
+   private static final int TEXT_ID_FOR_DIALOG = 0;
+	   
 
 	public void onCreate(Bundle savedInstanceState) {		
 		if (DEBUG_LOG) Log.d(TAG, "On Create of the  MainTab");		
@@ -101,7 +102,7 @@ public class MainTabActivity extends TabActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_tab_activity);
 
-		
+
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
 		boolean isFavourite=false;
 		if (GemUtilities.isBlank(surveyDataObject.favouriteRecord)) {
@@ -211,7 +212,7 @@ public class MainTabActivity extends TabActivity {
 				}
 			}			
 			consequencesDataCursor.close();
-			
+
 		} else {
 			if (DEBUG_LOG) Log.d(TAG,"STARTING FRESH SURVEY FORMS");
 		}
@@ -242,7 +243,7 @@ public class MainTabActivity extends TabActivity {
 
 	}
 
-/*
+	/*
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
@@ -250,15 +251,15 @@ public class MainTabActivity extends TabActivity {
 		Log.d("IDCT", "Main Tab Activity Pausing .....");
 
 	}
-	*/
-	
+	 */
+
 	/*
 	@Override
 	protected void onResume() {
 		super.onResume();
 		Log.d("IDCT", "Main Tab Activity resuming .....");
 	}
-	*/
+	 */
 	public static boolean createDirIfNotExists(String path) {
 		boolean ret = true;
 
@@ -411,7 +412,7 @@ public class MainTabActivity extends TabActivity {
 		}
 	}
 
-
+/*
 	public void removeTabs() {
 		if (DEBUG_LOG) Log.d(TAG,"removing tabs " + tabHost.getTabWidget().getChildCount());
 		//tabHost.clearAllTabs();
@@ -434,7 +435,7 @@ public class MainTabActivity extends TabActivity {
 		generateTabs();
 
 	}
-
+*/
 
 	public void setTabColor() {
 
@@ -469,7 +470,7 @@ public class MainTabActivity extends TabActivity {
 			tabHost.setCurrentTab(tabHost.getCurrentTab()-1);
 		}
 	}
-
+/*
 	public void restart() {
 		lockTabIcons();
 		tabHost.setCurrentTab(0);
@@ -485,7 +486,7 @@ public class MainTabActivity extends TabActivity {
 		if (DEBUG_LOG) Log.d(TAG, "scrolling to");
 
 	}
-
+*/
 
 
 	public void unlockTabIcons(TabHost tabHost){
@@ -549,6 +550,10 @@ public class MainTabActivity extends TabActivity {
 		//Toast.makeText(getApplicationContext(), "Survey data saved", Toast.LENGTH_SHORT).show();
 		surveyDataObject.clearGemSurveyObject();
 		surveyDataObject.unsavedEdits = false;
+		
+
+		
+		
 		return true;
 	}
 
@@ -592,11 +597,8 @@ public class MainTabActivity extends TabActivity {
 				tabHost.setCurrentTab(0);
 				saveData();
 				if (DEBUG_LOG) Log.d(TAG, "SAVE DATA FINISHED. Finish the activity");
-				GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
-				surveyDataObject.clearGemSurveyObject();
-				surveyDataObject.unsavedEdits = false;
 				MainTabActivity.this.finish();
-				if (DEBUG_LOG) Log.d(TAG, "Acitivity should be finished");	
+				if (DEBUG_LOG) Log.d(TAG, "Acitivity should be finished");					
 			}
 		})
 		.setNegativeButton("No",new DialogInterface.OnClickListener() {
@@ -722,26 +724,59 @@ public class MainTabActivity extends TabActivity {
 	//Checks the arrays.xml to determine which forms hold which attributes
 	public void addAsFavourite() {
 		if (DEBUG_LOG) Log.d(TAG,"ADDING AS FAVOURITE");
-		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
-		String uidToFavourite = surveyDataObject.getUid();
 
-		if (DEBUG_LOG) Log.d(TAG,"Uid is for favouriting: " + uidToFavourite);
 
-		//saveData();		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Hello User");
+		builder.setMessage("What is your name:");
+		// Use an EditText view to get user input.
+		final EditText input = new EditText(this);
+		input.setId(TEXT_ID_FOR_DIALOG);
+		builder.setView(input);
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-		Date currentDate = new Date(System.currentTimeMillis());
-		String currentDateandTime = sdf.format(currentDate);
-		String name = "IDCT_favourite_" + currentDateandTime.toString();
+		builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int whichButton) {
+				String value = input.getText().toString();
+				Log.d(TAG, "User name: " + value);
+				
+				GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
+				String uidToFavourite = surveyDataObject.getUid();
+				if (DEBUG_LOG) Log.d(TAG,"Uid is for favouriting: " + uidToFavourite);
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+				Date currentDate = new Date(System.currentTimeMillis());
+				String currentDateandTime = sdf.format(currentDate);
+				String name = value + "_" + currentDateandTime.toString();
 
-		mDbHelper = new GemDbAdapter(getBaseContext());      
-		mDbHelper.createDatabase();      
-		mDbHelper.open();
-		mDbHelper.insertFavourite(name,uidToFavourite);
-		//Should really try / catch this
-		mDbHelper.close();		
+				mDbHelper = new GemDbAdapter(getBaseContext());      
+				mDbHelper.createDatabase();      
+				mDbHelper.open();
+				mDbHelper.insertFavourite(name,uidToFavourite);
+				//Should really try / catch this
+				mDbHelper.close();		
 
-		backButtonPressed();
+				tabHost.setCurrentTab(0);
+				saveData();
+				if (DEBUG_LOG) Log.d(TAG, "SAVE DATA FINISHED. Finish the activity");
+				MainTabActivity.this.finish();
+				if (DEBUG_LOG) Log.d(TAG, "Acitivity should be finished");	
+				
+				
+				return;
+			}
+		});
+
+		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				return;
+			}
+		});
+
+		builder.show();
+
+
 	}
 
 
@@ -826,19 +861,19 @@ public class MainTabActivity extends TabActivity {
 	 * @return TRUE if the asset exists and FALSE otherwise
 	 */
 	public static boolean assetExists(Context context, String pathInAssets) {
-	    boolean bAssetOk = false;
-	    AssetManager mg = context.getAssets();
+		boolean bAssetOk = false;
+		AssetManager mg = context.getAssets();
 
-	    try {
-	      mg.open(pathInAssets);
-	      bAssetOk = true;
+		try {
+			mg.open(pathInAssets);
+			bAssetOk = true;
 
-	    } catch (IOException ex) {
-	      ex.printStackTrace();
-	    }
-	    return bAssetOk;
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		return bAssetOk;
 	}
-	
+
 	public void showHelp() {
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
 

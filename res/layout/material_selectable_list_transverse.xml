@@ -51,7 +51,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:text="Material Tech"
+            android:text="Material Technology"
             android:textStyle="bold" />
 
         <ListView android:fadeScrollbars="false"
@@ -80,7 +80,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:text="Mortar Type"
+            android:text="Mortar / Stone Type"
             android:textStyle="bold" />
 
         <ListView android:fadeScrollbars="false"
@@ -108,7 +108,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:text="Mortar Reinforcement"
+            android:text="Masonry Reinforcement"
             android:textStyle="bold" />
 
 
