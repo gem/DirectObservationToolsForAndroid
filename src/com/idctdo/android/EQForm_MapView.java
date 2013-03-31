@@ -264,11 +264,9 @@ public class EQForm_MapView extends Activity {
         * Use the method setTitle(), for setting a title
         * for the dialog window
         *  */
-        mProgressDialog.setMessage("Work in Progress ...");
+        mProgressDialog.setMessage("Loading map data...");
         
         
-
-
 		//Save the path as a string value
 		String extStorageDirectory = vectorsFile.toString();
 		//SingleMediaScanner scan2 = new SingleMediaScanner(this, vectorsFile);
@@ -1348,14 +1346,14 @@ public class EQForm_MapView extends Activity {
 	}
 
 	private class ProgressBarAsync extends AsyncTask<String, String, Void> {
-		 private ProgressDialog dialog = new ProgressDialog(EQForm_MapView.this);
+		 //private ProgressDialog dialog = new ProgressDialog(EQForm_MapView.this);
 		 
 		/** This callback method is invoked, before starting the background process */
 		@Override
 		protected void onPreExecute() {
 
-			 this.dialog.setMessage("Please wait");
-		        this.dialog.show();
+			// this.dialog.setMessage("Please wait");
+		     //   this.dialog.show();
 		}
 
 		/** This callback method is invoked on calling execute() method
@@ -1393,9 +1391,9 @@ public class EQForm_MapView extends Activity {
 		 * doInBackground() is executed completely */
 		@Override
 		protected void onPostExecute(Void result) {
-			   if (dialog.isShowing()) {
-		            dialog.dismiss();		            
-		        }
+			   //if (dialog.isShowing()) {
+		       //     dialog.dismiss();		            
+		       // }
 			   if (mProgressDialog.isShowing()) {
 			   		mProgressDialog.dismiss();
 			   }
