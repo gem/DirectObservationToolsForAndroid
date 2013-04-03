@@ -47,6 +47,7 @@ import android.widget.Toast;
 
 
 
+
 public class GemDbAdapter 
 {
 	public boolean DEBUG_LOG = true; 
@@ -688,7 +689,8 @@ public class GemDbAdapter
 	public void insertProject(String projectName, String surveyorName, String projectSummary, Date date)
 	{		
 		try
-		{					
+		{		
+			
 			ContentValues cv = new ContentValues();
 			UUID id = UUID.randomUUID();
 			cv.put("PROJ_UID", id.toString());
@@ -731,7 +733,7 @@ public class GemDbAdapter
 			ContentValues cv = new ContentValues();
 			UUID id = UUID.randomUUID();
 			cv.put("KEY", "GEM_VERSION");
-			cv.put("VALUE","Android_2.0.1");
+			cv.put("VALUE","Android_2.0.4");
 			mDb.insert("SETTINGS", null, cv);
 			//String feedbackMsg = "Using GEM :\n " + surveyorName.toString();
 			//Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
@@ -809,10 +811,7 @@ public class GemDbAdapter
 			Log.d(TAG, "Trying to insert Media detail data");
 			try
 			{
-
 				HashMap map = (HashMap) mediaList.get(i);
-				//Cursor mCur = mDb.execSQL(sql, null);
-
 				ContentValues cv = new ContentValues();		
 				cv.put("GEMOBJ_UID", gemGlobalVariables.getUid());
 
@@ -825,8 +824,8 @@ public class GemDbAdapter
 					cv.put(key, value);
 				}
 				Log.d(TAG, "GEM Media DetailValues: " + cv.toString());
-				Toast.makeText(this.mContext.getApplicationContext(), "Photos were sucessfully linked in the database", Toast.LENGTH_SHORT).show();
 				mDb.insert("MEDIA_DETAIL", null, cv);	
+				Toast.makeText(this.mContext.getApplicationContext(), "Photos were sucessfully linked in the database", Toast.LENGTH_SHORT).show();
 
 			}
 			catch (SQLException mSQLException) 

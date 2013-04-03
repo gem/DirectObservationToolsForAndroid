@@ -97,7 +97,7 @@
                 style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Plan Area"
+                android:text="Plan Area (square metres)"
                 android:textStyle="bold" />
 
             <EditText
@@ -112,7 +112,7 @@
                 style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Replacement Cost"
+                android:text="Replacement Cost (per square metre)"
                 android:textStyle="bold" />
 
             <EditText

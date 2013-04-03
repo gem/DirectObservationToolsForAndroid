@@ -102,9 +102,9 @@
                 <TextView
                     android:id="@+id/textViewHeightAboveGroundStoreys"
                     style="@style/AttributeTitleStyle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
+                 
                     android:layout_alignParentTop="true"
                     android:gravity="center"
                     android:text="No. of Storeys Above Ground (storeys)"
@@ -157,7 +157,7 @@
                 <TextView
                     android:id="@+id/textViewHeightBelowGroundStoreys"
                     style="@style/AttributeTitleStyle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
@@ -209,7 +209,7 @@
                 <TextView
                     android:id="@+id/textViewHeightAboveGrade"
                     style="@style/AttributeTitleStyle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
@@ -248,6 +248,7 @@
                     android:inputType="number|numberDecimal" />
             </RelativeLayout>
 
+            
             <RelativeLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/rel5"

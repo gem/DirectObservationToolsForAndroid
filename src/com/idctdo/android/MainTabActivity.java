@@ -665,10 +665,11 @@ public class MainTabActivity extends TabActivity {
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		menu.add(0,0,0,"Take Picture");
+		menu.add(0,4,0,"View linked pictures");
 		menu.add(0,1,0,"Save changes and close");
 		menu.add(0,2,0,"Save changes and favourite");
 		menu.add(0,3,0,"Help");
-		menu.add(0,4,0,"View linked pictures");
+
 		return true;
 	}
 
@@ -701,10 +702,6 @@ public class MainTabActivity extends TabActivity {
 			takePic.putExtra("return-data", true);				
 			startActivityForResult(takePic, CAMERA_RESULT);
 
-			/*1
-				Intent PreviousPage = new Intent (EQForm_MapView.this, EQForm_ModifiedEMS_Camera.class);
-				startActivity(PreviousPage);*/
-
 
 			break;
 		case 1: //Save button
@@ -733,11 +730,10 @@ public class MainTabActivity extends TabActivity {
 
 	//Checks the arrays.xml to determine which forms hold which attributes
 	public void viewLinkedPictures() {
-		if (DEBUG_LOG) Log.d(TAG,"Vuewing linked pictures");
+		if (DEBUG_LOG) Log.d(TAG,"Viewing linked pictures");
 
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
 		String uid = surveyDataObject.getUid();
-
 
 		mDbHelper = new GemDbAdapter(getBaseContext());      
 		mDbHelper.createDatabase();      
@@ -747,15 +743,12 @@ public class MainTabActivity extends TabActivity {
 		mDbHelper.close();		
 		ArrayList<DBRecord> buildingPositionAttributesList = GemUtilities.cursorToArrayList(mCursor);	
 
-
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Linked images");	
-
 
 		final ArrayAdapter<String> modeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,  buildingPositionAttributesList);
 		builder.setAdapter(modeAdapter, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) {
-				// Toast.makeText(getApplicationContext(), buildingPositionAttributesList[item], Toast.LENGTH_SHORT).show();
 			}
 
 		});
@@ -765,7 +758,6 @@ public class MainTabActivity extends TabActivity {
 				//dismiss the dialog  
 			}
 		});
-
 		builder.show();
 
 
