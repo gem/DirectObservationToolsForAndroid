@@ -51,7 +51,7 @@
                 <ListView
                     android:id="@+id/listExample"
                     android:layout_width="182dp"
-                    android:layout_height="160dp"
+                    android:layout_height="200dp"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@+id/textView1"
                     android:choiceMode="singleChoice" >

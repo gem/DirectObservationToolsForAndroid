@@ -129,7 +129,7 @@ public class GemDbAdapter
 	{
 		try
 		{
-			String sql ="SELECT * FROM SETTINGS";
+			String sql ="SELECT * FROM SETTINGS where KEY like '%_FAV';";
 			Cursor mCur = mDb.rawQuery(sql, null);
 			if (mCur!=null)
 			{
@@ -518,6 +518,25 @@ public class GemDbAdapter
 		}
 	}
 
+	public Cursor getAllMediaByRecord(String uid) {
+		try
+		{
+			String sql = "		select * from media_detail where GEMOBJ_UID = '"+ uid+ "'";
+			if (DEBUG_LOG) Log.d("IDCT", "running sql " + sql);
+			Cursor mCur = mDb.rawQuery(sql, null);
+			if (mCur!=null)
+			{
+				mCur.moveToNext();
+				Log.e(TAG, "mCur not null " + mCur.getColumnCount());
+			}
+			return mCur;
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "getMediaRecords >>"+ mSQLException.toString());
+			throw mSQLException;
+		}
+	}
 
 
 	public Cursor getAttributeValuesByDictionaryTable(String dictionaryTable)
@@ -652,10 +671,10 @@ public class GemDbAdapter
 		{					
 			ContentValues cv = new ContentValues();
 			UUID id = UUID.randomUUID();
-			cv.put("KEY", favouriteName.toString());
+			cv.put("KEY", favouriteName.toString() + "_FAV");
 			cv.put("VALUE", uidString.toString());
 			mDb.insert("SETTINGS", null, cv);
-			String feedbackMsg = "Favourite saved\n " + favouriteName;
+			String feedbackMsg = "Favourite saved\n " + favouriteName + "_FAV";
 			Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
 		}
 		catch (SQLException mSQLException) 
@@ -677,7 +696,7 @@ public class GemDbAdapter
 			//cv.put("PROJ_DATE", surveyDate.toString());
 			//cv.put("USER_MADE", surveyorName.toString());
 			cv.put("PROJ_SUMRY", projectSummary.toString());
-			
+
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			cv.put("PROJ_DATE", dateFormat.format(date));
 

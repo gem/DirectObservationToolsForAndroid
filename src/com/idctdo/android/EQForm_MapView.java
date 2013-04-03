@@ -598,7 +598,6 @@ public class EQForm_MapView extends Activity {
 			mDbHelper.createDatabase();      
 			mDbHelper.open();
 			Cursor favouritesCursor = mDbHelper.getGemFavourites();
-			ArrayList favesList =GemUtilities.cursorToArrayList(favouritesCursor);  
 			mDbHelper.close();	
 
 
@@ -694,7 +693,6 @@ public class EQForm_MapView extends Activity {
 			Log.i(TAG, "show Dialog ButtonClick");
 			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 			builder.setTitle("Select Base Map");			
-
 			final CharSequence[] baseMaps = {"OpenStreetMap","Bing Hybrid","Bing Roads","Bing Aerial"};
 			final CharSequence[] localBaseMaps = getLocalBaseMapLayers();
 			if (DEBUG_LOG) Log.d(TAG,"LOCAL BASEMAPS " + localBaseMaps.toString());

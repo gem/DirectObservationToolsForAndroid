@@ -137,7 +137,7 @@ public class Floor_Selection_Form extends Activity {
 			final Cursor floorConnectionAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(floorConnectionAttributeDictionary);
 			ArrayList<DBRecord> floorConnectionAttributesList = GemUtilities.cursorToArrayList(floorConnectionAttributeDictionaryCursor);
 			ArrayAdapter spinnerArrayAdapter3 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,floorConnectionAttributesList);
-			spinnerArrayAdapter2.setDropDownViewResource(R.layout.simple_spinner_item);
+			spinnerArrayAdapter3.setDropDownViewResource(R.layout.simple_spinner_item);
 			spinnerFloorConnection.setAdapter(spinnerArrayAdapter3);				
 			spinnerFloorConnection.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {

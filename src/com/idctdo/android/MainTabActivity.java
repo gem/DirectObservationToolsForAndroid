@@ -37,6 +37,7 @@ import java.util.UUID;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -61,9 +62,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
@@ -92,8 +95,8 @@ public class MainTabActivity extends TabActivity {
 	String FILENAME;
 	String Filename;
 
-   private static final int TEXT_ID_FOR_DIALOG = 0;
-	   
+	private static final int TEXT_ID_FOR_DIALOG = 0;
+
 
 	public void onCreate(Bundle savedInstanceState) {		
 		if (DEBUG_LOG) Log.d(TAG, "On Create of the  MainTab");		
@@ -412,7 +415,7 @@ public class MainTabActivity extends TabActivity {
 		}
 	}
 
-/*
+	/*
 	public void removeTabs() {
 		if (DEBUG_LOG) Log.d(TAG,"removing tabs " + tabHost.getTabWidget().getChildCount());
 		//tabHost.clearAllTabs();
@@ -435,7 +438,7 @@ public class MainTabActivity extends TabActivity {
 		generateTabs();
 
 	}
-*/
+	 */
 
 	public void setTabColor() {
 
@@ -470,7 +473,7 @@ public class MainTabActivity extends TabActivity {
 			tabHost.setCurrentTab(tabHost.getCurrentTab()-1);
 		}
 	}
-/*
+	/*
 	public void restart() {
 		lockTabIcons();
 		tabHost.setCurrentTab(0);
@@ -486,7 +489,7 @@ public class MainTabActivity extends TabActivity {
 		if (DEBUG_LOG) Log.d(TAG, "scrolling to");
 
 	}
-*/
+	 */
 
 
 	public void unlockTabIcons(TabHost tabHost){
@@ -550,10 +553,10 @@ public class MainTabActivity extends TabActivity {
 		//Toast.makeText(getApplicationContext(), "Survey data saved", Toast.LENGTH_SHORT).show();
 		surveyDataObject.clearGemSurveyObject();
 		surveyDataObject.unsavedEdits = false;
-		
 
-		
-		
+
+
+
 		return true;
 	}
 
@@ -665,6 +668,7 @@ public class MainTabActivity extends TabActivity {
 		menu.add(0,1,0,"Save changes and close");
 		menu.add(0,2,0,"Save changes and favourite");
 		menu.add(0,3,0,"Help");
+		menu.add(0,4,0,"View linked pictures");
 		return true;
 	}
 
@@ -714,13 +718,58 @@ public class MainTabActivity extends TabActivity {
 		case 3: //Help
 			if (DEBUG_LOG) Log.d(TAG,"Quick, send help");	
 			showHelp();
+		case 4: //Add as favourite
+			if (DEBUG_LOG) Log.d(TAG,"View linked pictures");
+			viewLinkedPictures();
+			break;
 		default:
 			break;
 		}
 
+
 		return false;
 	}
 
+
+	//Checks the arrays.xml to determine which forms hold which attributes
+	public void viewLinkedPictures() {
+		if (DEBUG_LOG) Log.d(TAG,"Vuewing linked pictures");
+
+		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
+		String uid = surveyDataObject.getUid();
+
+
+		mDbHelper = new GemDbAdapter(getBaseContext());      
+		mDbHelper.createDatabase();      
+		mDbHelper.open();
+		Cursor mCursor = mDbHelper.getAllMediaByRecord(uid);
+		//Should really try / catch this
+		mDbHelper.close();		
+		ArrayList<DBRecord> buildingPositionAttributesList = GemUtilities.cursorToArrayList(mCursor);	
+
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Linked images");	
+
+
+		final ArrayAdapter<String> modeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,  buildingPositionAttributesList);
+		builder.setAdapter(modeAdapter, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int item) {
+				// Toast.makeText(getApplicationContext(), buildingPositionAttributesList[item], Toast.LENGTH_SHORT).show();
+			}
+
+		});
+		builder.setPositiveButton("Ok",
+				new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				//dismiss the dialog  
+			}
+		});
+
+		builder.show();
+
+
+	}
 	//Checks the arrays.xml to determine which forms hold which attributes
 	public void addAsFavourite() {
 		if (DEBUG_LOG) Log.d(TAG,"ADDING AS FAVOURITE");
@@ -739,11 +788,11 @@ public class MainTabActivity extends TabActivity {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String value = input.getText().toString();
 				Log.d(TAG, "Favourite name: " + value);
-				
+
 				GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
 				String uidToFavourite = surveyDataObject.getUid();
 				if (DEBUG_LOG) Log.d(TAG,"Uid is for favouriting: " + uidToFavourite);
-				
+
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
 				Date currentDate = new Date(System.currentTimeMillis());
 				String currentDateandTime = sdf.format(currentDate);
@@ -761,8 +810,8 @@ public class MainTabActivity extends TabActivity {
 				if (DEBUG_LOG) Log.d(TAG, "SAVE DATA FINISHED. Finish the activity");
 				MainTabActivity.this.finish();
 				if (DEBUG_LOG) Log.d(TAG, "Acitivity should be finished");	
-				
-				
+
+
 				return;
 			}
 		});
@@ -778,6 +827,8 @@ public class MainTabActivity extends TabActivity {
 
 
 	}
+
+
 
 
 	public String loadHelpFileNames(String strToCheck) {
