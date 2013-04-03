@@ -266,8 +266,7 @@ public class EQForm_MapView extends Activity {
         *  */
         mProgressDialog.setMessage("Loading map data...");
         
-        
-        
+                
 		//Save the path as a string value
 		String extStorageDirectory = vectorsFile.toString();
 		//SingleMediaScanner scan2 = new SingleMediaScanner(this, vectorsFile);

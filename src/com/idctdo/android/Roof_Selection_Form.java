@@ -104,19 +104,12 @@ public class Roof_Selection_Form extends Activity {
 		super.onResume();
 		MainTabActivity a = (MainTabActivity)getParent();
 		surveyDataObject = (GEMSurveyObject)getApplication();
-
-
-
 		if (a.isTabCompleted(tabIndex)) {
 
 		} else {
-			mDbHelper = new GemDbAdapter(getBaseContext());        
-
+			mDbHelper = new GemDbAdapter(getBaseContext());       
 			mDbHelper.createDatabase();      
 			mDbHelper.open();
-
-
-
 			spinnerRoofShape = (Spinner)  findViewById(R.id.spinnerRoofShape);
 			final Cursor roofShapeAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(roofShapeAttributeDictionary);
 			ArrayList<DBRecord> roofShapeAttributesList = GemUtilities.cursorToArrayList(roofShapeAttributeDictionaryCursor);
@@ -128,8 +121,7 @@ public class Roof_Selection_Form extends Activity {
 				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 					//Object item = parent.getItemAtPosition(pos);
 					if (DEBUG_LOG) Log.d("IDCT","spinner selected: " + spinnerRoofShape.getSelectedItem().toString());
-					if (DEBUG_LOG) Log.d("IDCT","spinner selected pos: " + pos);
-					
+					if (DEBUG_LOG) Log.d("IDCT","spinner selected pos: " + pos);					
 					//Temporarily disabled 7/1/13					
 					//allAttributeTypesTopLevelCursor.moveToPosition(pos);
 					//Log.d("IDCT","spinner selected pos val: " + allAttributeTypesTopLevelCursor.getString(1));							

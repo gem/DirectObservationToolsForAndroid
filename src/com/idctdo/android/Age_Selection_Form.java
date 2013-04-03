@@ -170,7 +170,7 @@ public class Age_Selection_Form extends Activity {
 
 					if (DEBUG_LOG) Log.d("IDCT","DATE SELECT: " + selectedAdapter.getItem(position).toString());
 					if (DEBUG_LOG) Log.d("IDCT","DATE Code: " + selectedAdapter.getItem(position).getAttributeValue());
-					if (selectedAdapter.getItem(position).getAttributeValue().toString().equals("BETW")) {
+					if (selectedAdapter.getItem(position).getAttributeValue().toString().equals("YBET")) {
 						//Make second date val visible
 						if (DEBUG_LOG) Log.d("IDCT","enter date 2");
 						date2.setVisibility(View.VISIBLE);
@@ -249,7 +249,7 @@ public class Age_Selection_Form extends Activity {
 					if (DEBUG_LOG) Log.d("IDCT","Height Code: " + heightSelectedAdapter.getItem(position).getAttributeValue());
 					
 					
-					if (heightSelectedAdapter.getItem(position).getAttributeValue().toString().equals("BETW")) {
+					if (heightSelectedAdapter.getItem(position).getAttributeValue().toString().equals("HBET")) {
 						//Make second date val visible
 						if (DEBUG_LOG) Log.d("IDCT","enter date 2");
 						editTextAboveGround1.setVisibility(View.VISIBLE);
@@ -291,7 +291,7 @@ public class Age_Selection_Form extends Activity {
 				
 					if (DEBUG_LOG) Log.d("IDCT","height val: " + heightSelectedAdapter2.getItem(position).toString());
 					
-					if (heightSelectedAdapter2.getItem(position).getAttributeValue().toString().equals("BETW")) {
+					if (heightSelectedAdapter2.getItem(position).getAttributeValue().toString().equals("HBET")) {
 						//Make second date val visible
 						if (DEBUG_LOG) Log.d("IDCT","enter date 2");
 						editTextBelowGround1.setVisibility(View.VISIBLE);
@@ -333,7 +333,7 @@ public class Age_Selection_Form extends Activity {
 					// user clicked a list item, make it "selected"
 					heightSelectedAdapter3.setSelectedPosition(position);
 					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
-					if (heightSelectedAdapter3.getItem(position).getAttributeValue().toString().equals("BETW")) {
+					if (heightSelectedAdapter3.getItem(position).getAttributeValue().toString().equals("HBET")) {
 						//Make second date val visible
 						if (DEBUG_LOG) Log.d("IDCT","enter date 2");
 						editTextAboveGrade1.setVisibility(View.VISIBLE);
@@ -387,8 +387,7 @@ public class Age_Selection_Form extends Activity {
 			editTextBelowGround2.setText(surveyDataObject.getSurveyDataValue(heightStoreysBelowGroundAttributeKey2));
 			
 			editTextAboveGrade1.setText(surveyDataObject.getSurveyDataValue(heightStoreysAboveGradeAttributeKey1));
-			editTextAboveGrade2.setText(surveyDataObject.getSurveyDataValue(heightStoreysAboveGradeAttributeKey2));
-			
+			editTextAboveGrade2.setText(surveyDataObject.getSurveyDataValue(heightStoreysAboveGradeAttributeKey2));		
 			
 						
 		} //End check tab complete

@@ -45,11 +45,8 @@ public class GemUtilities {
 				o1.setJson(mCursor.getString(2));
 			}
 			mArrayList.add(o1);
-			//generateCleanGlossary(mCursor.getString(0),mCursor.getString(1));
 			mCursor.moveToNext();
 		}
-
-
 		return mArrayList;
 	}
 
@@ -75,17 +72,19 @@ public class GemUtilities {
 			int i = 0;
 			for(DBRecord d : listOfTheseObjects){
 				Log.d("IDCT", "Looping thring arraylist of selectedAdapter " + i);
-				Log.d("IDCT", "val" + d.getAttributeValue());
-				if(d.getAttributeValue().contains(attributeValue)) {
-					Log.d("IDCT", "MATCH!" );					
-					//selectedAdapterToPopulate.setSelectedPosition(i);
-					//this.setSelectedPosition(i);
-
+				Log.d("IDCT", "Comparing val: " + d.getAttributeValue() + " with: " + attributeValue);
+				
+				//if(d.getAttributeValue().contains(attributeValue)) {
+				if(d.getAttributeValue().equals(attributeValue.toString())) {
+					Log.d("IDCT", "MATCH!" );		
+	
 					lv.setSelection(i,true);
 					return true;
 				}
 				i++;
 			}
+		} else {
+			Log.d("IDCT","Attribute value is null");
 		}
 		return false;
 	}

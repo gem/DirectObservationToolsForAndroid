@@ -79,10 +79,7 @@ public class Consequences_Form extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.consequences);
 		Log.d("IDCT","onCreate conseq form");
-		editTextNumberOfFatalities = (EditText) findViewById(R.id.editTextNumberOfFatalities);
-		editTextNumberOfInjured = (EditText) findViewById(R.id.editTextNumberOfInjured);
-		editTextNumberOfMissing = (EditText) findViewById(R.id.editTextNumberOfMissing );
-		editTextConsequencesComments= (EditText) findViewById(R.id.editTextConsequencesComments);
+
 	}
 
 
@@ -96,6 +93,13 @@ public class Consequences_Form extends Activity {
 		//if (a.isTabCompleted(tabIndex)) {
 
 		//} else {
+			
+			editTextNumberOfFatalities = (EditText) findViewById(R.id.editTextNumberOfFatalities);
+			editTextNumberOfInjured = (EditText) findViewById(R.id.editTextNumberOfInjured);
+			editTextNumberOfMissing = (EditText) findViewById(R.id.editTextNumberOfMissing );
+			editTextConsequencesComments= (EditText) findViewById(R.id.editTextConsequencesComments);
+			
+			
 			Log.d("IDCT","Resuming consequences form.");
 			mDbHelper = new GemDbAdapter(getBaseContext());      
 
@@ -179,7 +183,7 @@ public class Consequences_Form extends Activity {
 			editTextConsequencesComments.setText(surveyDataObject.getConsequencesDataValue(attributeKey4));
 
 			boolean result = false;	
-			result= selectedAdapter.loadPreviousAtttributes(listview, topLevelAttributeKey,surveyDataObject.getSurveyDataValue(topLevelAttributeKey));
+			result= selectedAdapter.loadPreviousAtttributes(listview, topLevelAttributeKey,surveyDataObject.getConsequencesDataValue(topLevelAttributeKey));
 
 			
 			
@@ -187,8 +191,8 @@ public class Consequences_Form extends Activity {
 		
 	}
 	public void completeThis() {
-		//MainTabActivity a = (MainTabActivity)getParent();
-		//a.completeTab(tabIndex);
+		MainTabActivity a = (MainTabActivity)getParent();
+		a.completeTab(tabIndex);
 	}
 	@Override
 	public void onBackPressed() {

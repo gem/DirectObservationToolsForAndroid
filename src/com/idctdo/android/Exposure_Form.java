@@ -90,15 +90,11 @@ public class Exposure_Form extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.exposure);
 		Log.d("IDCT","onCreate exposure form");
-		editTextNumberOfDayOccupants = (EditText) findViewById(R.id.editTextNumberOfDayOccupants);
-		editTextNumberOfNightOccupants = (EditText) findViewById(R.id.editTextNumberOfNightOccupants);
-		editTextNumberOfTransitOccupants = (EditText) findViewById(R.id.editTextNumberOfTransitOccupants );
-		editTextNumberOfDwellings= (EditText) findViewById(R.id.editTextNumberOfDwellings);
-		editTextPlanArea= (EditText) findViewById(R.id.editTextPlanArea);
-		editTextReplacementCost= (EditText) findViewById(R.id.editTextReplacementCost);
-		editTextExposureComments= (EditText) findViewById(R.id.editTextExposureComments);
+		
 
+/*
 		spinnerCurrency = (Spinner)  findViewById(R.id.spinnerCurrency);
+		*/
 	}
 
 	@Override
@@ -119,8 +115,18 @@ public class Exposure_Form extends Activity {
 		//if (a.isTabCompleted(tabIndex)) {
 
 		//} else {
-
 			Log.d("IDCT","Resuming exposure form.");
+			
+			
+			editTextNumberOfDayOccupants = (EditText) findViewById(R.id.editTextNumberOfDayOccupants);
+			editTextNumberOfNightOccupants = (EditText) findViewById(R.id.editTextNumberOfNightOccupants);
+			editTextNumberOfTransitOccupants = (EditText) findViewById(R.id.editTextNumberOfTransitOccupants );
+			editTextNumberOfDwellings= (EditText) findViewById(R.id.editTextNumberOfDwellings);
+			editTextPlanArea= (EditText) findViewById(R.id.editTextPlanArea);
+			editTextReplacementCost= (EditText) findViewById(R.id.editTextReplacementCost);
+			editTextExposureComments= (EditText) findViewById(R.id.editTextExposureComments);
+			
+			
 			mDbHelper = new GemDbAdapter(getBaseContext());        
 			mDbHelper.createDatabase();      
 			mDbHelper.open();
@@ -135,30 +141,20 @@ public class Exposure_Form extends Activity {
 			spinnerArrayAdapter.setDropDownViewResource(R.layout.simple_spinner_item);
 			spinnerCurrency.setAdapter(spinnerArrayAdapter);
 			
-			/*
-		    SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, 
-                    android.R.layout.simple_spinner_item, 
-                    allAttributeTypesTopLevelCursor, new String[] { "DESCRIPTION"},  
-                    new int[] {android.R.id.text1});
-		    spinnerCurrency.setAdapter(adapter);           
-			 */
 			spinnerCurrency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 					//Object item = parent.getItemAtPosition(pos);
 					Log.d("IDCT","spinner selected: " + spinnerCurrency.getSelectedItem().toString());
 					Log.d("IDCT","spinner selected pos: " + pos);					
-					//Temporarily disabled 7/1/13					
-					//allAttributeTypesTopLevelCursor.moveToPosition(pos);
-					//Log.d("IDCT","spinner selected pos val: " + allAttributeTypesTopLevelCursor.getString(1));							
-					//surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());
+
 					DBRecord selected = (DBRecord) spinnerCurrency.getSelectedItem();
 					Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
-					surveyDataObject.putGedData(topLevelAttributeKey, selected.getAttributeValue());		
+					surveyDataObject.putGedData(topLevelAttributeKey, selected.getAttributeValue());
+//					Log.d("IDCT","surveyDataObject: " + surveyDataObject.getAttributeValue());
 				}
 				public void onNothingSelected(AdapterView<?> parent) {
 				}
 			});	
-
 
 
 			editTextNumberOfDayOccupants.setOnFocusChangeListener(new OnFocusChangeListener() { 				
@@ -172,7 +168,7 @@ public class Exposure_Form extends Activity {
 				}
 			});
 
-			editTextNumberOfNightOccupants.setOnFocusChangeListener(new OnFocusChangeListener() { 				
+			editTextNumberOfNightOccupants.setOnFocusChangeListener(new OnFocusChangeListener() { 			
 
 				
 				public void onFocusChange(View v, boolean hasFocus) {
@@ -190,7 +186,7 @@ public class Exposure_Form extends Activity {
 				public void onFocusChange(View v, boolean hasFocus) {
 					if(!hasFocus) {
 						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
-						surveyDataObject.putGedData(attributeKey3, editTextNumberOfNightOccupants.getText().toString());
+						surveyDataObject.putGedData(attributeKey3, editTextNumberOfTransitOccupants.getText().toString());
 						completeThis();
 					}
 				}
@@ -240,8 +236,6 @@ public class Exposure_Form extends Activity {
 				}
 			});
 			
-		
-
 			
 			Log.d("IDCT", "getting Ged val for resume: " + surveyDataObject.getGedDataValue(attributeKey1));
 			editTextNumberOfDayOccupants.setText(surveyDataObject.getGedDataValue(attributeKey1));
@@ -251,13 +245,11 @@ public class Exposure_Form extends Activity {
 			editTextPlanArea.setText(surveyDataObject.getGedDataValue(attributeKey5));
 			editTextReplacementCost.setText(surveyDataObject.getGedDataValue(attributeKey6));
 			editTextExposureComments.setText(surveyDataObject.getGedDataValue(attributeKey8));
-				
-			
-			
+	
+					
 			boolean result = false;	
-			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerCurrency, topLevelAttributesList, attributeKey7,surveyDataObject.getSurveyDataValue(attributeKey7));
+			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerCurrency, topLevelAttributesList, topLevelAttributeKey,surveyDataObject.getGedDataValue(topLevelAttributeKey));
 				
-			
 		//}//End tab completed check
 		
 	}		
