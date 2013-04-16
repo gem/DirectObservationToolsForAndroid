@@ -22,6 +22,7 @@ public class SecondTabsActivity extends TabActivity {
 	public int unselectedTabColour = Color.parseColor("#000000");
 	public int selectedTabColour = Color.parseColor("#eeeeee");
 	
+			
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

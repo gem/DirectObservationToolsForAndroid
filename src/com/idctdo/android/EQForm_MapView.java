@@ -100,7 +100,7 @@ import android.widget.ToggleButton;
 
 public class EQForm_MapView extends Activity {
 
-	public boolean DEBUG_LOG = true; 
+	public boolean DEBUG_LOG = false; 
 
 	WebView mWebView;
 	/** Called when the activity is first created. */
@@ -173,6 +173,7 @@ public class EQForm_MapView extends Activity {
 	Button btn_refreshLayer;
 	ToggleButton btn_edit_points;
 
+	File mediaFile;
 	File vectorsFile;
 	File mapTilesFile;
 	String sdCardPath;
@@ -189,9 +190,6 @@ public class EQForm_MapView extends Activity {
 		super.onCreate(savedInstanceState);
 		if (DEBUG_LOG) Log.d(TAG,"ON CREATE");
 		setContentView(R.layout.map_view);
-
-
-
 		mContext = this;
 
 		mWebView = (WebView) findViewById(R.id.map_webview);
@@ -211,8 +209,7 @@ public class EQForm_MapView extends Activity {
 		mWebView.addJavascriptInterface(this, "webConnector"); 
 
 
-		mWebView.loadUrl("file:///android_asset/idct_map.html");
-		//mWebView.loadUrl("http://swingley.appspot.com/maps/olpts");		
+		mWebView.loadUrl("file:///android_asset/idct_map.html");		
 		mWebView.setWebViewClient(new MapWebViewClient());
 		progressBar = new ProgressDialog(EQForm_MapView.this);
 		progressBar.setMessage("Loading maps...");
@@ -223,10 +220,10 @@ public class EQForm_MapView extends Activity {
 				dialog.dismiss();
 			}
 		});
-		//progressBar.show();		
 
-		//progressBar = ProgressDialog.show(EQForm_MapView.this, "IDCT Surveyor", "Loading Maps...");
-
+		//Create Folder
+		mediaFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/gemmedia");
+		mediaFile.mkdirs();		
 
 		//Create Folder
 		vectorsFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/kml");
@@ -670,7 +667,7 @@ public class EQForm_MapView extends Activity {
 			//Button CameraButton;
 			//mAppSettings = getSharedPreferences(APP_SETTINGS, MODE_PRIVATE);
 			//FILENAME = (mAppSettings.getString(APP_SETTINGS_FILE_NAME, ""));				
-			Filename = Environment.getExternalStorageDirectory().getAbsolutePath() + "/idctdo/" + FILENAME +".jpg";
+			Filename = Environment.getExternalStorageDirectory().getAbsolutePath() + "/idctdo/gemmedia/" + FILENAME +".jpg";
 
 
 			if (DEBUG_LOG) Log.d(TAG,"CAMERA IMAGE FILENAME: " + Filename.toString());

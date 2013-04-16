@@ -45,7 +45,7 @@ import android.widget.Toast;
 
 public class Material_Selection_Longitudinal_Form2 extends Activity {
 
-	public boolean DEBUG_LOG = true; 
+	public boolean DEBUG_LOG = false; 
 	private static final String TAG = "IDCT";
 
 	public TabActivity tabActivity;

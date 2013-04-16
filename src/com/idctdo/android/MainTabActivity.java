@@ -554,9 +554,6 @@ public class MainTabActivity extends TabActivity {
 		surveyDataObject.clearGemSurveyObject();
 		surveyDataObject.unsavedEdits = false;
 
-
-
-
 		return true;
 	}
 
@@ -690,7 +687,7 @@ public class MainTabActivity extends TabActivity {
 			//Button CameraButton;
 			//mAppSettings = getSharedPreferences(APP_SETTINGS, MODE_PRIVATE);
 			//FILENAME = (mAppSettings.getString(APP_SETTINGS_FILE_NAME, ""));				
-			Filename = Environment.getExternalStorageDirectory().getAbsolutePath() + "/idctdo/" + FILENAME +".jpg";
+			Filename = Environment.getExternalStorageDirectory().getAbsolutePath() + "/idctdo/gemmedia/" + FILENAME +".jpg";
 
 
 
@@ -715,6 +712,7 @@ public class MainTabActivity extends TabActivity {
 		case 3: //Help
 			if (DEBUG_LOG) Log.d(TAG,"Quick, send help");	
 			showHelp();
+			break;
 		case 4: //Add as favourite
 			if (DEBUG_LOG) Log.d(TAG,"View linked pictures");
 			viewLinkedPictures();
@@ -744,7 +742,7 @@ public class MainTabActivity extends TabActivity {
 		ArrayList<DBRecord> buildingPositionAttributesList = GemUtilities.cursorToArrayList(mCursor);	
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Linked images");	
+		builder.setTitle("Linked images. Note: the list will only show images once the survey point is saved.");	
 
 		final ArrayAdapter<String> modeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,  buildingPositionAttributesList);
 		builder.setAdapter(modeAdapter, new DialogInterface.OnClickListener() {
@@ -856,6 +854,7 @@ public class MainTabActivity extends TabActivity {
 			if (lowestD < 10) {
 				pageToLoad = elements[lowestIndex];
 			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
