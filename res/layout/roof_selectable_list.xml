@@ -28,22 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/textView4"
-        style="@style/AttributeTitleStyle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Roof Cover Material"
-        android:textStyle="bold" />
-
-    <Spinner
-        android:id="@+id/spinnerRoofCoverMaterial"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    
+        <RelativeLayout
         android:id="@+id/rel1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -70,13 +56,13 @@
             android:fadeScrollbars="false" >
         </ListView>
     </RelativeLayout>
-
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    
+        
+            <RelativeLayout
         android:id="@+id/rel2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rel2"
+        android:layout_below="@+id/rel1"
         android:background="@color/highlight_colour"
         android:gravity="left"
         android:orientation="vertical" >
@@ -90,6 +76,7 @@
             android:text="Roof System Type"
             android:textStyle="bold" />
 
+        
         <ListView
             android:id="@+id/listExample2"
             android:layout_width="fill_parent"
@@ -100,6 +87,24 @@
             android:fadeScrollbars="false" >
         </ListView>
     </RelativeLayout>
+    
+    <TextView
+        android:id="@+id/textView4"
+        style="@style/AttributeTitleStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Roof Cover Material"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/spinnerRoofCoverMaterial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+
     <TextView
         android:id="@+id/textView5"
         style="@style/AttributeTitleStyle"

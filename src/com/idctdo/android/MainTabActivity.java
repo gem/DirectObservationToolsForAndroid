@@ -915,7 +915,7 @@ public class MainTabActivity extends TabActivity {
 		}
 		return bAssetOk;
 	}
-
+	
 	public void showHelp() {
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
 
