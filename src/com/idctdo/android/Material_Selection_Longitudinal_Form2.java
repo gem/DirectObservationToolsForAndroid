@@ -150,7 +150,8 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 			Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(secondLevelAttributeType);
 			secondLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesSecondLevelCursor);
 
-			Cursor allAttributeTypesThirdLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(thirdLevelAttributeType);
+			//Cursor allAttributeTypesThirdLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(thirdLevelAttributeType);
+			Cursor allAttributeTypesThirdLevelCursor = mDbHelper.getAttributeValuesByDictionaryTableUsingRule(thirdLevelAttributeType,"MR");
 			thirdLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesThirdLevelCursor);
 
 			Cursor allAttributeTypesFourthLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(fourthLevelAttributeType);

@@ -20,6 +20,7 @@ package com.idctdo.android;
 
 
 
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -75,7 +76,7 @@ import android.widget.Toast;
 
 public class MainTabActivity extends TabActivity {
 	private static final String TAG = "IDCT";
-	public boolean DEBUG_LOG = false; 
+	public boolean DEBUG_LOG = true; 
 
 	public TabHost tabHost;
 
@@ -665,6 +666,7 @@ public class MainTabActivity extends TabActivity {
 		menu.add(0,4,0,"View linked pictures");
 		menu.add(0,1,0,"Save changes and close");
 		menu.add(0,2,0,"Save changes and favourite");
+		menu.add(0,5,0,"Delete record");
 		menu.add(0,3,0,"Help");
 
 		return true;
@@ -717,14 +719,67 @@ public class MainTabActivity extends TabActivity {
 			if (DEBUG_LOG) Log.d(TAG,"View linked pictures");
 			viewLinkedPictures();
 			break;
+		case 5: //Delete this point
+			if (DEBUG_LOG) Log.d(TAG,"Delete this point");
+			
+			deleteThisRecord();
+			break;
 		default:
 			break;
 		}
-
-
 		return false;
 	}
 
+	public void deleteThisRecord() {		
+		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
+		
+		if (surveyDataObject.isExistingRecord) { 	
+	
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Delete this record");
+			builder.setMessage("Are you sure you want to delete this record");
+
+			builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int whichButton) {				
+					GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
+					String uidToDelete= surveyDataObject.getUid();				
+					mDbHelper = new GemDbAdapter(getBaseContext());    				   
+					mDbHelper.open();		
+					mDbHelper.deleteRecordByUid(uidToDelete);
+					//Should really try / catch this
+					mDbHelper.close();				
+					
+					tabHost.setCurrentTab(0);
+					surveyDataObject.clearGemSurveyObject();
+					surveyDataObject.unsavedEdits = false;
+	
+					
+					if (DEBUG_LOG) Log.d(TAG, "DELETE FINISHED. Finish the activity");
+					MainTabActivity.this.finish();
+					if (DEBUG_LOG) Log.d(TAG, "Acitivity should be finished");	
+	
+	
+					return;
+				}
+			});
+	
+			builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					return;
+				}
+			});
+	
+			builder.show();
+	
+		} else {
+			Toast.makeText(getApplicationContext(), "Can't delete this as it's not saved!", Toast.LENGTH_SHORT).show();
+		}
+		
+		
+
+	}
 
 	//Checks the arrays.xml to determine which forms hold which attributes
 	public void viewLinkedPictures() {
