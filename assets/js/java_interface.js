@@ -254,7 +254,9 @@ function addKmlStringToMap2(lon,layerNameString,kmlString) {
 	var layer = new OpenLayers.Layer.Vector(layerNameString);
     layer.addFeatures(GetFeaturesFromKMLString(kmlString));
     map.addLayer(layer);
-    
+
+
+    map.zoomToExtent(layer.getDataExtent());    
 }
 
 

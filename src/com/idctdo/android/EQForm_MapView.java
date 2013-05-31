@@ -49,6 +49,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TabActivity;
 import android.location.Location;
@@ -61,6 +62,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
+import android.os.Handler;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
@@ -102,6 +104,8 @@ public class EQForm_MapView extends Activity {
 
 	public boolean DEBUG_LOG = false; 
 
+	protected Dialog mSplashDialog;
+	
 	WebView mWebView;
 	/** Called when the activity is first created. */
 	WebView webview;        
@@ -192,6 +196,26 @@ public class EQForm_MapView extends Activity {
 		setContentView(R.layout.map_view);
 		mContext = this;
 
+		 MyStateSaver data = (MyStateSaver) getLastNonConfigurationInstance();
+		    if (data != null) {
+		        // Show splash screen if still loading
+		        if (data.showSplashScreen) {
+		            showSplashScreen();
+		        }
+		        setContentView(R.layout.map_view);      
+
+		        // Rebuild your UI with your saved state here
+		    } else {
+		        showSplashScreen();
+		        setContentView(R.layout.map_view);   
+		        // Do your heavy loading here on a background thread
+
+
+
+		    }
+		    
+		//showSplashScreen();
+		
 		mWebView = (WebView) findViewById(R.id.map_webview);
 		mWebView.getSettings().setAllowFileAccess(true);
 		mWebView.getSettings().setJavaScriptEnabled(true);
@@ -402,7 +426,7 @@ public class EQForm_MapView extends Activity {
 		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
 			Toast.makeText(this, "GPS is Enabled in your device", Toast.LENGTH_SHORT).show();
 		}else{
-			showGPSDisabledAlertToUser();
+			//showGPSDisabledAlertToUser();
 		}
 
 		if (DEBUG_LOG) Log.d("IDCT","Requesting location updates for network");
@@ -832,7 +856,28 @@ public class EQForm_MapView extends Activity {
 		mWebView.loadUrl("javascript:updateSurveyPointPositionFromMap("+ isEditingPoints+")");
 		return false; 		
 	}	
-
+	protected void removeSplashScreen() {
+	    if (mSplashDialog != null) {
+	        mSplashDialog.dismiss();
+	        mSplashDialog = null;
+	    }
+	}
+	protected void showSplashScreen() {
+	    mSplashDialog = new Dialog(this, R.style.SplashScreen);
+	    mSplashDialog.setContentView(R.layout.splash);
+	    mSplashDialog.setCancelable(false);
+	    mSplashDialog.show();
+	     
+	    // Set Runnable to remove splash screen just in case
+	    final Handler handler = new Handler();
+	    handler.postDelayed(new Runnable() {
+	      @Override
+	      public void run() {
+	        removeSplashScreen();
+	      }
+	    }, 3000);
+	}
+	
 	private void loadPrevSurveyPoints() {
 		if (DEBUG_LOG) Log.d(TAG,"loading PREVIOUS survey points");
 		mDbHelper = new GemDbAdapter(getBaseContext());      
@@ -1255,6 +1300,31 @@ public class EQForm_MapView extends Activity {
 		return false;
 	}
 
+	
+	@Override
+	public Object onRetainNonConfigurationInstance() {
+		MyStateSaver data = new MyStateSaver();
+		// Save your important data here
+
+
+		if (mSplashDialog != null) {
+			data.showSplashScreen = true;
+			removeSplashScreen();
+		}
+		return data;
+	}
+	
+	
+	/**
+	 * Simple class for storing important data across config changes
+	 */
+	private class MyStateSaver {
+		public boolean showSplashScreen = false;
+		// Your other important fields here
+	}
+
+
+	
 	public void deleteRecords(){
 		if (DEBUG_LOG) Log.d(TAG,"Deleting records");
 		// do something on back.

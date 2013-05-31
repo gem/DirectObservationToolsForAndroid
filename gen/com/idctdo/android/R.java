@@ -501,9 +501,10 @@ public final class R {
         public static final int yes=0x7f09005c;
     }
     public static final class style {
-        public static final int AttributeTitleStyle=0x7f0a0002;
-        public static final int LightTabWidget=0x7f0a0001;
-        public static final int MyTheme=0x7f0a0000;
+        public static final int AttributeTitleStyle=0x7f0a0003;
+        public static final int LightTabWidget=0x7f0a0002;
+        public static final int MyTheme=0x7f0a0001;
+        public static final int SplashScreen=0x7f0a0000;
     }
     public static final class xml {
         public static final int prefs=0x7f040000;
