@@ -428,6 +428,7 @@ public class EQForm_MapView extends Activity {
 		}else{
 			//showGPSDisabledAlertToUser();
 		}
+		
 
 		if (DEBUG_LOG) Log.d("IDCT","Requesting location updates for network");
 
@@ -1036,7 +1037,7 @@ public class EQForm_MapView extends Activity {
 							UUID mediaUid = UUID.randomUUID();
 							surveyDataObject.putMediaData(
 									"MEDIA_UID", FILENAME,
-									"MEDIA_TYPE", "PHOTOGRAPH",
+									"MEDIA_TYPE", "PHOTO",
 									"COMMENTS", value,
 									"FILENAME", FILENAME + ".jpg"
 							);				
@@ -1052,7 +1053,7 @@ public class EQForm_MapView extends Activity {
 							UUID mediaUid = UUID.randomUUID();
 							surveyDataObject.putMediaData(
 									"MEDIA_UID", FILENAME,
-									"MEDIA_TYPE", "PHOTOGRAPH",
+									"MEDIA_TYPE", "PHOTO",
 									"COMMENTS", "no comment entered",
 									"FILENAME", FILENAME + ".jpg"
 							);												

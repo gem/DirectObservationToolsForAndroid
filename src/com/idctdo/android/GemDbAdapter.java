@@ -195,24 +195,53 @@ public class GemDbAdapter
 	}
 
 	
-	public Cursor deleteRecordByUid(String uid)
+	public boolean deleteRecordByUid(String uid)
 	{
 		try
 		{
 			String sql ="DELETE FROM GEM_OBJECT WHERE OBJ_UID = '" + uid + "'";
-			Cursor mCur = mDb.rawQuery(sql, null);
-			
-			if (mCur!=null)
-			{
-				mCur.moveToNext();
-			}
-			return mCur;
+			Cursor mCur = mDb.rawQuery(sql, null);			
 		}
 		catch (SQLException mSQLException) 
 		{
 			Log.e(TAG, "deleting record >>"+ mSQLException.toString());
 			throw mSQLException;
 		}
+		
+		try
+		{
+			String sql ="DELETE FROM CONSEQUENCES WHERE GEMOBJ_UID = '" + uid + "'";
+			Cursor mCur = mDb.rawQuery(sql, null);			
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "deleting record from CONSEQUENCES >>"+ mSQLException.toString());
+			throw mSQLException;
+		}
+		
+		try
+		{
+			String sql ="DELETE FROM GED WHERE GEMOBJ_UID = '" + uid + "'";
+			Cursor mCur = mDb.rawQuery(sql, null);			
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "deleting record from GED >>"+ mSQLException.toString());
+			throw mSQLException;
+		}
+				
+		try
+		{
+			String sql ="DELETE FROM MEDIA_DETAIL WHERE GEMOBJ_UID = '" + uid + "'";
+			Cursor mCur = mDb.rawQuery(sql, null);			
+		}
+		catch (SQLException mSQLException) 
+		{
+			Log.e(TAG, "deleting record from MEDIA_DETAIL >>"+ mSQLException.toString());
+			throw mSQLException;
+		}
+		
+		return true;
 	}
 	
 	

@@ -247,23 +247,6 @@ public class MainTabActivity extends TabActivity {
 
 	}
 
-	/*
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();		
-		Log.d("IDCT", "Main Tab Activity Pausing .....");
-
-	}
-	 */
-
-	/*
-	@Override
-	protected void onResume() {
-		super.onResume();
-		Log.d("IDCT", "Main Tab Activity resuming .....");
-	}
-	 */
 	public static boolean createDirIfNotExists(String path) {
 		boolean ret = true;
 
@@ -414,33 +397,8 @@ public class MainTabActivity extends TabActivity {
 				}
 			}
 		}
-	}
-
-	/*
-	public void removeTabs() {
-		if (DEBUG_LOG) Log.d(TAG,"removing tabs " + tabHost.getTabWidget().getChildCount());
-		//tabHost.clearAllTabs();
-
-		Activity currentActivity = getLocalActivityManager().getActivity("Material");
-		if (currentActivity instanceof Material_Selection_Longitudinal_Form) {
-			((Material_Selection_Longitudinal_Form) currentActivity).clearThis();
-		}
-
-		int count = tabHost.getTabWidget().getChildCount();
-		int i = tabHost.getTabWidget().getChildCount();
-		while(tabHost.getTabWidget().getChildCount()>1)
-		{
-
-			tabHost.getTabWidget().removeView(tabHost.getTabWidget().getChildTabViewAt(i));
-
-			i--;
-
-		}
-		generateTabs();
-
-	}
-	 */
-
+	}	
+	
 	public void setTabColor() {
 
 		for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
@@ -474,24 +432,6 @@ public class MainTabActivity extends TabActivity {
 			tabHost.setCurrentTab(tabHost.getCurrentTab()-1);
 		}
 	}
-	/*
-	public void restart() {
-		lockTabIcons();
-		tabHost.setCurrentTab(0);
-		tabHost.getTabWidget().setEnabled(false);
-		tabHost.setEnabled(false);
-
-		initTabIcons(tabHost);
-		setTabColor();
-		removeTabs();
-		HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.ScrollView);
-		hsv.scrollTo(0,0);
-		hsv.refreshDrawableState();
-		if (DEBUG_LOG) Log.d(TAG, "scrolling to");
-
-	}
-	 */
-
 
 	public void unlockTabIcons(TabHost tabHost){
 
@@ -506,7 +446,6 @@ public class MainTabActivity extends TabActivity {
 			for(int i=1;i<tabHost.getTabWidget().getChildCount();i++)			{
 				//tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#000000"));
 				ImageView iv2 = (ImageView)tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.icon);
-
 				iv2.setImageDrawable(getResources().getDrawable(R.drawable.tick_grey));
 			}		
 			setTabColor();
@@ -621,10 +560,6 @@ public class MainTabActivity extends TabActivity {
 	}
 
 
-
-
-
-
 	//Checks the arrays.xml to determine which forms hold which attributes
 	public int findFormWithThisElement(String attributeKey) {
 		Resources res = getResources();
@@ -691,8 +626,6 @@ public class MainTabActivity extends TabActivity {
 			//FILENAME = (mAppSettings.getString(APP_SETTINGS_FILE_NAME, ""));				
 			Filename = Environment.getExternalStorageDirectory().getAbsolutePath() + "/idctdo/gemmedia/" + FILENAME +".jpg";
 
-
-
 			if (DEBUG_LOG) Log.d(TAG,"CAMERA IMAGE FILENAME: " + Filename.toString());
 			ImageFile = new File(Filename);
 			FilenameUri = Uri.fromFile(ImageFile);		
@@ -757,8 +690,7 @@ public class MainTabActivity extends TabActivity {
 					
 					if (DEBUG_LOG) Log.d(TAG, "DELETE FINISHED. Finish the activity");
 					MainTabActivity.this.finish();
-					if (DEBUG_LOG) Log.d(TAG, "Acitivity should be finished");	
-	
+					if (DEBUG_LOG) Log.d(TAG, "Acitivity should be finished");
 	
 					return;
 				}
@@ -1043,7 +975,7 @@ public class MainTabActivity extends TabActivity {
 							UUID mediaUid = UUID.randomUUID();
 							surveyDataObject.putMediaData(
 									"MEDIA_UID", FILENAME,
-									"MEDIA_TYPE", "PHOTOGRAPH",
+									"MEDIA_TYPE", "PHOTO",
 									"COMMENTS", value,
 									"FILENAME", FILENAME + ".jpg"
 							);				
@@ -1058,7 +990,7 @@ public class MainTabActivity extends TabActivity {
 							UUID mediaUid = UUID.randomUUID();
 							surveyDataObject.putMediaData(
 									"MEDIA_UID", FILENAME,
-									"MEDIA_TYPE", "PHOTOGRAPH",
+									"MEDIA_TYPE", "PHOTO",
 									"COMMENTS", "no comment entered",
 									"FILENAME", FILENAME + ".jpg"
 							);			
