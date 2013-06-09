@@ -67,6 +67,12 @@ public class Details_Selection extends Activity {
 	public EditText editTextSlope;
 	private String slopeAttributeKey = "SLOPE";
 
+	public EditText editTextDirectionX;
+	private String directionXKey = "DIRECT_1";
+	
+	public EditText editTextDirectionY;
+	private String directionYKey = "DIRECT_2";
+	
 	
 	private String buildingPositionAttributeDictionary = "DIC_POSITION";
 	private String buildingPositionAttributeKey = "POSITION";
@@ -131,6 +137,30 @@ public class Details_Selection extends Activity {
 						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
 						editTextSlope = (EditText) findViewById(R.id.editTextSlope);
 						surveyDataObject.putData(slopeAttributeKey , editTextSlope.getText().toString());
+						completeThis();
+					}
+				}
+			});
+			
+			
+			editTextDirectionX= (EditText) findViewById(R.id.editTextDirectionX);
+			editTextDirectionX.setOnFocusChangeListener(new OnFocusChangeListener() {				
+				public void onFocusChange(View v, boolean hasFocus) {
+					if(!hasFocus) {
+						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
+						editTextDirectionX = (EditText) findViewById(R.id.editTextDirectionX);
+						surveyDataObject.putData(directionXKey, editTextDirectionX.getText().toString());
+						completeThis();
+					}
+				}
+			});
+			editTextDirectionY= (EditText) findViewById(R.id.editTextDirectionY);
+			editTextDirectionY.setOnFocusChangeListener(new OnFocusChangeListener() {				
+				public void onFocusChange(View v, boolean hasFocus) {
+					if(!hasFocus) {
+						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
+						editTextDirectionY = (EditText) findViewById(R.id.editTextDirectionY);
+						surveyDataObject.putData(directionYKey, editTextDirectionY.getText().toString());
 						completeThis();
 					}
 				}
@@ -225,6 +255,9 @@ public class Details_Selection extends Activity {
 			//Resume any previous values if editing existing attribute 
 			editTextSurveyComment.setText(surveyDataObject.getSurveyDataValue(commentsAttributeKey));
 			editTextSlope.setText(surveyDataObject.getSurveyDataValue(slopeAttributeKey));
+			editTextDirectionX.setText(surveyDataObject.getSurveyDataValue(directionXKey));
+			editTextDirectionY.setText(surveyDataObject.getSurveyDataValue(directionYKey));
+			
 			
 			boolean result = false;	
 			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerBuildingPosition, buildingPositionAttributesList, buildingPositionAttributeKey,surveyDataObject.getSurveyDataValue(buildingPositionAttributeKey));

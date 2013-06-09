@@ -9,13 +9,11 @@
     android:paddingRight="5dp" >
 
     <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/ScrollViewDetails"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="@color/highlight_colour"
@@ -28,7 +26,6 @@
                 android:text="" />
 
             <RelativeLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/rel1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -73,7 +70,6 @@
             </RelativeLayout>
 
             <RelativeLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/rel5"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -162,6 +158,60 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewNonStructuralExteriorWalls"
                 android:layout_marginTop="5dp" />
+
+            <RelativeLayout
+                android:id="@+id/rel7"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rel1"
+                android:background="@color/highlight_colour"
+                android:gravity="left"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/DirectionX"
+                    style="@style/AttributeTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="left"
+                    android:text="Direction X"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/editTextDirectionX"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:ems="10"
+                    android:layout_below="@+id/DirectionX"
+                    android:hint="Direct X"
+                    android:inputType="number" />
+
+                <TextView
+                    android:id="@+id/DirectionY"
+                    style="@style/AttributeTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="left"
+                    android:text="Direction Y"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/editTextDirectionY"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/DirectionY"
+                    android:ems="10"
+                    android:hint="Direct Y"
+                    android:inputType="number" />
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 

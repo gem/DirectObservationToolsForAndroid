@@ -203,7 +203,6 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 					SelectedAdapter a = (SelectedAdapter) arg0.getAdapter();
 					surveyDataObject.lastEditedAttribute = a.getItem(position).getAttributeDescription();
 					surveyDataObject.putData(secondLevelAttributeKeyTransverse, selectedAdapter5.getItem(position).getAttributeValue());					
-					//Toast.makeText(getApplicationContext(), "LV2 click: " + selectedAdapter2.getItem(position).getOrderName() + " " + selectedAdapter2.getItem(position).getOrderStatus() + " " +selectedAdapter2.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
 					completeThis();		
 
 				}

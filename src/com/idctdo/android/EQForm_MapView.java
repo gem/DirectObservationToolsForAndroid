@@ -145,7 +145,6 @@ public class EQForm_MapView extends Activity {
 	private ProgressDialog mProgressDialog;
 	private ProgressBarAsync mProgressbarAsync;
 
-
 	StringBuilder sb;
 	StringBuilder sb2;
 
