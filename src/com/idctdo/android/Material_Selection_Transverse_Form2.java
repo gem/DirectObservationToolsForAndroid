@@ -138,7 +138,8 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 
 			mDbHelper.createDatabase();      
 			mDbHelper.open();
-
+		
+			
 			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeType);     
 			ArrayList<DBRecord> firstLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 			if (DEBUG_LOG) Log.d("IDCT","TYPES: " + firstLevelAttributesList.toString());

@@ -1052,6 +1052,7 @@ public class EQForm_MapView extends Activity {
 							GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();				
 							UUID mediaUid = UUID.randomUUID();
 							surveyDataObject.putMediaData(
+									
 									"MEDIA_UID", FILENAME,
 									"MEDIA_TYPE", "PHOTO",
 									"COMMENTS", "no comment entered",
@@ -1138,12 +1139,7 @@ public class EQForm_MapView extends Activity {
 		return false;
 	}
 
-
-
-
-
-
-
+	
 	private void showGPSDisabledAlertToUser(){
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setMessage("GPS is disabled in your device. Would you like to enable it?").setCancelable(false).setPositiveButton("Goto Settings Page To Enable GPS",

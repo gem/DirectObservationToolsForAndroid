@@ -9,8 +9,9 @@
     
     <!-- Splash Strings -->
    <string name="splash_title">IDCT ANDROID FIELD TOOL</string>
-    <string name="splash_version_info">Version 1</string>
+    <string name="splash_version_info">Version 1.08</string>
     <string name="splash_author_info">University of Nottingham</string>
+    
     <!-- Main Menu Strings" -->
     <string name="menu_title">Global Earthquake Model\nInventory Data Capture Tool\n</string>
     <string name="modified_ems98_button">Modified EMS-98</string>

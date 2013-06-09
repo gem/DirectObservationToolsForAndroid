@@ -31,8 +31,9 @@ public final class R {
         public static final int bg_colour=0x7f070003;
         public static final int gem_blue=0x7f070002;
         public static final int highlight_colour=0x7f070004;
-        public static final int light_green=0x7f070005;
+        public static final int light_green=0x7f070006;
         public static final int red=0x7f070001;
+        public static final int splash_bg_colour=0x7f070005;
         public static final int title_shadow=0x7f070000;
     }
     public static final class dimen {
@@ -47,23 +48,23 @@ public final class R {
         public static final int title_size=0x7f080000;
     }
     public static final class drawable {
-        public static final int background=0x7f020000;
+        public static final int background_old=0x7f020000;
         public static final int border_ui=0x7f020001;
         public static final int borderframe=0x7f020002;
-        public static final int building_icon=0x7f020003;
-        public static final int camera=0x7f020004;
-        public static final int camera_green=0x7f020005;
-        public static final int cone_icon=0x7f020006;
-        public static final int cone_icon_green=0x7f020007;
-        public static final int damage_guidance=0x7f020008;
-        public static final int finish_small=0x7f020009;
-        public static final int finish_small_old=0x7f02000a;
-        public static final int gem_logo=0x7f02000b;
+        public static final int camera=0x7f020003;
+        public static final int camera_green=0x7f020004;
+        public static final int cone_icon=0x7f020005;
+        public static final int cone_icon_green=0x7f020006;
+        public static final int damage_guidance=0x7f020007;
+        public static final int finish_small=0x7f020008;
+        public static final int finish_small_old=0x7f020009;
+        public static final int gem_logo=0x7f02000a;
+        public static final int gem_splash=0x7f02000b;
         public static final int globe=0x7f02000c;
         public static final int gradient=0x7f02000d;
         public static final int gradient_small=0x7f02000e;
         public static final int ic_launcher=0x7f02000f;
-        public static final int ic_launcher_old=0x7f020010;
+        public static final int ic_launcher_old2=0x7f020010;
         public static final int ic_menu_mylocation=0x7f020011;
         public static final int ic_tab_android=0x7f020012;
         public static final int ic_tab_apple=0x7f020013;
@@ -72,8 +73,8 @@ public final class R {
         public static final int icon=0x7f020016;
         public static final int layers_icon=0x7f020017;
         public static final int locateme=0x7f020018;
-        public static final int office_building=0x7f020019;
-        public static final int seismograph=0x7f02001a;
+        public static final int seismograph=0x7f020019;
+        public static final int seismograph_olfd=0x7f02001a;
         public static final int splash=0x7f02001b;
         public static final int star=0x7f02001c;
         public static final int tab_icon=0x7f02001d;

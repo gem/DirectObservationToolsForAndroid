@@ -194,57 +194,76 @@ public class GemDbAdapter
 		mDbHelper.close();
 	}
 
-	
+
 	public boolean deleteRecordByUid(String uid)
 	{
+
 		try
 		{
 			String sql ="DELETE FROM GEM_OBJECT WHERE OBJ_UID = '" + uid + "'";
-			Cursor mCur = mDb.rawQuery(sql, null);			
+			Cursor mCur = mDb.rawQuery(sql, null);	
+			if (mCur!=null)
+			{
+				mCur.moveToNext();
+			}
+
 		}
 		catch (SQLException mSQLException) 
 		{
 			Log.e(TAG, "deleting record >>"+ mSQLException.toString());
 			throw mSQLException;
 		}
+
 		
 		try
 		{
 			String sql ="DELETE FROM CONSEQUENCES WHERE GEMOBJ_UID = '" + uid + "'";
-			Cursor mCur = mDb.rawQuery(sql, null);			
+			Cursor mCur = mDb.rawQuery(sql, null);
+			if (mCur!=null)
+			{
+				mCur.moveToNext();
+			}
 		}
 		catch (SQLException mSQLException) 
 		{
 			Log.e(TAG, "deleting record from CONSEQUENCES >>"+ mSQLException.toString());
 			throw mSQLException;
 		}
-		
+
 		try
 		{
 			String sql ="DELETE FROM GED WHERE GEMOBJ_UID = '" + uid + "'";
-			Cursor mCur = mDb.rawQuery(sql, null);			
+			Cursor mCur = mDb.rawQuery(sql, null);
+			if (mCur!=null)
+			{
+				mCur.moveToNext();
+			}
 		}
 		catch (SQLException mSQLException) 
 		{
 			Log.e(TAG, "deleting record from GED >>"+ mSQLException.toString());
 			throw mSQLException;
 		}
-				
+
 		try
 		{
 			String sql ="DELETE FROM MEDIA_DETAIL WHERE GEMOBJ_UID = '" + uid + "'";
-			Cursor mCur = mDb.rawQuery(sql, null);			
+			Cursor mCur = mDb.rawQuery(sql, null);	
+			if (mCur!=null)
+			{
+				mCur.moveToNext();
+			}
 		}
 		catch (SQLException mSQLException) 
 		{
 			Log.e(TAG, "deleting record from MEDIA_DETAIL >>"+ mSQLException.toString());
 			throw mSQLException;
 		}
-		
+		 
 		return true;
 	}
-	
-	
+
+
 	public void exportGemTableToCsv(){
 
 		File sd = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/db_snapshots");
@@ -624,7 +643,7 @@ public class GemDbAdapter
 			//String sql = "select DESCRIPTION, CODE, TRIM(SCOPE) from '"+ dictionaryTable + "'";
 			//String sql = "select DESCRIPTION, CODE, SCOPE from GEM_RULES INNER JOIN DIC_MASONRY_REINFORCEMENT ON GEM_RULES.CHILD_CODE = DIC_MASONRY_REINFORCEMENT.CODE
 			String sql = "select DESCRIPTION, CODE, SCOPE from GEM_RULES INNER JOIN '"+ dictionaryTable + "' ON GEM_RULES.CHILD_CODE = '"+ dictionaryTable + "'.CODE where PARENT_CODE = '"+ parentCode+ "'";
-			
+
 			if (DEBUG_LOG) Log.d("IDCT", "running sql " + sql);
 
 			Cursor mCur = mDb.rawQuery(sql, null);
@@ -765,7 +784,7 @@ public class GemDbAdapter
 	{		
 		try
 		{		
-			
+
 			ContentValues cv = new ContentValues();
 			UUID id = UUID.randomUUID();
 			cv.put("PROJ_UID", id.toString());

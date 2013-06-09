@@ -2,62 +2,61 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@android:color/white"
-    android:orientation="horizontal">
-	<RelativeLayout
-		android:id="@+id/MainSplashText"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent" 
-		android:gravity="center_horizontal">
+    android:background="@color/splash_bg_colour"
+    android:orientation="horizontal" >
 
-			<TextView
-				android:id="@+id/SplashTitle"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-			    android:gravity="center"
-				android:text="@string/splash_title"
-				android:textSize="@dimen/splash_title"
-				android:textColor ="@android:color/black"
-				android:layout_alignParentTop="true">
-			</TextView>
-	 
-		
-				<TextView
-				android:id="@+id/SplashAuthor"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:layout_gravity ="left"
-				android:gravity="left"
-				android:text="@string/splash_author_info"
-				android:textSize="@dimen/splash_info"
-				android:textColor ="@android:color/black"
-				android:layout_alignParentBottom="true">
-				</TextView>
-				
-				<TextView
-				android:id="@+id/SplashVersion"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:layout_gravity ="right"
-				android:gravity="right"
-				android:text="@string/splash_version_info"
-				android:textSize="@dimen/splash_info"
-				android:textColor ="@android:color/black"
-				android:layout_alignBaseline="@id/SplashAuthor">
-				</TextView>
-				<ImageView
-				
-				android:id="@+id/background"
-				android:layout_centerInParent="true"
-				android:src="@drawable/splash"
-				android:layout_below="@id/SplashTitle"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content">
-				</ImageView>		
-			
-		
-		
-		</RelativeLayout>
-		
-    
+    <RelativeLayout
+        android:id="@+id/MainSplashText"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal" >
+
+        <TextView
+            android:id="@+id/SplashTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="@string/splash_title"
+            android:textColor="@android:color/white"
+            android:visibility="gone"
+            android:textSize="@dimen/splash_title" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/SplashAuthor"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:visibility="gone"
+            android:text="@string/splash_author_info"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/splash_info" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/SplashVersion"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/SplashAuthor"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:text="@string/splash_version_info"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/splash_info" >
+        </TextView>
+        
+        
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/gem_splash" />
+
+    </RelativeLayout>
+
 </LinearLayout>
