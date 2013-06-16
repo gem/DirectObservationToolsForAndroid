@@ -444,6 +444,8 @@ function init(){
 	var click = new OpenLayers.Control.Click( { trigger: function(e) {		
 
 		//if (!isEditingPoints) {
+
+		if ((isEditingPoints && unsavedEditedPoint) || !isEditingPoints) {
 			console.log("Click event");		
 			console.log("map click MOBILE");
 			var lonlat = map.getLonLatFromViewPortPx(e.xy);
@@ -455,7 +457,7 @@ function init(){
 			var myLocation = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat );
 			myLocation.transform(map.getProjectionObject(),new OpenLayers.Projection("EPSG:4326"));		
 			drawCandidateSurveyPoint(myLocation.x, myLocation.y,"0");		
-		//}
+		}
 	}});
 	 
 	map.addControl(click);

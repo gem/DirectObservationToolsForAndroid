@@ -102,7 +102,7 @@ import android.widget.ToggleButton;
 
 public class EQForm_MapView extends Activity {
 
-	public boolean DEBUG_LOG = false; 
+	public boolean DEBUG_LOG = true; 
 
 	protected Dialog mSplashDialog;
 	
@@ -541,13 +541,27 @@ public class EQForm_MapView extends Activity {
 		@Override
 		public void onClick(View v) {
 			if (DEBUG_LOG) Log.d(TAG,"Edit points button clicked");
+			/*
 			if (isEditingPoints) {
+				if (DEBUG_LOG) Log.d(TAG,"Starting Editing mode in js");
 				mWebView.loadUrl("javascript:startEditingMode(false)");
 				isEditingPoints = false;
 			} else {
+				if (DEBUG_LOG) Log.d(TAG,"stoppint editing mode in js");
 				mWebView.loadUrl("javascript:startEditingMode(true)");
 				isEditingPoints = true;
 			}
+			*/
+			if (btn_edit_points.isChecked()) {
+				if (DEBUG_LOG) Log.d(TAG,"Starting Editing mode in js");
+				mWebView.loadUrl("javascript:startEditingMode(true)");
+				isEditingPoints = true;
+			} else {
+				if (DEBUG_LOG) Log.d(TAG,"stoppint editing mode in js");
+				mWebView.loadUrl("javascript:startEditingMode(false)");
+				isEditingPoints = false;
+			}
+			
 		}
 	};
 
@@ -839,8 +853,7 @@ public class EQForm_MapView extends Activity {
 	/***********************************************************
 	 * END OF UI BUTTON CLICK LISTENERS
 	 * ********************************************************/
-
-
+	
 
 	/***********************************************************
 	 * JAVA / JAVASCRIPT INTERFACE HELPER FUNCTION
@@ -924,6 +937,7 @@ public class EQForm_MapView extends Activity {
 		return false; 	
 	}
 
+	
 	//Called from JS with point location of survey
 	//This point forms the survey point and should be saved in the db
 	//It could be a new survey point or a new geom of an exisiting one 

@@ -247,23 +247,21 @@ public class Details_Selection extends Activity {
 			});					
 			nonStructuralExteriorWallsDictionaryCursor.close();
 			
+						
 			
 			mDbHelper.close();
-			
-			
+						
 			
 			//Resume any previous values if editing existing attribute 
 			editTextSurveyComment.setText(surveyDataObject.getSurveyDataValue(commentsAttributeKey));
 			editTextSlope.setText(surveyDataObject.getSurveyDataValue(slopeAttributeKey));
 			editTextDirectionX.setText(surveyDataObject.getSurveyDataValue(directionXKey));
 			editTextDirectionY.setText(surveyDataObject.getSurveyDataValue(directionYKey));
-			
-			
+							
 			boolean result = false;	
 			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerBuildingPosition, buildingPositionAttributesList, buildingPositionAttributeKey,surveyDataObject.getSurveyDataValue(buildingPositionAttributeKey));
 			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerBuildingShape, buildingShapeAttributesList, buildingShapeAttributeKey,surveyDataObject.getSurveyDataValue(buildingShapeAttributeKey));
-			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerNonStructuralExteriorWalls, nonStructuralExteriorWallsAttributesList, nonStructuralExteriorWallsAttributeKey,surveyDataObject.getSurveyDataValue(nonStructuralExteriorWallsAttributeKey));
-				
+			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerNonStructuralExteriorWalls, nonStructuralExteriorWallsAttributesList, nonStructuralExteriorWallsAttributeKey,surveyDataObject.getSurveyDataValue(nonStructuralExteriorWallsAttributeKey));				
 		}//end tab is compelted check
 	}
 

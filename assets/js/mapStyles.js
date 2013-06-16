@@ -112,10 +112,11 @@ var surveyPointDefaultStyle = new OpenLayers.Style({
 	fillColor: "#FFFF00",
 	strokeColor: "#000000",
 	strokeWidth: 1,
-	externalGraphic: "img/cone_icon_red.png",
+	externalGraphic: "img/cone_icon_red_new.png",
 	graphicOpacity: 0.85,
 	fillOpacity: 0.85,
-	pointRadius: 75,
+	pointRadius: 40,
+	graphicYOffset: -64,
 	fontColor: "#000000",
 	fontFamily: "sans-serif",
 	fontWeight: "bold"
