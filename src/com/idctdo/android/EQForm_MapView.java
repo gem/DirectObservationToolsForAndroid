@@ -935,8 +935,7 @@ public class EQForm_MapView extends Activity {
 		if (DEBUG_LOG) Log.d(TAG,"loading layer names");
 		if (DEBUG_LOG) Log.d(TAG,"layers are: " + layerNamesJson);
 		return false; 	
-	}
-
+	}	
 	
 	//Called from JS with point location of survey
 	//This point forms the survey point and should be saved in the db
@@ -948,9 +947,9 @@ public class EQForm_MapView extends Activity {
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
 		if (DEBUG_LOG) Log.d(TAG,"Currently got unsaved edits? " + g.unsavedEdits);
 		g.setLon(lon);
-		g.setLat(lat);
-
-		if (g.unsavedEdits) {
+		g.setLat(lat);				
+		
+		if (g.unsavedEdits) {	
 			if (DEBUG_LOG) Log.d(TAG,"Got unsaved edits");	
 			//Check if we're editing a point i.e. we've clicked it and got its id. If we are then keep the uid. Else generate new one			
 			//if (gemId.equals("0")) {
