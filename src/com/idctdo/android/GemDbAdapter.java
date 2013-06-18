@@ -46,14 +46,13 @@ import android.widget.Toast;
 
 
 
-
-
 public class GemDbAdapter 
 {
 	public boolean DEBUG_LOG = false; 
 
 	protected static final String TAG = "IDCT";
 
+	
 	private final Context mContext;
 	private SQLiteDatabase mDb;
 	private DataBaseHelper mDbHelper;
@@ -641,7 +640,7 @@ public class GemDbAdapter
 		try
 		{
 			//String sql = "select DESCRIPTION, CODE, TRIM(SCOPE) from '"+ dictionaryTable + "'";
-			//String sql = "select DESCRIPTION, CODE, SCOPE from GEM_RULES INNER JOIN DIC_MASONRY_REINFORCEMENT ON GEM_RULES.CHILD_CODE = DIC_MASONRY_REINFORCEMENT.CODE
+			//String sql = "select DESCRIPTION, CODE, SCOPE from GEM_RULES INNER JOIN DIC_MASONRY_REINFORCEMENT ON GEM_RULES.CHILD_CODE = DIC_MASONRY_REINFORCEMENT.CODE where PARENT_CODE = 'MR';
 			String sql = "select DESCRIPTION, CODE, SCOPE from GEM_RULES INNER JOIN '"+ dictionaryTable + "' ON GEM_RULES.CHILD_CODE = '"+ dictionaryTable + "'.CODE where PARENT_CODE = '"+ parentCode+ "'";
 
 			if (DEBUG_LOG) Log.d("IDCT", "running sql " + sql);

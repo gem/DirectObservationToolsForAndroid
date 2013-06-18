@@ -165,9 +165,7 @@ public class Details_Selection extends Activity {
 					}
 				}
 			});
-			
-			
-			
+									
 			spinnerBuildingPosition = (Spinner)  findViewById(R.id.spinnerBuildingPosition);
 			final Cursor buildingPositionAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(buildingPositionAttributeDictionary);
 			ArrayList<DBRecord> buildingPositionAttributesList = GemUtilities.cursorToArrayList(buildingPositionAttributeDictionaryCursor);
@@ -178,8 +176,7 @@ public class Details_Selection extends Activity {
 				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 					//Object item = parent.getItemAtPosition(pos);
 					if (DEBUG_LOG) Log.d("IDCT","spinner selected: " + spinnerBuildingPosition.getSelectedItem().toString());
-					if (DEBUG_LOG) Log.d("IDCT","spinner selected pos: " + pos);
-					
+					if (DEBUG_LOG) Log.d("IDCT","spinner selected pos: " + pos);					
 					//Temporarily disabled 7/1/13					
 					//allAttributeTypesTopLevelCursor.moveToPosition(pos);
 					//Log.d("IDCT","spinner selected pos val: " + allAttributeTypesTopLevelCursor.getString(1));							

@@ -7,7 +7,7 @@
     android:orientation="vertical" >
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+        
         android:id="@+id/rel1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+        
         android:id="@+id/rel2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+       
         android:id="@+id/rel3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    
         android:id="@+id/rel4"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
         android:id="@+id/rel5"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

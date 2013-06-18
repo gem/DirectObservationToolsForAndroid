@@ -5,8 +5,8 @@ var defaultStyle = new OpenLayers.Style({
 	externalGraphic: "img/cone_icon_green_new.png",
 	graphicOpacity: 0.85,
 	fillOpacity: 0.85,
-	pointRadius: 50,
-	graphicYOffset: -64,
+	graphicHeight: 70,
+	graphicYOffset: -70,
 	fontColor: "#000000",
 	fontFamily: "sans-serif",
 	fontWeight: "bold"
@@ -35,8 +35,8 @@ var selectStyle = new OpenLayers.Style({
 	externalGraphic: "img/cone_icon_green_new.png",
 	graphicOpacity: 0.85,
 	fillOpacity: 0.85,
-	pointRadius: 50,
-	graphicYOffset: -64,
+	graphicHeight: 70,
+	graphicYOffset: -70,
 	fontColor: "#000000",
 	fontFamily: "sans-serif",
 	fontWeight: "bold"
@@ -117,8 +117,8 @@ var surveyPointDefaultStyle = new OpenLayers.Style({
 	externalGraphic: "img/cone_icon_red_new.png",
 	graphicOpacity: 0.85,
 	fillOpacity: 0.85,
-	pointRadius: 50,
-	graphicYOffset: -64,
+	graphicHeight: 70,
+	graphicYOffset: -70,
 	fontColor: "#000000",
 	fontFamily: "sans-serif",
 	fontWeight: "bold"

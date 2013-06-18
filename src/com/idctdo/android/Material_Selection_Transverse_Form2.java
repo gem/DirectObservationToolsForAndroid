@@ -92,7 +92,7 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.material_selectable_list2);
-		
+
 		Resources res = getResources();
 		String[] attribKeys = res.getStringArray(R.array.formAttributeKeys0b);
 		topLevelAttributeKey = attribKeys[0];
@@ -100,8 +100,8 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 		thirdLevelAttributeKey =  attribKeys[2];
 		fourthLevelAttributeKey =  attribKeys[3];
 		fifthLevelAttributeKey =  attribKeys[4];
-		
-		
+
+
 		tabActivity = (TabActivity) getParent();
 		tabHost = tabActivity.getTabHost();
 	}
@@ -128,315 +128,315 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 		SecondTabsActivity a = (SecondTabsActivity)getParent();		
 		surveyDataObject = (GEMSurveyObject)getApplication();	
 
-		
+
 		//if (a.isSecondaryTabCompleted()) {
 		//	if (DEBUG_LOG) Log.d("JFR","Tab is complete");
 		//} else {
 
-			if (DEBUG_LOG) Log.d("JFR","creating material");
-			mDbHelper = new GemDbAdapter(getBaseContext());        
+		if (DEBUG_LOG) Log.d("JFR","creating material");
+		mDbHelper = new GemDbAdapter(getBaseContext());        
 
-			mDbHelper.createDatabase();      
-			mDbHelper.open();
-		
-			
-			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeType);     
-			ArrayList<DBRecord> firstLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
-			if (DEBUG_LOG) Log.d("IDCT","TYPES: " + firstLevelAttributesList.toString());
-
-			Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(secondLevelAttributeType);
-			secondLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesSecondLevelCursor);
-
-			Cursor allAttributeTypesThirdLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(thirdLevelAttributeType);
-			thirdLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesThirdLevelCursor);
-
-			Cursor allAttributeTypesFourthLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(fourthLevelAttributeType);
-			fourthLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesFourthLevelCursor);
-
-			Cursor allAttributeTypesFifthLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(fifthLevelAttributeType);
-			fifthLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesFifthLevelCursor);
-			
-			allAttributeTypesTopLevelCursor.close();
-			allAttributeTypesSecondLevelCursor.close();
-			allAttributeTypesThirdLevelCursor.close();
-			allAttributeTypesFourthLevelCursor.close();
-			allAttributeTypesFifthLevelCursor.close();
-
-			mDbHelper.close();
-
-			selectedAdapter = new SelectedAdapter(this,0,firstLevelAttributesList);
-			selectedAdapter.setNotifyOnChange(true);
-			listview = (ListView) findViewById(R.id.listExample);
-			listview.setAdapter(selectedAdapter);        
+		mDbHelper.createDatabase();      
+		mDbHelper.open();
 
 
-			selectedAdapter2 = new SelectedAdapter(this,0,secondLevelAttributesList);    		
-			selectedAdapter2.setNotifyOnChange(true);		
-			listview2 = (ListView) findViewById(R.id.listExample2);
-			listview2.setAdapter(selectedAdapter2);                      
-			listview2.setVisibility(View.INVISIBLE);
-			RelativeLayout relativeLayout2 = (RelativeLayout) findViewById(R.id.rel2);
-			relativeLayout2.setVisibility(View.INVISIBLE);
+		Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeType);     
+		ArrayList<DBRecord> firstLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
+		if (DEBUG_LOG) Log.d("IDCT","TYPES: " + firstLevelAttributesList.toString());
 
-			selectedAdapter3 = new SelectedAdapter(this,0,thirdLevelAttributesList);    		
-			selectedAdapter3.setNotifyOnChange(true);		
-			listview3 = (ListView) findViewById(R.id.listExample3);
-			listview3.setAdapter(selectedAdapter3);               
-			listview3.setVisibility(View.VISIBLE);
-			RelativeLayout relativeLayout3 = (RelativeLayout) findViewById(R.id.rel3);
-			relativeLayout3.setVisibility(View.INVISIBLE);
+		Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(secondLevelAttributeType);
+		secondLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesSecondLevelCursor);
 
-			selectedAdapter4 = new SelectedAdapter(this,0,fourthLevelAttributesList);    		
-			selectedAdapter4.setNotifyOnChange(true);		
-			listview4 = (ListView) findViewById(R.id.listExample4);
-			listview4.setAdapter(selectedAdapter4);               
-			listview4.setVisibility(View.VISIBLE);
-			RelativeLayout relativeLayout4 = (RelativeLayout) findViewById(R.id.rel4);
-			relativeLayout4.setVisibility(View.INVISIBLE);
+		//Cursor allAttributeTypesThirdLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(thirdLevelAttributeType);
+		Cursor allAttributeTypesThirdLevelCursor = mDbHelper.getAttributeValuesByDictionaryTableUsingRule(thirdLevelAttributeType,"MR");
+		thirdLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesThirdLevelCursor);
 
+		Cursor allAttributeTypesFourthLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(fourthLevelAttributeType);
+		fourthLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesFourthLevelCursor);
 
-			selectedAdapter5 = new SelectedAdapter(this,0,fifthLevelAttributesList);    		
-			selectedAdapter5.setNotifyOnChange(true);		
-			listview5 = (ListView) findViewById(R.id.listExample5);
-			listview5.setAdapter(selectedAdapter5);               
-			listview5.setVisibility(View.VISIBLE);
-			RelativeLayout relativeLayout5 = (RelativeLayout) findViewById(R.id.rel5);
-			relativeLayout5.setVisibility(View.INVISIBLE);
+		Cursor allAttributeTypesFifthLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(fifthLevelAttributeType);
+		fifthLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesFifthLevelCursor);
 
-			listview.setOnItemClickListener(new OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView arg0, View view,
-						int position, long id) {
-					// user clicked a list item, make it "selected"
-					selectedAdapter.setSelectedPosition(position);		
-					selectedAdapter2.setSelectedPosition(-1);			
-					selectedAdapter3.setSelectedPosition(-1);			
-					selectedAdapter4.setSelectedPosition(-1);			
-					selectedAdapter5.setSelectedPosition(-1);		
-					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();				
+		allAttributeTypesTopLevelCursor.close();
+		allAttributeTypesSecondLevelCursor.close();
+		allAttributeTypesThirdLevelCursor.close();
+		allAttributeTypesFourthLevelCursor.close();
+		allAttributeTypesFifthLevelCursor.close();
 
-					secondLevelAttributesList.clear();
-					thirdLevelAttributesList.clear();
-					fourthLevelAttributesList.clear();	
-					fifthLevelAttributesList.clear();	
+		mDbHelper.close();
 
-					mDbHelper.open();
-
-					if (DEBUG_LOG) Log.d("IDCT", "MATERIAL TYPE SELECING BY " + secondLevelAttributeType + " and " + selectedAdapter.getItem(position).getJson());				
-					if (DEBUG_LOG) Log.d("IDCT", "SELECTED DB RECORD QUADRUPLET: "  + selectedAdapter.getItem(position).toString());
-					surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());
-
-					Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(secondLevelAttributeType,selectedAdapter.getItem(position).getJson());
-					mCursor.moveToFirst();
-					while(!mCursor.isAfterLast()) {
-						//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-						DBRecord o1 = new DBRecord();	
-						o1.setAttributeDescription(mCursor.getString(0));
-						o1.setAttributeValue(mCursor.getString(1));
-						o1.setJson(mCursor.getString(2));
-						secondLevelAttributesList.add(o1);
-						mCursor.moveToNext();
-					}		     
-					mCursor.close();
-					mDbHelper.close();    		          
-
-					listview2.setVisibility(View.VISIBLE);
-					RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel2);
-					relativeLayout.setVisibility(View.VISIBLE);
-				
-					
-					completeThisSecondaryTab();
-
-					selectedAdapter2.notifyDataSetChanged();
-					selectedAdapter3.notifyDataSetChanged();
-					selectedAdapter4.notifyDataSetChanged();   
-				}
-			});        
+		selectedAdapter = new SelectedAdapter(this,0,firstLevelAttributesList);
+		selectedAdapter.setNotifyOnChange(true);
+		listview = (ListView) findViewById(R.id.listExample);
+		listview.setAdapter(selectedAdapter);        
 
 
-			listview2.setOnItemClickListener(new OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView arg0, View view,int position, long id) {
-					// user clicked a list item, make it "selected" 		        
-					selectedAdapter2.setSelectedPosition(position);
-					selectedAdapter3.setSelectedPosition(-1);			
-					selectedAdapter4.setSelectedPosition(-1);			
-					selectedAdapter5.setSelectedPosition(-1);						
-					surveyDataObject.putData(secondLevelAttributeKey, selectedAdapter2.getItem(position).getAttributeValue());
+		selectedAdapter2 = new SelectedAdapter(this,0,secondLevelAttributesList);    		
+		selectedAdapter2.setNotifyOnChange(true);		
+		listview2 = (ListView) findViewById(R.id.listExample2);
+		listview2.setAdapter(selectedAdapter2);                      
+		listview2.setVisibility(View.INVISIBLE);
+		RelativeLayout relativeLayout2 = (RelativeLayout) findViewById(R.id.rel2);
+		relativeLayout2.setVisibility(View.INVISIBLE);
 
-					//Toast.makeText(getApplicationContext(), "LV2 click: " + selectedAdapter2.getItem(position).getOrderName() + " " + selectedAdapter2.getItem(position).getOrderStatus() + " " +selectedAdapter2.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
+		selectedAdapter3 = new SelectedAdapter(this,0,thirdLevelAttributesList);    		
+		selectedAdapter3.setNotifyOnChange(true);		
+		listview3 = (ListView) findViewById(R.id.listExample3);
+		listview3.setAdapter(selectedAdapter3);               
+		listview3.setVisibility(View.VISIBLE);
+		RelativeLayout relativeLayout3 = (RelativeLayout) findViewById(R.id.rel3);
+		relativeLayout3.setVisibility(View.INVISIBLE);
 
-					thirdLevelAttributesList.clear();
-					fourthLevelAttributesList.clear();	
-					fifthLevelAttributesList.clear();	
-
-					mDbHelper.open();			
-
-
-					if (DEBUG_LOG) Log.d("IDCT", "MATERIAL TECH ON CLICK" + thirdLevelAttributeType + " and " + selectedAdapter2.getItem(position).getJson());
-
-					Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(thirdLevelAttributeType,selectedAdapter2.getItem(position).getJson());
-					if (mCursor != null) {
-						if (mCursor.getCount() > 0) {		
-							mCursor.moveToFirst();
-							while(!mCursor.isAfterLast()) {
-								//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-
-								DBRecord o1 = new DBRecord();		
-
-								if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-								//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
-
-								o1.setAttributeDescription(mCursor.getString(0));
-								o1.setAttributeValue(mCursor.getString(1));
-								o1.setJson(mCursor.getString(2));
-								thirdLevelAttributesList.add(o1);
-								mCursor.moveToNext();
-							}	
-							listview3.setVisibility(View.VISIBLE);
-							RelativeLayout relativeLayout3 = (RelativeLayout) findViewById(R.id.rel3);
-							relativeLayout3.setVisibility(View.VISIBLE);
-
-						}
-
-					}
-					mCursor.close();
-					mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(fourthLevelAttributeType,selectedAdapter2.getItem(position).getJson());
-					if (mCursor != null) {
-						if (mCursor.getCount() > 0) {	
-							mCursor.moveToFirst();
-							while(!mCursor.isAfterLast()) {
-								//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-								DBRecord o1 = new DBRecord();	
-								if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-								//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
-
-								o1.setAttributeDescription(mCursor.getString(0));
-								o1.setAttributeValue(mCursor.getString(1));
-								o1.setJson(mCursor.getString(2));
-								fourthLevelAttributesList.add(o1);
-								mCursor.moveToNext();
-							}	
-							RelativeLayout relativeLayout4 = (RelativeLayout) findViewById(R.id.rel4);
-							relativeLayout4.setVisibility(View.VISIBLE);
-							listview4.setVisibility(View.VISIBLE);
-
-						}
-
-					}
-					mCursor.close();
-					mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(fifthLevelAttributeType,selectedAdapter2.getItem(position).getJson());
-					if (mCursor != null) {
-						if (mCursor.getCount() > 0) {	
-							mCursor.moveToFirst();
-							while(!mCursor.isAfterLast()) {
-								//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-
-								DBRecord o1 = new DBRecord();		
-
-								if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-								//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
-
-								o1.setAttributeDescription(mCursor.getString(0));
-								o1.setAttributeValue(mCursor.getString(1));
-								o1.setJson(mCursor.getString(2));
-								fifthLevelAttributesList.add(o1);
-								mCursor.moveToNext();
-							}		  
-							RelativeLayout relativeLayout5 = (RelativeLayout) findViewById(R.id.rel5);
-							relativeLayout5.setVisibility(View.VISIBLE);
-							listview5.setVisibility(View.VISIBLE);
-						}
-
-					}
-					mCursor.close();
-					mDbHelper.close();  
-
-					updateListViewHeights(2);
-
-					selectedAdapter3.notifyDataSetChanged();
-					selectedAdapter4.notifyDataSetChanged();
-					selectedAdapter5.notifyDataSetChanged();		
-
-				}
-			});
-
-			listview3.setOnItemClickListener(new OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView arg0, View view,int position, long id) {
-					// user clicked a list item, make it "selected" 		        
-					selectedAdapter3.setSelectedPosition(position);				
-					//Toast.makeText(getApplicationContext(), "LV3 click: " + selectedAdapter3.getItem(position).getOrderName() + " " + selectedAdapter3.getItem(position).getOrderStatus() + " " +selectedAdapter3.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
-					surveyDataObject.putData(thirdLevelAttributeKey, selectedAdapter3.getItem(position).getAttributeValue());
-
-					storeSurveyVariables();
-				}
-			});
+		selectedAdapter4 = new SelectedAdapter(this,0,fourthLevelAttributesList);    		
+		selectedAdapter4.setNotifyOnChange(true);		
+		listview4 = (ListView) findViewById(R.id.listExample4);
+		listview4.setAdapter(selectedAdapter4);               
+		listview4.setVisibility(View.VISIBLE);
+		RelativeLayout relativeLayout4 = (RelativeLayout) findViewById(R.id.rel4);
+		relativeLayout4.setVisibility(View.INVISIBLE);
 
 
-			listview4.setOnItemClickListener(new OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView arg0, View view,int position, long id) {
-					// user clicked a list item, make it "selected" 		        
-					selectedAdapter4.setSelectedPosition(position);				
-					//Toast.makeText(getApplicationContext(), "LV3 click: " + selectedAdapter3.getItem(position).getOrderName() + " " + selectedAdapter3.getItem(position).getOrderStatus() + " " +selectedAdapter3.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
-					surveyDataObject.putData(fourthLevelAttributeKey, selectedAdapter4.getItem(position).getAttributeValue());
+		selectedAdapter5 = new SelectedAdapter(this,0,fifthLevelAttributesList);    		
+		selectedAdapter5.setNotifyOnChange(true);		
+		listview5 = (ListView) findViewById(R.id.listExample5);
+		listview5.setAdapter(selectedAdapter5);               
+		listview5.setVisibility(View.VISIBLE);
+		RelativeLayout relativeLayout5 = (RelativeLayout) findViewById(R.id.rel5);
+		relativeLayout5.setVisibility(View.INVISIBLE);
 
-					storeSurveyVariables();
-				}
-			}); 
+		listview.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView arg0, View view,
+					int position, long id) {
+				// user clicked a list item, make it "selected"
+				selectedAdapter.setSelectedPosition(position);		
+				selectedAdapter2.setSelectedPosition(-1);			
+				selectedAdapter3.setSelectedPosition(-1);			
+				selectedAdapter4.setSelectedPosition(-1);			
+				selectedAdapter5.setSelectedPosition(-1);		
+				//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();				
 
-			listview5.setOnItemClickListener(new OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView arg0, View view,int position, long id) {
-					// user clicked a list item, make it "selected" 		        
-					selectedAdapter5.setSelectedPosition(position);				
-					//Toast.makeText(getApplicationContext(), "LV3 click: " + selectedAdapter3.getItem(position).getOrderName() + " " + selectedAdapter3.getItem(position).getOrderStatus() + " " +selectedAdapter3.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
-					surveyDataObject.putData(fifthLevelAttributeKey, selectedAdapter5.getItem(position).getAttributeValue());
+				secondLevelAttributesList.clear();
+				thirdLevelAttributesList.clear();
+				fourthLevelAttributesList.clear();	
+				fifthLevelAttributesList.clear();	
 
-					storeSurveyVariables();					
-				}
-			});            
+				mDbHelper.open();
 
+				if (DEBUG_LOG) Log.d("IDCT", "MATERIAL TYPE SELECING BY " + secondLevelAttributeType + " and " + selectedAdapter.getItem(position).getJson());				
+				if (DEBUG_LOG) Log.d("IDCT", "SELECTED DB RECORD QUADRUPLET: "  + selectedAdapter.getItem(position).toString());
+				surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());
 
+				Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(secondLevelAttributeType,selectedAdapter.getItem(position).getJson());
+				mCursor.moveToFirst();
+				while(!mCursor.isAfterLast()) {
+					//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
+					DBRecord o1 = new DBRecord();	
+					o1.setAttributeDescription(mCursor.getString(0));
+					o1.setAttributeValue(mCursor.getString(1));
+					o1.setJson(mCursor.getString(2));
+					secondLevelAttributesList.add(o1);
+					mCursor.moveToNext();
+				}		     
+				mCursor.close();
+				mDbHelper.close();    		          
 
-			boolean result = false;			
-			result= selectedAdapter.loadPreviousAtttributes(listview, topLevelAttributeKey,surveyDataObject.getSurveyDataValue(topLevelAttributeKey));
-			if (result)  {
-				listview.setVisibility(View.VISIBLE);
-				findViewById(R.id.rel1).setVisibility(View.VISIBLE);
-				//completeThisSecondaryTab();
-			}
-			result= selectedAdapter2.loadPreviousAtttributes(listview2, secondLevelAttributeKey,surveyDataObject.getSurveyDataValue(secondLevelAttributeKey));
-			if (result)  {
 				listview2.setVisibility(View.VISIBLE);
-				findViewById(R.id.rel2).setVisibility(View.VISIBLE);
+				RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel2);
+				relativeLayout.setVisibility(View.VISIBLE);
+
+
+				completeThisSecondaryTab();
+
+				selectedAdapter2.notifyDataSetChanged();
+				selectedAdapter3.notifyDataSetChanged();
+				selectedAdapter4.notifyDataSetChanged();   
 			}
-			result= selectedAdapter3.loadPreviousAtttributes(listview3, thirdLevelAttributeKey,surveyDataObject.getSurveyDataValue(thirdLevelAttributeKey));
-			if (result)  {
-				listview3.setVisibility(View.VISIBLE);
-				findViewById(R.id.rel3).setVisibility(View.VISIBLE);
-			}	
+		});        
 
-			result= selectedAdapter4.loadPreviousAtttributes(listview4, fourthLevelAttributeKey,surveyDataObject.getSurveyDataValue(fourthLevelAttributeKey));
-			if (result)  {
-				listview4.setVisibility(View.VISIBLE);
-				findViewById(R.id.rel4).setVisibility(View.VISIBLE);
-			}	
 
-			result= selectedAdapter5.loadPreviousAtttributes(listview5, fifthLevelAttributeKey,surveyDataObject.getSurveyDataValue(fifthLevelAttributeKey));
-			if (result)  {
-				listview5.setVisibility(View.VISIBLE);
-				findViewById(R.id.rel5).setVisibility(View.VISIBLE);
-			}	
+		listview2.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView arg0, View view,int position, long id) {
+				// user clicked a list item, make it "selected" 		        
+				selectedAdapter2.setSelectedPosition(position);
+				selectedAdapter3.setSelectedPosition(-1);			
+				selectedAdapter4.setSelectedPosition(-1);			
+				selectedAdapter5.setSelectedPosition(-1);						
+				surveyDataObject.putData(secondLevelAttributeKey, selectedAdapter2.getItem(position).getAttributeValue());
+
+				//Toast.makeText(getApplicationContext(), "LV2 click: " + selectedAdapter2.getItem(position).getOrderName() + " " + selectedAdapter2.getItem(position).getOrderStatus() + " " +selectedAdapter2.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
+
+				thirdLevelAttributesList.clear();
+				fourthLevelAttributesList.clear();	
+				fifthLevelAttributesList.clear();	
+
+				mDbHelper.open();			
+
+
+				if (DEBUG_LOG) Log.d("IDCT", "MATERIAL TECH ON CLICK" + thirdLevelAttributeType + " and " + selectedAdapter2.getItem(position).getJson());
+
+				Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(thirdLevelAttributeType,selectedAdapter2.getItem(position).getJson());
+				if (mCursor != null) {
+					if (mCursor.getCount() > 0) {		
+						mCursor.moveToFirst();
+						while(!mCursor.isAfterLast()) {
+							DBRecord o1 = new DBRecord();		
+							if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
+							o1.setAttributeDescription(mCursor.getString(0));
+							o1.setAttributeValue(mCursor.getString(1));
+							o1.setJson(mCursor.getString(2));
+							thirdLevelAttributesList.add(o1);
+							mCursor.moveToNext();
+						}	
+						listview3.setVisibility(View.VISIBLE);
+						RelativeLayout relativeLayout3 = (RelativeLayout) findViewById(R.id.rel3);
+						relativeLayout3.setVisibility(View.VISIBLE);
+					}else{
+						listview3.setVisibility(View.INVISIBLE);
+						RelativeLayout relativeLayout3 = (RelativeLayout) findViewById(R.id.rel3);
+						relativeLayout3.setVisibility(View.INVISIBLE);						
+					}
+				} 
+				mCursor.close();
+				//mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(fourthLevelAttributeType,selectedAdapter2.getItem(position).getJson());
+				mCursor = mDbHelper.getAttributeValuesByDictionaryTableUsingRule(fourthLevelAttributeType,selectedAdapter.getItem(selectedAdapter.getSelectedPosition()).getAttributeValue());
+				if (mCursor != null) {
+					if (mCursor.getCount() > 0) {	
+						mCursor.moveToFirst();
+						while(!mCursor.isAfterLast()) {
+							//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
+							DBRecord o1 = new DBRecord();	
+							if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
+							//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
+
+							o1.setAttributeDescription(mCursor.getString(0));
+							o1.setAttributeValue(mCursor.getString(1));
+							o1.setJson(mCursor.getString(2));
+							fourthLevelAttributesList.add(o1);
+							mCursor.moveToNext();
+						}	
+						RelativeLayout relativeLayout4 = (RelativeLayout) findViewById(R.id.rel4);
+						relativeLayout4.setVisibility(View.VISIBLE);
+						listview4.setVisibility(View.VISIBLE);
+					} else{
+						listview4.setVisibility(View.INVISIBLE);
+						RelativeLayout relativeLayout4 = (RelativeLayout) findViewById(R.id.rel4);
+						relativeLayout4.setVisibility(View.INVISIBLE);						
+					}
+				} 
+				mCursor.close();
+				mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(fifthLevelAttributeType,selectedAdapter2.getItem(position).getJson());
+				if (mCursor != null) {
+					if (mCursor.getCount() > 0) {	
+						mCursor.moveToFirst();
+						while(!mCursor.isAfterLast()) {
+							//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
+
+							DBRecord o1 = new DBRecord();		
+
+							if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
+							//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
+
+							o1.setAttributeDescription(mCursor.getString(0));
+							o1.setAttributeValue(mCursor.getString(1));
+							o1.setJson(mCursor.getString(2));
+							fifthLevelAttributesList.add(o1);
+							mCursor.moveToNext();
+						}		  
+						RelativeLayout relativeLayout5 = (RelativeLayout) findViewById(R.id.rel5);
+						relativeLayout5.setVisibility(View.VISIBLE);
+						listview5.setVisibility(View.VISIBLE);
+					}
+
+				}
+				mCursor.close();
+				mDbHelper.close();  
+
+				updateListViewHeights(2);
+
+				selectedAdapter3.notifyDataSetChanged();
+				selectedAdapter4.notifyDataSetChanged();
+				selectedAdapter5.notifyDataSetChanged();		
+
+			}
+		});
+
+		listview3.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView arg0, View view,int position, long id) {
+				// user clicked a list item, make it "selected" 		        
+				selectedAdapter3.setSelectedPosition(position);				
+				//Toast.makeText(getApplicationContext(), "LV3 click: " + selectedAdapter3.getItem(position).getOrderName() + " " + selectedAdapter3.getItem(position).getOrderStatus() + " " +selectedAdapter3.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
+				surveyDataObject.putData(thirdLevelAttributeKey, selectedAdapter3.getItem(position).getAttributeValue());
+
+				storeSurveyVariables();
+			}
+		});
+
+
+		listview4.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView arg0, View view,int position, long id) {
+				// user clicked a list item, make it "selected" 		        
+				selectedAdapter4.setSelectedPosition(position);				
+				//Toast.makeText(getApplicationContext(), "LV3 click: " + selectedAdapter3.getItem(position).getOrderName() + " " + selectedAdapter3.getItem(position).getOrderStatus() + " " +selectedAdapter3.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
+				surveyDataObject.putData(fourthLevelAttributeKey, selectedAdapter4.getItem(position).getAttributeValue());
+
+				storeSurveyVariables();
+			}
+		}); 
+
+		listview5.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView arg0, View view,int position, long id) {
+				// user clicked a list item, make it "selected" 		        
+				selectedAdapter5.setSelectedPosition(position);				
+				//Toast.makeText(getApplicationContext(), "LV3 click: " + selectedAdapter3.getItem(position).getOrderName() + " " + selectedAdapter3.getItem(position).getOrderStatus() + " " +selectedAdapter3.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
+				surveyDataObject.putData(fifthLevelAttributeKey, selectedAdapter5.getItem(position).getAttributeValue());
+
+				storeSurveyVariables();					
+			}
+		});            
+
+
+
+		boolean result = false;			
+		result= selectedAdapter.loadPreviousAtttributes(listview, topLevelAttributeKey,surveyDataObject.getSurveyDataValue(topLevelAttributeKey));
+		if (result)  {
+			listview.setVisibility(View.VISIBLE);
+			findViewById(R.id.rel1).setVisibility(View.VISIBLE);
+			//completeThisSecondaryTab();
+		}
+		result= selectedAdapter2.loadPreviousAtttributes(listview2, secondLevelAttributeKey,surveyDataObject.getSurveyDataValue(secondLevelAttributeKey));
+		if (result)  {
+			listview2.setVisibility(View.VISIBLE);
+			findViewById(R.id.rel2).setVisibility(View.VISIBLE);
+		}
+		result= selectedAdapter3.loadPreviousAtttributes(listview3, thirdLevelAttributeKey,surveyDataObject.getSurveyDataValue(thirdLevelAttributeKey));
+		if (result)  {
+			listview3.setVisibility(View.VISIBLE);
+			findViewById(R.id.rel3).setVisibility(View.VISIBLE);
+		}	
+
+		result= selectedAdapter4.loadPreviousAtttributes(listview4, fourthLevelAttributeKey,surveyDataObject.getSurveyDataValue(fourthLevelAttributeKey));
+		if (result)  {
+			listview4.setVisibility(View.VISIBLE);
+			findViewById(R.id.rel4).setVisibility(View.VISIBLE);
+		}	
+
+		result= selectedAdapter5.loadPreviousAtttributes(listview5, fifthLevelAttributeKey,surveyDataObject.getSurveyDataValue(fifthLevelAttributeKey));
+		if (result)  {
+			listview5.setVisibility(View.VISIBLE);
+			findViewById(R.id.rel5).setVisibility(View.VISIBLE);
+		}	
 
 		//}//End of tab completed check
-		
+
 		//updateListViewHeights(1);
-		
+
 	}
 
-	
 	public void updateListViewHeights(int layoutCode) {		
 		int measuredWidth = 0;  
 		int measuredHeight = 0;  
@@ -498,7 +498,7 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 	}
 
 
-	
+
 	public void clearThis() {
 		if (DEBUG_LOG) Log.d("IDCT", "clearing stuff");
 		selectedAdapter.setSelectedPosition(-1);

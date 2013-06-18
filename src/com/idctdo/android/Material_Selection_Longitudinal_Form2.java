@@ -45,7 +45,7 @@ import android.widget.Toast;
 
 public class Material_Selection_Longitudinal_Form2 extends Activity {
 
-	public boolean DEBUG_LOG = false; 
+	public boolean DEBUG_LOG = true; 
 	private static final String TAG = "IDCT";
 
 	public TabActivity tabActivity;
@@ -228,7 +228,8 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 					if (DEBUG_LOG) Log.d("IDCT", "MATERIAL TYPE SELECING BY " + secondLevelAttributeType + " and " + selectedAdapter.getItem(position).getJson());				
 					if (DEBUG_LOG) Log.d("IDCT", "SELECTED DB RECORD QUADRUPLET: "  + selectedAdapter.getItem(position).toString());
 					surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());
-
+					
+					//Populate second box
 					Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(secondLevelAttributeType,selectedAdapter.getItem(position).getJson());
 					if (mCursor != null) {
 						mCursor.moveToFirst();
@@ -241,7 +242,9 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 							mCursor.moveToNext();
 						}			
 					}
-					mCursor.close();
+					mCursor.close();					
+
+									
 					mDbHelper.close();    		          
 
 
@@ -289,7 +292,6 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 
 								if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
 								//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
-
 								o1.setAttributeDescription(mCursor.getString(0));
 								o1.setAttributeValue(mCursor.getString(1));
 								o1.setJson(mCursor.getString(2));
@@ -299,17 +301,23 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 							RelativeLayout relativeLayout3 = (RelativeLayout) findViewById(R.id.rel3);
 							relativeLayout3.setVisibility(View.VISIBLE);
 							listview3.setVisibility(View.VISIBLE);
-						}
+						} else{
+							listview3.setVisibility(View.INVISIBLE);
+							RelativeLayout relativeLayout3 = (RelativeLayout) findViewById(R.id.rel3);
+							relativeLayout3.setVisibility(View.INVISIBLE);						
+						}				
 					}
 					mCursor.close();
-					mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(fourthLevelAttributeType,selectedAdapter2.getItem(position).getJson());
+					//mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(fourthLevelAttributeType,selectedAdapter2.getItem(position).getJson());
+					if (DEBUG_LOG) Log.d("IDCT2", "SELECTED ADAPTER2: " + selectedAdapter.getItem(selectedAdapter.getSelectedPosition()).getAttributeValue());					
+					mCursor = mDbHelper.getAttributeValuesByDictionaryTableUsingRule(fourthLevelAttributeType,selectedAdapter.getItem(selectedAdapter.getSelectedPosition()).getAttributeValue());
 					if (mCursor != null) {
 						if (mCursor.getCount() > 0) {		
 							mCursor.moveToFirst();
 							while(!mCursor.isAfterLast()) {
 								//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
 								DBRecord o1 = new DBRecord();		
-								if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
+								if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST MASONRY: " + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
 								//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
 
 								o1.setAttributeDescription(mCursor.getString(0));
@@ -322,6 +330,10 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 							listview4.setVisibility(View.VISIBLE);
 							RelativeLayout relativeLayout4 = (RelativeLayout) findViewById(R.id.rel4);
 							relativeLayout4.setVisibility(View.VISIBLE);
+						} else{
+							listview4.setVisibility(View.INVISIBLE);
+							RelativeLayout relativeLayout4 = (RelativeLayout) findViewById(R.id.rel4);
+							relativeLayout4.setVisibility(View.INVISIBLE);						
 						}
 
 					}

@@ -14,6 +14,22 @@
         android:text=""
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/spinnerLlrsQualifierText"
+        style="@style/AttributeTitleStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="LLRS Qualifier"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/spinnerLlrsQualifier"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        
+        android:layout_marginTop="5dp" />
+
     <RelativeLayout
         android:id="@+id/rel2"
         android:layout_width="fill_parent"
@@ -29,7 +45,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="LLRS"
+            android:text=""
             android:textStyle="bold" />
 
         <TextView
@@ -138,7 +154,7 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp" >
         </ListView>
-        
+
         <ListView
             android:id="@+id/listLLRSLongitudinalDuctility"
             android:layout_width="fill_parent"
@@ -150,8 +166,6 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp" >
         </ListView>
-
-        
     </RelativeLayout>
 
 </LinearLayout>

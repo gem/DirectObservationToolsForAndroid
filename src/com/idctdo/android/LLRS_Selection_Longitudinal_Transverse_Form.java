@@ -29,8 +29,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
@@ -53,11 +55,16 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 	private String secondLevelAttributeKeyLongitudinal = "LLRS_DCT_L";	
 	private String secondLevelAttributeKeyTransverse = "LLRS_DCT_T";
 
+	private String llrsQualifierAttributeDictionary = "DIC_LLRS_QUAL";
+	private String llrsQualifierAttributeKey = "LLRS_QUAL";
+	
 	private SelectedAdapter selectedAdapter;
 	private SelectedAdapter selectedAdapter2;
 	private SelectedAdapter selectedAdapter3;
 	private SelectedAdapter selectedAdapter4;
 	private SelectedAdapter selectedAdapter5;
+	
+	public Spinner spinnerLlrsQualifier;
 
 	private ArrayList list;
 
@@ -105,16 +112,7 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 			allLLRSCursor.close(); 
 			allLLRSDCursor.close();
 
-			mDbHelper.close();
-
-			/*
-			selectedAdapter = new SelectedAdapter(this,0,lLrs);
-			selectedAdapter.setNotifyOnChange(true);
-
-			listview = (ListView) findViewById(R.id.listLLRS);
-			listview.setAdapter(selectedAdapter);        
-
-			 */
+						
 			selectedAdapter2 = new SelectedAdapter(this,0,lLrs);    		
 			selectedAdapter2.setNotifyOnChange(true);		
 			listview2 = (ListView) findViewById(R.id.listLLRSLongitudinal);
@@ -137,23 +135,32 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 			listview5 = (ListView) findViewById(R.id.listLLRSTransverseDuctility);
 			listview5.setAdapter(selectedAdapter5);        
 
-			//listview2.setVisibility(View.INVISIBLE);
+			
 
-
-			/*
-			listview.setOnItemClickListener(new OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView arg0, View view,
-						int position, long id) {
-					// user clicked a list item, make it "selected"
-					selectedAdapter.setSelectedPosition(position);
-					//surveyDataObject.putData(topLevelAttributeKeyLongitudinal, selectedAdapter.getItem(position).getAttributeValue());	
-
-					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
-
+			spinnerLlrsQualifier = (Spinner)  findViewById(R.id.spinnerLlrsQualifier);
+			final Cursor llrsQualifierAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(llrsQualifierAttributeDictionary);
+			ArrayList<DBRecord> llrsQualifierAttributesList = GemUtilities.cursorToArrayList(llrsQualifierAttributeDictionaryCursor);
+			ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,llrsQualifierAttributesList );
+			spinnerArrayAdapter.setDropDownViewResource(R.layout.simple_spinner_item);
+			spinnerLlrsQualifier.setAdapter(spinnerArrayAdapter);
+			spinnerLlrsQualifier.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+					//Object item = parent.getItemAtPosition(pos);
+					if (DEBUG_LOG) Log.d("IDCT","spinner selected: " + spinnerLlrsQualifier.getSelectedItem().toString());
+					if (DEBUG_LOG) Log.d("IDCT","spinner selected pos: " + pos);
+					DBRecord selected = (DBRecord) spinnerLlrsQualifier.getSelectedItem();
+					if (DEBUG_LOG) Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
+					surveyDataObject.putData(llrsQualifierAttributeKey, selected.getAttributeValue());
+					completeThis();
 				}
-			});        
-			 */
+				public void onNothingSelected(AdapterView<?> parent) {
+				}
+			});	
+			llrsQualifierAttributeDictionaryCursor.close();
+			
+						
+			
+			mDbHelper.close();			
 
 			listview2.setOnItemClickListener(new OnItemClickListener() {
 				@Override
@@ -169,7 +176,7 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 
 				}
 			});
-
+					
 			listview3.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
@@ -179,8 +186,7 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 					surveyDataObject.lastEditedAttribute = a.getItem(position).getAttributeDescription();
 					surveyDataObject.putData(secondLevelAttributeKeyLongitudinal, selectedAdapter3.getItem(position).getAttributeValue());					
 					//Toast.makeText(getApplicationContext(), "LV2 click: " + selectedAdapter2.getItem(position).getOrderName() + " " + selectedAdapter2.getItem(position).getOrderStatus() + " " +selectedAdapter2.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
-					completeThis();		
-					
+					completeThis();							
 				}
 			});
 			listview4.setOnItemClickListener(new OnItemClickListener() {
@@ -207,22 +213,19 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 
 				}
 			});
-			/*
-			loadPreviousAtttributes(listview2, selectedAdapter2,topLevelAttributeKeyLongitudinal,lLrs);
-			loadPreviousAtttributes(listview3, selectedAdapter3,secondLevelAttributeKeyLongitudinal,lLrsd);
-			loadPreviousAtttributes(listview4, selectedAdapter4,topLevelAttributeKeyTransverse,lLrs);
-			loadPreviousAtttributes(listview5, selectedAdapter5,secondLevelAttributeKeyTransverse,lLrsd);
-			*/
+	
+			
 			boolean result = false;			
 			result= selectedAdapter2.loadPreviousAtttributes(listview2, topLevelAttributeKeyLongitudinal,surveyDataObject.getSurveyDataValue(topLevelAttributeKeyLongitudinal));
 			result= selectedAdapter3.loadPreviousAtttributes(listview3, secondLevelAttributeKeyLongitudinal,surveyDataObject.getSurveyDataValue(secondLevelAttributeKeyLongitudinal));
 			result= selectedAdapter4.loadPreviousAtttributes(listview4, topLevelAttributeKeyTransverse,surveyDataObject.getSurveyDataValue(topLevelAttributeKeyTransverse));
 			result= selectedAdapter5.loadPreviousAtttributes(listview5, secondLevelAttributeKeyTransverse,surveyDataObject.getSurveyDataValue(secondLevelAttributeKeyTransverse));
 			
+			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerLlrsQualifier, llrsQualifierAttributesList , llrsQualifierAttributeKey,surveyDataObject.getSurveyDataValue(llrsQualifierAttributeKey));
+
+			
 		}//End of tab completed check
-
 	}
-
 
 	
 	
