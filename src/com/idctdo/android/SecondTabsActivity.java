@@ -70,6 +70,7 @@ public class SecondTabsActivity extends TabActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		if (DEBUG_LOG) Log.d("IDCT","On resume of SecondTabsActivity");
 	}
 	
 	
@@ -111,4 +112,9 @@ public class SecondTabsActivity extends TabActivity {
 		return a.isTabCompleted(tabIndex);
 	}
 
+	public void hideAdvancedView(boolean shouldHide) {
+		((Material_Selection_Longitudinal_Form2)getLocalActivityManager().getCurrentActivity()).hideAdvancedView(shouldHide);
+	}
+
+	
 }

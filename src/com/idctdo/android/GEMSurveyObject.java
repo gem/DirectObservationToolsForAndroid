@@ -27,6 +27,9 @@ public class GEMSurveyObject extends Application {
 	private String uid;
 	public boolean unsavedEdits = false;
 	
+	public boolean advancedView = true;
+	public boolean isShowingAdvancedView = true;
+	
 	public boolean isExistingRecord = false;
 	public String favouriteRecord = "";
 	

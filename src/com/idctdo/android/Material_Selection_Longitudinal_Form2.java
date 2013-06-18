@@ -93,7 +93,8 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.material_selectable_list2);
-
+		if (DEBUG_LOG) Log.d("JFR","on creating material selection form");
+		
 		Resources res = getResources();
 		String[] attribKeys = res.getStringArray(R.array.formAttributeKeys0a);
 		topLevelAttributeKey = attribKeys[0];
@@ -443,12 +444,30 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 
 
 		//updateListViewHeights(1);
-
-
-
-
+		if (DEBUG_LOG) Log.d(TAG, "MATERIAL TAB surveyDataObject.advancedView: " + surveyDataObject.advancedView);
+			/*
+		if (surveyDataObject.advancedView == false) {
+			tabHost.getTabWidget().getChildAt(1).setVisibility(View.GONE);
+		} else {
+			tabHost.getTabWidget().getChildAt(1).setVisibility(View.VISIBLE);
+		}*/
 	}
 
+	public void hideAdvancedView(boolean shouldHide) {
+		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
+		if (shouldHide == true) {
+			tabHost.getTabWidget().getChildAt(1).setVisibility(View.GONE);
+			surveyDataObject.isShowingAdvancedView = false; 
+			surveyDataObject.advancedView = false;
+		} else {
+			if (DEBUG_LOG) Log.d("IDCT","Show the extra tab");
+			tabHost.getTabWidget().getChildAt(1).setVisibility(View.VISIBLE);
+			surveyDataObject.advancedView = true;
+			surveyDataObject.isShowingAdvancedView = true;
+		}
+		if (DEBUG_LOG) Log.d("IDCT","Adjusted adv view. Now surveyDataObject.isShowingAdvancedView: " + surveyDataObject.isShowingAdvancedView);
+	} 
+	
 	public void updateListViewHeights(int layoutCode) {		
 		int measuredWidth = 0;  
 		int measuredHeight = 0;  
