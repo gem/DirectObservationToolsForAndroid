@@ -7,7 +7,6 @@
     android:orientation="vertical" >
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rel1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -23,21 +22,18 @@
             android:text="Material Type"
             android:textStyle="bold" />
 
-        <ListView android:fadeScrollbars="false"
+        <ListView
             android:id="@+id/listExample"
             android:layout_width="fill_parent"
             android:layout_height="150dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/textView1"
-            android:choiceMode="singleChoice" >
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false" >
         </ListView>
-
-
-       
     </RelativeLayout>
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rel2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -54,19 +50,18 @@
             android:text="Material Technology"
             android:textStyle="bold" />
 
-        <ListView android:fadeScrollbars="false"
+        <ListView
             android:id="@+id/listExample2"
             android:layout_width="fill_parent"
             android:layout_height="100dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/textView2"
-            android:choiceMode="singleChoice" >
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false" >
         </ListView>
-
     </RelativeLayout>
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rel3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -83,18 +78,18 @@
             android:text="Mortar / Stone Type"
             android:textStyle="bold" />
 
-        <ListView android:fadeScrollbars="false"
+        <ListView
             android:id="@+id/listExample3"
             android:layout_width="fill_parent"
             android:layout_height="70dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/textView3"
-            android:choiceMode="singleChoice" >
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false" >
         </ListView>
     </RelativeLayout>
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rel4"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -111,19 +106,18 @@
             android:text="Masonry Reinforcement"
             android:textStyle="bold" />
 
-
-        <ListView android:fadeScrollbars="false"
+        <ListView
             android:id="@+id/listExample4"
             android:layout_width="fill_parent"
             android:layout_height="70dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/textView4"
-            android:choiceMode="singleChoice" >
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false" >
         </ListView>
     </RelativeLayout>
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rel5"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -140,14 +134,14 @@
             android:text="Steel Connection"
             android:textStyle="bold" />
 
-
-        <ListView android:fadeScrollbars="false"
+        <ListView
             android:id="@+id/listExample5"
             android:layout_width="fill_parent"
             android:layout_height="100dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/textView5"
-            android:choiceMode="singleChoice" >
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false" >
         </ListView>
     </RelativeLayout>
 

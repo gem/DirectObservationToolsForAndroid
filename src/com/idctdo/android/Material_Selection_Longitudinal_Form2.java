@@ -452,6 +452,7 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 			tabHost.getTabWidget().getChildAt(1).setVisibility(View.VISIBLE);
 		}*/
 	}
+	
 
 	public void hideAdvancedView(boolean shouldHide) {
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();

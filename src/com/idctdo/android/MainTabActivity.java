@@ -603,7 +603,7 @@ public class MainTabActivity extends TabActivity {
 		menu.add(0,2,0,"Save changes and favourite");
 		menu.add(0,5,0,"Delete record");
 		menu.add(0,3,0,"Help");
-		menu.add(0,6,0,"Basic/Advanced");
+		//menu.add(0,6,0,"Basic/Advanced");
 
 		return true;
 	}
@@ -668,6 +668,7 @@ public class MainTabActivity extends TabActivity {
 
 	public void basicAdvancedModeSwitch() {
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
+		
 		if (DEBUG_LOG) Log.d(TAG, "surveyDataObject.advancedView: " + surveyDataObject.advancedView);
 		if (surveyDataObject.isShowingAdvancedView) { 	
 			((SecondTabsActivity)getLocalActivityManager().getCurrentActivity()).hideAdvancedView(true);
@@ -677,6 +678,9 @@ public class MainTabActivity extends TabActivity {
 			//surveyDataObject.advancedView = true;
 		}
 	}
+	
+	
+	
 	public void deleteThisRecord() {		
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
 		
