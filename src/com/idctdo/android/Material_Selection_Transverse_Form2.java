@@ -347,6 +347,10 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 						RelativeLayout relativeLayout5 = (RelativeLayout) findViewById(R.id.rel5);
 						relativeLayout5.setVisibility(View.VISIBLE);
 						listview5.setVisibility(View.VISIBLE);
+					}else{
+						listview5.setVisibility(View.INVISIBLE);
+						RelativeLayout relativeLayout5 = (RelativeLayout) findViewById(R.id.rel5);
+						relativeLayout5.setVisibility(View.INVISIBLE);						
 					}
 
 				}

@@ -275,8 +275,6 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 					selectedAdapter5.setSelectedPosition(-1);	
 					surveyDataObject.putData(secondLevelAttributeKey, selectedAdapter2.getItem(position).getAttributeValue());
 
-					//Toast.makeText(getApplicationContext(), "LV2 click: " + selectedAdapter2.getItem(position).getOrderName() + " " + selectedAdapter2.getItem(position).getOrderStatus() + " " +selectedAdapter2.getItem(position).getJson(), Toast.LENGTH_SHORT).show();
-
 					thirdLevelAttributesList.clear();
 					fourthLevelAttributesList.clear();	
 					fifthLevelAttributesList.clear();	
@@ -358,6 +356,10 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 							RelativeLayout relativeLayout5 = (RelativeLayout) findViewById(R.id.rel5);
 							relativeLayout5.setVisibility(View.VISIBLE);
 							listview5.setVisibility(View.VISIBLE);
+						}else{
+							listview5.setVisibility(View.INVISIBLE);
+							RelativeLayout relativeLayout5 = (RelativeLayout) findViewById(R.id.rel5);
+							relativeLayout5.setVisibility(View.INVISIBLE);						
 						}
 
 					}
