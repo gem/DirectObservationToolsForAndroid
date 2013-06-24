@@ -325,6 +325,7 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 						relativeLayout4.setVisibility(View.INVISIBLE);						
 					}
 				} 
+				
 				mCursor.close();
 				mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(fifthLevelAttributeType,selectedAdapter2.getItem(position).getJson());
 				if (mCursor != null) {
