@@ -109,9 +109,11 @@ public class SelectedAdapter extends ArrayAdapter<DBRecord>{
 		if (!GemUtilities.isBlank(attributeValue)) {
 			Log.d("IDCT", attributeValue + " is not null. attributeValue: " + attributeValue);
 			int i = 0;
+			Log.d("IDCT", "listOfTheseObjects length: " + listOfTheseObjects.size());
+			
 			for(DBRecord d : listOfTheseObjects){
 				Log.d("IDCT", "Looping thring arraylist of selectedAdapter " + i);
-				Log.d("IDCT", "val" + d.getAttributeValue());
+				Log.d("IDCT", "val: " + d.getAttributeValue());
 				//if(d.getAttributeValue().contains(attributeValue)) {
 				if(d.getAttributeValue().equals(attributeValue.toString())) {
 					Log.d("IDCT", "MATCH!" );					

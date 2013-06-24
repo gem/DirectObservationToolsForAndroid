@@ -137,8 +137,6 @@ public class Occupancy_Selection_Form extends Activity {
 					selectedAdapter.setSelectedPosition(position);
 					selectedAdapter2.setSelectedPosition(-1);			
 					surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());
-					
-					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();				
 
 					completeThis();
 

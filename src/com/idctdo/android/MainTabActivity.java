@@ -76,7 +76,7 @@ import android.widget.Toast;
 
 public class MainTabActivity extends TabActivity {
 	private static final String TAG = "IDCT";
-	public boolean DEBUG_LOG = true; 
+	public boolean DEBUG_LOG = false; 
 
 	public TabHost tabHost;
 
