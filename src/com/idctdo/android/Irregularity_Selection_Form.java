@@ -68,7 +68,9 @@ public class Irregularity_Selection_Form extends Activity {
 
 	private ArrayList list;
 	public ArrayList<DBRecord> secondLevelAttributesList;
+	public ArrayList<DBRecord> secondLevelAttributesListPart2;
 	public ArrayList<DBRecord> thirdLevelAttributesList;
+	public ArrayList<DBRecord> thirdLevelAttributesListPart2;
 
 	ListView listview;
 	ListView listview2;		 
@@ -115,12 +117,20 @@ public class Irregularity_Selection_Form extends Activity {
 			Cursor allAttributeTypesSecondLevelCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(horiztonalIrregularityAttributeDictionary,"IR");
 			secondLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesSecondLevelCursor);
 
+			Cursor allAttributeTypesSecondLevelPart2Cursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(horiztonalIrregularityAttributeDictionary,"IR");
+			secondLevelAttributesListPart2 = GemUtilities.cursorToArrayList(allAttributeTypesSecondLevelPart2Cursor);
+			
 			Cursor allAttributeTypesThirdLevelCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(verticalIrregularityAttributeDictionary,"IR");
 			thirdLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesThirdLevelCursor);
-
+			
+			Cursor allAttributeTypesThirdLevelPart2Cursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(verticalIrregularityAttributeDictionary,"IR");
+			thirdLevelAttributesListPart2 =  GemUtilities.cursorToArrayList(allAttributeTypesThirdLevelPart2Cursor);
+			
 			allAttributeTypesTopLevelCursor.close();
 			allAttributeTypesSecondLevelCursor.close();
+			allAttributeTypesSecondLevelPart2Cursor.close();
 			allAttributeTypesThirdLevelCursor.close();
+			allAttributeTypesThirdLevelPart2Cursor.close();
 			
 			mDbHelper.close();
 
@@ -138,8 +148,9 @@ public class Irregularity_Selection_Form extends Activity {
 			listview2.setVisibility(View.VISIBLE);
 			RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel2);
 			relativeLayout.setVisibility(View.VISIBLE);
-
-			selectedAdapter3 = new SelectedAdapter(this,0,secondLevelAttributesList);    		
+		
+			
+			selectedAdapter3 = new SelectedAdapter(this,0,secondLevelAttributesListPart2);    		
 			selectedAdapter3.setNotifyOnChange(true);		
 			listview3 = (ListView) findViewById(R.id.listHorizontalIrregularitySecondary);
 			listview3.setAdapter(selectedAdapter3);               
@@ -155,13 +166,11 @@ public class Irregularity_Selection_Form extends Activity {
 			listview4.setAdapter(selectedAdapter4);                      
 			listview4.setVisibility(View.VISIBLE);
 
-			selectedAdapter5 = new SelectedAdapter(this,0,thirdLevelAttributesList);    		
+			selectedAdapter5 = new SelectedAdapter(this,0,thirdLevelAttributesListPart2);    		
 			selectedAdapter5.setNotifyOnChange(true);		
 			listview5 = (ListView) findViewById(R.id.listVerticalIrregularitySecondary);
 			listview5.setAdapter(selectedAdapter5);                      
 			listview5.setVisibility(View.VISIBLE);
-
-
 			
 			listview.setOnItemClickListener(new OnItemClickListener() {
 				@Override
@@ -173,27 +182,53 @@ public class Irregularity_Selection_Form extends Activity {
 					SelectedAdapter a = (SelectedAdapter) arg0.getAdapter();
 					surveyDataObject.lastEditedAttribute = a.getItem(position).getAttributeDescription();
 					surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());
-					
-					
-					//Toast.makeText(getApplicationContext(), "Item clicked: " + selectedAdapter.getItem(position).getOrderName() + " " + selectedAdapter.getItem(position).getOrderStatus() + " " +selectedAdapter.getItem(position).getJson(), Toast.LENGTH_SHORT).show();				
 
 					DBRecord selectedItem = selectedAdapter.getItem(position);
 					if (DEBUG_LOG) Log.d("IDCT", "SELECTED ITEM: " + selectedItem.getJson());
 					if (DEBUG_LOG) Log.d("IDCT", "SELECTED ITEM: " + selectedItem.getCode());
 					if (DEBUG_LOG) Log.d("IDCT", "SELECTED ITEM: " + selectedItem.getAttributeDescription());
-					//GEMSurveyObject g = (GEMSurveyObject)getApplication();
-					//g.putData(key, value);
 
 					completeThis();
 
-					/* Causing some fail having this inter-list dependency
+					// Causing some fail having this inter-list dependency
 					secondLevelAttributesList.clear();
-					thirdLevelAttributesList.clear();	
-
+					thirdLevelAttributesList.clear();
+					secondLevelAttributesListPart2.clear();
+					thirdLevelAttributesListPart2.clear();	
 					mDbHelper.open();			
 
-					Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(horiztonalIrregularityAttributeDictionary, selectedAdapter.getItem(position).getJson());
+					//Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(horiztonalIrregularityAttributeDictionary, selectedAdapter.getItem(position).getJson());
+					Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableUsingRule(horiztonalIrregularityAttributeDictionary, selectedAdapter.getItem(position).getJson());
+					
+					mCursor.moveToFirst();
+					while(!mCursor.isAfterLast()) {
+						DBRecord o1 = new DBRecord();		
 
+						if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
+
+						o1.setAttributeDescription(mCursor.getString(0));
+						o1.setAttributeValue(mCursor.getString(1));
+						o1.setJson(mCursor.getString(2));
+						secondLevelAttributesList.add(o1);
+						mCursor.moveToNext();
+					}		     
+					
+					
+					
+					mCursor = mDbHelper.getAttributeValuesByDictionaryTableUsingRule(horiztonalIrregularityAttributeDictionary, selectedAdapter.getItem(position).getJson());
+					mCursor.moveToFirst();
+					while(!mCursor.isAfterLast()) {
+						DBRecord o1 = new DBRecord();		
+						if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
+						o1.setAttributeDescription(mCursor.getString(0));
+						o1.setAttributeValue(mCursor.getString(1));
+						o1.setJson(mCursor.getString(2));
+						secondLevelAttributesListPart2.add(o1);
+						mCursor.moveToNext();
+					}		     
+					
+					
+					mCursor = mDbHelper.getAttributeValuesByDictionaryTableUsingRule(verticalIrregularityAttributeDictionary, selectedAdapter.getItem(position).getJson());
 					mCursor.moveToFirst();
 					while(!mCursor.isAfterLast()) {
 						//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
@@ -206,23 +241,32 @@ public class Irregularity_Selection_Form extends Activity {
 						o1.setAttributeDescription(mCursor.getString(0));
 						o1.setAttributeValue(mCursor.getString(1));
 						o1.setJson(mCursor.getString(2));
-						secondLevelAttributesList.add(o1);
+						thirdLevelAttributesList.add(o1);
 						mCursor.moveToNext();
-					}		     
+					}		     					
+					
+					
+					mCursor = mDbHelper.getAttributeValuesByDictionaryTableUsingRule(verticalIrregularityAttributeDictionary, selectedAdapter.getItem(position).getJson());
+					mCursor.moveToFirst();
+					while(!mCursor.isAfterLast()) {
+						DBRecord o1 = new DBRecord();
+						if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
+						o1.setAttributeDescription(mCursor.getString(0));
+						o1.setAttributeValue(mCursor.getString(1));
+						o1.setJson(mCursor.getString(2));
+						thirdLevelAttributesListPart2.add(o1);
+						mCursor.moveToNext();
+					}		     							
 					mDbHelper.close();    		          
-
-
-
 					if (mCursor.getCount() > 0) { 
 						listview2.setVisibility(View.VISIBLE);
 						RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel2);
 						relativeLayout.setVisibility(View.VISIBLE);
 					}
-
-
 					selectedAdapter2.notifyDataSetChanged();
-					selectedAdapter3.notifyDataSetChanged(); 
-					*/  
+					selectedAdapter3.notifyDataSetChanged();
+					selectedAdapter4.notifyDataSetChanged();
+					selectedAdapter5.notifyDataSetChanged();					  
 				}
 			});        
 
