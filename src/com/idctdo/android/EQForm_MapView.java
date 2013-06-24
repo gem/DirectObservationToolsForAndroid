@@ -102,7 +102,7 @@ import android.widget.ToggleButton;
 
 public class EQForm_MapView extends Activity {
 
-	public boolean DEBUG_LOG = true; 
+	public boolean DEBUG_LOG = false; 
 
 	protected Dialog mSplashDialog;
 	

@@ -43,6 +43,7 @@ import android.widget.Toast;
 
 public class Details_Selection extends Activity {
 
+	
 	public boolean DEBUG_LOG = false; 
 	
 	private ArrayList list;

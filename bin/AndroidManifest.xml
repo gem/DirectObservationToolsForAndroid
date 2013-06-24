@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.idctdo.android"
     android:versionCode="1"
-    android:versionName="1.08" >
+    android:versionName="2.09" >
 
     <uses-sdk android:minSdkVersion="8" />
 
