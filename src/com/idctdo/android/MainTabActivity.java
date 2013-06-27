@@ -833,15 +833,12 @@ public class MainTabActivity extends TabActivity {
 			int lowestIndex = -1;
 			String matched = "";
 			if (DEBUG_LOG) Log.d(TAG,"starting match loop for elements. " + elements.length);
-
-
 			for( int i = 0; i < elements.length; i++)
 			{				
 				String element = elements[i].substring(0, elements[i].lastIndexOf('.'));    
 				//if (DEBUG_LOG) Log.d(TAG,"Element " + element);
 				String[] parts = element.split("--");
 				if (parts.length > 1) {
-					if (DEBUG_LOG) Log.d(TAG,"Element p1 " + parts[1]);
 					if (strToCheck.toLowerCase().equals(parts[1].toLowerCase())) {
 						pageToLoad = element; 
 						//if (DEBUG_LOG) Log.d(TAG,"str: " +  strToCheck + " element.toString(): "+element.toString() );
@@ -860,7 +857,6 @@ public class MainTabActivity extends TabActivity {
 					matched = element;
 				}*/
 			}
-			if (DEBUG_LOG) Log.d(TAG,"Finished loop");
 			/*
 			if (DEBUG_LOG) Log.d(TAG,"Matched index: " + elements[lowestIndex]);
 			if (DEBUG_LOG) Log.d(TAG,"Match: " + lowestIndex);

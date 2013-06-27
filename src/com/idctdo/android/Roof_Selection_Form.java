@@ -42,7 +42,7 @@ import android.widget.Toast;
 
 public class Roof_Selection_Form extends Activity {
 
-	public boolean DEBUG_LOG = true; 
+	public boolean DEBUG_LOG = false; 
 
 	public TabActivity tabActivity;
 	public TabHost tabHost;

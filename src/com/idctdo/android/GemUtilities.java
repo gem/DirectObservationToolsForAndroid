@@ -66,17 +66,17 @@ public class GemUtilities {
 
 
 	public static boolean loadPreviousAtttributesSpinner(Spinner lv,ArrayList<DBRecord> listOfTheseObjects, String attributeKey,String attributeValue) {
-		Log.d("IDCT","About to resume some values for " + attributeKey);
+		if (DEBUG_LOG) Log.d("IDCT","About to resume some values for " + attributeKey);
 		if (!GemUtilities.isBlank(attributeValue)) {
-			Log.d("IDCT", attributeValue + " is not null. attributeValue: " + attributeValue);
+			if (DEBUG_LOG) Log.d("IDCT", attributeValue + " is not null. attributeValue: " + attributeValue);
 			int i = 0;
 			for(DBRecord d : listOfTheseObjects){
-				Log.d("IDCT", "Looping thring arraylist of selectedAdapter " + i);
-				Log.d("IDCT", "Comparing val: " + d.getAttributeValue() + " with: " + attributeValue);
+				if (DEBUG_LOG) Log.d("IDCT", "Looping thring arraylist of selectedAdapter " + i);
+				if (DEBUG_LOG) Log.d("IDCT", "Comparing val: " + d.getAttributeValue() + " with: " + attributeValue);
 				
 				//if(d.getAttributeValue().contains(attributeValue)) {
 				if(d.getAttributeValue().equals(attributeValue.toString())) {
-					Log.d("IDCT", "MATCH!" );		
+					if (DEBUG_LOG) Log.d("IDCT", "MATCH!" );		
 	
 					lv.setSelection(i,true);
 					return true;
@@ -84,7 +84,7 @@ public class GemUtilities {
 				i++;
 			}
 		} else {
-			Log.d("IDCT","Attribute value is null");
+			if (DEBUG_LOG) Log.d("IDCT","Attribute value is null");
 		}
 		return false;
 	}
