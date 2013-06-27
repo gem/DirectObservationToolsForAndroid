@@ -554,6 +554,7 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 		mainTab.saveSelectedAdapterData(secondLevelAttributeKey, selectedAdapter2);
 		mainTab.saveSelectedAdapterData(thirdLevelAttributeKey, selectedAdapter3);
 		mainTab.saveSelectedAdapterData(fourthLevelAttributeKey, selectedAdapter4);
+		mainTab.saveSelectedAdapterData(fifthLevelAttributeKey, selectedAdapter5);
 	}
 
 

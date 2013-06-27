@@ -76,7 +76,7 @@ import android.widget.Toast;
 
 public class MainTabActivity extends TabActivity {
 	private static final String TAG = "IDCT";
-	public boolean DEBUG_LOG = false; 
+	public boolean DEBUG_LOG = true; 
 
 	public TabHost tabHost;
 
@@ -398,7 +398,7 @@ public class MainTabActivity extends TabActivity {
 			}
 		}
 	}	
-	
+
 	public void setTabColor() {
 
 		for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
@@ -646,7 +646,7 @@ public class MainTabActivity extends TabActivity {
 			addAsFavourite();
 			break;
 		case 3: //Help
-			if (DEBUG_LOG) Log.d(TAG,"Quick, send help");	
+			if (DEBUG_LOG) Log.d(TAG,"Get help");	
 			showHelp();
 			break;
 		case 4: //Add as favourite
@@ -655,7 +655,7 @@ public class MainTabActivity extends TabActivity {
 			break;
 		case 5: //Delete this point
 			if (DEBUG_LOG) Log.d(TAG,"Delete this point");		
-			
+
 			deleteThisRecord();
 			break;
 		case 6: //Basic /advanced switch mode
@@ -668,7 +668,7 @@ public class MainTabActivity extends TabActivity {
 
 	public void basicAdvancedModeSwitch() {
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
-		
+
 		if (DEBUG_LOG) Log.d(TAG, "surveyDataObject.advancedView: " + surveyDataObject.advancedView);
 		if (surveyDataObject.isShowingAdvancedView) { 	
 			((SecondTabsActivity)getLocalActivityManager().getCurrentActivity()).hideAdvancedView(true);
@@ -678,14 +678,14 @@ public class MainTabActivity extends TabActivity {
 			//surveyDataObject.advancedView = true;
 		}
 	}
-	
-	
-	
+
+
+
 	public void deleteThisRecord() {		
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
-		
+
 		if (surveyDataObject.isExistingRecord) { 	
-	
+
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("Delete this record");
 			builder.setMessage("Are you sure you want to delete this record");
@@ -700,34 +700,34 @@ public class MainTabActivity extends TabActivity {
 					mDbHelper.deleteRecordByUid(uidToDelete);
 					//Should really try / catch this
 					mDbHelper.close();				
-					
+
 					tabHost.setCurrentTab(0);
 					surveyDataObject.clearGemSurveyObject();
 					surveyDataObject.unsavedEdits = false;
-	
-					
+
+
 					if (DEBUG_LOG) Log.d(TAG, "DELETE FINISHED. Finish the activity");
 					MainTabActivity.this.finish();
 					if (DEBUG_LOG) Log.d(TAG, "Acitivity should be finished");
-	
+
 					return;
 				}
 			});
-	
+
 			builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					return;
 				}
 			});
-	
+
 			builder.show();
-	
+
 		} else {
 			Toast.makeText(getApplicationContext(), "Can't delete this as it's not saved!", Toast.LENGTH_SHORT).show();
 		}
-		
-		
+
+
 
 	}
 
@@ -827,44 +827,61 @@ public class MainTabActivity extends TabActivity {
 
 
 	public String loadHelpFileNames(String strToCheck) {
-		File folder = new File("file:///android_asset/glossary");
-		if (DEBUG_LOG) Log.d(TAG,"help loading");
+		//File folder = new File("file:///android_asset/glossary");
+		if (DEBUG_LOG) Log.d(TAG,"help loading: " + strToCheck);
 		String pageToLoad = "";
 		try {
-			String[] elements = listFiles("glossary","nothing");
+			String[] elements = listFiles("glossary/glossary_cleaned","nothing");
 			int d = 0;
 			int lowestD = 1000;
 			int lowestIndex = -1;
 			String matched = "";
-			for( int i = 0; i < elements.length - 1; i++)
+			if (DEBUG_LOG) Log.d(TAG,"starting match loop for elements. " + elements.length);
+
+
+			for( int i = 0; i < elements.length; i++)
 			{				
 				String element = elements[i].substring(0, elements[i].lastIndexOf('.'));    
-
+				//if (DEBUG_LOG) Log.d(TAG,"Element " + element);
+				String[] parts = element.split("--");
+				if (parts.length > 1) {
+					if (DEBUG_LOG) Log.d(TAG,"Element p1 " + parts[1]);
+					if (strToCheck.toLowerCase().equals(parts[1].toLowerCase())) {
+						pageToLoad = element; 
+						//if (DEBUG_LOG) Log.d(TAG,"str: " +  strToCheck + " element.toString(): "+element.toString() );
+						break;
+					}
+				}
+				/*
 				d = GemUtilities.getLevenshteinDistance(strToCheck.toLowerCase(), element.toLowerCase());			   
 
-				//if (DEBUG_LOG) Log.d(TAG,"LevShtein: " + d + " i: "+ i  );
-				//if (DEBUG_LOG) Log.d(TAG,"str: " +  strToCheck + " element.toString(): "+element.toString() );
+				if (DEBUG_LOG) Log.d(TAG,"LevShtein: " + d + " i: "+ i  );
+				if (DEBUG_LOG) Log.d(TAG,"str: " +  strToCheck + " element.toString(): "+element.toString() );
 
 				if (d < lowestD) {
 					lowestD = d;
 					lowestIndex = i;
 					matched = element;
-				}
+				}*/
 			}
-
+			if (DEBUG_LOG) Log.d(TAG,"Finished loop");
+			/*
 			if (DEBUG_LOG) Log.d(TAG,"Matched index: " + elements[lowestIndex]);
 			if (DEBUG_LOG) Log.d(TAG,"Match: " + lowestIndex);
 			if (DEBUG_LOG) Log.d(TAG,"Match Val: " + lowestD);
 			if (DEBUG_LOG) Log.d(TAG,"Query string: " + strToCheck);
+
+
 			if (lowestD < 10) {
-				pageToLoad = elements[lowestIndex];
-			}
-			
+				pageToLoad = elements[0];
+			}*/
+
+			if (DEBUG_LOG) Log.d(TAG,"Page to Load: " + pageToLoad);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return pageToLoad;
+		return pageToLoad + ".html";
 	}
 
 
@@ -872,14 +889,13 @@ public class MainTabActivity extends TabActivity {
 		Resources res = getResources(); //if you are in an activity
 		AssetManager am = res.getAssets();
 		String fileList[] = am.list(dirFrom);
-
-		if (fileList != null)
-		{   
-			for ( int i = 0;i<fileList.length;i++)
-			{
-
-				//if (DEBUG_LOG) Log.d(TAG,fileList[i]);
+		if (DEBUG_LOG) Log.d(TAG,"fileList: " + fileList.toString());
+		if (fileList != null)	{   
+			for ( int i = 0;i<fileList.length;i++)			{
+				if (DEBUG_LOG) Log.d(TAG,fileList[i]);
 			}
+		} else {
+			if (DEBUG_LOG) Log.d(TAG,"fileList empty");
 		}
 		return fileList;
 	}
@@ -920,13 +936,15 @@ public class MainTabActivity extends TabActivity {
 		}
 		return bAssetOk;
 	}
-	
+
 	public void showHelp() {
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
 
 		if (!GemUtilities.isBlank(g.lastEditedAttribute)) { 
 			String pageToLoad = g.lastEditedAttribute + ".html";
+			if (DEBUG_LOG) Log.d("IDCT","Going to try help file for: " + g.lastEditedAttribute );
 
+			pageToLoad = loadHelpFileNames(g.lastEditedAttribute);
 			//File file = new File("file:///android_asset/glossary/glossary_cleaned/" + pageToLoad);
 			if (assetExists(getBaseContext(),"glossary/glossary_cleaned/" + pageToLoad)) {
 				AlertDialog.Builder alert = new AlertDialog.Builder(this);

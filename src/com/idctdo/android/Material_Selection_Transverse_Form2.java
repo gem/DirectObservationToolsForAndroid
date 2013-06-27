@@ -518,6 +518,7 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 	}
 
 
+	
 	public void storeSurveyVariables() {
 		SecondTabsActivity a = (SecondTabsActivity)getParent();		
 		MainTabActivity mainTab =a.getMainTab(); 
@@ -525,6 +526,7 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 		mainTab.saveSelectedAdapterData(secondLevelAttributeKey, selectedAdapter2);
 		mainTab.saveSelectedAdapterData(thirdLevelAttributeKey, selectedAdapter3);
 		mainTab.saveSelectedAdapterData(fourthLevelAttributeKey, selectedAdapter4);
+		mainTab.saveSelectedAdapterData(fifthLevelAttributeKey, selectedAdapter5);
 	}
 
 

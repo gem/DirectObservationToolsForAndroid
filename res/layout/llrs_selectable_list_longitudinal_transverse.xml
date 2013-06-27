@@ -75,7 +75,7 @@
             android:layout_centerHorizontal="true" />
 
         <ListView
-            android:id="@+id/listLLRSLongitudinal"
+            android:id="@+id/listLLRSTransverse"
             android:layout_width="fill_parent"
             android:layout_height="200dp"
             android:layout_alignLeft="@id/strut"
@@ -87,7 +87,7 @@
         </ListView>
 
         <ListView
-            android:id="@+id/listLLRSTransverse"
+            android:id="@+id/listLLRSLongitudinal"
             android:layout_width="fill_parent"
             android:layout_height="200dp"
             android:layout_alignRight="@id/strut"

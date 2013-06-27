@@ -189,9 +189,9 @@ public final class R {
         public static final int listExample5=0x7f0b0076;
         public static final int listHorizontalIrregularityPrimary=0x7f0b0049;
         public static final int listHorizontalIrregularitySecondary=0x7f0b004a;
-        public static final int listLLRSLongitudinal=0x7f0b0058;
+        public static final int listLLRSLongitudinal=0x7f0b0059;
         public static final int listLLRSLongitudinalDuctility=0x7f0b005c;
-        public static final int listLLRSTransverse=0x7f0b0059;
+        public static final int listLLRSTransverse=0x7f0b0058;
         public static final int listLLRSTransverseDuctility=0x7f0b005b;
         public static final int listStructuralIrregularity=0x7f0b0046;
         public static final int listVerticalIrregularityPrimary=0x7f0b004e;

@@ -3,7 +3,6 @@
     package="com.idctdo.android"
     android:versionCode="1"
     android:versionName="2.09" >
-
     
     <uses-sdk android:minSdkVersion="8" />
 
@@ -105,4 +104,5 @@
         </activity>
     </application>
 
+    
 </manifest>
