@@ -134,11 +134,14 @@ public class Details_Selection extends Activity {
 			editTextSlope = (EditText) findViewById(R.id.editTextSlope);
 			editTextSlope.setOnFocusChangeListener(new OnFocusChangeListener() {				
 				public void onFocusChange(View v, boolean hasFocus) {
+					editTextSlope = (EditText) findViewById(R.id.editTextSlope);
 					if(!hasFocus) {
-						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
-						editTextSlope = (EditText) findViewById(R.id.editTextSlope);
+						Log.d("IDCT", "LOST FOCUS OF EDIT TEXT");						
 						surveyDataObject.putData(slopeAttributeKey , editTextSlope.getText().toString());
 						completeThis();
+					} else {
+						Log.d("IDCT", "GOT FOCUS OF EDIT TEXT");
+						surveyDataObject.putData(slopeAttributeKey , editTextSlope.getText().toString());
 					}
 				}
 			});

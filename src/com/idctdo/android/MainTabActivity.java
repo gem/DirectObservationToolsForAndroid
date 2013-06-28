@@ -836,7 +836,6 @@ public class MainTabActivity extends TabActivity {
 			for( int i = 0; i < elements.length; i++)
 			{				
 				String element = elements[i].substring(0, elements[i].lastIndexOf('.'));    
-				//if (DEBUG_LOG) Log.d(TAG,"Element " + element);
 				String[] parts = element.split("--");
 				if (parts.length > 1) {
 					if (strToCheck.toLowerCase().equals(parts[1].toLowerCase())) {
@@ -884,7 +883,7 @@ public class MainTabActivity extends TabActivity {
 		if (DEBUG_LOG) Log.d(TAG,"fileList: " + fileList.toString());
 		if (fileList != null)	{   
 			for ( int i = 0;i<fileList.length;i++)			{
-				if (DEBUG_LOG) Log.d(TAG,fileList[i]);
+				//if (DEBUG_LOG) Log.d(TAG,fileList[i]);
 			}
 		} else {
 			if (DEBUG_LOG) Log.d(TAG,"fileList empty");
@@ -931,11 +930,9 @@ public class MainTabActivity extends TabActivity {
 
 	public void showHelp() {
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
-
 		if (!GemUtilities.isBlank(g.lastEditedAttribute)) { 
 			String pageToLoad = g.lastEditedAttribute + ".html";
 			if (DEBUG_LOG) Log.d("IDCT","Going to try help file for: " + g.lastEditedAttribute );
-
 			pageToLoad = loadHelpFileNames(g.lastEditedAttribute);
 			//File file = new File("file:///android_asset/glossary/glossary_cleaned/" + pageToLoad);
 			if (assetExists(getBaseContext(),"glossary/glossary_cleaned/" + pageToLoad)) {
