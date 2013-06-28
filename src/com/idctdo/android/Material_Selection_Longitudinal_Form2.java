@@ -453,6 +453,8 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 		} else {
 			tabHost.getTabWidget().getChildAt(1).setVisibility(View.VISIBLE);
 		}*/
+		
+		surveyDataObject.lastEditedAttribute = "";
 	}
 	
 

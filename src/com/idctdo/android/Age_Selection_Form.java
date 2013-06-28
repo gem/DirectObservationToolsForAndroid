@@ -391,7 +391,7 @@ public class Age_Selection_Form extends Activity {
 			
 						
 		} //End check tab complete
-		
+		surveyDataObject.lastEditedAttribute = "";
 	}	
 
 	public void completeThis() {

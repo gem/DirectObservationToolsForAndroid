@@ -8,7 +8,7 @@
  * IDCT Android is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU General Public License r more details.
  * 
  * You should have received a copy of the GNU Affero General Public License
  * along with IDCT Android.  If not, see <http://www.gnu.org/licenses/>.
@@ -44,7 +44,7 @@ import android.widget.Toast;
 public class Details_Selection extends Activity {
 
 	
-	public boolean DEBUG_LOG = false; 
+	public boolean DEBUG_LOG = true; 
 	
 	private ArrayList list;
 	public ArrayList<DBRecord> lLrsd;
@@ -98,7 +98,6 @@ public class Details_Selection extends Activity {
 
 		btn_cancelObservation =(Button)findViewById(R.id.btn_cancel_observation);
 		btn_cancelObservation.setOnClickListener(cancelObservationListener);
-
 	}
 
 	
@@ -122,12 +121,13 @@ public class Details_Selection extends Activity {
 			editTextSurveyComment = (EditText) findViewById(R.id.surveyComment);
 			editTextSurveyComment.setOnFocusChangeListener(new OnFocusChangeListener() {				
 				public void onFocusChange(View v, boolean hasFocus) {
-					if(!hasFocus) {
+					//if(!hasFocus) {
 						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
 						editTextSurveyComment = (EditText) findViewById(R.id.surveyComment);
 						surveyDataObject.putData(commentsAttributeKey, editTextSurveyComment.getText().toString());
+						surveyDataObject.lastEditedAttribute = commentsAttributeKey;
 						completeThis();
-					}
+					//}
 				}
 			});
 			
@@ -135,14 +135,11 @@ public class Details_Selection extends Activity {
 			editTextSlope.setOnFocusChangeListener(new OnFocusChangeListener() {				
 				public void onFocusChange(View v, boolean hasFocus) {
 					editTextSlope = (EditText) findViewById(R.id.editTextSlope);
-					if(!hasFocus) {
-						Log.d("IDCT", "LOST FOCUS OF EDIT TEXT");						
+					//if(!hasFocus) {
+						Log.d("IDCT", "FOCUS OF EDIT TEXT");						
 						surveyDataObject.putData(slopeAttributeKey , editTextSlope.getText().toString());
+						surveyDataObject.lastEditedAttribute = slopeAttributeKey;
 						completeThis();
-					} else {
-						Log.d("IDCT", "GOT FOCUS OF EDIT TEXT");
-						surveyDataObject.putData(slopeAttributeKey , editTextSlope.getText().toString());
-					}
 				}
 			});
 			
@@ -150,30 +147,33 @@ public class Details_Selection extends Activity {
 			editTextDirectionX= (EditText) findViewById(R.id.editTextDirectionX);
 			editTextDirectionX.setOnFocusChangeListener(new OnFocusChangeListener() {				
 				public void onFocusChange(View v, boolean hasFocus) {
-					if(!hasFocus) {
+					//if(!hasFocus) {
 						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
 						editTextDirectionX = (EditText) findViewById(R.id.editTextDirectionX);
 						surveyDataObject.putData(directionXKey, editTextDirectionX.getText().toString());
+						surveyDataObject.lastEditedAttribute = directionXKey;
 						completeThis();
-					}
+					//}
 				}
 			});
 			editTextDirectionY= (EditText) findViewById(R.id.editTextDirectionY);
 			editTextDirectionY.setOnFocusChangeListener(new OnFocusChangeListener() {				
 				public void onFocusChange(View v, boolean hasFocus) {
-					if(!hasFocus) {
+					//if(!hasFocus) {
 						Log.d("IDCT", "CHANGED FOCUS OF EDIT TEXT");
 						editTextDirectionY = (EditText) findViewById(R.id.editTextDirectionY);
 						surveyDataObject.putData(directionYKey, editTextDirectionY.getText().toString());
+						surveyDataObject.lastEditedAttribute = directionYKey;
 						completeThis();
-					}
+					//}
 				}
 			});
 									
 			spinnerBuildingPosition = (Spinner)  findViewById(R.id.spinnerBuildingPosition);
 			final Cursor buildingPositionAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(buildingPositionAttributeDictionary);
-			ArrayList<DBRecord> buildingPositionAttributesList = GemUtilities.cursorToArrayList(buildingPositionAttributeDictionaryCursor);
-			ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,buildingPositionAttributesList );
+			ArrayList<DBRecord> buildingPositionAttributesList = GemUtilities.cursorToArrayList(buildingPositionAttributeDictionaryCursor,true);
+			//ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,buildingPositionAttributesList );
+			CustomAdapter spinnerArrayAdapter = new CustomAdapter(this, android.R.layout.simple_spinner_item, buildingPositionAttributesList , 0);			
 			spinnerArrayAdapter.setDropDownViewResource(R.layout.simple_spinner_item);
 			spinnerBuildingPosition.setAdapter(spinnerArrayAdapter);
 			spinnerBuildingPosition.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -181,10 +181,7 @@ public class Details_Selection extends Activity {
 					//Object item = parent.getItemAtPosition(pos);
 					if (DEBUG_LOG) Log.d("IDCT","spinner selected: " + spinnerBuildingPosition.getSelectedItem().toString());
 					if (DEBUG_LOG) Log.d("IDCT","spinner selected pos: " + pos);					
-					//Temporarily disabled 7/1/13					
-					//allAttributeTypesTopLevelCursor.moveToPosition(pos);
-					//Log.d("IDCT","spinner selected pos val: " + allAttributeTypesTopLevelCursor.getString(1));							
-					//surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());
+	
 					DBRecord selected = (DBRecord) spinnerBuildingPosition.getSelectedItem();
 					if (DEBUG_LOG) Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
 					surveyDataObject.putData(buildingPositionAttributeKey, selected.getAttributeValue());
@@ -197,8 +194,9 @@ public class Details_Selection extends Activity {
 			
 			spinnerBuildingShape = (Spinner)  findViewById(R.id.spinnerBuildingShape);
 			final Cursor buildingShapeAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(buildingShapeAttributeDictionary);
-			ArrayList<DBRecord> buildingShapeAttributesList = GemUtilities.cursorToArrayList(buildingShapeAttributeDictionaryCursor);
-			ArrayAdapter spinnerArrayAdapter2 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,buildingShapeAttributesList);
+			ArrayList<DBRecord> buildingShapeAttributesList = GemUtilities.cursorToArrayList(buildingShapeAttributeDictionaryCursor,true);
+			//ArrayAdapter spinnerArrayAdapter2 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,buildingShapeAttributesList);
+			CustomAdapter spinnerArrayAdapter2 = new CustomAdapter(this, android.R.layout.simple_spinner_item, buildingShapeAttributesList , 0);
 			spinnerArrayAdapter2.setDropDownViewResource(R.layout.simple_spinner_item);
 			spinnerBuildingShape.setAdapter(spinnerArrayAdapter2);
 			spinnerBuildingShape.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -206,11 +204,6 @@ public class Details_Selection extends Activity {
 					//Object item = parent.getItemAtPosition(pos);
 					if (DEBUG_LOG) Log.d("IDCT","spinner selected: " + spinnerBuildingShape.getSelectedItem().toString());
 					if (DEBUG_LOG) Log.d("IDCT","spinner selected pos: " + pos);
-					
-					//Temporarily disabled 7/1/13					
-					//allAttributeTypesTopLevelCursor.moveToPosition(pos);
-					//Log.d("IDCT","spinner selected pos val: " + allAttributeTypesTopLevelCursor.getString(1));							
-					//surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());
 					DBRecord selected = (DBRecord) spinnerBuildingShape.getSelectedItem();
 					if (DEBUG_LOG) Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
 					surveyDataObject.putData(buildingShapeAttributeKey, selected.getAttributeValue());
@@ -223,8 +216,10 @@ public class Details_Selection extends Activity {
 			
 			spinnerNonStructuralExteriorWalls = (Spinner)  findViewById(R.id.spinnerNonStructuralExteriorWalls);
 			final Cursor nonStructuralExteriorWallsDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(nonStructuralExteriorWallsDictionary);
-			ArrayList<DBRecord> nonStructuralExteriorWallsAttributesList = GemUtilities.cursorToArrayList(nonStructuralExteriorWallsDictionaryCursor);
-			ArrayAdapter spinnerArrayAdapter3 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,nonStructuralExteriorWallsAttributesList);
+			ArrayList<DBRecord> nonStructuralExteriorWallsAttributesList = GemUtilities.cursorToArrayList(nonStructuralExteriorWallsDictionaryCursor,true);
+			//ArrayAdapter spinnerArrayAdapter3 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,nonStructuralExteriorWallsAttributesList);
+			CustomAdapter spinnerArrayAdapter3 = new CustomAdapter(this, android.R.layout.simple_spinner_item, nonStructuralExteriorWallsAttributesList , 0);
+			
 			spinnerArrayAdapter3.setDropDownViewResource(R.layout.simple_spinner_item);
 			spinnerNonStructuralExteriorWalls.setAdapter(spinnerArrayAdapter3);
 			spinnerNonStructuralExteriorWalls.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -232,22 +227,15 @@ public class Details_Selection extends Activity {
 					//Object item = parent.getItemAtPosition(pos);
 					if (DEBUG_LOG) Log.d("IDCT","spinner selected: " + spinnerNonStructuralExteriorWalls.getSelectedItem().toString());
 					if (DEBUG_LOG) Log.d("IDCT","spinner selected pos: " + pos);
-					
-					//Temporarily disabled 7/1/13					
-					//allAttributeTypesTopLevelCursor.moveToPosition(pos);
-					//Log.d("IDCT","spinner selected pos val: " + allAttributeTypesTopLevelCursor.getString(1));							
-					//surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());
 					DBRecord selected = (DBRecord) spinnerNonStructuralExteriorWalls.getSelectedItem();
 					if (DEBUG_LOG) Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
 					surveyDataObject.putData(nonStructuralExteriorWallsAttributeKey, selected.getAttributeValue());
-					completeThis();
-					
+					completeThis();					
 				}
 				public void onNothingSelected(AdapterView<?> parent) {
 				}
 			});					
-			nonStructuralExteriorWallsDictionaryCursor.close();
-			
+			nonStructuralExteriorWallsDictionaryCursor.close();		
 						
 			
 			mDbHelper.close();
@@ -263,7 +251,9 @@ public class Details_Selection extends Activity {
 			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerBuildingPosition, buildingPositionAttributesList, buildingPositionAttributeKey,surveyDataObject.getSurveyDataValue(buildingPositionAttributeKey));
 			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerBuildingShape, buildingShapeAttributesList, buildingShapeAttributeKey,surveyDataObject.getSurveyDataValue(buildingShapeAttributeKey));
 			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerNonStructuralExteriorWalls, nonStructuralExteriorWallsAttributesList, nonStructuralExteriorWallsAttributeKey,surveyDataObject.getSurveyDataValue(nonStructuralExteriorWallsAttributeKey));				
-		}//end tab is compelted check
+		}//end tab is completed check
+		
+		surveyDataObject.lastEditedAttribute = "";
 	}
 
 

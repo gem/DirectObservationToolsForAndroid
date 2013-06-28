@@ -153,7 +153,7 @@ public class LLRS_Selection_Longitudinal_Form extends Activity {
 			if (DEBUG_LOG) Log.d(TAG, "v: " + v);
 		}
 		
-
+		surveyDataObject.lastEditedAttribute = "";
     }
 	
 	public void clearThis() {

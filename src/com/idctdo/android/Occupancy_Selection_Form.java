@@ -195,6 +195,7 @@ public class Occupancy_Selection_Form extends Activity {
 				findViewById(R.id.rel2).setVisibility(View.VISIBLE);
 			}
 		}//end tab is compelted check
+		surveyDataObject.lastEditedAttribute = "";
 	}
 
 	@Override

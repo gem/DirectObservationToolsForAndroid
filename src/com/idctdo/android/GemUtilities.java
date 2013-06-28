@@ -31,10 +31,10 @@ import android.widget.Spinner;
 //Static functions for data processing and the like
 public class GemUtilities {
 
-	public static boolean DEBUG_LOG = false; 
+	public static boolean DEBUG_LOG = true; 
 	protected static final String TAG = "GemUtilities";
 
-	public static ArrayList cursorToArrayList(Cursor mCursor) {
+	public static ArrayList cursorToArrayList(Cursor mCursor,boolean... addBlankTopRow) {
 		ArrayList<DBRecord> mArrayList = new ArrayList<DBRecord>();
 		mCursor.moveToFirst();
 		while(!mCursor.isAfterLast()) {
@@ -46,6 +46,14 @@ public class GemUtilities {
 			}
 			mArrayList.add(o1);
 			mCursor.moveToNext();
+		}
+		
+		if (addBlankTopRow.length > 0) {
+			if (DEBUG_LOG) Log.d("IDCT","Prepending a blank value to ArrayList");
+			DBRecord o1 = new DBRecord();		
+			o1.setAttributeDescription("");
+			o1.setAttributeValue("");
+			mArrayList.add(0,o1);			
 		}
 		return mArrayList;
 	}

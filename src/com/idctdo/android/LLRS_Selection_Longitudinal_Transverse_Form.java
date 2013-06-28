@@ -134,13 +134,14 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 			selectedAdapter5.setNotifyOnChange(true);		
 			listview5 = (ListView) findViewById(R.id.listLLRSTransverseDuctility);
 			listview5.setAdapter(selectedAdapter5);        
-
-			
+		
 
 			spinnerLlrsQualifier = (Spinner)  findViewById(R.id.spinnerLlrsQualifier);
 			final Cursor llrsQualifierAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(llrsQualifierAttributeDictionary);
-			ArrayList<DBRecord> llrsQualifierAttributesList = GemUtilities.cursorToArrayList(llrsQualifierAttributeDictionaryCursor);
-			ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,llrsQualifierAttributesList );
+			ArrayList<DBRecord> llrsQualifierAttributesList = GemUtilities.cursorToArrayList(llrsQualifierAttributeDictionaryCursor,true);
+			//ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,llrsQualifierAttributesList );
+			CustomAdapter spinnerArrayAdapter = new CustomAdapter(this, android.R.layout.simple_spinner_item, llrsQualifierAttributesList, 0);
+			
 			spinnerArrayAdapter.setDropDownViewResource(R.layout.simple_spinner_item);
 			spinnerLlrsQualifier.setAdapter(spinnerArrayAdapter);
 			spinnerLlrsQualifier.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

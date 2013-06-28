@@ -40,7 +40,7 @@ import android.widget.Toast;
 
 
 public class Irregularity_Selection_Form extends Activity {
-	public boolean DEBUG_LOG = false; 
+	public boolean DEBUG_LOG = true; 
 
 	private String topLevelAttributeDictionary = "DIC_STRUCTURAL_IRREGULARITY";
 	private String topLevelAttributeKey = "STR_IRREG";
@@ -52,7 +52,6 @@ public class Irregularity_Selection_Form extends Activity {
 	private String verticalIrregularityAttributeDictionary = "DIC_STRUCTURAL_VERT_IRREG";
 	private String thirdLevelAttributeKey = "STR_VEIR_P";
 	private String thirdLevelAttributeKeySecondary = "STR_VEIR_S";
-
 
 
 	public TabActivity tabActivity;
@@ -195,16 +194,11 @@ public class Irregularity_Selection_Form extends Activity {
 					secondLevelAttributesListPart2.clear();
 					thirdLevelAttributesListPart2.clear();	
 					mDbHelper.open();			
-
-					//Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(horiztonalIrregularityAttributeDictionary, selectedAdapter.getItem(position).getJson());
 					Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableUsingRule(horiztonalIrregularityAttributeDictionary, selectedAdapter.getItem(position).getAttributeValue());
-
 					mCursor.moveToFirst();
 					while(!mCursor.isAfterLast()) {
-						DBRecord o1 = new DBRecord();		
-
+						DBRecord o1 = new DBRecord();	
 						if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-
 						o1.setAttributeDescription(mCursor.getString(0));
 						o1.setAttributeValue(mCursor.getString(1));
 						o1.setJson(mCursor.getString(2));
@@ -212,7 +206,7 @@ public class Irregularity_Selection_Form extends Activity {
 						mCursor.moveToNext();
 					}		     
 
-
+					
 
 					mCursor = mDbHelper.getAttributeValuesByDictionaryTableUsingRule(horiztonalIrregularityAttributeDictionary, selectedAdapter.getItem(position).getAttributeValue());
 					mCursor.moveToFirst();
@@ -230,13 +224,8 @@ public class Irregularity_Selection_Form extends Activity {
 					mCursor = mDbHelper.getAttributeValuesByDictionaryTableUsingRule(verticalIrregularityAttributeDictionary, selectedAdapter.getItem(position).getAttributeValue());
 					mCursor.moveToFirst();
 					while(!mCursor.isAfterLast()) {
-						//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-
 						DBRecord o1 = new DBRecord();		
-
 						if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-						//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
-
 						o1.setAttributeDescription(mCursor.getString(0));
 						o1.setAttributeValue(mCursor.getString(1));
 						o1.setJson(mCursor.getString(2));
@@ -301,7 +290,7 @@ public class Irregularity_Selection_Form extends Activity {
 					selectedAdapter3.setSelectedPosition(position);
 					SelectedAdapter a = (SelectedAdapter) arg0.getAdapter();
 					surveyDataObject.lastEditedAttribute = a.getItem(position).getAttributeDescription();
-					//Broken as the column name doesn't map, columen should be strhvi not strvi
+		
 					surveyDataObject.putData(secondLevelAttributeKeySecondary, selectedAdapter3.getItem(position).getAttributeValue());
 				}
 			});
@@ -322,9 +311,8 @@ public class Irregularity_Selection_Form extends Activity {
 			listview5.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
-					// user clicked a list item, make it "selected" 		        
+					// user clicked a list item, make it "selected" 	        
 					selectedAdapter5.setSelectedPosition(position);
-
 					SelectedAdapter a = (SelectedAdapter) arg0.getAdapter();
 					surveyDataObject.lastEditedAttribute = a.getItem(position).getAttributeDescription();
 					//Broken as the column name doesn't map, columen should be strhvi not strvi
@@ -340,8 +328,7 @@ public class Irregularity_Selection_Form extends Activity {
 				listview2.setVisibility(View.VISIBLE);
 				findViewById(R.id.rel2).setVisibility(View.VISIBLE);
 			}		
-			result= selectedAdapter3.loadPreviousAtttributes(listview3, secondLevelAttributeKeySecondary,surveyDataObject.getSurveyDataValue(secondLevelAttributeKeySecondary));
-			
+			result= selectedAdapter3.loadPreviousAtttributes(listview3, secondLevelAttributeKeySecondary,surveyDataObject.getSurveyDataValue(secondLevelAttributeKeySecondary));			
 			result= selectedAdapter4.loadPreviousAtttributes(listview4, thirdLevelAttributeKey,surveyDataObject.getSurveyDataValue(thirdLevelAttributeKey));
 			
 			if (result)  {
@@ -350,6 +337,10 @@ public class Irregularity_Selection_Form extends Activity {
 			}
 			result= selectedAdapter5.loadPreviousAtttributes(listview5, thirdLevelAttributeKeySecondary,surveyDataObject.getSurveyDataValue(thirdLevelAttributeKeySecondary));			
 		}	//end of tab completed check	
+		
+		
+		
+		surveyDataObject.lastEditedAttribute = "";
 	}
 
 	public void clearThis() {

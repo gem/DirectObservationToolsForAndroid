@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.idctdo.android;
 
+
 import android.app.Activity;
 import android.app.TabActivity;
 import android.os.Bundle;
@@ -188,7 +189,7 @@ public class Consequences_Form extends Activity {
 			
 			
 		//}//end tab completed check
-		
+			surveyDataObject.lastEditedAttribute = "";
 	}
 	public void completeThis() {
 		MainTabActivity a = (MainTabActivity)getParent();

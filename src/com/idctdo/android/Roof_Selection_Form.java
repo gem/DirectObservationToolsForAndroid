@@ -42,7 +42,7 @@ import android.widget.Toast;
 
 public class Roof_Selection_Form extends Activity {
 
-	public boolean DEBUG_LOG = false; 
+	public boolean DEBUG_LOG = true; 
 
 	public TabActivity tabActivity;
 	public TabHost tabHost;
@@ -60,15 +60,15 @@ public class Roof_Selection_Form extends Activity {
 
 	private String secondLevelAttributeDictionary = "DIC_ROOF_SYSTEM_TYPE";
 	private String secondLevelAttributeKey = "ROOFSYSTYP";
-	
+
 	private String roofConnectionAttributeDictionary = "DIC_ROOF_CONNECTION";
 	private String roofConnectionAttributeKey = "ROOF_CONN";
-	
+
 	public Spinner spinnerRoofShape;
 	public Spinner spinnerRoofCoverMaterial;
 	public Spinner spinnerRoofConnection;
 
-	
+
 	private SelectedAdapter selectedAdapter;
 	private SelectedAdapter selectedAdapter2;
 	private SelectedAdapter selectedAdapter3;
@@ -112,86 +112,84 @@ public class Roof_Selection_Form extends Activity {
 			mDbHelper.open();
 			spinnerRoofShape = (Spinner)  findViewById(R.id.spinnerRoofShape);
 			final Cursor roofShapeAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(roofShapeAttributeDictionary);
-			ArrayList<DBRecord> roofShapeAttributesList = GemUtilities.cursorToArrayList(roofShapeAttributeDictionaryCursor);
-			ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,roofShapeAttributesList );
+			ArrayList<DBRecord> roofShapeAttributesList = GemUtilities.cursorToArrayList(roofShapeAttributeDictionaryCursor,true);
+			//ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,roofShapeAttributesList );
+			CustomAdapter spinnerArrayAdapter = new CustomAdapter(this, android.R.layout.simple_spinner_item, roofShapeAttributesList , 0);
 			spinnerArrayAdapter.setDropDownViewResource(R.layout.simple_spinner_item);
 			spinnerRoofShape.setAdapter(spinnerArrayAdapter);
-
 			spinnerRoofShape.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 					//Object item = parent.getItemAtPosition(pos);
 					if (DEBUG_LOG) Log.d("IDCT","spinner selected: " + spinnerRoofShape.getSelectedItem().toString());
 					if (DEBUG_LOG) Log.d("IDCT","spinner selected pos: " + pos);					
-					//Temporarily disabled 7/1/13					
-					//allAttributeTypesTopLevelCursor.moveToPosition(pos);
-					//Log.d("IDCT","spinner selected pos val: " + allAttributeTypesTopLevelCursor.getString(1));							
-					//surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());
 					DBRecord selected = (DBRecord) spinnerRoofShape.getSelectedItem();
 					if (DEBUG_LOG) Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
 					surveyDataObject.putData(roofShapeAttributeKey, selected.getAttributeValue());		
 				}
 				public void onNothingSelected(AdapterView<?> parent) {
+					if (DEBUG_LOG) Log.d("IDCT","NOTHING SELECTED");
+					surveyDataObject.putData(roofShapeAttributeKey, "");				
 				}
 			});	
 			roofShapeAttributeDictionaryCursor.close();
-			
+
 			spinnerRoofCoverMaterial = (Spinner)  findViewById(R.id.spinnerRoofCoverMaterial);
 			final Cursor roofCoverMaterialAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(roofCoverMaterialAttributeDictionary);
-			ArrayList<DBRecord> roofCoverMaterialAttributesList = GemUtilities.cursorToArrayList(roofCoverMaterialAttributeDictionaryCursor);
-			ArrayAdapter spinnerArrayAdapter2 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,roofCoverMaterialAttributesList );
+			ArrayList<DBRecord> roofCoverMaterialAttributesList = GemUtilities.cursorToArrayList(roofCoverMaterialAttributeDictionaryCursor,true);
+			//ArrayAdapter spinnerArrayAdapter2 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,roofCoverMaterialAttributesList );
+			CustomAdapter spinnerArrayAdapter2 = new CustomAdapter(this, android.R.layout.simple_spinner_item, roofCoverMaterialAttributesList, 0);
 			spinnerArrayAdapter2.setDropDownViewResource(R.layout.simple_spinner_item);
-			spinnerRoofCoverMaterial.setAdapter(spinnerArrayAdapter2);
-			
+			spinnerRoofCoverMaterial.setAdapter(spinnerArrayAdapter2);			
 			spinnerRoofCoverMaterial.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-					//Object item = parent.getItemAtPosition(pos);
 					if (DEBUG_LOG) Log.d("IDCT","spinner selected: " + spinnerRoofCoverMaterial.getSelectedItem().toString());
 					if (DEBUG_LOG) Log.d("IDCT","spinner selected pos: " + pos);
-					
-					//Temporarily disabled 7/1/13					
-					//allAttributeTypesTopLevelCursor.moveToPosition(pos);
-					//Log.d("IDCT","spinner selected pos val: " + allAttributeTypesTopLevelCursor.getString(1));							
-					//surveyDataObject.putGedData(topLevelAttributeKey,  allAttributeTypesTopLevelCursor.getString(1).toString());
 					DBRecord selected = (DBRecord) spinnerRoofCoverMaterial.getSelectedItem();
 					if (DEBUG_LOG) Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
-					surveyDataObject.putData(roofCoverMaterialAttributeKey, selected.getAttributeValue());		
+					surveyDataObject.putData(roofCoverMaterialAttributeKey, selected.getAttributeValue());
+					completeThis();
 				}
 				public void onNothingSelected(AdapterView<?> parent) {
 				}
 			});	
 			roofCoverMaterialAttributeDictionaryCursor.close();
-		
-			
-			
+
+
+
 
 
 			spinnerRoofConnection = (Spinner)  findViewById(R.id.spinnerRoofConnection);
 			final Cursor roofConnectionAttributeDictionaryCursor = mDbHelper.getAttributeValuesByDictionaryTable(roofConnectionAttributeDictionary);
-			ArrayList<DBRecord> roofConnectionAttributesList = GemUtilities.cursorToArrayList(roofConnectionAttributeDictionaryCursor);
-			ArrayAdapter spinnerArrayAdapter4 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,roofConnectionAttributesList );
+			ArrayList<DBRecord> roofConnectionAttributesList = GemUtilities.cursorToArrayList(roofConnectionAttributeDictionaryCursor,true);			
+			int hidingItemIndex = 0;
+			//ArrayAdapter spinnerArrayAdapter4 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,roofConnectionAttributesList );			
+			CustomAdapter spinnerArrayAdapter4 = new CustomAdapter(this, android.R.layout.simple_spinner_item, roofConnectionAttributesList , hidingItemIndex);			
 			spinnerArrayAdapter4.setDropDownViewResource(R.layout.simple_spinner_item);
 			spinnerRoofConnection.setAdapter(spinnerArrayAdapter4);
 			spinnerRoofConnection.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 					//Object item = parent.getItemAtPosition(pos);
+
 					if (DEBUG_LOG) Log.d("IDCT","spinner selected: " + spinnerRoofConnection.getSelectedItem().toString());
 					if (DEBUG_LOG) Log.d("IDCT","spinner selected pos: " + pos);
 					DBRecord selected = (DBRecord) spinnerRoofConnection.getSelectedItem();
 					if (DEBUG_LOG) Log.d("IDCT","SELECTED: " + selected.getAttributeValue());
-					surveyDataObject.putData(roofConnectionAttributeKey, selected.getAttributeValue());		
+					surveyDataObject.putData(roofConnectionAttributeKey, selected.getAttributeValue());
+					completeThis();
+
 				}
 				public void onNothingSelected(AdapterView<?> parent) {
 				}
 			});	
 			roofConnectionAttributeDictionaryCursor.close();
-			
-			
-			
-			
-			
-			
-			
-			
+
+
+
+
+
+
+
+
 			Cursor allAttributeTypesTopLevelCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);     
 			ArrayList<DBRecord> topLevelAttributesList = GemUtilities.cursorToArrayList(allAttributeTypesTopLevelCursor);        
 			if (DEBUG_LOG) Log.d("IDCT","TYPES: " + topLevelAttributesList.toString());
@@ -219,7 +217,6 @@ public class Roof_Selection_Form extends Activity {
 			RelativeLayout relativeLayout2 = (RelativeLayout) findViewById(R.id.rel2);
 			relativeLayout2.setVisibility(View.INVISIBLE);
 
-
 			listview.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView arg0, View view,
@@ -227,24 +224,16 @@ public class Roof_Selection_Form extends Activity {
 					// user clicked a list item, make it "selected"
 					selectedAdapter.setSelectedPosition(position);
 					selectedAdapter2.setSelectedPosition(-1);
-
 					surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());
 					secondLevelAttributesList.clear();
-
-
 					mDbHelper.open();
 					//Cursor mCursor = mDbHelper.getAllMaterialTechnologies(selectedAdapter.getItem(position).getJson());
 					if (DEBUG_LOG) Log.d("IDCT", "Going to select by" + secondLevelAttributeKey + " and " + selectedAdapter.getItem(position).getJson());
 					Cursor mCursor = mDbHelper.getAttributeValuesByDictionaryTableAndScope(secondLevelAttributeDictionary,selectedAdapter.getItem(position).getJson());
 					mCursor.moveToFirst();
 					while(!mCursor.isAfterLast()) {
-						//mArrayList.add(mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-
 						DBRecord o1 = new DBRecord();		
-
 						if (DEBUG_LOG) Log.d("IDCT", "CURSOR TO ARRAY LIST" + mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1))));
-						//String mTitleRaw = mCursor.getString(mCursor.getColumnIndex(mCursor.getColumnName(1)));
-
 						o1.setAttributeDescription(mCursor.getString(0));
 						o1.setAttributeValue(mCursor.getString(1));
 						o1.setJson(mCursor.getString(2));
@@ -271,10 +260,7 @@ public class Roof_Selection_Form extends Activity {
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
 					// user clicked a list item, make it "selected" 		        
 					selectedAdapter2.setSelectedPosition(position);
-
 					surveyDataObject.putData(secondLevelAttributeKey, selectedAdapter2.getItem(position).getAttributeValue());
-
-
 				}
 			});
 
@@ -285,15 +271,17 @@ public class Roof_Selection_Form extends Activity {
 			if (result)  {
 				listview2.setVisibility(View.VISIBLE);
 				findViewById(R.id.rel2).setVisibility(View.VISIBLE);
-			}
-				
-			
+			}			
+
 			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerRoofShape, roofShapeAttributesList, roofShapeAttributeKey,surveyDataObject.getSurveyDataValue(roofShapeAttributeKey));
 			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerRoofCoverMaterial, roofCoverMaterialAttributesList, roofCoverMaterialAttributeKey,surveyDataObject.getSurveyDataValue(roofCoverMaterialAttributeKey));
 			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerRoofConnection, roofConnectionAttributesList, roofConnectionAttributeKey,surveyDataObject.getSurveyDataValue(roofConnectionAttributeKey));
-			
+
 		}//End tab completed check		
-	}
+
+		Log.d("IDCT","Setting last edited to blank");
+		surveyDataObject.lastEditedAttribute = "";
+	}//end of onResume
 
 	public void clearThis() {
 		if (DEBUG_LOG) Log.d("IDCT", "clearing stuff");

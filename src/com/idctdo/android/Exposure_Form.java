@@ -251,7 +251,7 @@ public class Exposure_Form extends Activity {
 			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerCurrency, topLevelAttributesList, topLevelAttributeKey,surveyDataObject.getGedDataValue(topLevelAttributeKey));
 				
 		//}//End tab completed check
-		
+			surveyDataObject.lastEditedAttribute = "";
 	}		
 	public void completeThis() {
 		MainTabActivity a = (MainTabActivity)getParent();

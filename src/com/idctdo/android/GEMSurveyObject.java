@@ -90,8 +90,8 @@ public class GEMSurveyObject extends Application {
 			lastEditedAttribute = value;
 			Log.d("IDCT","lastEdited: " + lastEditedAttribute.toString());
 		} else {
-			lastEditedAttribute = key;
-			Log.d("IDCT","Entering a lastEdited attribute key: " + lastEditedAttribute.toString());
+			//lastEditedAttribute = key;
+			//Log.d("IDCT","Entering a lastEdited attribute key: " + lastEditedAttribute.toString());
 		}
 		surveyData.put(key, value);
 	

@@ -439,7 +439,7 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 		//}//End of tab completed check
 
 		//updateListViewHeights(1);
-
+		surveyDataObject.lastEditedAttribute = "";
 	}
 
 	public void updateListViewHeights(int layoutCode) {		
