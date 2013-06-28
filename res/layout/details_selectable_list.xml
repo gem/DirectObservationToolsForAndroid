@@ -97,6 +97,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:ems="10"
+                    android:maxLength="3"
                     android:hint="slope (degs)"
                     android:inputType="number" />
 

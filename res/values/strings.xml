@@ -5,11 +5,10 @@
         
     <string name="editing_toggle_turn_on">Stop Editing</string>
     <string name="editing_toggle_turn_off">Edit Points</string>
-    
-    
+        
     <!-- Splash Strings -->
    <string name="splash_title">IDCT ANDROID FIELD TOOL</string>
-    <string name="splash_version_info">Version 2.09</string>
+    <string name="splash_version_info">Version 2.10</string>
     <string name="splash_author_info">University of Nottingham</string>
     
     <!-- Main Menu Strings" -->

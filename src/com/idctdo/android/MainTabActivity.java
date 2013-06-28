@@ -684,7 +684,7 @@ public class MainTabActivity extends TabActivity {
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("Delete this record");
-			builder.setMessage("Are you sure you want to delete this record");
+			builder.setMessage("Are you sure you want to delete this record?\n\nIf this record has been defined as a favourite template record it won't be available to create new records in future.");
 
 			builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 				@Override
