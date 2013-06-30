@@ -48,7 +48,7 @@ import android.widget.Toast;
 
 public class GemDbAdapter 
 {
-	public boolean DEBUG_LOG = true; 
+	public boolean DEBUG_LOG = false; 
 
 	protected static final String TAG = "IDCT";
 

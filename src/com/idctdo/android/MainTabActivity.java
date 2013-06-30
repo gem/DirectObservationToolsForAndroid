@@ -72,7 +72,7 @@ import android.widget.Toast;
 
 public class MainTabActivity extends TabActivity {
 	private static final String TAG = "IDCT";
-	public boolean DEBUG_LOG = true; 
+	public boolean DEBUG_LOG = false; 
 
 	public TabHost tabHost;
 
@@ -681,7 +681,7 @@ public class MainTabActivity extends TabActivity {
 		GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
 
 		if (surveyDataObject.isExistingRecord) { 	
-
+			
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("Delete this record");
 			builder.setMessage("Are you sure you want to delete this record?\n\nIf this record has been defined as a favourite template record it won't be available to create new records in future.");

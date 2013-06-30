@@ -6,9 +6,9 @@
     android:gravity="left"
     android:orientation="vertical" >
 
-    
+        
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    
         android:id="@+id/rel1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+      
         android:id="@+id/rel2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+      
         android:id="@+id/rel3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+     
         android:id="@+id/rel4"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -104,15 +104,17 @@
         android:gravity="left"
         android:orientation="vertical" >
 
+        
         <TextView
             android:id="@+id/textView4"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:text="Mortar Reinforcement"
+            android:text="Masonry Reinforcement"
             android:textStyle="bold" />
   
 
+        
         <ListView android:fadeScrollbars="false"
             android:id="@+id/listExample4"
             android:layout_width="fill_parent"
@@ -124,7 +126,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+      
         android:id="@+id/rel5"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

@@ -7,7 +7,7 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+       
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@color/highlight_colour"
@@ -17,7 +17,7 @@
         android:paddingRight="3dp" >
 
         <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+         
             android:id="@+id/rel1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+          
             android:id="@+id/rel2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                 android:layout_centerHorizontal="true" />
 
             <RelativeLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
+               
                 android:id="@+id/rel3"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
+               
                 android:id="@+id/rel4"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="Mort. Reinforce." />
+                    android:text="Masonry Reinforcement" />
 
                 <ListView
                     android:id="@+id/listExample4"
@@ -147,7 +147,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+         
             android:id="@+id/rel5"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

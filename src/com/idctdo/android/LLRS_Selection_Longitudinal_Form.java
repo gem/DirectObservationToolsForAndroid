@@ -40,7 +40,7 @@ import android.widget.Toast;
 public class LLRS_Selection_Longitudinal_Form extends Activity {
 	
 	private static final String TAG = "IDCT";
-	public boolean DEBUG_LOG = true; 
+	public boolean DEBUG_LOG = false; 
 	
 	
 	public TabActivity tabActivity;
