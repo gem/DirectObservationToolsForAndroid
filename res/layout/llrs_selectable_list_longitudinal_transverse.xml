@@ -21,6 +21,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="LLRS Qualifier"
+        android:onClick="onClick"                
+	    android:clickable="true"  
+	         
         android:textStyle="bold" />
 
     <Spinner

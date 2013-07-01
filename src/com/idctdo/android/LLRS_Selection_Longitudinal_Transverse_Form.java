@@ -35,13 +35,15 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 
+
 	private static final String TAG = "IDCT";
-	public boolean DEBUG_LOG = false; 
-	
+	public boolean DEBUG_LOG = true; 
+
 	public TabActivity tabActivity;
 	public TabHost tabHost;
 	public int tabIndex = 1;
@@ -57,13 +59,13 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 
 	private String llrsQualifierAttributeDictionary = "DIC_LLRS_QUAL";
 	private String llrsQualifierAttributeKey = "LLRS_QUAL";
-	
+
 	private SelectedAdapter selectedAdapter;
 	private SelectedAdapter selectedAdapter2;
 	private SelectedAdapter selectedAdapter3;
 	private SelectedAdapter selectedAdapter4;
 	private SelectedAdapter selectedAdapter5;
-	
+
 	public Spinner spinnerLlrsQualifier;
 
 	private ArrayList list;
@@ -87,6 +89,16 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 		setContentView(R.layout.llrs_selectable_list_longitudinal_transverse);
 	}
 
+
+	public void onClick(View v) {
+		if( v instanceof TextView ) {
+			TextView tv = (TextView) v;
+			if (DEBUG_LOG) Log.d(TAG,"View press " + tv.getId());    	
+			if (DEBUG_LOG) Log.d(TAG,"TextView press " + tv.getText().toString());
+		}
+	}  
+
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -100,7 +112,7 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 
 			mDbHelper.createDatabase();      
 			mDbHelper.open();
-			
+
 			Cursor allLLRSCursor = mDbHelper.getAttributeValuesByDictionaryTable(topLevelAttributeDictionary);        
 			lLrs = GemUtilities.cursorToArrayList(allLLRSCursor);        
 			if (DEBUG_LOG) Log.d(TAG,"lLrs: " + lLrs.toString());
@@ -112,7 +124,7 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 			allLLRSCursor.close(); 
 			allLLRSDCursor.close();
 
-						
+
 			selectedAdapter2 = new SelectedAdapter(this,0,lLrs);    		
 			selectedAdapter2.setNotifyOnChange(true);		
 			listview2 = (ListView) findViewById(R.id.listLLRSLongitudinal);
@@ -140,8 +152,8 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 			ArrayList<DBRecord> llrsQualifierAttributesList = GemUtilities.cursorToArrayList(llrsQualifierAttributeDictionaryCursor,true);
 			//ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,llrsQualifierAttributesList );
 			CustomAdapter spinnerArrayAdapter = new CustomAdapter(this, android.R.layout.simple_spinner_item, llrsQualifierAttributesList, 0);
-		
-			
+
+
 			spinnerArrayAdapter.setDropDownViewResource(R.layout.simple_spinner_item);
 			spinnerLlrsQualifier.setAdapter(spinnerArrayAdapter);
 			spinnerLlrsQualifier.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -158,9 +170,9 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 				}
 			});	
 			llrsQualifierAttributeDictionaryCursor.close();
-			
-						
-			
+
+
+
 			mDbHelper.close();			
 
 			listview2.setOnItemClickListener(new OnItemClickListener() {
@@ -177,7 +189,7 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 
 				}
 			});
-					
+
 			listview3.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView arg0, View view,int position, long id) {
@@ -198,7 +210,7 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 					SelectedAdapter a = (SelectedAdapter) arg0.getAdapter();
 					surveyDataObject.lastEditedAttribute = a.getItem(position).getAttributeDescription();
 					surveyDataObject.putData(topLevelAttributeKeyTransverse, selectedAdapter4.getItem(position).getAttributeValue());					
-					
+
 
 				}
 			});
@@ -214,22 +226,22 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 
 				}
 			});
-	
-			
+
+
 			boolean result = false;			
 			result= selectedAdapter2.loadPreviousAtttributes(listview2, topLevelAttributeKeyLongitudinal,surveyDataObject.getSurveyDataValue(topLevelAttributeKeyLongitudinal));
 			result= selectedAdapter3.loadPreviousAtttributes(listview3, secondLevelAttributeKeyLongitudinal,surveyDataObject.getSurveyDataValue(secondLevelAttributeKeyLongitudinal));
 			result= selectedAdapter4.loadPreviousAtttributes(listview4, topLevelAttributeKeyTransverse,surveyDataObject.getSurveyDataValue(topLevelAttributeKeyTransverse));
 			result= selectedAdapter5.loadPreviousAtttributes(listview5, secondLevelAttributeKeyTransverse,surveyDataObject.getSurveyDataValue(secondLevelAttributeKeyTransverse));
-			
+
 			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerLlrsQualifier, llrsQualifierAttributesList , llrsQualifierAttributeKey,surveyDataObject.getSurveyDataValue(llrsQualifierAttributeKey));
 
-			
+
 		}//End of tab completed check
 	}
 
-	
-	
+
+
 	public void clearThis() {
 		if (DEBUG_LOG) Log.d(TAG, "clearing stuff");
 		//selectedAdapter.setSelectedPosition(-1);
