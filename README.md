@@ -9,6 +9,10 @@ Android Tool
 
 
 
-<a href="http://idct.github.io/DirectObservationToolsForAndroid/">/</a>
+
+[Release 2.10 apk](http://idct.github.io/DirectObservationToolsForAndroid/idct.apk)
 
 ![ScreenShot](http://idct.github.io/DirectObservationToolsForAndroid/download.png)
+
+
+[Alternative project page](http://idct.github.io/DirectObservationToolsForAndroid)
