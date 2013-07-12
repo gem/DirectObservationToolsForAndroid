@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textView1"
                     android:hint="Enter general building comments"
-                    android:lines="6" >
+                    android:lines="4" >
                 </EditText>
 
                 <Button
@@ -86,9 +86,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:gravity="left"
-                    android:text="Slope"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:text="Slope" />
 
                 <EditText
                     android:id="@+id/editTextSlope"
@@ -97,9 +95,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:ems="10"
-                    android:maxLength="3"
                     android:hint="slope (degs)"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:maxLength="3" />
 
                 <TextView
                     android:id="@+id/textViewBuildingPosition"
@@ -110,9 +108,7 @@
                     android:layout_below="@+id/editTextSlope"
                     android:layout_marginTop="5dp"
                     android:gravity="left"
-                    android:text="Position Within Block"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:text="Position Within Block" />
 
                 <Spinner
                     android:id="@+id/spinnerBuildingPosition"
@@ -130,9 +126,7 @@
                     android:layout_below="@+id/spinnerBuildingPosition"
                     android:layout_marginTop="5dp"
                     android:gravity="left"
-                    android:text="Plan Shape"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:text="Plan Shape" />
             </RelativeLayout>
 
             <Spinner
@@ -149,9 +143,7 @@
                 android:layout_below="@+id/spinnerBuildingShape"
                 android:layout_marginTop="5dp"
                 android:gravity="left"
-                android:text="Material Of Exterior Walls"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:text="Material Of Exterior Walls" />
 
             <Spinner
                 android:id="@+id/spinnerNonStructuralExteriorWalls"
@@ -177,17 +169,15 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:gravity="left"
-                    android:text="Direction X"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:text="Direction X" />
 
                 <EditText
                     android:id="@+id/editTextDirectionX"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:ems="10"
                     android:layout_below="@+id/DirectionX"
+                    android:ems="10"
                     android:hint="Direct X"
                     android:inputType="number" />
 
@@ -199,9 +189,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:gravity="left"
-                    android:text="Direction Y"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:text="Direction Y" />
 
                 <EditText
                     android:id="@+id/editTextDirectionY"

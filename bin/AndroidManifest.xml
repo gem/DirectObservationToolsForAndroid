@@ -3,13 +3,15 @@
     package="com.idctdo.android"
     android:versionCode="1"
     android:versionName="2.10" >
+
     <uses-sdk android:minSdkVersion="8" />
-    
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    
+    
     <application
         android:name=".GEMSurveyObject"
         android:hardwareAccelerated="false"
@@ -22,7 +24,7 @@
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -30,7 +32,6 @@
             android:name=".MainTabActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".EQForm_Settings"
             android:screenOrientation="portrait" />
@@ -103,5 +104,4 @@
         </activity>
     </application>
 
-    
 </manifest>
