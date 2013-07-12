@@ -2,10 +2,9 @@
 
 
 
-Global Earthquake Model 
-Inventory Data Capture Tools 
-Direct Observation 
-Android Tool
+Global Earthquake Model - Inventory Data Capture Tools 
+
+Direct Observation Android Tool
 
 
 
@@ -14,5 +13,3 @@ Android Tool
 
 ![ScreenShot](http://idct.github.io/DirectObservationToolsForAndroid/download.png)
 
-
-[Alternative project page](http://idct.github.io/DirectObservationToolsForAndroid)
