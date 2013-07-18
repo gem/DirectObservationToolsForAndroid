@@ -15,7 +15,6 @@
  ******************************************************************************/
 package com.idctdo.android;
 
-
 public class DBRecord {
     
     private String attributeDescription;
