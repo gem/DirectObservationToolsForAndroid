@@ -7,7 +7,7 @@
     <string name="editing_toggle_turn_off">Edit Points</string>
         
     <!-- Splash Strings -->
-   <string name="splash_title">IDCT ANDROID FIELD TOOL</string>
+   <string name="splash_title">IDCT: Mobile Field Tool</string>
     <string name="splash_version_info">Version 0.2.11</string>
     <string name="splash_author_info">University of Nottingham</string>
     
@@ -146,6 +146,9 @@
 	<string name="second_reo_3">ø10</string>
 	<string name="second_reo_4">ø12</string>
 	
+	
+	
+	
 	<!-- Reo Centres -->
 	<string name="centre1">\@50  mm</string>
 	<string name="centre2">\@100 mm</string>
@@ -164,6 +167,7 @@
 	<string name="number7">*16</string>
 	<string name="number8">*18</string>
 	<string name="number9">*20</string>
+	
 	
 		<!-- Damage Level Spinner -->
 	<string name="damage0">0: No structural damage </string>

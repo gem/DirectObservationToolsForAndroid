@@ -94,9 +94,9 @@ public final class R {
         public static final int ScrollView01=0x7f0b0008;
         public static final int ScrollViewConsequences=0x7f0b0019;
         public static final int ScrollViewDetails=0x7f0b0022;
-        public static final int SplashAuthor=0x7f0b00c5;
-        public static final int SplashTitle=0x7f0b00c4;
-        public static final int SplashVersion=0x7f0b00c6;
+        public static final int SplashAuthor=0x7f0b00c4;
+        public static final int SplashTitle=0x7f0b00c6;
+        public static final int SplashVersion=0x7f0b00c7;
         public static final int about=0x7f0b0063;
         public static final int about_text=0x7f0b0002;
         public static final int additional_edit=0x7f0b00a6;
@@ -110,7 +110,7 @@ public final class R {
         public static final int back_camera=0x7f0b00b2;
         public static final int back_help=0x7f0b0044;
         public static final int back_settings=0x7f0b00c0;
-        public static final int background=0x7f0b00c7;
+        public static final int background=0x7f0b00c5;
         public static final int beam_main_reo=0x7f0b00a2;
         public static final int beam_main_reo_number=0x7f0b00a3;
         public static final int beam_shear=0x7f0b00a4;
