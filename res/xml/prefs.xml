@@ -4,11 +4,7 @@
     <PreferenceCategory
         android:summary="Map Display Settings"
         android:title="Map Settings" >
-        <CheckBoxPreference
-            android:enabled="false"
-            android:key="checkBox"
-            android:summary="On/Off"
-            android:title="Auto-Update position" />
+   
         
         <CheckBoxPreference
             android:enabled="true"
