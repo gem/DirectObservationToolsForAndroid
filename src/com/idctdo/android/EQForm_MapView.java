@@ -1403,11 +1403,7 @@ public class EQForm_MapView extends Activity {
 			Intent ModifiedEMS98 = new Intent (EQForm_MapView.this, EQForm_ModifiedEMS_1.class);
 			startActivity(ModifiedEMS98);*/
 
-		}   else if (v.getId()==R.id.settings){
-			//Intent Settings = new Intent (EQForm_MapView.this, EQForm_Settings.class);
-			//startActivity(Settings);
-
-		}  else if (v.getId()==R.id.btn_take_photo){ 
+		}   else if (v.getId()==R.id.btn_take_photo){ 
 			Toast.makeText(this, "Launching camera", Toast.LENGTH_SHORT).show();
 			//Intent PreviousPage = new Intent (EQForm_MapView.this, EQForm_ModifiedEMS_Camera.class);
 			//startActivity(PreviousPage);

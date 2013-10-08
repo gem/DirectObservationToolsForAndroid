@@ -24,6 +24,7 @@ public class DBRecord {
     private String attributeScope;
     private int recordCode;
     
+    
     public String getAttributeDescription() {
         return attributeDescription;
     }
