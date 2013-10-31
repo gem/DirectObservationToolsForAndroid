@@ -9,7 +9,7 @@ Direct Observation Android Tool
 
 
 
-[Release 0.2.11 apk](http://idct.github.io/DirectObservationToolsForAndroid/idct.apk) ~32MB
+[Release 0.2.12 apk](http://idct.github.io/DirectObservationToolsForAndroid/idct.apk) ~32MB
 
 ![ScreenShot](http://idct.github.io/DirectObservationToolsForAndroid/download.png)
 
