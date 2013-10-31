@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    
     <PreferenceCategory
         android:summary="Map Display Settings"
         android:title="Map Settings" >
-   
-        
+           
         <CheckBoxPreference
             android:enabled="true"
             android:key="showPositionDetailsCheckBox"

@@ -745,7 +745,6 @@ public class EQForm_MapView extends Activity {
 			});
 
 
-
 			builder.setSingleChoiceItems(
 					choiceList, 
 					selected, 
@@ -758,7 +757,6 @@ public class EQForm_MapView extends Activity {
 								//String tileLocationPath = "file:////mnt/sdcard/idctdo/maptiles/laquila_mapquest/";
 								String tileLocationPath = sdCardPath +  "idctdo/maptiles/" + choiceList[which] +"/";
 								String zoomLevel = "18";			
-
 
 								File extStore = Environment.getExternalStorageDirectory();
 								File xmlFile = new File(extStore.getAbsolutePath() + "/idctdo/maptiles/" + choiceList[which] +"/tilemapresource.xml");

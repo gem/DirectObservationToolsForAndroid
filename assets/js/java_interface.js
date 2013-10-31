@@ -198,7 +198,7 @@ function addOfflineBaseMap(layerNameString,tileLocationPath,zoom) {
 			sphericalMercator: true,
 			transitionEffect: "resize",
 			buffer: 1,
-			numZoomLevels: 18
+			numZoomLevels: 19
 		}
 	);	
 	map.addLayer(sdtiles);
@@ -224,7 +224,7 @@ function addOfflineTMSMap(layerNameString,tileLocationPath,zoom) {
 		getURL: xyz_getTileURL, 
 		alpha: true, 
 		isBaseLayer: true,
-		numZoomLevels: 18	
+		numZoomLevels: 19
 	});
 	
 

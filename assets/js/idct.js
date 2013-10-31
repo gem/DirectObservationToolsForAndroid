@@ -10,18 +10,16 @@ var DEBUG_DISPLAY_PANZOOM = false;
 var DEBUG_FREE_ROTATE = false;
 var DEBUG_SHOW_LAYER_SWITCHER = false;
 
-var DEBUG_USE_BROWSER_CACHING = false;
+var DEBUG_USE_BROWSER_CACHING = false; //Causing issues at the moment
 
 var debugFeature;
 
-//var mapBounds = new OpenLayers.Bounds( -1.00041666667, 49.9995106059, 1.99995992776, 53.0004166667);
 var mapBounds = new OpenLayers.Bounds( 13.3589926433, 42.3394886236, 13.4150903442, 42.3687820513);
 var mapMinZoom = 0;
 var mapMaxZoom = 20;
 
 // avoid pink tiles
 OpenLayers.IMAGE_RELOAD_ATTEMPTS = 3;
-//OpenLayers.Util.onImageLoadErrorColor = "transparent";
 
 var map, vectors, myPositions, locationPointLayer, prevSurveyPoints, vectorEditing, controls;
 
@@ -79,52 +77,7 @@ OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {
 			);
 		  }
 	});
-
-
-						 /*
-OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {                
-                defaultHandlerOptions: {
-                    'single': true,
-                    'double': false,
-                    'pixelTolerance': 0,
-                    'stopSingle': false,
-                    'stopDouble': false
-                },
-
-                initialize: function(options) {
-                    this.handlerOptions = OpenLayers.Util.extend(
-                        {}, this.defaultHandlerOptions
-                    );
-                    OpenLayers.Control.prototype.initialize.apply(
-                        this, arguments
-                    ); 
-                    this.handler = new OpenLayers.Handler.Click(
-                        this, {
-                            'click': this.trigger
-                        }, this.handlerOptions
-                    );
-                }, 
-
-                trigger: function(e) {
-                    var lonlat = map.getLonLatFromPixel(e.xy);
-                     //                         + lonlat.lon + " E");										  
-                    //alert("You clicked near " + lonlat.lat + " N, " +
-											  
-						// create some attributes for the feature
-					var attributes = {name: "my name", bar: "foo"};
-					var myLocation = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat);
-					var feature = new OpenLayers.Feature.Vector(myLocation,attributes);
-						
-					myPositions.removeAllFeatures();
-					
-					myPositions.addFeatures([feature]);
-					
-					myPositions.redraw();
-                }
-
-            });
-			*/
-			
+		
 
 function init(){
 
@@ -135,8 +88,7 @@ function init(){
 		units: "m",
 		//maxResolution: 156543.0339,
 		//maxExtent: new OpenLayers.Bounds(-20037508, -20037508, 20037508, 20037508.34),
-					
-					
+										
 		controls: [
            new OpenLayers.Control.TouchNavigation({
                 dragPanOptions: {
@@ -182,8 +134,7 @@ function init(){
     var gsat = new OpenLayers.Layer.Google(
         "Google Satellite",
         {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
-    );
-	
+    );	
 	*/
 	
 	var bingRoads = new OpenLayers.Layer.Bing({
@@ -208,11 +159,6 @@ function init(){
 	});
 	
 
-		
-	//myVectorLayer.addFeatures(GetFeaturesFromKMLString( ));
-	
-
-
 	var cached = new OpenLayers.Layer.XYZ(
 		"tiles 2",
 		[
@@ -224,17 +170,14 @@ function init(){
 			sphericalMercator: true,
 			transitionEffect: "resize",
 			buffer: 1,
-			numZoomLevels: 18
+			numZoomLevels: 20
 		}
 	);
 	
-	
+	//Added as dummy spacer layer
 	var sdtiles = new OpenLayers.Layer.XYZ(
 		"OpenStreetMap (cached)",
 		[
-			//"file:////mnt/sdcard/maptiles/mapnik/${z}/${x}/${y}.png.tile"
-			//"file:////mnt/sdcard/maptiles/binghybrid/${z}/${x}/${y}.png.tile"
-			//"tiles/${z}/${x}/${y}.png.tile"
 			"file:////mnt/sdcard/idctdo/maptiles2/sdtiles/${z}/${x}/${y}.png.tile"
 		], {
 			attribution: "Tiles © " + 
@@ -243,12 +186,11 @@ function init(){
 			sphericalMercator: true,
 			transitionEffect: "resize",
 			buffer: 1,
-			numZoomLevels: 18
+			numZoomLevels: 20
 		}
-	);
-					  
+	);					  
 
-					
+	//Added as dummy spacer layer
 	var localTMSTiles = new OpenLayers.Layer.XYZ("Local TMS Tiles",
 	"tiles/",
 	{ 
@@ -256,9 +198,8 @@ function init(){
 		getURL: xyz_getTileURL, 
 		alpha: true, 
 		isBaseLayer: true,
-		numZoomLevels: 18	
-	});
-			
+		numZoomLevels: 20
+	});		
 
 
 	
@@ -438,18 +379,13 @@ function init(){
 		toggle:false
 	});	
 	map.addControl(prevSurveyPointsDragControl);
-	//prevSurveyPointsDragControl.activate();
-
 
 	var click = new OpenLayers.Control.Click( { trigger: function(e) {		
-
-		//if (!isEditingPoints) {
 
 		if ((isEditingPoints && unsavedEditedPoint) || !isEditingPoints) {
 			console.log("Click event");		
 			console.log("map click MOBILE");
 			var lonlat = map.getLonLatFromViewPortPx(e.xy);
-			//alert('mousedown');
 			// create some attributes for the feature			
 			//myLocation.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject() );
 			console.log("opx" + lonlat);
@@ -545,11 +481,8 @@ function init(){
 		prevSurveyPoints.addFeatures([feature]);
 	}
 	prevSurveyPoints.redraw();
-	
-	
 
 } //end of init()
-
 
 
 
@@ -570,7 +503,6 @@ function drawCandidateSurveyPoint(lon, lat,idString) {
 }
 
 
-
 //Helper method to get features from KML string
 function GetFeaturesFromKMLString(strKML) {
 	//renderers: ["SVG", "Canvas", "VML"]
@@ -581,8 +513,6 @@ function GetFeaturesFromKMLString(strKML) {
 	});
 	return format.read(strKML);
 };
-
-
 
 
 //Helper method to OSM tile URLS
