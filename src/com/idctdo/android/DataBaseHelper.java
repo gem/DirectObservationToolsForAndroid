@@ -47,6 +47,7 @@ public class DataBaseHelper extends SQLiteOpenHelper
 	private SQLiteDatabase mDataBase; 
 	private final Context mContext;
 
+	
 	public DataBaseHelper(Context context) 
 	{
 		super(context, DB_NAME, null, 1);// 1? its Database Version
