@@ -15,6 +15,7 @@
  ******************************************************************************/
 package org.globalquakemodel.org.idctdo;
 
+
 import android.app.Activity;
 import android.app.TabActivity;
 import android.os.Bundle;
@@ -191,6 +192,8 @@ public class Details_Selection extends Activity {
 				public void onNothingSelected(AdapterView<?> parent) {
 				}
 			});	
+			
+			
 			buildingPositionAttributeDictionaryCursor.close();
 			
 			spinnerBuildingShape = (Spinner)  findViewById(R.id.spinnerBuildingShape);

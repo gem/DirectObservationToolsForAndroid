@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/highlight_colour"
@@ -9,14 +10,14 @@
     android:paddingRight="5dp" >
 
     <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+        
         android:id="@+id/ScrollView01"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:fadeScrollbars="false" >
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+            
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="@color/highlight_colour"
@@ -31,7 +32,7 @@
                 android:textStyle="bold" />
 
             <RelativeLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
+                
                 android:id="@+id/rel1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -90,7 +91,7 @@
                 android:textStyle="bold" />
 
             <RelativeLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
+                
                 android:id="@+id/rel2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -145,7 +146,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
+                
                 android:id="@+id/rel3"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -197,7 +198,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
+                
                 android:id="@+id/rel4"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -214,7 +215,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:gravity="center"
-                    android:text="Ground Floor Height Above Grade (metres)"
+                    android:text="Ground Floor Height Above Grade (cm)"
                     android:textStyle="bold" />
 
                 <ListView
@@ -250,7 +251,7 @@
 
             
             <RelativeLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
+                
                 android:id="@+id/rel5"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
