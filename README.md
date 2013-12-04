@@ -20,6 +20,8 @@ Direct Observation Android Tool
 The Direct Observation Android Tool has been compiled using Eclipse 3.6.2 using version 4.2.2 of the Android SDK. The application also makes use of the JavaScript map library OpenLayers, version 2.11.
 
 Tiles (with extension png.tile) for offline usage may be downloaded using [MOBAC](http://mobac.sourceforge.net)
+
+
 [Sample OpenStreetMap (MapQuest) tiles of Pavia, Italy](http://idct.github.io/DirectObservationToolsForAndroid/sample_pavia_png_tiles.zip) ~20MB
 
 ## Application Structure
