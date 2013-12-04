@@ -8,17 +8,12 @@
         
     <!-- Splash Strings -->
    <string name="splash_title">IDCT: Mobile Field Tool</string>
-    <string name="splash_version_info">Version 0.2.12</string>
+    <string name="splash_version_info">Version 0.2.13</string>
     <string name="splash_author_info">University of Nottingham</string>
     
     <!-- Main Menu Strings" -->
     <string name="menu_title">Global Earthquake Model\nInventory Data Capture Tool\n</string>
-    <string name="modified_ems98_button">Modified EMS-98</string>
-    <string name="settings_button">Settings</string>
-    <string name="help_button">Help</string>
-    <string name="sync_data_button">Sync Data</string>
-    <string name="survey_summary_button">Summary</string>
-    <string name="map_view_button">Map View</string>
+
     
     
 </resources>
