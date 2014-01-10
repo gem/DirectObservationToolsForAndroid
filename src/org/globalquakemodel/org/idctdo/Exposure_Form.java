@@ -20,28 +20,19 @@ import android.app.TabActivity;
 import android.os.Bundle;
 
 import java.util.ArrayList;
-import java.util.UUID;
 import org.globalquakemodel.org.idctdo.R;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TabHost;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
 
 public class Exposure_Form extends Activity {
 

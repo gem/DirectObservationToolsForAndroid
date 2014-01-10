@@ -21,23 +21,17 @@ import android.app.TabActivity;
 import android.os.Bundle;
 
 import java.util.ArrayList;
-import java.util.UUID;
 import org.globalquakemodel.org.idctdo.R;
 
-import android.app.Activity;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
 
 
 
@@ -69,14 +63,7 @@ public class Age_Selection_Form extends Activity {
 	private String heightStoreysAboveGradeAttributeKey1 = "HT_GR_GF_1";		
 	private String heightStoreysAboveGradeAttributeKey2 = "HT_GR_GF_2";		
 	
-	private String slope = "SLOPE";		
-	
 	private SelectedAdapter selectedAdapter;
-	private SelectedAdapter selectedAdapter2;
-	
-	private ArrayList list;
-	private ArrayList list2;
-	
 	ListView listview;
 	ListView listview2;
 

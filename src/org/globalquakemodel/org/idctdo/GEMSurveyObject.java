@@ -17,8 +17,6 @@ package org.globalquakemodel.org.idctdo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.UUID;
-
 import android.app.Application;
 import android.util.Log;
 

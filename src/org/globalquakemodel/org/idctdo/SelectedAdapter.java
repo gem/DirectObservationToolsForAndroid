@@ -21,10 +21,8 @@ package org.globalquakemodel.org.idctdo;
 
 
 import java.util.ArrayList;
-import java.util.List;
 import org.globalquakemodel.org.idctdo.R;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;

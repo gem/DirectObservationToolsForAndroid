@@ -21,27 +21,21 @@ import android.app.TabActivity;
 import android.os.Bundle;
 
 import java.util.ArrayList;
-import java.util.UUID;
 import org.globalquakemodel.org.idctdo.R;
 
-import android.app.Activity;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.graphics.Point;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
 
 
 public class Material_Selection_Transverse_Form2 extends Activity {
@@ -73,7 +67,6 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 	private SelectedAdapter selectedAdapter4;
 	private SelectedAdapter selectedAdapter5;
 
-	private ArrayList list;
 	public ArrayList<DBRecord> secondLevelAttributesList;
 	public ArrayList<DBRecord> thirdLevelAttributesList;
 	public ArrayList<DBRecord> fourthLevelAttributesList;
@@ -126,7 +119,7 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 	protected void onResume() {
 		super.onResume();
 
-		SecondTabsActivity a = (SecondTabsActivity)getParent();		
+		getParent();		
 		surveyDataObject = (GEMSurveyObject)getApplication();	
 
 
@@ -446,7 +439,7 @@ public class Material_Selection_Transverse_Form2 extends Activity {
 	public void updateListViewHeights(int layoutCode) {		
 		int measuredWidth = 0;  
 		int measuredHeight = 0;  
-		Point size = new Point();
+		new Point();
 		WindowManager w = getWindowManager();		
 		Display d = w.getDefaultDisplay(); 
 		measuredWidth = d.getWidth(); 

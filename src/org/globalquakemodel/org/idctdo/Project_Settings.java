@@ -16,21 +16,14 @@
 package org.globalquakemodel.org.idctdo;
 
 import android.app.Activity;
-import android.app.TabActivity;
 import android.os.Bundle;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.UUID;
 import org.globalquakemodel.org.idctdo.R;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
@@ -43,15 +36,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TabHost;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 public class Project_Settings extends Activity {
 
 	public boolean DEBUG_LOG = true; 
 
-	private ArrayList list;
 	public ArrayList<DBRecord> lLrsd;
 
 
@@ -66,24 +56,11 @@ public class Project_Settings extends Activity {
 	public GEMSurveyObject surveyDataObject;
 
 	public EditText editTextSurveyComment;
-	private String commentsAttributeKey = "COMMENTS";
-
 	public EditText projectName;
 	public EditText projectSummary;
 	public EditText surveyorName;
 	public Date surveyDate;
 	
-	private String projectNameAttributeKey = "PROJ_NAME";
-
-	private String buildingPositionAttributeDictionary = "DIC_POSITION";
-	private String buildingPositionAttributeKey = "POSITION";
-
-	private String buildingShapeAttributeDictionary = "DIC_PLAN_SHAPE";
-	private String buildingShapeAttributeKey = "PLAN_SHAPE";
-
-	private String nonStructuralExteriorWallsDictionary = "DIC_NONSTRUCTURAL_EXTERIOR_WALLS";
-	private String nonStructuralExteriorWallsAttributeKey = "NONSTRCEXW";
-
 	public Spinner spinnerProjectSelection;
 	public Spinner spinnerBuildingShape;
 	public Spinner spinnerNonStructuralExteriorWalls;
@@ -225,9 +202,8 @@ public class Project_Settings extends Activity {
 			mDbHelper.open();
 			
 			DatePicker datePicker = (DatePicker) findViewById(R.id.datePicker1);
-			int day = datePicker.getDayOfMonth();
-			int month = datePicker.getMonth() + 1;
-			int year = datePicker.getYear();
+			datePicker.getDayOfMonth();
+			datePicker.getYear();
 			
 			Date date = new Date(datePicker.getYear() - 1900, datePicker.getMonth(), datePicker.getDayOfMonth());
 			

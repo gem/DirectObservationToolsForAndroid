@@ -20,23 +20,15 @@ import android.app.TabActivity;
 import android.os.Bundle;
 
 import java.util.ArrayList;
-import java.util.UUID;
 import org.globalquakemodel.org.idctdo.R;
 
-import android.app.Activity;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
 
 public class LLRS_Selection_Transverse_Form extends Activity {
 	
@@ -50,8 +42,6 @@ public class LLRS_Selection_Transverse_Form extends Activity {
 	
 
 	private String topLevelAttributeDictionary = "DIC_LLRS";
-	private String topLevelAttributeKey = "LLRS_L";
-	
 	private String secondLevelAttributeDictionary = "DIC_LLRS_DUCTILITY";
 	private String secondLevelAttributeKey = "LLRS_DUCT_L";
 	
@@ -59,7 +49,6 @@ public class LLRS_Selection_Transverse_Form extends Activity {
 	private SelectedAdapter selectedAdapter;
 	private SelectedAdapter selectedAdapter2;
 
-	private ArrayList list;
 	public ArrayList<DBRecord> lLrsd;
 
 	ListView listview;
