@@ -59,7 +59,6 @@ public class LLRS_Selection_Longitudinal_Form extends Activity {
 	private SelectedAdapter selectedAdapter;
 	private SelectedAdapter selectedAdapter2;
 
-	private ArrayList list;
 	public ArrayList<DBRecord> lLrsd;
 
 

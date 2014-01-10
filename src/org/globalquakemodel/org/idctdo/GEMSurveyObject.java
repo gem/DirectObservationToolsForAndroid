@@ -78,8 +78,7 @@ public class GEMSurveyObject extends Application {
 		return this.currentSurveyPointLat;
 	}
 	
-	public String getComment(){
-		
+	public String getComment(){		
 		return null;
 	}
 	
@@ -100,27 +99,22 @@ public class GEMSurveyObject extends Application {
 	}
 	
 	public String getSurveyDataValue(String key) {			
-		//Log.d("IDCT","HASHMAP : " + surveyData.toString());
 		return surveyData.get(key);
 	}
 	
 	public String getGedDataValue(String key) {			
-		//Log.d("IDCT","HASHMAP : " + surveyData.toString());
 		return gedData.get(key);
 	}
 	public String getConsequencesDataValue(String key) {			
-		//Log.d("IDCT","HASHMAP : " + surveyData.toString());
 		return consequencesData.get(key);
 	}
 	
 	public boolean putGedData(String key, String value) {		
 		gedData.put(key, value);
-		//Log.d("IDCT","HASHMAP : " + surveyData.toString());
 		return true;
 	}
 	public boolean putConsequencesData(String key, String value) {		
 		consequencesData.put(key, value);
-		//Log.d("IDCT","HASHMAP : " + surveyData.toString());
 		return true;
 	}
 	
@@ -131,7 +125,6 @@ public class GEMSurveyObject extends Application {
 		map.put(key3, value3);
 		map.put(key4, value4);
 		mediaDetailDataList.add(map);
-		//Log.d("IDCT","HASHMAP : " + surveyData.toString());
 		return true;
 	}
 	
@@ -161,7 +154,6 @@ public class GEMSurveyObject extends Application {
 		consequencesData = new HashMap<String, String>();
 		setData(0);
 	}
-	
 	
 }
 

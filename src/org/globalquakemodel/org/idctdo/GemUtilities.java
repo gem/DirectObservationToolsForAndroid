@@ -47,7 +47,7 @@ public class GemUtilities {
 			mArrayList.add(o1);
 			mCursor.moveToNext();
 		}
-		
+
 		if (addBlankTopRow.length > 0) {
 			if (DEBUG_LOG) Log.d("IDCT","Prepending a blank value to ArrayList");
 			DBRecord o1 = new DBRecord();		
@@ -81,11 +81,11 @@ public class GemUtilities {
 			for(DBRecord d : listOfTheseObjects){
 				if (DEBUG_LOG) Log.d("IDCT", "Looping thring arraylist of selectedAdapter " + i);
 				if (DEBUG_LOG) Log.d("IDCT", "Comparing val: " + d.getAttributeValue() + " with: " + attributeValue);
-				
+
 				//if(d.getAttributeValue().contains(attributeValue)) {
 				if(d.getAttributeValue().equals(attributeValue.toString())) {
 					if (DEBUG_LOG) Log.d("IDCT", "MATCH!" );		
-	
+
 					lv.setSelection(i,true);
 					return true;
 				}
@@ -265,7 +265,7 @@ public class GemUtilities {
 		if (!isBlank(pageToLoad)) {
 			try {		
 
-			
+
 				String sdcardpath = Environment.getExternalStorageDirectory().toString()+ "/idctdo/glossary/";
 				String dst= Environment.getExternalStorageDirectory().toString()+ "/idctdo/glossary_cleaned/";
 
