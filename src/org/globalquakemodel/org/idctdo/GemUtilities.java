@@ -214,7 +214,7 @@ public class GemUtilities {
 
 
 	public static String loadHelpFileNames(String strToCheck) {
-		File folder = new File("file:///android_asset/glossary");
+		new File("file:///android_asset/glossary");
 		//if (DEBUG_LOG) Log.d(TAG,"help loading");
 		String pageToLoad = "";
 		try {
@@ -222,7 +222,6 @@ public class GemUtilities {
 			int d = 0;
 			int lowestD = 1000;
 			int lowestIndex = -1;
-			String matched = "";
 			for( int i = 0; i < files.length - 1; i++) {				
 				String filename = files[i].getName();
 				String element = filename.substring(0, filename.lastIndexOf('.'));    
@@ -235,7 +234,6 @@ public class GemUtilities {
 				if (d < lowestD) {
 					lowestD = d;
 					lowestIndex = i;
-					matched = element;
 				}
 			}
 

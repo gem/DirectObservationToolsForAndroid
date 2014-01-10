@@ -86,7 +86,7 @@ public class Consequences_Form extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		MainTabActivity a = (MainTabActivity)getParent();
+		getParent();
 		surveyDataObject = (GEMSurveyObject)getApplication();
 		
 		//if (a.isTabCompleted(tabIndex)) {
@@ -181,8 +181,7 @@ public class Consequences_Form extends Activity {
 			editTextNumberOfMissing.setText(surveyDataObject.getConsequencesDataValue(attributeKey3));
 			editTextConsequencesComments.setText(surveyDataObject.getConsequencesDataValue(attributeKey4));
 
-			boolean result = false;	
-			result= selectedAdapter.loadPreviousAtttributes(listview, topLevelAttributeKey,surveyDataObject.getConsequencesDataValue(topLevelAttributeKey));
+			selectedAdapter.loadPreviousAtttributes(listview, topLevelAttributeKey,surveyDataObject.getConsequencesDataValue(topLevelAttributeKey));
 
 			
 			

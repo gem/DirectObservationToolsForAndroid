@@ -40,7 +40,6 @@ public class Details_Selection extends Activity {
 	
 	public boolean DEBUG_LOG = false; 
 	
-	private ArrayList list;
 	public ArrayList<DBRecord> lLrsd;
 
 	ListView listview;
@@ -243,10 +242,9 @@ public class Details_Selection extends Activity {
 			editTextDirectionX.setText(surveyDataObject.getSurveyDataValue(directionXKey));
 			editTextDirectionY.setText(surveyDataObject.getSurveyDataValue(directionYKey));
 							
-			boolean result = false;	
-			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerBuildingPosition, buildingPositionAttributesList, buildingPositionAttributeKey,surveyDataObject.getSurveyDataValue(buildingPositionAttributeKey));
-			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerBuildingShape, buildingShapeAttributesList, buildingShapeAttributeKey,surveyDataObject.getSurveyDataValue(buildingShapeAttributeKey));
-			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerNonStructuralExteriorWalls, nonStructuralExteriorWallsAttributesList, nonStructuralExteriorWallsAttributeKey,surveyDataObject.getSurveyDataValue(nonStructuralExteriorWallsAttributeKey));				
+			GemUtilities.loadPreviousAtttributesSpinner(spinnerBuildingPosition, buildingPositionAttributesList, buildingPositionAttributeKey,surveyDataObject.getSurveyDataValue(buildingPositionAttributeKey));
+			GemUtilities.loadPreviousAtttributesSpinner(spinnerBuildingShape, buildingShapeAttributesList, buildingShapeAttributeKey,surveyDataObject.getSurveyDataValue(buildingShapeAttributeKey));
+			GemUtilities.loadPreviousAtttributesSpinner(spinnerNonStructuralExteriorWalls, nonStructuralExteriorWallsAttributesList, nonStructuralExteriorWallsAttributeKey,surveyDataObject.getSurveyDataValue(nonStructuralExteriorWallsAttributeKey));				
 		}//end tab is completed check
 		
 		surveyDataObject.lastEditedAttribute = "";

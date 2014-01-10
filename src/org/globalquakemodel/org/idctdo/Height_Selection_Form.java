@@ -40,12 +40,6 @@ public class Height_Selection_Form extends Activity {
 	private String topLevelAttributeKey = "STORY_AG_Q";
 	
 	private String heightTopLevelAttributeDictionary2 = "DIC_HEIGHT_QUALIFIER";
-	private String topLevelAttributeKey2 = "STORY_AG_Q";	
-	
-	private String heightTopLevelAttributeDictionary3 = "DIC_HEIGHT_QUALIFIER";
-	private String topLevelAttributeKey3 = "STORY_AG_Q";	
-	
-	
 	/*	
 	private String topLevelAttributeType = "DATE";
 	private String heightLevelAttributeType = "HEIGHT";
@@ -57,10 +51,6 @@ public class Height_Selection_Form extends Activity {
 	private SelectedAdapter selectedAdapter;
 	private SelectedAdapter selectedAdapter2;
 	private SelectedAdapter selectedAdapter3;
-	
-	private ArrayList list;
-	private ArrayList list2;
-	private ArrayList list3;
 	
 	ListView listview;
 	ListView listview2;

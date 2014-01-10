@@ -65,10 +65,6 @@ public class Roof_Selection_Form extends Activity {
 
 	private SelectedAdapter selectedAdapter;
 	private SelectedAdapter selectedAdapter2;
-	private SelectedAdapter selectedAdapter3;
-	private SelectedAdapter selectedAdapter4;
-
-	private ArrayList list;
 	public ArrayList<DBRecord> secondLevelAttributesList;
 
 

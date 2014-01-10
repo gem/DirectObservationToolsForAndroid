@@ -60,7 +60,6 @@ public class Irregularity_Selection_Form extends Activity {
 	private SelectedAdapter selectedAdapter5;
 
 
-	private ArrayList list;
 	public ArrayList<DBRecord> secondLevelAttributesList;
 	public ArrayList<DBRecord> secondLevelAttributesListPart2;
 	public ArrayList<DBRecord> thirdLevelAttributesList;

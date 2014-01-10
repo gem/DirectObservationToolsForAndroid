@@ -763,7 +763,7 @@ public class GemDbAdapter
 		try
 		{					
 			ContentValues cv = new ContentValues();
-			UUID id = UUID.randomUUID();
+			UUID.randomUUID();
 			cv.put("KEY", favouriteName.toString() + "_FAV");
 			cv.put("VALUE", uidString.toString());
 			mDb.insert("SETTINGS", null, cv);
@@ -813,7 +813,7 @@ public class GemDbAdapter
 		try
 		{					
 			ContentValues cv = new ContentValues();
-			UUID id = UUID.randomUUID();
+			UUID.randomUUID();
 			cv.put("KEY", "CURRENT_USER");
 			cv.put("VALUE",surveyorName.toString());
 			mDb.insert("SETTINGS", null, cv);
@@ -828,7 +828,7 @@ public class GemDbAdapter
 		try
 		{					
 			ContentValues cv = new ContentValues();
-			UUID id = UUID.randomUUID();
+			UUID.randomUUID();
 			cv.put("KEY", "GEM_VERSION");
 			cv.put("VALUE",appVer);
 			mDb.insert("SETTINGS", null, cv);
@@ -966,11 +966,6 @@ public class GemDbAdapter
 				if (DEBUG_LOG) Log.d(TAG,"inserting record in db " + gemGlobalVariables.getUid());	
 				mDb.insert("GED", null, cv);
 			}
-
-
-			//mDb.insert("GED", null, cv);
-			String feedbackMsg = "GED Data saved\n ";
-			//Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
 		}
 		catch (SQLException mSQLException) 
 		{
@@ -1012,11 +1007,6 @@ public class GemDbAdapter
 				if (DEBUG_LOG) Log.d(TAG,"inserting record in db " + gemGlobalVariables.getUid());	
 				mDb.insert("CONSEQUENCES", null, cv);
 			}
-
-
-			//mDb.insert("CONSEQUENCES", null, cv);
-			String feedbackMsg = "CONSEQUENCES Data saved\n";
-			//Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
 		}
 		catch (SQLException mSQLException) 
 		{

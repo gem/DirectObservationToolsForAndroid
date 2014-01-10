@@ -121,7 +121,6 @@ public class EQForm_MapView extends Activity {
 	public long minTimePositionUpdates = 0; //30000
 	public float minDistPositionUpdates = 0; //10f
 
-	private int mProgressStatus = 0;
 	private ProgressDialog mProgressDialog;
 	private ProgressBarAsync mProgressbarAsync;
 
@@ -267,12 +266,9 @@ public class EQForm_MapView extends Activity {
         mProgressDialog.setMessage("Loading map data...");
         
                 
-		//Save the path as a string value
-		String extStorageDirectory = vectorsFile.toString();
-		//SingleMediaScanner scan2 = new SingleMediaScanner(this, vectorsFile);
-		//SingleMediaScanner scan3 = new SingleMediaScanner(this, mapTilesFile);
-		SingleMediaScanner scan2 = new SingleMediaScanner(this, testFile);
-		SingleMediaScanner scan3 = new SingleMediaScanner(this, testFile2);
+		vectorsFile.toString();
+		new SingleMediaScanner(this, testFile);
+		new SingleMediaScanner(this, testFile2);
 
 
 		sdCardPath = "file:///" +  Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
@@ -616,7 +612,6 @@ public class EQForm_MapView extends Activity {
 			mDbHelper.close();	
 
 
-			int selected = -1; // does not select anything			
 			ArrayList<DBRecord> buildingPositionAttributesList = GemUtilities.cursorToArrayList(favouritesCursor);
 			final ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(mContext,android.R.layout.simple_list_item_1,buildingPositionAttributesList );
 
@@ -679,7 +674,7 @@ public class EQForm_MapView extends Activity {
 
 
 			getSurveyPoint();
-			GEMSurveyObject g = (GEMSurveyObject)getApplication();
+			getApplication();
 			UUID mediaId = UUID.randomUUID();
 			FILENAME = "" + mediaId.toString();	
 			//Button CameraButton;
@@ -695,10 +690,6 @@ public class EQForm_MapView extends Activity {
 			takePic.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, FilenameUri);
 			takePic.putExtra("return-data", true);				
 			startActivityForResult(takePic, CAMERA_RESULT);
-
-			/*1
-			Intent PreviousPage = new Intent (EQForm_MapView.this, EQForm_ModifiedEMS_Camera.class);
-			startActivity(PreviousPage);*/
 		}
 	};
 
@@ -732,7 +723,6 @@ public class EQForm_MapView extends Activity {
 						@Override
 						public void onClick(DialogInterface dialog,	int which) {
 							if (DEBUG_LOG) Log.d(TAG,"selected "+choiceList[which]);
-							int index = 1;
 							if (which > 3) { //If not one of the standard OSM or Bing web access layers								
 								//String tileLocationPath = "file:////mnt/sdcard/idctdo/maptiles/laquila_mapquest/";
 								String tileLocationPath = sdCardPath +  "idctdo/maptiles/" + choiceList[which] +"/";
@@ -768,7 +758,6 @@ public class EQForm_MapView extends Activity {
 			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 			builder.setTitle("Select Vector Layer To Show");	
 
-			int selected = -1; // does not select anything
 			final CharSequence[] choiceList = getVectorLayers();
 			if (vectorsListDisplayState == null) { 
 				vectorsListDisplayState = new boolean[choiceList.length];
@@ -787,7 +776,6 @@ public class EQForm_MapView extends Activity {
 	
 								
 								
-								int index = 1;
 								File extStore = Environment.getExternalStorageDirectory();
 								String kmlPath = extStore.getAbsolutePath() + "/idctdo/kml/" + choiceList[which];
 								
@@ -1024,7 +1012,7 @@ public class EQForm_MapView extends Activity {
 							// Do something with value!
 							//Toast.makeText(this, "Photo captured", Toast.LENGTH_SHORT).show();
 							GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();				
-							UUID mediaUid = UUID.randomUUID();
+							UUID.randomUUID();
 							surveyDataObject.putMediaData(
 									"MEDIA_UID", FILENAME,
 									"MEDIA_TYPE", "PHOTO",
@@ -1040,7 +1028,7 @@ public class EQForm_MapView extends Activity {
 							// Canceled.
 							//Toast.makeText(this, "Photo captured", Toast.LENGTH_SHORT).show();
 							GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();				
-							UUID mediaUid = UUID.randomUUID();
+							UUID.randomUUID();
 							surveyDataObject.putMediaData(
 									
 									"MEDIA_UID", FILENAME,
@@ -1192,7 +1180,6 @@ public class EQForm_MapView extends Activity {
 
 		File[] listOfFiles = mapTilesFile.listFiles(); 
 		ArrayList<CharSequence> choiceList = new ArrayList();
-		int j = 0;
 		for (int i = 0; i < listOfFiles.length; i++) 	{
 			if (listOfFiles[i].isDirectory()) {
 				file = listOfFiles[i].getName();		
@@ -1211,7 +1198,6 @@ public class EQForm_MapView extends Activity {
 		String files;
 		File[] listOfFiles = vectorsFile.listFiles(); 
 		ArrayList<CharSequence> choiceList = new ArrayList();
-		int j = 0;
 		for (int i = 0; i < listOfFiles.length; i++) {
 			if (listOfFiles[i].isFile()) 	{
 				files = listOfFiles[i].getName();
@@ -1422,7 +1408,6 @@ public class EQForm_MapView extends Activity {
 					//Escape the string
 					String escaped = StringEscapeUtils.escapeJava(kmlString);
 					int packingVar1= 1;
-					int packingVar2= 1;
 					mWebView.loadUrl("javascript:addKmlStringToMap2("+packingVar1 +", \"" +   layerFileName +"\", \"" +  escaped+ "\")");
 
 

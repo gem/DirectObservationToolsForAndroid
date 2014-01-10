@@ -36,7 +36,6 @@ import android.widget.TabHost;
 
 public class Exposure_Form extends Activity {
 
-	private ArrayList list;
 	public ArrayList<DBRecord> lLrsd;
 
 	public TabActivity tabActivity;
@@ -74,7 +73,6 @@ public class Exposure_Form extends Activity {
 	private String attributeKey4 = "NUM_DWELL";
 	private String attributeKey5 = "PLAN_AREA";
 	private String attributeKey6 = "REPLC_COST";
-	private String attributeKey7 = "CURRENCY";
 	private String attributeKey8 = "COMMENTS";
 
 	@Override
@@ -101,7 +99,7 @@ public class Exposure_Form extends Activity {
 	protected void onResume() {
 		super.onResume();
 
-		MainTabActivity a = (MainTabActivity)getParent();
+		getParent();
 		surveyDataObject = (GEMSurveyObject)getApplication();
 
 		//if (a.isTabCompleted(tabIndex)) {
@@ -239,8 +237,7 @@ public class Exposure_Form extends Activity {
 			editTextExposureComments.setText(surveyDataObject.getGedDataValue(attributeKey8));
 	
 					
-			boolean result = false;	
-			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerCurrency, topLevelAttributesList, topLevelAttributeKey,surveyDataObject.getGedDataValue(topLevelAttributeKey));
+			GemUtilities.loadPreviousAtttributesSpinner(spinnerCurrency, topLevelAttributesList, topLevelAttributeKey,surveyDataObject.getGedDataValue(topLevelAttributeKey));
 				
 		//}//End tab completed check
 			surveyDataObject.lastEditedAttribute = "";

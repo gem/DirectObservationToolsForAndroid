@@ -126,7 +126,7 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 	protected void onResume() {
 		super.onResume();
 
-		SecondTabsActivity a = (SecondTabsActivity)getParent();		
+		getParent();		
 		surveyDataObject = (GEMSurveyObject)getApplication();	
 
 		//if (a.isSecondaryTabCompleted()) {
@@ -471,7 +471,7 @@ public class Material_Selection_Longitudinal_Form2 extends Activity {
 	public void updateListViewHeights(int layoutCode) {		
 		int measuredWidth = 0;  
 		int measuredHeight = 0;  
-		Point size = new Point();
+		new Point();
 		WindowManager w = getWindowManager();		
 		Display d = w.getDefaultDisplay(); 
 		measuredWidth = d.getWidth(); 

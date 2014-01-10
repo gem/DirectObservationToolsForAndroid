@@ -306,13 +306,13 @@ public class MainTabActivity extends TabActivity {
 		.setContent(intentPageEight);
 
 		Intent intentPageNine = new Intent().setClass(this, Structure_Selection_Form.class);
-		TabSpec tabSpecPageNine = tabHost
+		tabHost
 		.newTabSpec("Page 9")
 		.setIndicator("Struc", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageNine);
 
 		Intent intentPageTen = new Intent().setClass(this, Height_Selection_Form.class);
-		TabSpec tabSpecPageTen = tabHost
+		tabHost
 		.newTabSpec("Page 10")
 		.setIndicator("Height", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageTen);
@@ -604,7 +604,7 @@ public class MainTabActivity extends TabActivity {
 
 			//getSurveyPoint();
 
-			GEMSurveyObject g = (GEMSurveyObject)getApplication();
+			getApplication();
 			UUID mediaId = UUID.randomUUID();
 			FILENAME = "" + mediaId.toString();	
 			//Button CameraButton;
@@ -817,10 +817,6 @@ public class MainTabActivity extends TabActivity {
 		String pageToLoad = "";
 		try {
 			String[] elements = listFiles("glossary/glossary_cleaned","nothing");
-			int d = 0;
-			int lowestD = 1000;
-			int lowestIndex = -1;
-			String matched = "";
 			if (DEBUG_LOG) Log.d(TAG,"starting match loop for elements. " + elements.length);
 			for( int i = 0; i < elements.length; i++)
 			{				
@@ -986,7 +982,7 @@ public class MainTabActivity extends TabActivity {
 
 							//Toast.makeText(this, "Photo captured", Toast.LENGTH_SHORT).show();
 							GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();				
-							UUID mediaUid = UUID.randomUUID();
+							UUID.randomUUID();
 							surveyDataObject.putMediaData(
 									"MEDIA_UID", FILENAME,
 									"MEDIA_TYPE", "PHOTO",
@@ -1001,7 +997,7 @@ public class MainTabActivity extends TabActivity {
 							// Canceled.
 							//Toast.makeText(this, "Photo captured", Toast.LENGTH_SHORT).show();
 							GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();				
-							UUID mediaUid = UUID.randomUUID();
+							UUID.randomUUID();
 							surveyDataObject.putMediaData(
 									"MEDIA_UID", FILENAME,
 									"MEDIA_TYPE", "PHOTO",

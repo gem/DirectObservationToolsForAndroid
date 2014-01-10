@@ -49,9 +49,6 @@ public class Structure_Selection_Form extends Activity {
 	private SelectedAdapter selectedAdapter;
 	private SelectedAdapter selectedAdapter2;
 	
-	private ArrayList list;
-	private ArrayList list2;
-	
 	ListView listview;
 	ListView listview2;
 

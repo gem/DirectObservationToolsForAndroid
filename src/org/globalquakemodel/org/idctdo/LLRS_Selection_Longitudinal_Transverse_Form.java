@@ -54,15 +54,12 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 	private String llrsQualifierAttributeDictionary = "DIC_LLRS_QUAL";
 	private String llrsQualifierAttributeKey = "LLRS_QUAL";
 
-	private SelectedAdapter selectedAdapter;
 	private SelectedAdapter selectedAdapter2;
 	private SelectedAdapter selectedAdapter3;
 	private SelectedAdapter selectedAdapter4;
 	private SelectedAdapter selectedAdapter5;
 
 	public Spinner spinnerLlrsQualifier;
-
-	private ArrayList list;
 
 	public ArrayList<DBRecord> lLrs;
 	public ArrayList<DBRecord> lLrsd;
@@ -222,13 +219,12 @@ public class LLRS_Selection_Longitudinal_Transverse_Form extends Activity {
 			});
 
 
-			boolean result = false;			
-			result= selectedAdapter2.loadPreviousAtttributes(listview2, topLevelAttributeKeyLongitudinal,surveyDataObject.getSurveyDataValue(topLevelAttributeKeyLongitudinal));
-			result= selectedAdapter3.loadPreviousAtttributes(listview3, secondLevelAttributeKeyLongitudinal,surveyDataObject.getSurveyDataValue(secondLevelAttributeKeyLongitudinal));
-			result= selectedAdapter4.loadPreviousAtttributes(listview4, topLevelAttributeKeyTransverse,surveyDataObject.getSurveyDataValue(topLevelAttributeKeyTransverse));
-			result= selectedAdapter5.loadPreviousAtttributes(listview5, secondLevelAttributeKeyTransverse,surveyDataObject.getSurveyDataValue(secondLevelAttributeKeyTransverse));
+			selectedAdapter2.loadPreviousAtttributes(listview2, topLevelAttributeKeyLongitudinal,surveyDataObject.getSurveyDataValue(topLevelAttributeKeyLongitudinal));
+			selectedAdapter3.loadPreviousAtttributes(listview3, secondLevelAttributeKeyLongitudinal,surveyDataObject.getSurveyDataValue(secondLevelAttributeKeyLongitudinal));
+			selectedAdapter4.loadPreviousAtttributes(listview4, topLevelAttributeKeyTransverse,surveyDataObject.getSurveyDataValue(topLevelAttributeKeyTransverse));
+			selectedAdapter5.loadPreviousAtttributes(listview5, secondLevelAttributeKeyTransverse,surveyDataObject.getSurveyDataValue(secondLevelAttributeKeyTransverse));
 
-			result = GemUtilities.loadPreviousAtttributesSpinner(spinnerLlrsQualifier, llrsQualifierAttributesList , llrsQualifierAttributeKey,surveyDataObject.getSurveyDataValue(llrsQualifierAttributeKey));
+			GemUtilities.loadPreviousAtttributesSpinner(spinnerLlrsQualifier, llrsQualifierAttributesList , llrsQualifierAttributeKey,surveyDataObject.getSurveyDataValue(llrsQualifierAttributeKey));
 
 
 		}//End of tab completed check
