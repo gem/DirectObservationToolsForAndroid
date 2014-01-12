@@ -918,8 +918,7 @@ public class GemDbAdapter
 						cv.put(key, value);
 					} else{
 						cv.putNull(key);
-					}						
-					cv.put(key, value);
+					}									
 				}
 				Log.d(TAG, "GEM Media DetailValues: " + cv.toString());
 				mDb.insert("MEDIA_DETAIL", null, cv);	

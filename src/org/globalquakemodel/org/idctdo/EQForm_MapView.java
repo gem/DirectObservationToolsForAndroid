@@ -586,7 +586,6 @@ public class EQForm_MapView extends Activity {
 						btn_edit_points.setChecked(false);
 					}
 				});
-
 				//Is in editing state, could prompt to save these changes	
 			} else {
 				//promptForSavingEdits();
@@ -610,7 +609,6 @@ public class EQForm_MapView extends Activity {
 			mDbHelper.open();
 			Cursor favouritesCursor = mDbHelper.getGemFavourites();
 			mDbHelper.close();	
-
 
 			ArrayList<DBRecord> buildingPositionAttributesList = GemUtilities.cursorToArrayList(favouritesCursor);
 			final ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(mContext,android.R.layout.simple_list_item_1,buildingPositionAttributesList );
@@ -642,10 +640,8 @@ public class EQForm_MapView extends Activity {
 			});
 
 			AlertDialog alert = builder.create();
-
 			alert.show();
 			favouritesCursor.close();
-
 			//Stop any geometry editing			
 			mWebView.loadUrl("javascript:startEditingMode(false)");
 			isEditingPoints = false;
@@ -661,17 +657,14 @@ public class EQForm_MapView extends Activity {
 					//btn_take_survey_photo.setVisibility(View.VISIBLE);//Poss Dodgy threading stuff using this
 				}
 			});
-
 		}
 	};
-
 
 	private OnClickListener takePhotoListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			//addPoint();
 			if (DEBUG_LOG) Log.d(TAG,"camera class");
-
 
 			getSurveyPoint();
 			getApplication();
@@ -681,7 +674,6 @@ public class EQForm_MapView extends Activity {
 			//mAppSettings = getSharedPreferences(APP_SETTINGS, MODE_PRIVATE);
 			//FILENAME = (mAppSettings.getString(APP_SETTINGS_FILE_NAME, ""));				
 			Filename = Environment.getExternalStorageDirectory().getAbsolutePath() + "/idctdo/gemmedia/" + FILENAME +".jpg";
-
 
 			if (DEBUG_LOG) Log.d(TAG,"CAMERA IMAGE FILENAME: " + Filename.toString());
 			ImageFile = new File(Filename);
