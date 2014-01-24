@@ -9,9 +9,9 @@ Direct Observation Android Tool
 
 
 
-[Release 0.2.14 apk](http://idct.github.io/DirectObservationToolsForAndroid/idct.apk) ~32MB
+[Release 0.2.14 apk](http://gem.github.io/DirectObservationToolsForAndroid/idct.apk) ~32MB
 
-![ScreenShot](http://idct.github.io/DirectObservationToolsForAndroid/download.png)
+![ScreenShot](http://gem.github.io/DirectObservationToolsForAndroid/download.png)
 
 
 
@@ -22,7 +22,7 @@ The Direct Observation Android Tool has been compiled using Eclipse 3.6.2 using 
 Tiles (with extension png.tile) for offline usage may be downloaded using [MOBAC](http://mobac.sourceforge.net)
 
 
-[Sample OpenStreetMap (MapQuest) tiles of Pavia, Italy](http://idct.github.io/DirectObservationToolsForAndroid/sample_pavia_png_tiles.zip) ~20MB
+[Sample OpenStreetMap (MapQuest) tiles of Pavia, Italy](http://gem.github.io/DirectObservationToolsForAndroid/sample_pavia_png_tiles.zip) ~20MB
 
 ## Application Structure
 
