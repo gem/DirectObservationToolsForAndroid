@@ -45,16 +45,14 @@ var editingPointGemId = 0;
 
 var ll;
 
-var bingApiKey = "AqTGBsziZHIJYYxgivLBf0hVdrAk9mWO5cQcb8Yux8sW5M8c8opEC2lZqKR1ZZXf";
+// Updated Bing API Key, fixes issue 11:
+// https://github.com/gem/DirectObservationToolsForAndroid/issues/11
+var bingApiKey = "Au1pvDVsDE5shJGLak2j1NZ8VSsQ9hcME9MO4BTOUiObFDsfAd-u8PNSqkywGHPB";
 
-
-						 
 OpenLayers.Util.onImageLoadError = function () {
     this.src = "img/close.gif";
 }
 
-						 
- 	
 OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {
 		  defaultHandlerOptions: {
 			'single': true,
@@ -101,23 +99,45 @@ function init(){
 	if (DEBUG_SHOW_LAYER_SWITCHER) {
 		map.addControl(new OpenLayers.Control.LayerSwitcher({ roundedCornerColor : '#000000' }));
     }
-	
-            
-	 var mapnik =   new OpenLayers.Layer.OSM("OpenStreetMap", 
+
+    /*
+     * Use Carto Positron basemap as default
+     * "Our basemaps can be used in any .js and Leaflet map you make"
+     * https://carto.com/location-data-services/basemaps/
+     *
+     * Fixes issue 10:
+     * https://github.com/gem/DirectObservationToolsForAndroid/issues/10
+     */
+	var cartoLightOSM =   new OpenLayers.Layer.OSM("Carto Positron (OSM)",
             [
-                "http://otile1.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.png",
-                 "http://otile2.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.png",
-                  "http://otile3.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.png",
-                   "http://otile4.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.png"
-            ], 
+                "http://a.basemaps.cartocdn.com/light_all/${z}/${x}/${y}.png",
+                "http://b.basemaps.cartocdn.com/light_all/${z}/${x}/${y}.png",
+                "http://c.basemaps.cartocdn.com/light_all/${z}/${x}/${y}.png",
+                "http://d.basemaps.cartocdn.com/light_all/${z}/${x}/${y}.png"
+            ],
             {
-            eventListeners: {
-                //tileloaded: updateStatus
+            	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attributions">Carto</a>',
             }
-    });
-   
-	
-	
+    );
+
+    /*
+     * The OpenStreetMap layer works well, but the OSM Tile Usage Policy explicitly forbids
+     * "distributing an app that uses tiles from openstreetmap.org" without permission
+     * http://wiki.openstreetmap.org/wiki/Tile_usage_policy
+     *
+     * TODO check with OSM
+     *
+	 var osm =   new OpenLayers.Layer.OSM("OSM",
+            [
+                "http://a.tile.openstreetmap.org/${z}/${x}/${y}.png",
+                "http://b.tile.openstreetmap.org/${z}/${x}/${y}.png",
+                "http://c.tile.openstreetmap.org/${z}/${x}/${y}.png"
+            ],
+            {
+            	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attributions">Carto</a>',
+            }
+     );
+    */
 	/*
     var gphy = new OpenLayers.Layer.Google(
         "Google Physical",
@@ -134,7 +154,7 @@ function init(){
     var gsat = new OpenLayers.Layer.Google(
         "Google Satellite",
         {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
-    );	
+    );
 	*/
 	
 	var bingRoads = new OpenLayers.Layer.Bing({
@@ -216,8 +236,8 @@ function init(){
 	});
 	
 	
-	map.addLayers([mapnik,bingHybrid,bingRoads,bingAerial,myPositions,locationPointLayer,prevSurveyPoints,sdtiles,localTMSTiles]);	
-	
+	map.addLayers([cartoLightOSM,bingHybrid,bingRoads,bingAerial,myPositions,locationPointLayer,prevSurveyPoints,sdtiles,localTMSTiles]);
+
 	/* Causing issues at the moment*/
 	//Browser caching
 	if (DEBUG_USE_BROWSER_CACHING) {

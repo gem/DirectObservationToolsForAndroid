@@ -105,7 +105,7 @@
                 </ListView>
 
                 <EditText
-                    android:id="@+id/editText3"
+                    android:id="@+id/editText3b"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -115,11 +115,11 @@
                     android:inputType="number" />
 
                 <EditText
-                    android:id="@+id/editText4"
+                    android:id="@+id/editText4b"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/editText3"
-                    android:layout_alignBottom="@+id/editText3"
+                    android:layout_alignBaseline="@+id/editText3b"
+                    android:layout_alignBottom="@+id/editText3b"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
