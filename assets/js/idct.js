@@ -45,8 +45,8 @@ var editingPointGemId = 0;
 
 var ll;
 
-var bingApiKey = "AqTGBsziZHIJYYxgivLBf0hVdrAk9mWO5cQcb8Yux8sW5M8c8opEC2lZqKR1ZZXf";
-
+//var bingApiKey = "AqTGBsziZHIJYYxgivLBf0hVdrAk9mWO5cQcb8Yux8sW5M8c8opEC2lZqKR1ZZXf";
+var bingApiKey = "Au1pvDVsDE5shJGLak2j1NZ8VSsQ9hcME9MO4BTOUiObFDsfAd-u8PNSqkywGHPB";
 
 						 
 OpenLayers.Util.onImageLoadError = function () {
@@ -216,8 +216,9 @@ function init(){
 	});
 	
 	
-	map.addLayers([mapnik,bingHybrid,bingRoads,bingAerial,myPositions,locationPointLayer,prevSurveyPoints,sdtiles,localTMSTiles]);	
-	
+//	map.addLayers([mapnik,bingHybrid,bingRoads,bingAerial,myPositions,locationPointLayer,prevSurveyPoints,sdtiles,localTMSTiles]);
+	map.addLayers([bingHybrid,bingRoads,bingAerial,mapnik,myPositions,locationPointLayer,prevSurveyPoints,sdtiles,localTMSTiles]);
+
 	/* Causing issues at the moment*/
 	//Browser caching
 	if (DEBUG_USE_BROWSER_CACHING) {
