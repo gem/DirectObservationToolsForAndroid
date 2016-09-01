@@ -19,4 +19,7 @@ local.properties
 /.gradle/
 /.idea/misc.xml
 /.idea/workspace.xml
+/.idea/modules.xml
 /app/app.iml
+
+*.iml
