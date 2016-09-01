@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/highlight_colour"
+    android:gravity="left"
+    android:orientation="vertical"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp" >
+
+    <ScrollView
+        android:id="@+id/ScrollViewDetails"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/highlight_colour"
+            android:gravity="left"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+            <RelativeLayout
+                android:id="@+id/rel1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/highlight_colour"
+                android:gravity="left"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    style="@style/AttributeTitleStyle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="Comments" />
+
+                <EditText
+                    android:id="@+id/surveyComment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView1"
+                    android:hint="Enter general building comments"
+                    android:lines="4" >
+                </EditText>
+
+                <Button
+                    android:id="@+id/btn_save_observation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/surveyComment"
+                    android:text="Save this observation"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/btn_cancel_observation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/surveyComment"
+                    android:text="Cancel this observation"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rel5"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rel1"
+                android:background="@color/highlight_colour"
+                android:gravity="left"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textViewSlope"
+                    style="@style/AttributeTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="left"
+                    android:text="Slope" />
+
+                <EditText
+                    android:id="@+id/editTextSlope"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:ems="10"
+                    android:hint="slope (degs)"
+                    android:inputType="number"
+                    android:maxLength="3" />
+
+                <TextView
+                    android:id="@+id/textViewBuildingPosition"
+                    style="@style/AttributeTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/editTextSlope"
+                    android:layout_marginTop="5dp"
+                    android:gravity="left"
+                    android:text="Position Within Block" />
+
+                <Spinner
+                    android:id="@+id/spinnerBuildingPosition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewBuildingPosition"
+                    android:layout_marginTop="5dp" />
+
+                <TextView
+                    android:id="@+id/textViewBuildingShape"
+                    style="@style/AttributeTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/spinnerBuildingPosition"
+                    android:layout_marginTop="5dp"
+                    android:gravity="left"
+                    android:text="Plan Shape" />
+            </RelativeLayout>
+
+            <Spinner
+                android:id="@+id/spinnerBuildingShape"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/textViewNonStructuralExteriorWalls"
+                style="@style/AttributeTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/spinnerBuildingShape"
+                android:layout_marginTop="5dp"
+                android:gravity="left"
+                android:text="Material Of Exterior Walls" />
+
+            <Spinner
+                android:id="@+id/spinnerNonStructuralExteriorWalls"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewNonStructuralExteriorWalls"
+                android:layout_marginTop="5dp" />
+
+            <RelativeLayout
+                android:id="@+id/rel7"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rel1"
+                android:background="@color/highlight_colour"
+                android:gravity="left"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/DirectionX"
+                    style="@style/AttributeTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="left"
+                    android:text="Direction X" />
+
+                <EditText
+                    android:id="@+id/editTextDirectionX"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/DirectionX"
+                    android:ems="10"
+                    android:hint="Direct X"
+                    android:inputType="number" />
+
+                <TextView
+                    android:id="@+id/DirectionY"
+                    style="@style/AttributeTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="left"
+                    android:text="Direction Y" />
+
+                <EditText
+                    android:id="@+id/editTextDirectionY"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/DirectionY"
+                    android:ems="10"
+                    android:hint="Direct Y"
+                    android:inputType="number" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

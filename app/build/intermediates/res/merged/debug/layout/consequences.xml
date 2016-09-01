@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/highlight_colour"
+    android:gravity="left"
+    android:orientation="vertical"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp" >
+
+    <ScrollView
+   
+        android:id="@+id/ScrollViewConsequences"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/highlight_colour"
+            android:gravity="left"
+            android:orientation="vertical" >
+
+            <TextView
+                style="@style/AttributeTitleStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/AttributeTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="Number of Fatalities"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editTextNumberOfFatalities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number" >
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                style="@style/AttributeTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Number of Injured"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editTextNumberOfInjured"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number" />
+
+            <TextView
+                android:id="@+id/textViewConsequences1"
+                style="@style/AttributeTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Number Missing"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editTextNumberOfMissing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:id="@+id/textViewConsequences2"
+                style="@style/AttributeTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Damage Grade"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/listDamageGrade"
+                android:layout_width="fill_parent"
+                android:layout_height="180dp"
+                android:layout_alignParentLeft="true"
+                android:choiceMode="singleChoice" >
+            </ListView>
+
+            <TextView
+                android:id="@+id/textViewConsequences5"
+                style="@style/AttributeTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Comments"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editTextConsequencesComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

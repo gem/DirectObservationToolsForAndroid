@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <WebView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/map_webview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+    <Button
+        android:id="@+id/btn_start_survey"
+        android:layout_width="85dip"
+        android:layout_height="85dip"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/finish_small"
+        android:text="Start Survey" />
+
+    <Button
+        android:id="@+id/btn_select_layer"
+        android:layout_width="65dip"
+        android:layout_height="65dip"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/layers_icon"
+        android:text="Base Layers" />
+
+    <Button
+        android:id="@+id/btn_take_photo"
+        android:layout_width="65dip"
+        android:layout_height="65dip"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/camera" />
+
+    <Button
+        android:id="@+id/btn_zoom_out"
+        android:layout_width="65dip"
+        android:layout_height="65dip"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/btn_zoom_in"
+        android:text="-"
+        android:textSize="40dp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btn_zoom_in"
+        android:layout_width="65dip"
+        android:layout_height="65dip"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="100dp"
+        android:text="+"
+        android:textSize="40dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/text_view_gpsInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/btn_zoom_out"
+        android:text="Best Location:" />
+
+    <TextView
+        android:id="@+id/text_view_gpsInfo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btn_zoom_out"
+        android:text="" />
+
+    <Button
+        android:id="@+id/btn_locate_me"
+        android:layout_width="65dip"
+        android:layout_height="65dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Locate Me" />
+
+    <ToggleButton
+        android:id="@+id/btn_edit_points"
+        android:layout_width="65dip"
+        android:layout_height="65dip"
+        android:layout_marginRight="35dp"
+        android:layout_toLeftOf="@+id/btn_select_layer"
+        android:text="Edit Points"
+        android:textOff="@string/editing_toggle_turn_off"
+        android:textOn="@string/editing_toggle_turn_on"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/btn_cancel_survey_point"
+        android:layout_width="85dip"
+        android:layout_height="85dip"
+        android:layout_above="@+id/btn_start_survey"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="184dp"
+        android:background="@drawable/undo"
+        android:text="Cancel" />
+
+    <Button
+        android:id="@+id/btn_start_survey_with_favourite"
+        android:layout_width="85dip"
+        android:layout_height="85dip"
+        android:layout_above="@+id/btn_start_survey"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/star"
+        android:text="Favourite" />
+
+    <Button
+        android:id="@+id/btn_select_vector_layer"
+        android:layout_width="65dip"
+        android:layout_height="65dip"
+        android:layout_alignTop="@+id/btn_zoom_in"
+        android:layout_toRightOf="@+id/btn_edit_points"
+        android:text="KML Layers"
+        android:visibility="visible"
+          />
+
+</RelativeLayout>

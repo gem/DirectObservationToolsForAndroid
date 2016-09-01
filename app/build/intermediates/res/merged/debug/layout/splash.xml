@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/splash_bg_colour"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:id="@+id/MainSplashText"
+        android:layout_width="fill_parent"
+         android:background="@color/splash_bg_colour"
+        android:layout_height="fill_parent"  >
+
+        <TextView
+            android:id="@+id/SplashAuthor"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:visibility="gone"
+            android:text="@string/splash_author_info"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/splash_info" >
+        </TextView>
+
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="fill_parent"
+            android:contentDescription="@string/splash_title"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/gem_splash" />
+
+        <TextView
+            android:id="@+id/SplashTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/background"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="52dp"
+            android:gravity="right"
+            android:text="@string/splash_title"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/splash_title" />
+
+        <TextView
+            android:id="@+id/SplashVersion"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/background"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="16dp"
+            android:gravity="right"
+            android:text="@string/splash_version_info"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/splash_info" />
+
+    </RelativeLayout>
+
+</LinearLayout>

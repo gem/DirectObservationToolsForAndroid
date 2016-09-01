@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/highlight_colour"
+    android:gravity="left"
+    android:orientation="vertical" >
+
+        
+    <RelativeLayout    
+        android:id="@+id/rel1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/highlight_colour"
+        android:gravity="left"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Material Type"
+            android:textStyle="bold" />
+
+        <ListView android:fadeScrollbars="false"
+            android:id="@+id/listExample"
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView1"
+            android:choiceMode="singleChoice" >
+        </ListView>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+      
+        android:id="@+id/rel2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel1"
+        android:background="@color/highlight_colour"
+        android:gravity="left"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Material Tech"
+            android:textStyle="bold" />
+
+        <ListView android:fadeScrollbars="false"
+            android:id="@+id/listExample2"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView2"
+            android:choiceMode="singleChoice" >
+        </ListView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+      
+        android:id="@+id/rel3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel2"
+        android:background="@color/highlight_colour"
+        android:gravity="left"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Mortar Type"
+            android:textStyle="bold" />
+
+
+        <ListView android:fadeScrollbars="false"
+            android:id="@+id/listExample3"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView3"
+            android:choiceMode="singleChoice" >
+        </ListView>
+    </RelativeLayout>
+
+    <RelativeLayout
+     
+        android:id="@+id/rel4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel3"
+        android:background="@color/highlight_colour"
+        android:gravity="left"
+        android:orientation="vertical" >
+
+        
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Masonry Reinforcement"
+            android:textStyle="bold" />
+  
+
+        
+        <ListView android:fadeScrollbars="false"
+            android:id="@+id/listExample4"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView4"
+            android:choiceMode="singleChoice" >
+        </ListView>
+    </RelativeLayout>
+
+    <RelativeLayout
+      
+        android:id="@+id/rel5"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/highlight_colour"
+        android:gravity="left"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Steel Connection"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/listExample5"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView5"
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false" >
+        </ListView>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,805 @@
+[
+    {
+        "outputFile": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\build\\intermediates\\res\\merged\\debug\\values\\values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endLine": 8,
+                    "endColumn": 19,
+                    "endOffset": 276
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\arrays.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 59,
+                        "endLine": 9,
+                        "endColumn": 19,
+                        "endOffset": 286
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 9,
+                    "startColumn": 4,
+                    "startOffset": 281,
+                    "endLine": 15,
+                    "endColumn": 19,
+                    "endOffset": 502
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\arrays.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 292,
+                        "endLine": 16,
+                        "endColumn": 19,
+                        "endOffset": 519
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 16,
+                    "startColumn": 4,
+                    "startOffset": 507,
+                    "endLine": 21,
+                    "endColumn": 19,
+                    "endOffset": 687
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\arrays.xml",
+                    "position": {
+                        "startLine": 17,
+                        "startColumn": 4,
+                        "startOffset": 525,
+                        "endLine": 22,
+                        "endColumn": 19,
+                        "endOffset": 710
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 22,
+                    "startColumn": 4,
+                    "startOffset": 692,
+                    "endLine": 28,
+                    "endColumn": 19,
+                    "endOffset": 911
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\arrays.xml",
+                    "position": {
+                        "startLine": 23,
+                        "startColumn": 4,
+                        "startOffset": 716,
+                        "endLine": 29,
+                        "endColumn": 19,
+                        "endOffset": 941
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 29,
+                    "startColumn": 4,
+                    "startOffset": 916,
+                    "endLine": 36,
+                    "endColumn": 19,
+                    "endOffset": 1159
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\arrays.xml",
+                    "position": {
+                        "startLine": 30,
+                        "startColumn": 4,
+                        "startOffset": 947,
+                        "endLine": 37,
+                        "endColumn": 19,
+                        "endOffset": 1197
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 37,
+                    "startColumn": 4,
+                    "startOffset": 1164,
+                    "endLine": 42,
+                    "endColumn": 19,
+                    "endOffset": 1352
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\arrays.xml",
+                    "position": {
+                        "startLine": 38,
+                        "startColumn": 4,
+                        "startOffset": 1203,
+                        "endLine": 43,
+                        "endColumn": 19,
+                        "endOffset": 1396
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 43,
+                    "startColumn": 4,
+                    "startOffset": 1357,
+                    "endLine": 47,
+                    "endColumn": 19,
+                    "endOffset": 1512
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\arrays.xml",
+                    "position": {
+                        "startLine": 44,
+                        "startColumn": 4,
+                        "startOffset": 1402,
+                        "endLine": 48,
+                        "endColumn": 19,
+                        "endOffset": 1561
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 48,
+                    "startColumn": 4,
+                    "startOffset": 1517,
+                    "endLine": 51,
+                    "endColumn": 19,
+                    "endOffset": 1638
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\arrays.xml",
+                    "position": {
+                        "startLine": 49,
+                        "startColumn": 4,
+                        "startOffset": 1567,
+                        "endLine": 52,
+                        "endColumn": 19,
+                        "endOffset": 1691
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 52,
+                    "startColumn": 4,
+                    "startOffset": 1643,
+                    "endLine": 66,
+                    "endColumn": 19,
+                    "endOffset": 2114
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\arrays.xml",
+                    "position": {
+                        "startLine": 53,
+                        "startColumn": 4,
+                        "startOffset": 1697,
+                        "endLine": 67,
+                        "endColumn": 19,
+                        "endOffset": 2182
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 67,
+                    "startColumn": 4,
+                    "startOffset": 2119,
+                    "endLine": 76,
+                    "endColumn": 19,
+                    "endOffset": 2424
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\arrays.xml",
+                    "position": {
+                        "startLine": 68,
+                        "startColumn": 4,
+                        "startOffset": 2188,
+                        "endLine": 77,
+                        "endColumn": 19,
+                        "endOffset": 2502
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 77,
+                    "startColumn": 4,
+                    "startOffset": 2429,
+                    "endLine": 83,
+                    "endColumn": 19,
+                    "endOffset": 2637
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\arrays.xml",
+                    "position": {
+                        "startLine": 78,
+                        "startColumn": 5,
+                        "startOffset": 2509,
+                        "endLine": 84,
+                        "endColumn": 19,
+                        "endOffset": 2723
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 84,
+                    "startColumn": 4,
+                    "startOffset": 2642,
+                    "endLine": 89,
+                    "endColumn": 19,
+                    "endOffset": 2840
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\arrays.xml",
+                    "position": {
+                        "startLine": 103,
+                        "startColumn": 4,
+                        "startOffset": 3252,
+                        "endLine": 108,
+                        "endColumn": 19,
+                        "endOffset": 3455
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 90,
+                    "startColumn": 4,
+                    "startOffset": 2845,
+                    "endLine": 95,
+                    "endColumn": 19,
+                    "endOffset": 3021
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\arrays.xml",
+                    "position": {
+                        "startLine": 97,
+                        "startColumn": 4,
+                        "startOffset": 3065,
+                        "endLine": 102,
+                        "endColumn": 19,
+                        "endOffset": 3246
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 96,
+                    "startColumn": 4,
+                    "startOffset": 3026,
+                    "endLine": 100,
+                    "endColumn": 19,
+                    "endOffset": 3169
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\arrays.xml",
+                    "position": {
+                        "startLine": 87,
+                        "startColumn": 4,
+                        "startOffset": 2745,
+                        "endLine": 91,
+                        "endColumn": 19,
+                        "endOffset": 2892
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 101,
+                    "startColumn": 4,
+                    "startOffset": 3174,
+                    "endLine": 105,
+                    "endColumn": 19,
+                    "endOffset": 3331
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\arrays.xml",
+                    "position": {
+                        "startLine": 92,
+                        "startColumn": 4,
+                        "startOffset": 2898,
+                        "endLine": 96,
+                        "endColumn": 19,
+                        "endOffset": 3059
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 106,
+                    "startColumn": 4,
+                    "startOffset": 3336,
+                    "endColumn": 43,
+                    "endOffset": 3375
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\colors.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 0,
+                        "startOffset": 181,
+                        "endColumn": 39,
+                        "endOffset": 220
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 107,
+                    "startColumn": 4,
+                    "startOffset": 3380,
+                    "endColumn": 42,
+                    "endOffset": 3418
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\colors.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 0,
+                        "startOffset": 138,
+                        "endColumn": 38,
+                        "endOffset": 176
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 108,
+                    "startColumn": 4,
+                    "startOffset": 3423,
+                    "endColumn": 50,
+                    "endOffset": 3469
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\colors.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 0,
+                        "startOffset": 225,
+                        "endColumn": 46,
+                        "endOffset": 271
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 109,
+                    "startColumn": 4,
+                    "startOffset": 3474,
+                    "endColumn": 45,
+                    "endOffset": 3515
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\colors.xml",
+                    "position": {
+                        "startLine": 15,
+                        "startColumn": 0,
+                        "startOffset": 327,
+                        "endColumn": 41,
+                        "endOffset": 368
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 110,
+                    "startColumn": 4,
+                    "startOffset": 3520,
+                    "endColumn": 37,
+                    "endOffset": 3553
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\colors.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 0,
+                        "startOffset": 99,
+                        "endColumn": 33,
+                        "endOffset": 132
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 111,
+                    "startColumn": 4,
+                    "startOffset": 3558,
+                    "endColumn": 50,
+                    "endOffset": 3604
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\colors.xml",
+                    "position": {
+                        "startLine": 13,
+                        "startColumn": 0,
+                        "startOffset": 276,
+                        "endColumn": 46,
+                        "endOffset": 322
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 112,
+                    "startColumn": 4,
+                    "startOffset": 3609,
+                    "endColumn": 46,
+                    "endOffset": 3651
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\colors.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 0,
+                        "startOffset": 53,
+                        "endColumn": 42,
+                        "endOffset": 95
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 113,
+                    "startColumn": 4,
+                    "startOffset": 3656,
+                    "endColumn": 41,
+                    "endOffset": 3693
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\dimens.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 0,
+                        "startOffset": 223,
+                        "endColumn": 37,
+                        "endOffset": 260
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 114,
+                    "startColumn": 4,
+                    "startOffset": 3698,
+                    "endColumn": 48,
+                    "endOffset": 3742
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\dimens.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 0,
+                        "startOffset": 92,
+                        "endColumn": 44,
+                        "endOffset": 136
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 115,
+                    "startColumn": 4,
+                    "startOffset": 3747,
+                    "endColumn": 45,
+                    "endOffset": 3788
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\dimens.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 0,
+                        "startOffset": 138,
+                        "endColumn": 41,
+                        "endOffset": 179
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 116,
+                    "startColumn": 4,
+                    "startOffset": 3793,
+                    "endColumn": 44,
+                    "endOffset": 3833
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\dimens.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 0,
+                        "startOffset": 181,
+                        "endColumn": 40,
+                        "endOffset": 221
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 117,
+                    "startColumn": 4,
+                    "startOffset": 3838,
+                    "endColumn": 41,
+                    "endOffset": 3875
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\dimens.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 0,
+                        "startOffset": 338,
+                        "endColumn": 37,
+                        "endOffset": 375
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 118,
+                    "startColumn": 4,
+                    "startOffset": 3880,
+                    "endColumn": 43,
+                    "endOffset": 3919
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\dimens.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 0,
+                        "startOffset": 297,
+                        "endColumn": 39,
+                        "endOffset": 336
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 119,
+                    "startColumn": 4,
+                    "startOffset": 3924,
+                    "endColumn": 41,
+                    "endOffset": 3961
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\dimens.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 0,
+                        "startOffset": 53,
+                        "endColumn": 37,
+                        "endOffset": 90
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 120,
+                    "startColumn": 4,
+                    "startOffset": 3966,
+                    "endColumn": 51,
+                    "endOffset": 4013
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\strings.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 94,
+                        "endColumn": 51,
+                        "endOffset": 141
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 121,
+                    "startColumn": 4,
+                    "startOffset": 4018,
+                    "endColumn": 63,
+                    "endOffset": 4077
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\strings.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 224,
+                        "endColumn": 63,
+                        "endOffset": 283
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 122,
+                    "startColumn": 4,
+                    "startOffset": 4082,
+                    "endColumn": 63,
+                    "endOffset": 4141
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\strings.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 159,
+                        "endColumn": 63,
+                        "endOffset": 218
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 123,
+                    "startColumn": 4,
+                    "startOffset": 4146,
+                    "endColumn": 93,
+                    "endOffset": 4235
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\strings.xml",
+                    "position": {
+                        "startLine": 14,
+                        "startColumn": 4,
+                        "startOffset": 569,
+                        "endColumn": 93,
+                        "endOffset": 658
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 124,
+                    "startColumn": 4,
+                    "startOffset": 4240,
+                    "endColumn": 71,
+                    "endOffset": 4307
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\strings.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 457,
+                        "endColumn": 71,
+                        "endOffset": 524
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 125,
+                    "startColumn": 4,
+                    "startOffset": 4312,
+                    "endColumn": 64,
+                    "endOffset": 4372
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\strings.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 3,
+                        "startOffset": 327,
+                        "endColumn": 63,
+                        "endOffset": 387
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 126,
+                    "startColumn": 4,
+                    "startOffset": 4377,
+                    "endColumn": 62,
+                    "endOffset": 4435
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\strings.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 393,
+                        "endColumn": 62,
+                        "endOffset": 451
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 127,
+                    "startColumn": 4,
+                    "startOffset": 4440,
+                    "endLine": 132,
+                    "endColumn": 8,
+                    "endOffset": 4625
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\styles.xml",
+                    "position": {
+                        "startLine": 24,
+                        "startColumn": 0,
+                        "startOffset": 685,
+                        "endLine": 29,
+                        "endColumn": 8,
+                        "endOffset": 875
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 133,
+                    "startColumn": 4,
+                    "startOffset": 4630,
+                    "endLine": 137,
+                    "endColumn": 8,
+                    "endOffset": 4872
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\styles.xml",
+                    "position": {
+                        "startLine": 17,
+                        "startColumn": 0,
+                        "startOffset": 433,
+                        "endLine": 21,
+                        "endColumn": 8,
+                        "endOffset": 679
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 138,
+                    "startColumn": 4,
+                    "startOffset": 4877,
+                    "endLine": 140,
+                    "endColumn": 8,
+                    "endOffset": 5013
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\styles.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 0,
+                        "startOffset": 289,
+                        "endLine": 14,
+                        "endColumn": 8,
+                        "endOffset": 427
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 141,
+                    "startColumn": 4,
+                    "startOffset": 5018,
+                    "endLine": 145,
+                    "endColumn": 12,
+                    "endOffset": 5234
+                },
+                "from": {
+                    "file": "C:\\AndroidProjects\\android_studio_reorg\\DirectObservationToolsForAndroid\\app\\src\\main\\res\\values\\styles.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 61,
+                        "endLine": 8,
+                        "endColumn": 12,
+                        "endOffset": 281
+                    }
+                }
+            }
+        ]
+    }
+]

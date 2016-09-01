@@ -1,0 +1,218 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:2:1-110:12
+	package
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:3:5-46
+		INJECTED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml
+		INJECTED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml
+	android:versionName
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:5:5-32
+		INJECTED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml
+		INJECTED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml
+	android:versionCode
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:4:5-28
+		INJECTED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml
+		INJECTED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:2:11-69
+uses-sdk
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:8:5-9:10
+	android:targetSdkVersion
+		INJECTED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml
+		INJECTED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:8:15-40
+		INJECTED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml
+		INJECTED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml
+uses-permission#android.permission.INTERNET
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:11:5-67
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:11:22-64
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:12:5-79
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:12:22-76
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:13:5-81
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:13:22-78
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:14:5-81
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:14:22-78
+application
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:18:5-108:19
+	android:label
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:22:9-41
+	android:hardwareAccelerated
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:20:9-44
+	android:icon
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:21:9-45
+	android:theme
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:23:9-39
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:19:9-71
+activity#org.globalquakemodel.org.idctdo.EQForm_MapView
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:24:9-33:20
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:27:13-47
+	android:label
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:26:13-45
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:25:13-74
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:28:13-32:29
+action#android.intent.action.MAIN
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:29:17-69
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:29:25-66
+category#android.intent.category.LAUNCHER
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:31:17-77
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:31:27-74
+activity#org.globalquakemodel.org.idctdo.MainTabActivity
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:34:9-37:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:37:13-47
+	android:configChanges
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:36:13-48
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:35:13-75
+activity#org.globalquakemodel.org.idctdo.EQForm_Settings
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:38:9-40:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:40:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:39:13-75
+activity#org.globalquakemodel.org.idctdo.Material_Selection_Longitudinal_Form
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:41:9-43:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:43:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:42:13-96
+activity#org.globalquakemodel.org.idctdo.Material_Selection_Longitudinal_Form2
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:44:9-46:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:46:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:45:13-97
+activity#org.globalquakemodel.org.idctdo.Material_Selection_Transverse_Form
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:47:9-49:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:49:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:48:13-94
+activity#org.globalquakemodel.org.idctdo.Material_Selection_Transverse_Form2
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:50:9-52:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:52:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:51:13-95
+activity#org.globalquakemodel.org.idctdo.LLRS_Selection_Longitudinal_Form
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:53:9-55:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:55:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:54:13-92
+activity#org.globalquakemodel.org.idctdo.SecondTabsActivity
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:56:9-58:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:58:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:57:13-78
+activity#org.globalquakemodel.org.idctdo.LLRS_Selection_Longitudinal_Transverse_Form
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:59:9-61:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:61:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:60:13-103
+activity#org.globalquakemodel.org.idctdo.LLRS_Selection_Transverse_Form
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:62:9-64:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:64:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:63:13-90
+activity#org.globalquakemodel.org.idctdo.Roof_Selection_Form
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:65:9-67:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:67:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:66:13-79
+activity#org.globalquakemodel.org.idctdo.Floor_Selection_Form
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:68:9-70:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:70:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:69:13-80
+activity#org.globalquakemodel.org.idctdo.EQForm_ModifiedEMS_Camera
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:71:9-73:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:73:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:72:13-85
+activity#org.globalquakemodel.org.idctdo.Irregularity_Selection_Form
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:74:9-76:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:76:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:75:13-87
+activity#org.globalquakemodel.org.idctdo.Irregularity_Selection_Secondary_Form
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:77:9-79:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:79:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:78:13-97
+activity#org.globalquakemodel.org.idctdo.Details_Selection
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:80:9-82:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:82:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:81:13-77
+activity#org.globalquakemodel.org.idctdo.Occupancy_Selection_Form
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:83:9-85:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:85:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:84:13-84
+activity#org.globalquakemodel.org.idctdo.Age_Selection_Form
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:86:9-88:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:88:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:87:13-78
+activity#org.globalquakemodel.org.idctdo.Height_Selection_Form
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:89:9-91:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:91:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:90:13-81
+activity#org.globalquakemodel.org.idctdo.Structure_Selection_Form
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:92:9-94:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:94:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:93:13-84
+activity#org.globalquakemodel.org.idctdo.Exposure_Form
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:95:9-97:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:97:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:96:13-73
+activity#org.globalquakemodel.org.idctdo.Consequences_Form
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:98:9-100:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:100:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:99:13-77
+activity#org.globalquakemodel.org.idctdo.Project_Settings
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:101:9-103:50
+	android:screenOrientation
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:103:13-47
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:102:13-76
+activity#org.globalquakemodel.org.idctdo.PrefsActivity
+ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:104:9-107:20
+	android:theme
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:106:13-66
+	android:name
+		ADDED from C:\AndroidProjects\android_studio_reorg\DirectObservationToolsForAndroid\app\src\main\AndroidManifest.xml:105:13-73

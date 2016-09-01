@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/highlight_colour"
+    android:gravity="left"
+    android:orientation="vertical"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp" >
+
+    
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        
+        android:id="@+id/rel1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/highlight_colour"
+        android:gravity="left"
+        android:orientation="vertical" >
+
+        
+        <TextView
+            android:id="@+id/textView1"
+            style="@style/AttributeTitleStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Structural Irregularity"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/listStructuralIrregularity"
+            android:layout_width="fill_parent"
+            android:layout_height="122dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView1"
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false" >
+        </ListView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        
+        android:id="@+id/rel2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel1"
+        android:background="@color/highlight_colour"
+        android:gravity="left"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/AttributeTitleStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Plan Irregularity"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewPrimaryTitle"
+            style="@style/AttributeTitleStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView2"
+            android:gravity="left"
+            android:text="Primary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewSecondaryTitle"
+            style="@style/AttributeTitleStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView2"
+            android:gravity="right"
+            android:text="Secondary"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/listHorizontalIrregularityPrimary"
+            android:layout_width="180dp"
+            android:layout_height="122dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textViewPrimaryTitle"
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false" >
+        </ListView>
+
+        <ListView
+            android:id="@+id/listHorizontalIrregularitySecondary"
+            android:layout_width="180dp"
+            android:layout_height="122dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/textViewSecondaryTitle"
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false" >
+        </ListView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        
+        android:id="@+id/rel3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel2"
+        android:background="@color/highlight_colour"
+        android:gravity="left"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textViewVerticalIrreg"
+            style="@style/AttributeTitleStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Vertical Irregularity"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewVerticalPrimaryTitle"
+            style="@style/AttributeTitleStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewVerticalIrreg"
+            android:gravity="left"
+            android:text="Primary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewVerticalSecondaryTitle"
+            style="@style/AttributeTitleStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewVerticalIrreg"
+            android:gravity="right"
+            android:text="Secondary"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/listVerticalIrregularityPrimary"
+            android:layout_width="180dp"
+            android:layout_height="130dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textViewVerticalPrimaryTitle"
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false" >
+        </ListView>
+
+        <ListView
+            android:id="@+id/listVerticalIrregularitySecondary"
+            android:layout_width="180dp"
+            android:layout_height="130dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/textViewVerticalSecondaryTitle"
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false" >
+        </ListView>
+    </RelativeLayout>
+
+</LinearLayout>

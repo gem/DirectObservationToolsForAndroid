@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    
+    <PreferenceCategory
+        android:summary="Map Display Settings"
+        android:title="Map Settings" >
+           
+        <CheckBoxPreference
+            android:enabled="true"
+            android:key="showPositionDetailsCheckBox"
+            android:summary="On/Off"
+            android:defaultValue="false"
+            android:title="Show positioning details" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:summary="Enter Project Metadata"
+        android:title="Project Details" >
+        <EditTextPreference
+            android:name="EditText"
+            android:defaultValue=""
+            android:key="projectIdTextPref"
+            android:summary="Unique Project ID for this survey."
+            android:title="Project / Survey ID" />
+
+    </PreferenceCategory>
+</PreferenceScreen>
