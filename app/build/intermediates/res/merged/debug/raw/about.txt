@@ -1,6 +1,0 @@
-Inventory Data Capture Tools
-
-Alpha release
-
-30/07/2012
-
