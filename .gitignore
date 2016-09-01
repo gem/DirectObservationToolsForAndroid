@@ -17,3 +17,6 @@ local.properties
 /build/
 /app/build/
 /.gradle/
+/.idea/misc.xml
+/.idea/workspace.xml
+/app/app.iml
