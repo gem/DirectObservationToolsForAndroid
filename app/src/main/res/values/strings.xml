@@ -8,8 +8,8 @@
         
     <!-- Splash Strings -->
    <string name="splash_title">IDCT: Mobile Field Tool</string>
-    <string name="splash_version_info">Version 0.2.14</string>
-    <string name="splash_author_info">University of Nottingham</string>
+    <string name="splash_version_info">Version 1.1.1</string>
+    <string name="splash_author_info">University of Nottingham and GEM Foundation</string>
     
     <!-- Main Menu Strings" -->
     <string name="menu_title">Global Earthquake Model\nInventory Data Capture Tool\n</string>
