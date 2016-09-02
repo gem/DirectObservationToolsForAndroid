@@ -1,23 +1,19 @@
 # IDCT-DO
 
 
-
-Global Earthquake Model - Inventory Data Capture Tools 
+[Global Earthquake Model](http://www.globalquakemodel.org) - [Inventory Data Capture Tools](https://www.globalquakemodel.org/what/physical-integrated-risk/inventory-capture-tools/)
 
 Direct Observation Android Tool
 
 
+[Install App via Google Play](https://play.google.com/store/apps/details?id=org.globalquakemodel.org.idctdo)
 
 
-[Release 0.2.14 apk](http://gem.github.io/DirectObservationToolsForAndroid/idct.apk) ~32MB
-
-![ScreenShot](http://gem.github.io/DirectObservationToolsForAndroid/download.png)
-
-
+This tool allows users of Android tablets and smartphones to collect information about individual buildings for use in seismic or multi-hazard risk assessment. The building attributes are defined by the [GEM Building Taxonomy](https://www.globalquakemodel.org/what/physical-integrated-risk/building-taxonomy/).
 
 
 
-The Direct Observation Android Tool has been compiled using Eclipse 3.6.2 using version 4.2.2 of the Android SDK. The application also makes use of the JavaScript map library OpenLayers, version 2.11.
+The Direct Observation Android Tool has been compiled using [AndroidStudio](https://developer.android.com/studio/index.html).  The application also makes use of the JavaScript map library OpenLayers, version 2.11.
 
 Tiles (with extension png.tile) for offline usage may be downloaded using [MOBAC](http://mobac.sourceforge.net)
 
