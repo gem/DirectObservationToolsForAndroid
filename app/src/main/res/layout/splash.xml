@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/MainSplashText"
         android:layout_width="fill_parent"
-         android:background="@color/splash_bg_colour"
+        android:background="@color/splash_bg_colour"
         android:layout_height="fill_parent"  >
 
         <TextView
@@ -37,9 +37,11 @@
             android:id="@+id/SplashTitle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/background"
+
+            android:layout_above="@+id/SplashVersion"
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="52dp"
+            android:layout_marginRight="16dp"
             android:gravity="right"
             android:text="@string/splash_title"
             android:textColor="@android:color/black"
@@ -49,9 +51,11 @@
             android:id="@+id/SplashVersion"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/background"
+
             android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
             android:gravity="right"
             android:text="@string/splash_version_info"
             android:textColor="@android:color/black"
