@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="formAttributeKeys0a">
+        <item>MAT_TYPE_L</item>
+        <item>MAT_TECH_L</item>
+        <item>MAS_MORT_L</item>
+        <item>MAS_REIN_L</item>
+        <item>STEELCON_L</item>
+    </string-array>
+    <string-array name="formAttributeKeys0b">
+        <item>MAT_TYPE_T</item>
+        <item>MAT_TECH_T</item>
+        <item>MAS_MORT_T</item>
+        <item>MAS_REIN_T</item>
+        <item>STEELCON_T</item>
+    </string-array>
+    <string-array name="formAttributeKeys1">
+        <item>LLRS_L</item>
+        <item>LLRS_T</item>
+        <item>LLRS_DCT_L</item>
+        <item>LLRS_DCT_T</item>
+    </string-array>
+    <string-array name="formAttributeKeys2">
+        <item>STR_IRREG</item>
+        <item>STR_HZIR_P</item>
+        <item>STR_HZIR_S</item>
+        <item>STR_VEIR_P</item>
+        <item>STR_VEIR_S</item>
+    </string-array>
+    <string-array name="formAttributeKeys3">
+        <item>COMMENTS</item>
+        <item>SLOPE</item>
+        <item>POSITION</item>
+        <item>PLAN_SHAPE</item>
+        <item>NONSTRCEXW</item>
+        <item>LLRS_DCT_T</item>
+    </string-array>
+    <string-array name="formAttributeKeys4">
+        <item>ROOF_SHAPE</item>
+        <item>ROOFCOVMAT</item>
+        <item>ROOFSYSMAT</item>
+        <item>ROOFSYSTYP</item>
+    </string-array>
+    <string-array name="formAttributeKeys5">
+        <item>FLOOR_MAT</item>
+        <item>FLOOR_TYPE</item>
+        <item>FOUNDN_SYS</item>
+    </string-array>
+    <string-array name="formAttributeKeys6">
+        <item>OCCUPCY</item>
+        <item>OCCUPCY_DT</item>
+    </string-array>
+    <string-array name="formAttributeKeys7">
+        <item>YR_BUILT_Q</item>
+        <item>YR_BUILT_1</item>
+        <item>YR_BUILT_2</item>
+        <item>STORY_AG_Q</item>
+        <item>STORY_AG_1</item>
+        <item>STORY_AG_2</item>
+        <item>STORY_BG_Q</item>
+        <item>STORY_BG_1</item>
+        <item>STORY_BG_2</item>
+        <item>HT_GR_GF_Q</item>
+        <item>HT_GR_GF_1</item>
+        <item>HT_GR_GF_2</item>
+        <item>SLOPE</item>
+    </string-array>
+    <string-array name="formAttributeKeys8">
+        <item>DAY_OCC</item>
+        <item>NIGHT_OCC</item>
+        <item>TRANS_OCC</item>
+        <item>NUM_DWELL</item>
+        <item>PLAN_AREA</item>
+        <item>REPLC_COST</item>
+        <item>CURRENCY</item>
+        <item>COMMENTS</item>
+    </string-array>
+     <string-array name="formAttributeKeys9">
+        <item>DAMAGE</item>
+        <item>FATALITIES</item>
+        <item>INJURED</item>
+        <item>MISSING</item>
+        <item>COMMENTS</item>
+    </string-array>   
+    
+     
+    <string-array name="listOptions">
+        <item>Option 1</item>
+        <item>Option 2</item>
+        <item>Option 3</item>
+    </string-array>
+    <string-array name="listValues">
+        <item>1 is selected</item>
+        <item>2 is selected</item>
+        <item>3 is selected</item>
+    </string-array>
+    <string-array name="hazardOptions">
+        <item>Earthquake</item>
+        <item>Landslide</item>
+        <item>Tsunami</item>
+        <item>Volcano</item>
+    </string-array>
+    <string-array name="hazardListValues">
+        <item>1 is selected</item>
+        <item>2 is selected</item>
+        <item>3 is selected</item>
+        <item>4 is selected</item>
+    </string-array>
+
+</resources>
