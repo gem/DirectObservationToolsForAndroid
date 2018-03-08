@@ -42,14 +42,16 @@ public class DataBaseHelper extends SQLiteOpenHelper
 	//destination path (location) of our database on device
 	private static String DB_PATH = "/data/data/com.dbhelper/databases/"; 
 	//private static String DB_NAME ="GEM_V001.s3db";// Database name
-	private static String DB_NAME ="gem.db3";// 
-	private SQLiteDatabase mDataBase; 
+	//	private static String DB_NAME ="gem.db3";
+	private static String DB_NAME;
+	private SQLiteDatabase mDataBase;
 	private final Context mContext;
 
 	
 	public DataBaseHelper(Context context) 
 	{
-		super(context, DB_NAME, null, 1);// 1? its Database Version
+		super(context, context.getString(R.string.db_name), null, 1);// 1? its Database Version
+		DB_NAME = context.getString(R.string.db_name);
 		DB_PATH = "/data/data/" + context.getPackageName() + "/databases/";
 		this.mContext = context;
 	}   
@@ -132,7 +134,8 @@ public class DataBaseHelper extends SQLiteOpenHelper
 					src.close();
 					dst.close();
 					Log.d(TAG, "FINISHED BACKING UP DB");
-					Toast.makeText(this.mContext.getApplicationContext(), "Database snapshot created. Snapshot is located at: \n" + sd + "/" + backupDBPath , Toast.LENGTH_LONG).show();
+//					Toast.makeText(this.mContext.getApplicationContext(), "Database snapshot created. Snapshot is located at: \n" + sd + "/" + backupDBPath , Toast.LENGTH_LONG).show();
+					Toast.makeText(this.mContext.getApplicationContext(),  this.mContext.getString(R.string.titleDatabaseHelperDBShapshot) + " \n" + sd + "/" + backupDBPath , Toast.LENGTH_LONG).show();
 
 				}
 			}
@@ -147,7 +150,7 @@ public class DataBaseHelper extends SQLiteOpenHelper
 	public boolean openDataBase() throws SQLException
 	{
 		String mPath = DB_PATH + DB_NAME;
-		Log.d(TAG, "opening db");
+		Log.d(TAG, "opening db: " + mPath);
 		mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.CREATE_IF_NECESSARY);
 		//mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);
 		Log.d(TAG, "opened db");
@@ -167,7 +170,8 @@ public class DataBaseHelper extends SQLiteOpenHelper
 		mDataBase.delete("MEDIA_DETAIL", null, null);
 		mDataBase.delete("SETTINGS", null, null);
 		//mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);
-		Toast.makeText(this.mContext.getApplicationContext(), "Deleting records", Toast.LENGTH_LONG).show();
+//		Toast.makeText(this.mContext.getApplicationContext(), "Deleting records", Toast.LENGTH_LONG).show();
+		Toast.makeText(this.mContext.getApplicationContext(), this.mContext.getString(R.string.titleDatabaseHelperDeleting), Toast.LENGTH_LONG).show();
 		mDataBase.close();
 		return true;
 

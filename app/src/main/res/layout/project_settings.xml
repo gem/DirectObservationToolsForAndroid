@@ -33,7 +33,7 @@
                 android:layout_below="@+id/spinnerBuildingShape"
                 android:layout_marginTop="5dp"
                 android:gravity="left"
-                android:text="Create New Project Details"
+                android:text="@string/titleProjectSettings"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
@@ -55,7 +55,7 @@
                     android:id="@+id/surveyorName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Surveyor Name"
+                    android:hint="@string/hintProjectSettingsSurveyorName"
                     android:lines="1" >
                 </EditText>
             </RelativeLayout>
@@ -65,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Project Name"
+                android:hint="@string/hintProjectSettingsProjectName"
                 android:lines="1" />
 
             <EditText
@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Project Summary"
+                android:hint="@string/hintProjectSettingsProjectSummary"
                 android:lines="3" />
 
             <DatePicker
@@ -97,7 +97,7 @@
                 android:id="@+id/btn_save_observation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Save these project details" />
+                android:text="@string/btn_project_settings_save" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -119,7 +119,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginTop="5dp"
                 android:gravity="left"
-                android:text="Select Project Details"
+                android:text="@string/titleProjectSettingsDetails"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 

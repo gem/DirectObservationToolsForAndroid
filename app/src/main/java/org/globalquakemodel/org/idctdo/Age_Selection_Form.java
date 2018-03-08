@@ -163,9 +163,11 @@ public class Age_Selection_Form extends Activity {
 						//Make second date val visible
 						if (DEBUG_LOG) Log.d("IDCT","enter date 2");
 						date2.setVisibility(View.VISIBLE);
+						date1.setHint(getResources().getString(R.string.hintAgeHeightDate1));
 						date1.setVisibility(View.VISIBLE);
 					} else {
 						date2.setVisibility(View.INVISIBLE);
+						date1.setHint(getResources().getString(R.string.hintAgeHeightDate));
 						date1.setVisibility(View.VISIBLE);
 					}					
 					surveyDataObject.putData(topLevelAttributeKey, selectedAdapter.getItem(position).getAttributeValue());
@@ -241,10 +243,12 @@ public class Age_Selection_Form extends Activity {
 					if (heightSelectedAdapter.getItem(position).getAttributeValue().toString().equals("HBET")) {
 						//Make second date val visible
 						if (DEBUG_LOG) Log.d("IDCT","enter date 2");
+						editTextAboveGround1.setHint(getResources().getString(R.string.hintAgeHeightStoreys1));
 						editTextAboveGround1.setVisibility(View.VISIBLE);
 						editTextAboveGround2.setVisibility(View.VISIBLE);
 					} else {
 						editTextAboveGround2.setVisibility(View.INVISIBLE);
+						editTextAboveGround1.setHint(getResources().getString(R.string.hintAgeHeightStoreys));
 						editTextAboveGround1.setVisibility(View.VISIBLE);
 					}		
 					
@@ -283,10 +287,12 @@ public class Age_Selection_Form extends Activity {
 					if (heightSelectedAdapter2.getItem(position).getAttributeValue().toString().equals("HBET")) {
 						//Make second date val visible
 						if (DEBUG_LOG) Log.d("IDCT","enter date 2");
+						editTextBelowGround1.setHint(getResources().getString(R.string.hintAgeHeightStoreys1));
 						editTextBelowGround1.setVisibility(View.VISIBLE);
 						editTextBelowGround2.setVisibility(View.VISIBLE);
 					} else {
 						editTextBelowGround2.setVisibility(View.INVISIBLE);
+						editTextBelowGround1.setHint(getResources().getString(R.string.hintAgeHeightStoreys));
 						editTextBelowGround1.setVisibility(View.VISIBLE);
 					}		
 					

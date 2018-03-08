@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:text="Height Above Ground (storeys)" />
+                android:text="@string/titleHeightStoreysAbove" />
 
             <RelativeLayout
                 android:id="@+id/rel2"
@@ -59,7 +59,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/listAboveGroundQualifier"
                     android:ems="10"
-                    android:hint="storeys 1"
+                    android:hint="@string/hintHeightStoreys1"
                     android:inputType="number" />
 
                 <EditText
@@ -72,7 +72,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
                     android:ems="10"
-                    android:hint="storeys 2"
+                    android:hint="@string/hintHeightStoreys2"
                     android:inputType="number" >
                 </EditText>
             </RelativeLayout>
@@ -93,7 +93,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:gravity="left"
-                    android:text="Height Below Ground (storeys)" />
+                    android:text="@string/titleHeightStoreysBelow" />
 
                 <ListView
                     android:id="@+id/listBelowGroundQualifier"
@@ -105,26 +105,26 @@
                 </ListView>
 
                 <EditText
-                    android:id="@+id/editText3b"
+                    android:id="@+id/editText3"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/listBelowGroundQualifier"
                     android:ems="10"
-                    android:hint="storeys 1"
+                    android:hint="@string/hintHeightStoreys1"
                     android:inputType="number" />
 
                 <EditText
-                    android:id="@+id/editText4b"
+                    android:id="@+id/editText4"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/editText3b"
-                    android:layout_alignBottom="@+id/editText3b"
+                    android:layout_alignBaseline="@+id/editText3"
+                    android:layout_alignBottom="@+id/editText3"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
                     android:ems="10"
-                    android:hint="storeys 2"
+                    android:hint="@string/hintHeightStoreys2"
                     android:inputType="number" >
                 </EditText>
             </RelativeLayout>
@@ -145,7 +145,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:gravity="left"
-                    android:text="Height Above Grade (centimetres)" />
+                    android:text="@string/titleHeightAboveGrade" />
 
                 <ListView
                     android:id="@+id/listAboveGradeQualifier"
@@ -163,21 +163,19 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/listAboveGradeQualifier"
                     android:ems="10"
-                    android:hint="height 1"
+                    android:hint="@string/hintHeightH1"
                     android:inputType="number" />
 
                 <EditText
                     android:id="@+id/editTextAboveGrade2"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    
-                
-          
+
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
                     android:ems="10"
-                    android:hint="height 2"
+                    android:hint="@string/hintHeightH2"
                     android:inputType="number" >
                 </EditText>
             </RelativeLayout>

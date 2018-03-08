@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:text="Number of Fatalities"
+                android:text="@string/titleConsequencesFatalities"
                 android:textStyle="bold" />
 
             <EditText
@@ -52,7 +52,7 @@
                 style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Number of Injured"
+                android:text="@string/titleConsequencesInjured"
                 android:textStyle="bold" />
 
             <EditText
@@ -67,7 +67,7 @@
                 style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Number Missing"
+                android:text="@string/titleConsequencesMissing"
                 android:textStyle="bold" />
 
             <EditText
@@ -82,7 +82,7 @@
                 style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Damage Grade"
+                android:text="@string/titleConsequencesDamageGrade"
                 android:textStyle="bold" />
 
             <ListView
@@ -98,7 +98,7 @@
                 style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Comments"
+                android:text="@string/titleConsequencesComments"
                 android:textStyle="bold" />
 
             <EditText

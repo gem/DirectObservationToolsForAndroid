@@ -19,7 +19,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:text="Material Type"
+            android:text="@string/titleMaterialType"
             android:textStyle="bold" />
 
         <ListView
@@ -47,7 +47,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:text="Material Technology"
+            android:text="@string/titleMaterialTech"
             android:textStyle="bold" />
 
         <ListView
@@ -75,8 +75,10 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:text="Mortar / Stone Type"
-            android:textStyle="bold" />
+            android:text="@string/titleMaterialMortarStoneType"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true" />
 
         <ListView
             android:id="@+id/listExample3"
@@ -103,7 +105,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:text="Masonry Reinforcement"
+            android:text="@string/titleMaterialMasonryReinforcement"
             android:textStyle="bold" />
 
         <ListView
@@ -131,7 +133,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:text="Steel Connection"
+            android:text="@string/titleMaterialSteelConnection"
             android:textStyle="bold" />
 
         <ListView

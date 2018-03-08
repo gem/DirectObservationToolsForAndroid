@@ -20,7 +20,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="LLRS Qualifier"
+        android:text="@string/titleLLRS_LongitudinalTransverseQualifier"
         android:onClick="onClick"                
 	    android:clickable="true"  
 	         
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView2"
             android:gravity="left"
-            android:text="Longitudinal"
+            android:text="@string/titleLLRS_LongitudinalTransverseLong"
             android:textStyle="bold" />
 
         <TextView
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView2"
             android:gravity="right"
-            android:text="Transverse"
+            android:text="@string/titleLLRS_LongitudinalTransverseTrans"
             android:textStyle="bold" />
 
         <View
@@ -117,7 +117,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Ductility"
+            android:text="@string/titleLLRS_LongitudinalTransverseDuctility"
             android:textStyle="bold" />
 
         <TextView
@@ -127,7 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewVerticalIrreg"
             android:gravity="left"
-            android:text="Longitudinal"
+            android:text="@string/titleLLRS_LongitudinalTransverseLong"
             android:textStyle="bold" />
 
         <TextView
@@ -137,7 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewVerticalIrreg"
             android:gravity="right"
-            android:text="Transverse"
+            android:text="@string/titleLLRS_LongitudinalTransverseTrans"
             android:textStyle="bold" />
 
         <View

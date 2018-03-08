@@ -333,18 +333,22 @@ public class EQForm_MapView extends Activity {
 		// do something on back.
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		// set title
-		alertDialogBuilder.setTitle("Exit IDCT?");
+//		alertDialogBuilder.setTitle("Exit IDCT?");
+		alertDialogBuilder.setTitle(R.string.titleMapViewMenuBack);
 
 		// set dialog message
 		alertDialogBuilder
-		.setMessage("Are you sure you want to close this application?")
+//		.setMessage("Are you sure you want to close this application?")
+		.setMessage(R.string.titleMapViewMenuBackConfirmation)
 		.setCancelable(false)
-		.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+//		.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+		.setPositiveButton(R.string.btn_yes,new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,int id) {
 				EQForm_MapView.this.finish();
 			}
 		})
-		.setNegativeButton("No",new DialogInterface.OnClickListener() {
+//		.setNegativeButton("No",new DialogInterface.OnClickListener() {
+		.setNegativeButton(R.string.btn_no,new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,int id) {
 				// if this button is clicked, just close
 				// the dialog box and do nothing
@@ -399,7 +403,8 @@ public class EQForm_MapView extends Activity {
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
 		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-			Toast.makeText(this, "GPS is Enabled in your device", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(this, "GPS is Enabled in your device", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.titleMapViewGPSEnabled, Toast.LENGTH_SHORT).show();
 		}else{
 			//showGPSDisabledAlertToUser();
 		}
@@ -417,7 +422,8 @@ public class EQForm_MapView extends Activity {
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
 		if (DEBUG_LOG) Log.d(TAG,"RESUMING MAP, global vars " + g.getLon()+ " lat: " + g.getLat());
 		if (g.getLat() == 0 && g.getLon() == 0) {  
-			Toast.makeText(this, "Waiting for location", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(this, "Waiting for location", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.titleMapViewWaitingLocation, Toast.LENGTH_SHORT).show();
 		}else {
 			mWebView.loadUrl("javascript:locateMe("+ g.getLat()+","+g.getLon()+","+currentLocationAccuracy+","+currentLocationSetAsCentre+")");			
 		}
@@ -601,7 +607,8 @@ public class EQForm_MapView extends Activity {
 
 			Log.i(TAG, "show Dialog ButtonClick");
 			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-			builder.setTitle("Select a Favourite");		
+//			builder.setTitle("Select a Favourite");
+			builder.setTitle(R.string.titleMapViewFavouriteSelection);
 
 			//Get the favourite / template list from the db
 			mDbHelper = new GemDbAdapter(getBaseContext());       
@@ -690,7 +697,8 @@ public class EQForm_MapView extends Activity {
 		public void onClick(View v) {
 			Log.i(TAG, "show Dialog ButtonClick");
 			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-			builder.setTitle("Select Base Map");			
+//			builder.setTitle("Select Base Map");
+			builder.setTitle(R.string.titleMapViewSelectLayer);
 			final CharSequence[] baseMaps = {"OpenStreetMap","Bing Hybrid","Bing Roads","Bing Aerial"};
 			final CharSequence[] localBaseMaps = getLocalBaseMapLayers();
 			if (DEBUG_LOG) Log.d(TAG,"LOCAL BASEMAPS " + localBaseMaps.toString());
@@ -748,7 +756,8 @@ public class EQForm_MapView extends Activity {
 		public void onClick(View v) {
 			Log.i(TAG, "show Dialog ButtonClick");
 			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-			builder.setTitle("Select Vector Layer To Show");	
+//			builder.setTitle("Select Vector Layer To Show");
+			builder.setTitle(R.string.titleMapViewSelectVectorLayer);
 
 			final CharSequence[] choiceList = getVectorLayers();
 			if (vectorsListDisplayState == null) { 
@@ -785,7 +794,8 @@ public class EQForm_MapView extends Activity {
 				                
 								
 							} else {//remove the layer
-								Toast.makeText(getBaseContext(), "Removing KML", Toast.LENGTH_SHORT).show();
+//								Toast.makeText(getBaseContext(), "Removing KML", Toast.LENGTH_SHORT).show();
+								Toast.makeText(getBaseContext(), R.string.titleMapViewSelectVectorLayerRemove, Toast.LENGTH_SHORT).show();
 								int packingVar1= 1;
 								int packingVar2= 1;
 								mWebView.loadUrl("javascript:removeOverlay("+packingVar1 +","+ packingVar2 +", \"" +  layerFileName +"\")");
@@ -969,7 +979,8 @@ public class EQForm_MapView extends Activity {
 	private void locateMe(boolean setAsCentre) {
 		if (DEBUG_LOG) Log.d(TAG,"locateMe. SetAsCentre " + setAsCentre);
 		if (currentLatitude == 0 && currentLongitude== 0) {  
-			Toast.makeText(this, "Waiting for location", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(this, "Waiting for location", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.titleMapViewWaitingLocation, Toast.LENGTH_SHORT).show();
 		}else {
 			mWebView.loadUrl("javascript:locateMe("+ currentLatitude+","+currentLongitude+","+currentLocationAccuracy+"," + setAsCentre + ")");
 		}
@@ -992,9 +1003,11 @@ public class EQForm_MapView extends Activity {
 				if (g.unsavedEdits) {					
 					AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
 
-					alert.setTitle("Photo Comment");
-					alert.setMessage("Add a comment to this photo");
-					// Set an EditText view to get user input 
+					/*alert.setTitle("Photo Comment");
+					alert.setMessage("Add a comment to this photo");*/
+					alert.setTitle(R.string.titlePhotoComment);
+					alert.setMessage(R.string.titlePhotoCommentLegend);
+					// Set an EditText view to get user input
 					final EditText input = new EditText(mContext);
 					alert.setView(input);
 
@@ -1015,7 +1028,8 @@ public class EQForm_MapView extends Activity {
 						}
 					});
 
-					alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//					alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+					alert.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int whichButton) {
 							// Canceled.
 							//Toast.makeText(this, "Photo captured", Toast.LENGTH_SHORT).show();
@@ -1034,7 +1048,8 @@ public class EQForm_MapView extends Activity {
 					alert.show();
 				}
 			} else {
-				Toast.makeText(this, "Camera cancelled", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(this, "Camera cancelled", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, R.string.titleCameraCancelled, Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
@@ -1046,13 +1061,16 @@ public class EQForm_MapView extends Activity {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
 		// set title
-		alertDialogBuilder.setTitle("Unsaved Survey Observation");
+//		alertDialogBuilder.setTitle("Unsaved Survey Observation");
+		alertDialogBuilder.setTitle(R.string.titleUnsavedSurveyObservation);
 
 		// set dialog message
 		alertDialogBuilder
-		.setMessage("Do you want to save this observation?")
+//		.setMessage("Do you want to save this observation?")
+		.setMessage(R.string.titleUnsavedSurveyObservation)
 		.setCancelable(false)
-		.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+//		.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+		.setNeutralButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,int id) {
 				// if this button is clicked, close
 				// current activity
@@ -1060,7 +1078,8 @@ public class EQForm_MapView extends Activity {
 				dialog.cancel();
 			}
 		})
-		.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+//		.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+		.setPositiveButton(R.string.btn_yes,new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,int id) {
 				// if this button is clicked, close
 				// current activity
@@ -1069,7 +1088,8 @@ public class EQForm_MapView extends Activity {
 				saveData();
 			}
 		})
-		.setNegativeButton("No",new DialogInterface.OnClickListener() {
+//		.setNegativeButton("No",new DialogInterface.OnClickListener() {
+		.setNegativeButton(R.string.btn_no,new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,int id) {
 				// if this button is clicked, just close
 				// the dialog box and do nothing
@@ -1112,7 +1132,8 @@ public class EQForm_MapView extends Activity {
 	
 	private void showGPSDisabledAlertToUser(){
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		alertDialogBuilder.setMessage("GPS is disabled in your device. Would you like to enable it?").setCancelable(false).setPositiveButton("Goto Settings Page To Enable GPS",
+//		alertDialogBuilder.setMessage("GPS is disabled in your device. Would you like to enable it?").setCancelable(false).setPositiveButton("Goto Settings Page To Enable GPS",
+		alertDialogBuilder.setMessage(R.string.titleMapViewGPSDisabled).setCancelable(false).setPositiveButton(R.string.titleMapViewGPSDisabledGotoSettings,
 				new DialogInterface.OnClickListener(){
 			public void onClick(DialogInterface dialog, int id){
 				Intent callGPSSettingIntent = new Intent(
@@ -1120,7 +1141,8 @@ public class EQForm_MapView extends Activity {
 				startActivity(callGPSSettingIntent);
 			}
 		});
-		alertDialogBuilder.setNegativeButton("Cancel",
+//		alertDialogBuilder.setNegativeButton("Cancel",
+		alertDialogBuilder.setNegativeButton(R.string.btn_cancel,
 				new DialogInterface.OnClickListener(){
 			public void onClick(DialogInterface dialog, int id){
 				dialog.cancel();
@@ -1208,12 +1230,18 @@ public class EQForm_MapView extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		menu.add(0,0,0,"Refresh Map");
+		/*menu.add(0,0,0,"Refresh Map");
 		menu.add(0,1,0,"Settings");
 		menu.add(0,2,0,"Export DB Snapshot to SDCard");
 		menu.add(0,3,0,"Export CSV to SDCard");
 		menu.add(0,4,0,"Project / Survey Set Up");
-		menu.add(0,5,0,"Clear Database");
+		menu.add(0,5,0,"Clear Database");*/
+		menu.add(0,0,0,R.string.titleMapViewMenuRefreshMap);
+		menu.add(0,1,0,R.string.titleMapViewMenuSettings);
+		menu.add(0,2,0,R.string.titleMapViewMenuDBtoSD);
+		menu.add(0,3,0,R.string.titleMapViewMenuCSVtoSD);
+		menu.add(0,4,0,R.string.titleMapViewMenuProjectSetUp);
+		menu.add(0,5,0,R.string.titleMapViewMenuClearDB);
 		return true;
 	}
 
@@ -1236,7 +1264,8 @@ public class EQForm_MapView extends Activity {
 
 			mDbHelper = new GemDbAdapter(getBaseContext());    
 			mDbHelper.open();	
-			Toast.makeText(this, "Exporting Database to SDCard", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(this, "Exporting Database to SDCard", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.titleMapViewMenuDBtoSDMessage, Toast.LENGTH_SHORT).show();
 			mDbHelper.copyDataBaseToSdCard();
 			mDbHelper.close();
 			break;
@@ -1244,7 +1273,8 @@ public class EQForm_MapView extends Activity {
 
 			mDbHelper = new GemDbAdapter(getBaseContext());    
 			mDbHelper.open();	
-			Toast.makeText(this, "Exporting Survey Data to CSV SDCard", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(this, "Exporting Survey Data to CSV SDCard", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.titleMapViewMenuCSVtoSDMessage, Toast.LENGTH_SHORT).show();
 			mDbHelper.exportGemTableToCsv();
 			mDbHelper.close();
 			break;
@@ -1296,13 +1326,18 @@ public class EQForm_MapView extends Activity {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
 		// set title
-		alertDialogBuilder.setTitle("Clear database");
+//		alertDialogBuilder.setTitle("Clear database");
+		alertDialogBuilder.setTitle(R.string.titleMapViewMenuClearDBMessageHead);
 		sb = new StringBuilder(512);
 		/* display some of the data in the TextView */
-		sb.append("This will clear the database of all survey data");
+	/*	sb.append("This will clear the database of all survey data");
 		sb.append("\n\nProject details, favourites, building survey information, exposure, consequences and photograph links will be deleted.");
 		sb.append("\n\nOffline map tiles, photographs, database exports will be kept.");
-		sb.append("\n\nIf you want to proceed enter the word 'delete' in the text box and hit yes");
+		sb.append("\n\nIf you want to proceed enter the word 'delete' in the text box and hit yes");*/
+		sb.append(getResources().getString(R.string.titleMapViewMenuClearDBMessageP1));
+		sb.append(getResources().getString(R.string.titleMapViewMenuClearDBMessageP2));
+		sb.append(getResources().getString(R.string.titleMapViewMenuClearDBMessageP3));
+		sb.append(getResources().getString(R.string.titleMapViewMenuClearDBMessageP4));
 		// set dialog message
 		alertDialogBuilder.setMessage(sb.toString());
 		// Use an EditText view to get user input.
@@ -1313,13 +1348,15 @@ public class EQForm_MapView extends Activity {
 
 		alertDialogBuilder
 		.setCancelable(false)
-		.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+//		.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+		.setPositiveButton(R.string.btn_yes,new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,int id) {
 				// if this button is clicked, close
 				// current activity
 				//This is needed to trigger the focus changed events of EditText fields
 				String value = input.getText().toString();
-				if (value.equals("delete")) {
+//				if (value.equals("delete")) {
+				if (value.equals(mContext.getString(R.string.titleMapViewMenuClearDBConfirmation))) {
 
 					mDbHelper = new GemDbAdapter(getBaseContext());    
 					mDbHelper.open();	
@@ -1331,12 +1368,15 @@ public class EQForm_MapView extends Activity {
 					startActivity(refresh);
 					EQForm_MapView.this.finish();
 				} else {
-					Toast.makeText(getBaseContext(), "Entered wrong check value. Database not cleared.", Toast.LENGTH_SHORT).show();
+//					Toast.makeText(getBaseContext(), "Entered wrong check value. Database not cleared.", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getBaseContext(), mContext.getString(R.string.titleMapViewMenuClearDBConfirmationWrong), Toast.LENGTH_SHORT).show();
 				}
 
 			}
 		})
-		.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+
+//		.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+		.setNegativeButton(R.string.btn_cancel,new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,int id) {
 				// if this button is clicked, just close
 				// the dialog box and do nothing
@@ -1360,13 +1400,15 @@ public class EQForm_MapView extends Activity {
 			startActivity(ModifiedEMS98);*/
 
 		}   else if (v.getId()==R.id.btn_take_photo){ 
-			Toast.makeText(this, "Launching camera", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(this, "Launching camera", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.titleMapViewLaunchCamera, Toast.LENGTH_SHORT).show();
 			//Intent PreviousPage = new Intent (EQForm_MapView.this, EQForm_ModifiedEMS_Camera.class);
 			//startActivity(PreviousPage);
 		} 
 
 		else if (v.getId()==R.id.btn_select_layer){ 
-			Toast.makeText(this, "selecting layer", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(this, "selecting layer", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.titleMapViewSelectingLayer, Toast.LENGTH_SHORT).show();
 			//showDialogButtonClick();
 		}
 	}
@@ -1497,30 +1539,36 @@ public class EQForm_MapView extends Activity {
 
 				sb = new StringBuilder(512);
 				/* display some of the data in the TextView */
-				sb.append("Best Location:\n");
+//				sb.append("Best Location:\n");
+				sb.append(R.string.titleMapViewBestLocation);
 
-				sb.append("Lon: ");
+//				sb.append("Lon: ");
+				sb.append(R.string.titleMapViewBestLocationLon);
 				sb.append(loc.getLongitude());
 				sb.append('\n');
 
-				sb.append("Lat: ");
+//				sb.append("Lat: ");
+				sb.append(R.string.titleMapViewBestLocationLat);
 				sb.append(loc.getLatitude());
 				sb.append('\n');
 
-				sb.append("Alt: ");
+//				sb.append("Alt: ");
+				sb.append(R.string.titleMapViewBestLocationAlt);
 				sb.append(loc.getAltitude());
 				sb.append('\n');
 
-				sb.append("Acc: ");
+//				sb.append("Acc: ");
+				sb.append(R.string.titleMapViewBestLocationAcc);
 				sb.append(loc.getAccuracy());
 				sb.append('\n');
 
-
-				sb.append("Prov: ");
+//				sb.append("Prov: ");
+				sb.append(R.string.titleMapViewBestLocationProv);
 				sb.append(loc.getProvider());
 				sb.append('\n');
 
-				sb.append("Time: ");
+//				sb.append("Time: ");
+				sb.append(R.string.titleMapViewBestLocationTime);
 				sb.append(DateFormat.format("hh:mm:ssaa", loc.getTime()));
 				sb.append('\n');				
 
@@ -1528,29 +1576,36 @@ public class EQForm_MapView extends Activity {
 			} else {
 				sb2 = new StringBuilder(512);
 				/* display some of the data in the TextView */
-				sb2.append("Discarded location:\n");
-				sb2.append("Lon: ");
+//				sb2.append("Discarded location:\n");
+				sb2.append(R.string.titleMapViewDiscardedLocation);
+//				sb2.append("Lon: ");
+				sb2.append(R.string.titleMapViewBestLocationLon);
 				sb2.append(loc.getLongitude());
 				sb2.append('\n');
 
-				sb2.append("Lat: ");
+//				sb2.append("Lat: ");
+				sb2.append(R.string.titleMapViewBestLocationLat);
 				sb2.append(loc.getLatitude());
 				sb2.append('\n');
 
-				sb2.append("Alt: ");
+//				sb2.append("Alt: ");
+				sb2.append(R.string.titleMapViewBestLocationAlt);
 				sb2.append(loc.getAltitude());
 				sb2.append('\n');
 
-				sb2.append("Acc: ");
+//				sb2.append("Acc: ");
+				sb2.append(R.string.titleMapViewBestLocationAcc);
 				sb2.append(loc.getAccuracy());
 				sb2.append('\n');
 
-				sb2.append("Prov: ");
+//				sb2.append("Prov: ");
+				sb2.append(R.string.titleMapViewBestLocationProv);
 				sb2.append(loc.getProvider());
 				sb2.append('\n');
 
-				sb2.append("Time: ");
-				sb2.append(DateFormat.format("hh:mm:ssaa", loc.getTime()));				
+//				sb2.append("Time: ");
+				sb2.append(R.string.titleMapViewBestLocationTime);
+				sb2.append(DateFormat.format("hh:mm:ssaa", loc.getTime()));
 				sb2.append('\n');			
 
 				text_view_gpsInfo2.setText(sb2.toString());
@@ -1568,9 +1623,26 @@ public class EQForm_MapView extends Activity {
 		{
 			if (DEBUG_LOG) Log.d(TAG,"Provider disabled: " + provider );
 
-			Toast.makeText( getApplicationContext(),
+			/*Toast.makeText( getApplicationContext(),
 					provider + " location provider disabled",
-					Toast.LENGTH_SHORT ).show();
+					Toast.LENGTH_SHORT ).show();*/
+			if (provider.equals("network")){
+				Toast.makeText( getApplicationContext(),
+						getResources().getString(R.string.titleMapViewLocationNetworkProviderDisabled),
+						Toast.LENGTH_SHORT ).show();
+
+			} else if (provider.equals("gps")){
+				Toast.makeText( getApplicationContext(),
+						getResources().getString(R.string.titleMapViewLocationGPSProviderDisabled),
+						Toast.LENGTH_SHORT ).show();
+
+			} else {
+				Toast.makeText( getApplicationContext(),
+						provider + getResources().getString(R.string.titleMapViewLocationProviderDisabled),
+						Toast.LENGTH_SHORT ).show();
+			}
+
+
 			/*
 			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -1587,10 +1659,26 @@ public class EQForm_MapView extends Activity {
 		public void onProviderEnabled(String provider)
 		{
 			if (DEBUG_LOG) Log.d(TAG,"Provider enabled");
-			Toast.makeText( getApplicationContext(),
-					provider + " location provider enabled",
-					Toast.LENGTH_SHORT).show();
 
+			/*Toast.makeText( getApplicationContext(),
+					provider + " location provider enabled",
+					Toast.LENGTH_SHORT).show();*/
+
+			if (provider.equals("network")){
+				Toast.makeText( getApplicationContext(),
+						getResources().getString(R.string.titleMapViewLocationNetworkProviderEnabled),
+						Toast.LENGTH_SHORT ).show();
+
+			} else if (provider.equals("gps")){
+				Toast.makeText( getApplicationContext(),
+						getResources().getString(R.string.titleMapViewLocationGPSProviderEnabled),
+						Toast.LENGTH_SHORT ).show();
+
+			} else {
+				Toast.makeText(getApplicationContext(),
+						provider + getResources().getString(R.string.titleMapViewLocationProviderEnabled),
+						Toast.LENGTH_SHORT).show();
+			}
 			/*
 			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);   
 			if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -1611,13 +1699,15 @@ public class EQForm_MapView extends Activity {
 			switch (status) {
 			case LocationProvider.OUT_OF_SERVICE:
 				if (DEBUG_LOG) Log.d(TAG, "Status Changed: Out of Service");
-				Toast.makeText(getApplicationContext(), provider + " location provider status Changed: Out of Service",	Toast.LENGTH_SHORT).show();
+//				Toast.makeText(getApplicationContext(), provider + " location provider status Changed: Out of Service",	Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), provider + " " +  R.string.titleMapViewLocationProviderChangedOut,	Toast.LENGTH_SHORT).show();
 				//textGpsStatus.setText("Provider:" + provider + " status: " + status);
 				break;
 			case LocationProvider.TEMPORARILY_UNAVAILABLE:
 				if (DEBUG_LOG) Log.d(TAG, "Status Changed: Temporarily Unavailable");
 				//textGpsStatus.setText("Provider:" + provider + " status: " + status);
-				Toast.makeText(getApplicationContext(), provider + " location provider status Changed: TEMPORARILY_UNAVAILABLE",	Toast.LENGTH_SHORT).show();
+//				Toast.makeText(getApplicationContext(), provider + " location provider status Changed: TEMPORARILY_UNAVAILABLE",	Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), provider + " " + R.string.titleMapViewLocationProviderChangedUnavailable,	Toast.LENGTH_SHORT).show();
 				break;
 			case LocationProvider.AVAILABLE:
 
@@ -1625,7 +1715,8 @@ public class EQForm_MapView extends Activity {
 
 				//textGpsStatus.setText("Provider:" + provider + " status: " + status);
 
-				Toast.makeText(getApplicationContext(), provider + " location provider status Changed: AVAILABLE",	Toast.LENGTH_SHORT).show();
+//				Toast.makeText(getApplicationContext(), provider + " location provider status Changed: AVAILABLE",	Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), provider + " " + R.string.titleMapViewLocationProviderChangedAvailable,	Toast.LENGTH_SHORT).show();
 
 				//Toast.makeText(getApplicationContext(), "Status Changed: Available",Toast.LENGTH_SHORT).show();
 				break;

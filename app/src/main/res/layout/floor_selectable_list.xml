@@ -20,7 +20,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Foundation System"
+        android:text="@string/titleFloorFoundation"
         android:textStyle="bold" />
 
     <Spinner
@@ -43,7 +43,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Floor System Material"
+            android:text="@string/titleFloorMaterial"
             android:textStyle="bold" />
 
         <ListView
@@ -73,7 +73,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Floor System Type"
+            android:text="@string/titleFloorType"
             android:textStyle="bold" />
 
         <ListView
@@ -86,16 +86,15 @@
             android:fadeScrollbars="false" >
         </ListView>
     </RelativeLayout>
-    
-    
-    
+
+
     <TextView
         android:id="@+id/textView4"
         style="@style/AttributeTitleStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Floor Connection"
+        android:text="@string/titleFloorConnection"
         android:textStyle="bold" />
 
     <Spinner

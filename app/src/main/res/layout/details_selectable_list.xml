@@ -11,14 +11,14 @@
     <ScrollView
         android:id="@+id/ScrollViewDetails"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="@color/highlight_colour"
             android:gravity="left"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="fill_parent"
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/highlight_colour"
                 android:gravity="left"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textView1"
@@ -39,16 +39,15 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="Comments" />
+                    android:text="@string/titleDetailsComments" />
 
                 <EditText
                     android:id="@+id/surveyComment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textView1"
-                    android:hint="Enter general building comments"
-                    android:lines="4" >
-                </EditText>
+                    android:hint="@string/hintDetailsComments"
+                    android:lines="4"></EditText>
 
                 <Button
                     android:id="@+id/btn_save_observation"
@@ -56,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/surveyComment"
-                    android:text="Save this observation"
+                    android:text="@string/btnDetailsSave"
                     android:visibility="gone" />
 
                 <Button
@@ -65,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@+id/surveyComment"
-                    android:text="Cancel this observation"
+                    android:text="@string/btnDetailsCancel"
                     android:visibility="gone" />
             </RelativeLayout>
 
@@ -76,7 +75,7 @@
                 android:layout_below="@+id/rel1"
                 android:background="@color/highlight_colour"
                 android:gravity="left"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textViewSlope"
@@ -86,16 +85,16 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:gravity="left"
-                    android:text="Slope" />
+                    android:text="@string/titleDetailsSlope" />
 
                 <EditText
                     android:id="@+id/editTextSlope"
-                    android:layout_width="100dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:ems="10"
-                    android:hint="slope (degs)"
+                    android:hint="@string/hintDetailsSlope"
                     android:inputType="number"
                     android:maxLength="3" />
 
@@ -108,7 +107,7 @@
                     android:layout_below="@+id/editTextSlope"
                     android:layout_marginTop="5dp"
                     android:gravity="left"
-                    android:text="Position Within Block" />
+                    android:text="@string/titleDetailsBuildingPosition" />
 
                 <Spinner
                     android:id="@+id/spinnerBuildingPosition"
@@ -126,7 +125,7 @@
                     android:layout_below="@+id/spinnerBuildingPosition"
                     android:layout_marginTop="5dp"
                     android:gravity="left"
-                    android:text="Plan Shape" />
+                    android:text="@string/titleDetailsBuildingShape" />
             </RelativeLayout>
 
             <Spinner
@@ -143,7 +142,7 @@
                 android:layout_below="@+id/spinnerBuildingShape"
                 android:layout_marginTop="5dp"
                 android:gravity="left"
-                android:text="Material Of Exterior Walls" />
+                android:text="@string/titleDetailsNonStructuralExteriorWalls" />
 
             <Spinner
                 android:id="@+id/spinnerNonStructuralExteriorWalls"
@@ -159,7 +158,7 @@
                 android:layout_below="@+id/rel1"
                 android:background="@color/highlight_colour"
                 android:gravity="left"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/DirectionX"
@@ -169,7 +168,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:gravity="left"
-                    android:text="Direction X" />
+                    android:text="@string/titleDetailsDirectionX" />
 
                 <EditText
                     android:id="@+id/editTextDirectionX"
@@ -178,7 +177,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_below="@+id/DirectionX"
                     android:ems="10"
-                    android:hint="Direct X"
+                    android:hint="@string/hintDetailsDirectionX"
                     android:inputType="number" />
 
                 <TextView
@@ -189,7 +188,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:gravity="left"
-                    android:text="Direction Y" />
+                    android:text="@string/titleDetailsDirectionY" />
 
                 <EditText
                     android:id="@+id/editTextDirectionY"
@@ -198,7 +197,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/DirectionY"
                     android:ems="10"
-                    android:hint="Direct Y"
+                    android:hint="@string/hintDetailsDirectionY"
                     android:inputType="number" />
             </RelativeLayout>
         </LinearLayout>
