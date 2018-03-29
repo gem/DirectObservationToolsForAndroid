@@ -5,8 +5,8 @@
 
     <!-- Splash Strings -->
    <string name="splash_title">IDCT: Herramienta móvil de campo</string>
-    <string name="splash_version_info">Versión 1.1.1</string>
-    <string name="splash_author_info">University of Nottingham and GEM Foundation</string>
+    <string name="splash_version_info">Versión 1.2.0</string>
+    <string name="splash_author_info">"University of Nottingham, GEM Foundation, y Corporación OSSO "</string>
     
     <!-- Main Menu Strings" -->
     <string name="menu_title">Global Earthquake Model\nInventory Data Capture Tool\n</string>
