@@ -133,7 +133,7 @@ public class GemDbAdapter
 	{
 		try
 		{
-			String sql ="SELECT * FROM SETTINGS where KEY like '%_FAV';";
+			@SuppressWarnings("SyntaxError") String sql ="SELECT * FROM SETTINGS where KEY like '%_FAV';";
 			Cursor mCur = mDb.rawQuery(sql, null);
 			if (mCur!=null)
 			{

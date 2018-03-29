@@ -21,7 +21,7 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/textView1age"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
@@ -58,7 +58,7 @@
             android:layout_width="182dp"
             android:layout_height="122dp"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/textView1"
+            android:layout_below="@+id/textView1age"
             android:choiceMode="singleChoice" >
 
         </ListView>

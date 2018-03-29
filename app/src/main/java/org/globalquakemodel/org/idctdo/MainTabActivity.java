@@ -941,7 +941,7 @@ public class MainTabActivity extends TabActivity {
 	/**
 	 * Check if an asset exists. This will fail if the asset has a size < 1 byte.
 	 * @param context
-	 * @param path
+	 * @param pathInAssets
 	 * @return TRUE if the asset exists and FALSE otherwise
 	 */
 	public static boolean assetExists(Context context, String pathInAssets) {

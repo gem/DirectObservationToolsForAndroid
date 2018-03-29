@@ -18,7 +18,6 @@
         android:title="@string/titleSettingsProject" >
         <EditTextPreference
             android:name="EditText"
-            android:defaultValue=""
             android:key="projectIdTextPref"
             android:summary="@string/titleSettingsProjectIDsummary"
             android:title="@string/titleSettingsProjectID" />
