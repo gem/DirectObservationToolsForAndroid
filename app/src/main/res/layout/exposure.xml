@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:text="Number of Day Occupants"
+                android:text="@string/titleExposureOccupantsDay"
                 android:textStyle="bold" />
 
             <EditText
@@ -52,7 +52,7 @@
                 style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Number of Night Occupants"
+                android:text="@string/titleExposureOccupantsNight"
                 android:textStyle="bold" />
 
             <EditText
@@ -67,7 +67,7 @@
                 style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Number of Transit Occupants"
+                android:text="@string/titleExposureOccupantsTransit"
                 android:textStyle="bold" />
 
             <EditText
@@ -82,7 +82,7 @@
                 style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Number of Dwellings"
+                android:text="@string/titleExposureDwellings"
                 android:textStyle="bold" />
 
             <EditText
@@ -97,7 +97,7 @@
                 style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Plan Area (square metres)"
+                android:text="@string/titleExposurePlanArea"
                 android:textStyle="bold" />
 
             <EditText
@@ -112,7 +112,7 @@
                 style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Replacement Cost (per square metre)"
+                android:text="@string/titleExposureReplacementCost"
                 android:textStyle="bold" />
 
             <EditText
@@ -132,7 +132,7 @@
                 style="@style/AttributeTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Comments"
+                android:text="@string/titleExposureComments"
                 android:textStyle="bold" />
 
             <EditText

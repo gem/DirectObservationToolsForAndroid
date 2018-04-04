@@ -25,7 +25,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:text="Lateral Load Resisting System" />
+            android:text="@string/titleLLRS_LongitudinalLateral" />
 
         <ListView
             android:id="@+id/listExample"
@@ -64,7 +64,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:text="Ductility" />
+            android:text="@string/titleLLRS_LongitudinalDuctility" />
 
         <ListView
             android:id="@+id/listExample2"
