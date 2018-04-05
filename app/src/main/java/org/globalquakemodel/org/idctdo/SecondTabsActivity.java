@@ -36,16 +36,20 @@ public class SecondTabsActivity extends TabActivity {
 
 		Intent tabIntent1=new Intent(this, Material_Selection_Longitudinal_Form2.class);
 		TabSpec tabSpec1 = tabHost
-		.newTabSpec("Longitudinal")
-		.setIndicator("Longitudinal")
+		.newTabSpec(getResources().getString(R.string.titleSecondTabsActivityLongitudinal))
+		.setIndicator(getResources().getString(R.string.titleSecondTabsActivityLongitudinal))
+		/*.newTabSpec("Longitudinal")
+		.setIndicator("Longitudinal")*/
 		.setContent(tabIntent1);
 
 		tabHost.addTab(tabSpec1);
 		
 		Intent tabIntent2=new Intent(this, Material_Selection_Transverse_Form2.class);
 		TabSpec tabSpec2 = tabHost
-		.newTabSpec("Transverse")
-		.setIndicator("Transverse")
+		.newTabSpec(getResources().getString(R.string.titleSecondTabsActivityTransverse))
+		.setIndicator(getResources().getString(R.string.titleSecondTabsActivityTransverse))
+		/*.newTabSpec("Transverse")
+		.setIndicator("Transverse")*/
 		.setContent(tabIntent2);
 		tabHost.addTab(tabSpec2);
 
