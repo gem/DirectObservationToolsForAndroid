@@ -31,7 +31,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Structural Irregularity"
+            android:text="@string/titleIrregularityStructural"
             android:textStyle="bold" />
 
         <ListView
@@ -61,7 +61,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Plan Irregularity"
+            android:text="@string/titleIrregularityPlan"
             android:textStyle="bold" />
 
         <TextView
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView2"
             android:gravity="left"
-            android:text="Primary"
+            android:text="@string/titleIrregularityPlanPrimary"
             android:textStyle="bold" />
 
         <TextView
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView2"
             android:gravity="right"
-            android:text="Secondary"
+            android:text="@string/titleIrregularityPlanSecondary"
             android:textStyle="bold" />
 
         <ListView
@@ -121,7 +121,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Vertical Irregularity"
+            android:text="@string/titleIrregularityVertical"
             android:textStyle="bold" />
 
         <TextView
@@ -131,7 +131,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewVerticalIrreg"
             android:gravity="left"
-            android:text="Primary"
+            android:text="@string/titleIrregularityVerticalPrimary"
             android:textStyle="bold" />
 
         <TextView
@@ -141,7 +141,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewVerticalIrreg"
             android:gravity="right"
-            android:text="Secondary"
+            android:text="@string/titleIrregularityVerticalSecondary"
             android:textStyle="bold" />
 
         <ListView
