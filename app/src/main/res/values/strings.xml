@@ -5,8 +5,8 @@
 
     <!-- Splash Strings -->
    <string name="splash_title">IDCT: Mobile Field Tool</string>
-    <string name="splash_version_info">Version 1.1.1</string>
-    <string name="splash_author_info">University of Nottingham and GEM Foundation</string>
+    <string name="splash_version_info">Version 1.2.0</string>
+    <string name="splash_author_info">University of Nottingham, GEM Foundation, and Corporación OSSO</string>
     
     <!-- Main Menu Strings" -->
     <string name="menu_title">Global Earthquake Model\nInventory Data Capture Tool\n</string>
@@ -74,7 +74,7 @@
  <string name="titleFloorMaterial">Floor System Material</string>
  <string name="titleFloorType">Floor System Type</string>
  <string name="titleFloorConnection">Floor Connection</string>
- <string name="db_name">gem-es.db3</string>
+ <string name="db_name">gem.db3</string>
     <string name="titleIrregularityStructural">Structural Irregularity</string>
  <string name="titleIrregularityPlan">Plan Irregularity</string>
  <string name="titleIrregularityPlanPrimary">Primary</string>
