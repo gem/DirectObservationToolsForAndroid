@@ -4,24 +4,23 @@
     
     <PreferenceCategory
         android:summary="Map Display Settings"
-        android:title="Map Settings" >
+        android:title="@string/titleSettingsMap" >
            
         <CheckBoxPreference
             android:enabled="true"
             android:key="showPositionDetailsCheckBox"
             android:summary="On/Off"
             android:defaultValue="false"
-            android:title="Show positioning details" />
+            android:title="@string/titleSettingsPositionDetails" />
     </PreferenceCategory>
     <PreferenceCategory
         android:summary="Enter Project Metadata"
-        android:title="Project Details" >
+        android:title="@string/titleSettingsProject" >
         <EditTextPreference
             android:name="EditText"
-            android:defaultValue=""
             android:key="projectIdTextPref"
-            android:summary="Unique Project ID for this survey."
-            android:title="Project / Survey ID" />
+            android:summary="@string/titleSettingsProjectIDsummary"
+            android:title="@string/titleSettingsProjectID" />
 
     </PreferenceCategory>
 </PreferenceScreen>

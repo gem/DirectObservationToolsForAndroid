@@ -20,7 +20,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Roof Shape"
+        android:text="@string/titleRoofShape"
         android:textStyle="bold" />
 
     <Spinner
@@ -43,7 +43,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Roof System Material"
+            android:text="@string/titleRoofSystemMaterial"
             android:textStyle="bold" />
 
         <ListView
@@ -73,7 +73,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Roof System Type"
+            android:text="@string/titleRoofSystemType"
             android:textStyle="bold" />
 
         
@@ -94,7 +94,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Roof Cover Material"
+        android:text="@string/titleRoofCoverMaterial"
         android:textStyle="bold" />
 
     <Spinner
@@ -111,7 +111,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Roof Connection"
+        android:text="@string/titleRoofConnection"
         android:textStyle="bold" />
 
     <Spinner

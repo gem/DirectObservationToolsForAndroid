@@ -252,81 +252,93 @@ public class MainTabActivity extends TabActivity {
 		Intent intentPageOne=new Intent(this, SecondTabsActivity.class);
 		TabSpec tabSpecPageOne = tabHost
 		.newTabSpec("Page 1.1")
-		.setIndicator("Material", ressources.getDrawable(R.drawable.tab_icon))
+		.setIndicator(getResources().getString(R.string.intentPageOne), ressources.getDrawable(R.drawable.tab_icon))
+//		.setIndicator("Material", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageOne);
 
 		Intent intentPageTwo = new Intent().setClass(this,  LLRS_Selection_Longitudinal_Transverse_Form.class);
 		TabSpec tabSpecPageTwo = tabHost
-		.newTabSpec("Page 2.1")	
-		.setIndicator("LLRS", ressources.getDrawable(R.drawable.tab_icon))
+		.newTabSpec("Page 2.1")
+        .setIndicator(getResources().getString(R.string.intentPageTwo), ressources.getDrawable(R.drawable.tab_icon))
+//		.setIndicator("LLRS", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageTwo);
 
 
 		Intent intentPageThree = new Intent().setClass(this,  Roof_Selection_Form.class);
 		TabSpec tabSpecPageThree = tabHost
 		.newTabSpec("Page 3")
-		.setIndicator("Roof", ressources.getDrawable(R.drawable.tab_icon))
+        .setIndicator(getResources().getString(R.string.intentPageThree), ressources.getDrawable(R.drawable.tab_icon))
+//        .setIndicator("Roof", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageThree);
 
 		Intent intentPageFour = new Intent().setClass(this, Floor_Selection_Form.class);
 		TabSpec tabSpecPageFour = tabHost
 		.newTabSpec("Page 4")
-		.setIndicator("Floor", ressources.getDrawable(R.drawable.tab_icon))
+        .setIndicator(getResources().getString(R.string.intentPageFour), ressources.getDrawable(R.drawable.tab_icon))
+//		.setIndicator("Floor", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageFour);
 
 
 		Intent intentPageFive = new Intent().setClass(this, Irregularity_Selection_Form.class);
 		TabSpec tabSpecPageFive = tabHost
 		.newTabSpec("Page 5")
-		.setIndicator("Irreg", ressources.getDrawable(R.drawable.tab_icon))
+        .setIndicator(getResources().getString(R.string.intentPageFive), ressources.getDrawable(R.drawable.tab_icon))
+//		.setIndicator("Irreg", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageFive);
-
-
 
 
 		Intent intentPageSix = new Intent().setClass(this, Occupancy_Selection_Form.class);
 		TabSpec tabSpecPageSix= tabHost
 		.newTabSpec("Page 6")
-		.setIndicator("Occu", ressources.getDrawable(R.drawable.tab_icon))
+		.setIndicator(getResources().getString(R.string.intentPageSix), ressources.getDrawable(R.drawable.tab_icon))
+        //.setIndicator("Occu", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageSix);
-
 
 
 		Intent intentPageSeven = new Intent().setClass(this, Age_Selection_Form.class);
 		TabSpec tabSpecPageSeven = tabHost
 		.newTabSpec("Page 7")
-		.setIndicator("AgeHght", ressources.getDrawable(R.drawable.tab_icon))
+        .setIndicator(getResources().getString(R.string.intentPageSeven), ressources.getDrawable(R.drawable.tab_icon))
+//		.setIndicator("AgeHght", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageSeven);
 
 
 		Intent intentPageEight = new Intent().setClass(this, Details_Selection.class);
 		TabSpec tabSpecPageEight = tabHost
 		.newTabSpec("Page 8")
-		.setIndicator("Comm.", ressources.getDrawable(R.drawable.tab_icon))
+        .setIndicator(getResources().getString(R.string.intentPageEight), ressources.getDrawable(R.drawable.tab_icon))
+//		.setIndicator("Comm.", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageEight);
 
 		Intent intentPageNine = new Intent().setClass(this, Structure_Selection_Form.class);
-		tabHost
+        TabSpec tabSpecPageNine = tabHost
+//        tabHost
 		.newTabSpec("Page 9")
-		.setIndicator("Struc", ressources.getDrawable(R.drawable.tab_icon))
+        .setIndicator(getResources().getString(R.string.intentPageNine), ressources.getDrawable(R.drawable.tab_icon))
+//		.setIndicator("Struc", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageNine);
 
 		Intent intentPageTen = new Intent().setClass(this, Height_Selection_Form.class);
-		tabHost
+        TabSpec tabSpecPageTen = tabHost
+//        tabHost
 		.newTabSpec("Page 10")
-		.setIndicator("Height", ressources.getDrawable(R.drawable.tab_icon))
+        .setIndicator(getResources().getString(R.string.intentPageTen), ressources.getDrawable(R.drawable.tab_icon))
+//		.setIndicator("Height", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageTen);
 
 		Intent intentPageEleven = new Intent().setClass(this, Exposure_Form.class);
 		TabSpec tabSpecPageEleven = tabHost
 		.newTabSpec("Page 11")
-		.setIndicator("Exp", ressources.getDrawable(R.drawable.tab_icon))
+        .setIndicator(getResources().getString(R.string.intentPageEleven), ressources.getDrawable(R.drawable.tab_icon))
+//        .setIndicator("Exp", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageEleven);
 
 		Intent intentPageTwelve = new Intent().setClass(this, Consequences_Form.class);
 		TabSpec tabSpecPageTwelve = tabHost
-		.newTabSpec("Page 11")
-		.setIndicator("Conseq", ressources.getDrawable(R.drawable.tab_icon))
+		//.newTabSpec("Page 11")
+		.newTabSpec("Page 12")
+        .setIndicator(getResources().getString(R.string.intentPageTwelve), ressources.getDrawable(R.drawable.tab_icon))
+//		.setIndicator("Conseq", ressources.getDrawable(R.drawable.tab_icon))
 		.setContent(intentPageTwelve);
 
 
@@ -500,13 +512,16 @@ public class MainTabActivity extends TabActivity {
 		// do something on back.
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		// set title
-		alertDialogBuilder.setTitle("Unsaved Survey Observation");
+//		alertDialogBuilder.setTitle("Unsaved Survey Observation");
+		alertDialogBuilder.setTitle(getResources().getString(R.string.titleUnsavedSurveyObservation));
 
 		// set dialog message
 		alertDialogBuilder
-		.setMessage("Do you want to save this observation?")
+//		.setMessage("Do you want to save this observation?")
+		.setMessage(getResources().getString(R.string.titleUnsavedSurveyObservationConfirmation))
 		.setCancelable(false)
-		.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+//		.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+		.setNeutralButton(getResources().getString(R.string.btn_cancel), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,int id) {
 				// if this button is clicked, close
 				// current activity
@@ -514,7 +529,8 @@ public class MainTabActivity extends TabActivity {
 				dialog.cancel();
 			}
 		})
-		.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+//		.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+		.setPositiveButton(getResources().getString(R.string.btn_yes), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,int id) {
 				// if this button is clicked, close
 				// current activity
@@ -526,7 +542,8 @@ public class MainTabActivity extends TabActivity {
 				if (DEBUG_LOG) Log.d(TAG, "Acitivity should be finished");					
 			}
 		})
-		.setNegativeButton("No",new DialogInterface.OnClickListener() {
+//		.setNegativeButton("No",new DialogInterface.OnClickListener() {
+		.setNegativeButton(getResources().getString(R.string.btn_no), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,int id) {
 				// if this button is clicked, just close
 				// the dialog box and do nothing
@@ -582,13 +599,20 @@ public class MainTabActivity extends TabActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
+		/*
 		menu.add(0,0,0,"Take Picture");
 		menu.add(0,4,0,"View linked pictures");
 		menu.add(0,1,0,"Save changes and close");
 		menu.add(0,2,0,"Save changes and favourite");
 		menu.add(0,5,0,"Delete record");
 		menu.add(0,3,0,"Help");
-		//menu.add(0,6,0,"Basic/Advanced");
+		*/
+		menu.add(0,0,0,getResources().getString(R.string.titleMainTabActivityMenuTakePicture));
+		menu.add(0,4,0,getResources().getString(R.string.titleMainTabActivityMenuViewLinkedPictures));
+		menu.add(0,1,0,getResources().getString(R.string.titleMainTabActivityMenuSaveClose));
+		menu.add(0,2,0,getResources().getString(R.string.titleMainTabActivityMenuSaveFavourite));
+		menu.add(0,5,0,getResources().getString(R.string.titleMainTabActivityMenuDelete));
+		menu.add(0,3,0,getResources().getString(R.string.titleMainTabActivityMenuHelp));
 
 		return true;
 	}
@@ -672,10 +696,13 @@ public class MainTabActivity extends TabActivity {
 		if (surveyDataObject.isExistingRecord) { 	
 			
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("Delete this record");
-			builder.setMessage("Are you sure you want to delete this record?\n\nIf this record has been defined as a favourite template record it won't be available to create new records in future.");
+//			builder.setTitle("Delete this record");
+//			builder.setMessage("Are you sure you want to delete this record?\n\nIf this record has been defined as a favourite template record it won't be available to create new records in future.");
+			builder.setTitle(getResources().getString(R.string.titleMainTabActivityDeleteThisRecord));
+			builder.setMessage(getResources().getString(R.string.titleMainTabActivityDeleteThisRecordConfirmation));
 
-			builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//			builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			builder.setPositiveButton(getResources().getString(R.string.btn_yes), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int whichButton) {				
 					GEMSurveyObject surveyDataObject = (GEMSurveyObject)getApplication();
@@ -699,7 +726,8 @@ public class MainTabActivity extends TabActivity {
 				}
 			});
 
-			builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//			builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			builder.setNegativeButton(getResources().getString(R.string.btn_cancel), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					return;
@@ -709,7 +737,8 @@ public class MainTabActivity extends TabActivity {
 			builder.show();
 
 		} else {
-			Toast.makeText(getApplicationContext(), "Can't delete this as it's not saved!", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(getApplicationContext(), "Can't delete this as it's not saved!", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), getResources().getString(R.string.titleMainTabActivityDeleteThisRecordFail), Toast.LENGTH_SHORT).show();
 		}
 
 
@@ -732,7 +761,9 @@ public class MainTabActivity extends TabActivity {
 		ArrayList<DBRecord> buildingPositionAttributesList = GemUtilities.cursorToArrayList(mCursor);	
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Linked images. Note: the list will only show images once the survey point is saved.");	
+//		builder.setTitle("Linked images. Note: the list will only show images once the survey point is saved.");
+		builder.setTitle(getResources().getString(R.string.titleMainTabActivityMenuViewLinkedPicturesNote));
+
 
 		final ArrayAdapter<String> modeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,  buildingPositionAttributesList);
 		builder.setAdapter(modeAdapter, new DialogInterface.OnClickListener() {
@@ -740,6 +771,7 @@ public class MainTabActivity extends TabActivity {
 			}
 
 		});
+
 		builder.setPositiveButton("Ok",
 				new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
@@ -747,8 +779,6 @@ public class MainTabActivity extends TabActivity {
 			}
 		});
 		builder.show();
-
-
 	}
 	//Checks the arrays.xml to determine which forms hold which attributes
 	public void addAsFavourite() {
@@ -756,8 +786,10 @@ public class MainTabActivity extends TabActivity {
 
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Name this favourite");
-		builder.setMessage("Enter a name for this favourite");
+		/*builder.setTitle("Name this favourite");
+		builder.setMessage("Enter a name for this favourite");*/
+		builder.setTitle(getResources().getString(R.string.titleMainTabActivityAddFavourite));
+		builder.setMessage(getResources().getString(R.string.titleMainTabActivityAddFavouriteName));
 		// Use an EditText view to get user input.
 		final EditText input = new EditText(this);
 		input.setId(TEXT_ID_FOR_DIALOG);
@@ -796,7 +828,8 @@ public class MainTabActivity extends TabActivity {
 			}
 		});
 
-		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		builder.setNegativeButton(getResources().getString(R.string.btn_cancel), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				return;
@@ -810,14 +843,24 @@ public class MainTabActivity extends TabActivity {
 
 
 
+	/*
+		This method receives the glossary variable from the showHelp() method call
+	*/
+	public String loadHelpFileNames(String strToCheck, String glossary) {
 
-	public String loadHelpFileNames(String strToCheck) {
+		String glossary_dir =  "glossary/" + glossary;
+//		Log.d("IDCT","Glossary dir :" + glossary_dir);
+
 		//File folder = new File("file:///android_asset/glossary");
 		if (DEBUG_LOG) Log.d(TAG,"help loading: " + strToCheck);
 		String pageToLoad = "";
 		try {
-			String[] elements = listFiles("glossary/glossary_cleaned","nothing");
+//			String[] elements = listFiles("glossary/glossary_cleaned","nothing");
+			String[] elements = listFiles(glossary_dir,"nothing");
+
 			if (DEBUG_LOG) Log.d(TAG,"starting match loop for elements. " + elements.length);
+
+
 			for( int i = 0; i < elements.length; i++)
 			{				
 				String element = elements[i].substring(0, elements[i].lastIndexOf('.'));    
@@ -862,13 +905,15 @@ public class MainTabActivity extends TabActivity {
 
 
 	private String[] listFiles(String dirFrom, String dirTo) throws IOException {
+
 		Resources res = getResources(); //if you are in an activity
 		AssetManager am = res.getAssets();
 		String fileList[] = am.list(dirFrom);
 		if (DEBUG_LOG) Log.d(TAG,"fileList: " + fileList.toString());
-		if (fileList != null)	{   
+
+		if (fileList != null)	{
 			for ( int i = 0;i<fileList.length;i++)			{
-				//if (DEBUG_LOG) Log.d(TAG,fileList[i]);
+				if (DEBUG_LOG) Log.d(TAG,fileList[i]);
 			}
 		} else {
 			if (DEBUG_LOG) Log.d(TAG,"fileList empty");
@@ -896,7 +941,7 @@ public class MainTabActivity extends TabActivity {
 	/**
 	 * Check if an asset exists. This will fail if the asset has a size < 1 byte.
 	 * @param context
-	 * @param path
+	 * @param pathInAssets
 	 * @return TRUE if the asset exists and FALSE otherwise
 	 */
 	public static boolean assetExists(Context context, String pathInAssets) {
@@ -914,16 +959,27 @@ public class MainTabActivity extends TabActivity {
 	}
 
 	public void showHelp() {
+
+		// brings the name of the folder name depending on the OS language
+		String glossary = getResources().getString(R.string.glossary);
+
 		GEMSurveyObject g = (GEMSurveyObject)getApplication();
+
 		if (!GemUtilities.isBlank(g.lastEditedAttribute)) { 
 			String pageToLoad = g.lastEditedAttribute + ".html";
 			if (DEBUG_LOG) Log.d("IDCT","Going to try help file for: " + g.lastEditedAttribute );
-			pageToLoad = loadHelpFileNames(g.lastEditedAttribute);
+
+//			pageToLoad = loadHelpFileNames(g.lastEditedAttribute);
+			pageToLoad = loadHelpFileNames(g.lastEditedAttribute, glossary);
+//			Log.d("IDCT","Loading Glossary from: glossary/" + glossary + "/" + pageToLoad);
 			//File file = new File("file:///android_asset/glossary/glossary_cleaned/" + pageToLoad);
-			if (assetExists(getBaseContext(),"glossary/glossary_cleaned/" + pageToLoad)) {
+
+//			if (assetExists(getBaseContext(),"glossary/glossary_cleaned/" + pageToLoad)) {
+			if (assetExists(getBaseContext(),"glossary/" + glossary + "/" + pageToLoad)) {
 				AlertDialog.Builder alert = new AlertDialog.Builder(this);
 				WebView wv = new WebView(this);			
-				wv.loadUrl("file:///android_asset/glossary/glossary_cleaned/" + pageToLoad);
+//				wv.loadUrl("file:///android_asset/glossary/glossary_cleaned/" + pageToLoad);
+				wv.loadUrl("file:///android_asset/glossary/" + glossary + "/" + pageToLoad);
 				wv.setWebViewClient(new WebViewClient()
 				{
 					@Override
@@ -968,8 +1024,10 @@ public class MainTabActivity extends TabActivity {
 				GEMSurveyObject g = (GEMSurveyObject)getApplication();
 				if (g.unsavedEdits) {
 					AlertDialog.Builder alert = new AlertDialog.Builder(this);
-					alert.setTitle("Photo Comment");
-					alert.setMessage("Add a comment to this photo");
+					/*alert.setTitle("Photo Comment");
+					alert.setMessage("Add a comment to this photo");*/
+					alert.setTitle(getResources().getString(R.string.titlePhotoComment));
+					alert.setMessage(getResources().getString(R.string.titlePhotoCommentLegend));
 
 					// Set an EditText view to get user input 
 					final EditText input = new EditText(this);

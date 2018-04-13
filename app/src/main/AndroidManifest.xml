@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.globalquakemodel.org.idctdo"
-    android:versionCode="3"
-    android:versionName="1.1.1" >
+    android:versionCode="4"
+    android:versionName="1.2.0" >
 
 
     <uses-sdk android:minSdkVersion="8" 
@@ -36,16 +36,7 @@
             android:configChanges="orientation"
             android:screenOrientation="sensor" />
         <activity
-            android:name="org.globalquakemodel.org.idctdo.EQForm_Settings"
-            android:screenOrientation="sensor" />
-        <activity
-            android:name="org.globalquakemodel.org.idctdo.Material_Selection_Longitudinal_Form"
-            android:screenOrientation="sensor" />
-        <activity
             android:name="org.globalquakemodel.org.idctdo.Material_Selection_Longitudinal_Form2"
-            android:screenOrientation="sensor" />
-        <activity
-            android:name="org.globalquakemodel.org.idctdo.Material_Selection_Transverse_Form"
             android:screenOrientation="sensor" />
         <activity
             android:name="org.globalquakemodel.org.idctdo.Material_Selection_Transverse_Form2"
@@ -69,13 +60,7 @@
             android:name="org.globalquakemodel.org.idctdo.Floor_Selection_Form"
             android:screenOrientation="sensor" />
         <activity
-            android:name="org.globalquakemodel.org.idctdo.EQForm_ModifiedEMS_Camera"
-            android:screenOrientation="sensor" />
-        <activity
             android:name="org.globalquakemodel.org.idctdo.Irregularity_Selection_Form"
-            android:screenOrientation="sensor" />
-        <activity
-            android:name="org.globalquakemodel.org.idctdo.Irregularity_Selection_Secondary_Form"
             android:screenOrientation="sensor" />
         <activity
             android:name="org.globalquakemodel.org.idctdo.Details_Selection"

@@ -20,6 +20,10 @@ Tiles (with extension png.tile) for offline usage may be downloaded using [MOBAC
 
 [Sample OpenStreetMap (MapQuest) tiles of Pavia, Italy](http://gem.github.io/DirectObservationToolsForAndroid/sample_pavia_png_tiles.zip) ~20MB
 
+
+Many thanks to [Corporación OSSO](http://osso.org.co) for their generous contribution of Spanish language support.
+
+
 ## Application Structure
 
 ###Database

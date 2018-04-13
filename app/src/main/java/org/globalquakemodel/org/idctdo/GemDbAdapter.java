@@ -133,7 +133,7 @@ public class GemDbAdapter
 	{
 		try
 		{
-			String sql ="SELECT * FROM SETTINGS where KEY like '%_FAV';";
+			@SuppressWarnings("SyntaxError") String sql ="SELECT * FROM SETTINGS where KEY like '%_FAV';";
 			Cursor mCur = mDb.rawQuery(sql, null);
 			if (mCur!=null)
 			{
@@ -323,7 +323,8 @@ public class GemDbAdapter
 			}
 			csvWrite.close();
 			curCSV.close();
-			Toast.makeText(this.mContext.getApplicationContext(), "CSV export created. Export is located at: \n" + sd + "/" + backupDBPath , Toast.LENGTH_LONG).show();
+//			Toast.makeText(this.mContext.getApplicationContext(), "CSV export created. Export is located at: \n" + sd + "/" + backupDBPath , Toast.LENGTH_LONG).show();
+			Toast.makeText(this.mContext.getApplicationContext(), this.mContext.getString(R.string.titleDbAdapterCSVExport) + "\n" + sd + "/" + backupDBPath , Toast.LENGTH_LONG).show();
 
 		}
 		catch(Exception sqlEx)
@@ -767,7 +768,8 @@ public class GemDbAdapter
 			cv.put("KEY", favouriteName.toString() + "_FAV");
 			cv.put("VALUE", uidString.toString());
 			mDb.insert("SETTINGS", null, cv);
-			String feedbackMsg = "Favourite saved\n " + favouriteName + "_FAV";
+//			String feedbackMsg = "Favourite saved\n " + favouriteName + "_FAV";
+			String feedbackMsg = this.mContext.getString(R.string.titleDbAdapterFavouriteSaved) + "\n " + favouriteName + "_FAV";
 			Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
 		}
 		catch (SQLException mSQLException) 
@@ -800,7 +802,8 @@ public class GemDbAdapter
 			cv.put("PROJ_DATE", dateFormat.format(date));
 			
 			mDb.insert("GEM_PROJECT", null, cv);
-			String feedbackMsg = "Project saved\n " + projectName;
+//			String feedbackMsg = "Project saved\n " + projectName;
+			String feedbackMsg = this.mContext.getString(R.string.titleDbAdapterProjectSaved) + "\n " + projectName;
 			Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
 
 		}
@@ -817,7 +820,8 @@ public class GemDbAdapter
 			cv.put("KEY", "CURRENT_USER");
 			cv.put("VALUE",surveyorName.toString());
 			mDb.insert("SETTINGS", null, cv);
-			String feedbackMsg = "Current User:\n " + surveyorName.toString();
+//			String feedbackMsg = "Current User:\n " + surveyorName.toString();
+			String feedbackMsg = this.mContext.getString(R.string.titleDbAdapterUser) + "\n " + surveyorName.toString();
 			Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
 		}
 		catch (SQLException mSQLException) 
@@ -856,7 +860,8 @@ public class GemDbAdapter
 				SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this.mContext.getApplicationContext());
 				projId = settings.getString("projectIdTextPref", "0");
 			} catch (SQLException mSQLException) {
-				Toast.makeText(this.mContext.getApplicationContext(), "There was a problem getting a project id. Ensure a project ID is defined in the settings.", Toast.LENGTH_LONG).show();
+//				Toast.makeText(this.mContext.getApplicationContext(), "There was a problem getting a project id. Ensure a project ID is defined in the settings.", Toast.LENGTH_LONG).show();
+				Toast.makeText(this.mContext.getApplicationContext(), this.mContext.getString(R.string.titleDbAdapterProjectIDProblem), Toast.LENGTH_LONG).show();
 			}
 			cv.put("PROJ_UID", projId.toString());			
 			cv.put("X", Double.toString(gemGlobalVariables.getLon()));
@@ -887,13 +892,15 @@ public class GemDbAdapter
 				mDb.insert("GEM_OBJECT", null, cv);
 			}
 
-			String feedbackMsg = "Survey Data saved\n " + "Lat: " + Double.toString(gemGlobalVariables.getLat()) + "\nLon: " + Double.toString(gemGlobalVariables.getLon()) + "\nID:" + gemGlobalVariables.getUid().toString();
+//			String feedbackMsg = "Survey Data saved\n " + "Lat: " + Double.toString(gemGlobalVariables.getLat()) + "\nLon: " + Double.toString(gemGlobalVariables.getLon()) + "\nID:" + gemGlobalVariables.getUid().toString();
+			String feedbackMsg = this.mContext.getString(R.string.titleDbAdapterSurveySaved) + "\n" + this.mContext.getString(R.string.titleMapViewBestLocationLat) + Double.toString(gemGlobalVariables.getLat()) + "\n" + this.mContext.getString(R.string.titleMapViewBestLocationLon) +  Double.toString(gemGlobalVariables.getLon()) + "\nID:" + gemGlobalVariables.getUid().toString();
 			Toast.makeText(this.mContext.getApplicationContext(), feedbackMsg , Toast.LENGTH_LONG).show();
 		}
 		catch (SQLException mSQLException) 
 		{
 			Log.d(TAG, "insert / Update GEM Object>>"+ mSQLException.toString());
-			Toast.makeText(this.mContext.getApplicationContext(), "There was a problem saving the GEM survey data", Toast.LENGTH_LONG).show();
+//			Toast.makeText(this.mContext.getApplicationContext(), "There was a problem saving the GEM survey data", Toast.LENGTH_LONG).show();
+			Toast.makeText(this.mContext.getApplicationContext(), this.mContext.getString(R.string.titleDbAdapterProblemSaving), Toast.LENGTH_LONG).show();
 			throw mSQLException;
 		}		
 
@@ -922,13 +929,15 @@ public class GemDbAdapter
 				}
 				Log.d(TAG, "GEM Media DetailValues: " + cv.toString());
 				mDb.insert("MEDIA_DETAIL", null, cv);	
-				Toast.makeText(this.mContext.getApplicationContext(), "Photos were sucessfully linked in the database", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(this.mContext.getApplicationContext(), "Photos were sucessfully linked in the database", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this.mContext.getApplicationContext(), this.mContext.getString(R.string.titleDbAdapterPhotosLinked), Toast.LENGTH_SHORT).show();
 
 			}
 			catch (SQLException mSQLException) 
 			{
 				Log.d(TAG, "insertMediaDetails >>"+ mSQLException.toString());
-				Toast.makeText(this.mContext.getApplicationContext(), "There was a problem saving the Media Detail", Toast.LENGTH_LONG).show();
+//				Toast.makeText(this.mContext.getApplicationContext(), "There was a problem saving the Media Detail", Toast.LENGTH_LONG).show();
+				Toast.makeText(this.mContext.getApplicationContext(), this.mContext.getString(R.string.titleDbAdapterProblemSavingMedia), Toast.LENGTH_LONG).show();
 				throw mSQLException;
 			}
 		}
@@ -969,7 +978,8 @@ public class GemDbAdapter
 		catch (SQLException mSQLException) 
 		{
 			Log.d(TAG, "insertGEDData >>"+ mSQLException.toString());
-			Toast.makeText(this.mContext.getApplicationContext(), "There was a problem saving the GEM survey data", Toast.LENGTH_LONG).show();
+//			Toast.makeText(this.mContext.getApplicationContext(), "There was a problem saving the GEM survey data", Toast.LENGTH_LONG).show();
+			Toast.makeText(this.mContext.getApplicationContext(), this.mContext.getString(R.string.titleDbAdapterProblemSaving), Toast.LENGTH_LONG).show();
 			throw mSQLException;
 		}
 
@@ -1010,7 +1020,8 @@ public class GemDbAdapter
 		catch (SQLException mSQLException) 
 		{
 			Log.d(TAG, "insertConseqData >>"+ mSQLException.toString());
-			Toast.makeText(this.mContext.getApplicationContext(), "There was a problem saving the GEM survey data", Toast.LENGTH_LONG).show();
+//			Toast.makeText(this.mContext.getApplicationContext(), "There was a problem saving the GEM survey data", Toast.LENGTH_LONG).show();
+			Toast.makeText(this.mContext.getApplicationContext(), this.mContext.getString(R.string.titleDbAdapterProblemSaving), Toast.LENGTH_LONG).show();
 			throw mSQLException;
 		}
 		gemGlobalVariables.getKeyValuePairsMap().clear();

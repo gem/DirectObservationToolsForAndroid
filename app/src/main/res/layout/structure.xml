@@ -21,11 +21,11 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/textView1age"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:text="Age (YYYY)" />
+            android:text="@string/titleStructureAge" />
 
         <!--
         <Button
@@ -36,13 +36,6 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:text="Button" />
-
-
-
-
-
-
-
         -->
 
         <EditText
@@ -51,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:ems="10"
-            android:hint="date 1"
+            android:hint="@string/hintStructureAge1"
             android:inputType="number"
 	
             android:width="50dp" >
@@ -65,7 +58,7 @@
             android:layout_width="182dp"
             android:layout_height="122dp"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/textView1"
+            android:layout_below="@+id/textView1age"
             android:choiceMode="singleChoice" >
 
         </ListView>
@@ -78,7 +71,7 @@
             android:layout_centerVertical="true"
             android:ems="10"
             android:inputType="number"
-            android:hint="date 2"
+            android:hint="@string/hintStructureAge2"
             android:visibility="invisible"
             android:width="50dp" />
 
@@ -100,17 +93,17 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView1b"
+           	android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:text="Height (storeys)" />
+            android:text="@string/titleStructureStoreys" />
 
         <EditText
             android:id="@+id/editText3"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView1b"
+            android:layout_below="@+id/textView1"
             android:ems="10"
             android:inputType="number" >
         </EditText>
