@@ -5,7 +5,7 @@
 
     <!-- Splash Strings -->
    <string name="splash_title">IDCT: Mobile Field Tool</string>
-    <string name="splash_version_info">Version 1.2.0</string>
+    <string name="splash_version_info">Version 1.2.1</string>
     <string name="splash_author_info">University of Nottingham, GEM Foundation, and Corporación OSSO</string>
     
     <!-- Main Menu Strings" -->
@@ -203,6 +203,7 @@
  <string name="titleDatabaseHelperDeleting">Deleting records</string>
  <string name="titleMapViewLocationGPSProviderDisabled">GPS location provider disabled</string>
  <string name="titleMapViewLocationGPSProviderEnabled">GPS location provider enabled</string>
+ <string name="btn_show_menu">Menu</string>
 
 
 </resources>

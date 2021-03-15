@@ -1,49 +1,35 @@
-/*******************************************************************************
+/*
+ * *****************************************************************************
  * Copyright (c) 2010-2012, GEM Foundation.
  * IDCT Android is free software: you can redistribute it and/or modify it
  * under the terms of the GNU Affero General Public License as published
  * by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * IDCT Android is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with IDCT Android.  If not, see <http://www.gnu.org/licenses/>.
- ******************************************************************************/
+ *****************************************************************************
+ */
 package org.globalquakemodel.org.idctdo;
 
 
-
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.UUID;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.globalquakemodel.org.idctdo.R;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TabActivity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -54,11 +40,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -79,16 +60,34 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.UUID;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 public class EQForm_MapView extends Activity {
 
-	public boolean DEBUG_LOG = false; 
+	public boolean DEBUG_LOG = false;
 
 	protected Dialog mSplashDialog;
-	
+
 	WebView mWebView;
 	/** Called when the activity is first created. */
-	WebView webview;        
+	WebView webview;
 	private static final String TAG = "IDCT";
 
 	SharedPreferences mAppSettings;
@@ -101,20 +100,20 @@ public class EQForm_MapView extends Activity {
 	public double prevSurveyPointLon = 0;
 	public double prevSurveyPointLat = 0;
 
-	private Context mContext; 
+	private Context mContext;
 
 	final static int CAMERA_RESULT = 0;
 
 	public boolean isFirstLoad = true;
 
-	public Location currentLocation; 
-	public LocationManager locationManager; 
+	public Location currentLocation;
+	public LocationManager locationManager;
 	public LocationListener mlocListener;
 	public double currentLatitude;
 	public double currentLongitude;
 	public double currentLocationAccuracy;
 	public double currentBearingFromGPS;
-	public String  currentLocationProvider = "Not set";
+	public String currentLocationProvider = "Not set";
 	public boolean currentLocationSetAsCentre = true;
 	MyCount drawUpdateCounter;
 
@@ -127,7 +126,7 @@ public class EQForm_MapView extends Activity {
 	StringBuilder sb;
 	StringBuilder sb2;
 
-	private ProgressDialog progressBar; 
+	private ProgressDialog progressBar;
 
 	File ImageFile;
 	Uri FilenameUri;
@@ -147,20 +146,21 @@ public class EQForm_MapView extends Activity {
 	Button btn_take_survey_photo;
 	Button btn_startSurvey;
 	Button btn_startSurveyFavourite;
-	Button btn_cancelSurveyPoint;	
+	Button btn_cancelSurveyPoint;
 	Button btn_selectLayer;
 	Button btn_selectVectorLayer;
 	Button btn_zoomIn;
 	Button btn_zoomOut;
 	Button btn_refreshLayer;
 	ToggleButton btn_edit_points;
+	Button btn_showMenu;
 
 	File mediaFile;
 	File vectorsFile;
 	File mapTilesFile;
 	String sdCardPath;
 
-	boolean[] vectorsListDisplayState = null; 
+	boolean[] vectorsListDisplayState = null;
 
 
 	TextView text_view_gpsInfo;
@@ -170,30 +170,29 @@ public class EQForm_MapView extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (DEBUG_LOG) Log.d(TAG,"ON CREATE");
+		if (DEBUG_LOG) Log.d(TAG, "ON CREATE");
 		setContentView(R.layout.map_view);
 		mContext = this;
 
-		 MyStateSaver data = (MyStateSaver) getLastNonConfigurationInstance();
-		    if (data != null) {
-		        // Show splash screen if still loading
-		        if (data.showSplashScreen) {
-		            showSplashScreen();
-		        }
-		        setContentView(R.layout.map_view);      
+		MyStateSaver data = (MyStateSaver) getLastNonConfigurationInstance();
+		if (data != null) {
+			// Show splash screen if still loading
+			if (data.showSplashScreen) {
+				showSplashScreen();
+			}
+			setContentView(R.layout.map_view);
 
-		        // Rebuild your UI with your saved state here
-		    } else {
-		        showSplashScreen();
-		        setContentView(R.layout.map_view);   
-		        // Do your heavy loading here on a background thread
+			// Rebuild your UI with your saved state here
+		} else {
+			showSplashScreen();
+			setContentView(R.layout.map_view);
+			// Do your heavy loading here on a background thread
 
 
+		}
 
-		    }
-		    
 		//showSplashScreen();
-		
+
 		mWebView = (WebView) findViewById(R.id.map_webview);
 		mWebView.getSettings().setAllowFileAccess(true);
 		mWebView.getSettings().setJavaScriptEnabled(true);
@@ -202,16 +201,16 @@ public class EQForm_MapView extends Activity {
 			public boolean onConsoleMessage(ConsoleMessage cm) {
 				if (DEBUG_LOG) Log.d(TAG, cm.message() + " -- From line "
 						+ cm.lineNumber() + " of "
-						+ cm.sourceId() );
+						+ cm.sourceId());
 				return true;
 			}
 		});
 
-		if (DEBUG_LOG) Log.d(TAG,"adding JS interface");
-		mWebView.addJavascriptInterface(this, "webConnector"); 
+		if (DEBUG_LOG) Log.d(TAG, "adding JS interface");
+		mWebView.addJavascriptInterface(this, "webConnector");
 
 
-		mWebView.loadUrl("file:///android_asset/idct_map.html");		
+		mWebView.loadUrl("file:///android_asset/idct_map.html");
 		mWebView.setWebViewClient(new MapWebViewClient());
 		progressBar = new ProgressDialog(EQForm_MapView.this);
 		progressBar.setMessage("Loading maps...");
@@ -224,24 +223,24 @@ public class EQForm_MapView extends Activity {
 		});
 
 		//Create Folder
-		mediaFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/gemmedia");
-		mediaFile.mkdirs();		
+		mediaFile = new File(Environment.getExternalStorageDirectory().toString() + "/idctdo/gemmedia");
+		mediaFile.mkdirs();
 
 		//Create Folder
-		vectorsFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/kml");
+		vectorsFile = new File(Environment.getExternalStorageDirectory().toString() + "/idctdo/kml");
 		vectorsFile.mkdirs();
 
-		mapTilesFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/maptiles");
+		mapTilesFile = new File(Environment.getExternalStorageDirectory().toString() + "/idctdo/maptiles");
 		mapTilesFile.mkdirs();
 
-		File testFile = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/kml/PUT_KML_FILES_HERE");
+		File testFile = new File(Environment.getExternalStorageDirectory().toString() + "/idctdo/kml/PUT_KML_FILES_HERE");
 		try {
 			testFile.createNewFile();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		File testFile2 = new File(Environment.getExternalStorageDirectory().toString()+"/idctdo/maptiles/PUT_DIRECTORIES_OF_ZYX_TILES_HERE");
+		File testFile2 = new File(Environment.getExternalStorageDirectory().toString() + "/idctdo/maptiles/PUT_DIRECTORIES_OF_ZYX_TILES_HERE");
 		try {
 			testFile2.createNewFile();
 		} catch (IOException e) {
@@ -250,36 +249,41 @@ public class EQForm_MapView extends Activity {
 		}
 
 
-	     /** Creating a progress dialog window */
-        mProgressDialog = new ProgressDialog(this);
- 
-        /** Close the dialog window on pressing back button */
-        mProgressDialog.setCancelable(true);
- 
-        /** Setting a horizontal style progress bar */
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
- 
-        /** Setting a message for this progress dialog
-        * Use the method setTitle(), for setting a title
-        * for the dialog window
-        *  */
-        mProgressDialog.setMessage("Loading map data...");
-        
-                
+		/* Creating a progress dialog window */
+		mProgressDialog = new ProgressDialog(this);
+
+		/* Close the dialog window on pressing back button */
+		mProgressDialog.setCancelable(true);
+
+		/* Setting a horizontal style progress bar */
+		mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+		/* Setting a message for this progress dialog
+		 * Use the method setTitle(), for setting a title
+		 * for the dialog window
+		 *  */
+		mProgressDialog.setMessage("Loading map data...");
+
+
 		vectorsFile.toString();
 		new SingleMediaScanner(this, testFile);
 		new SingleMediaScanner(this, testFile2);
 
 
-		sdCardPath = "file:///" +  Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
-		if (DEBUG_LOG) Log.d(TAG,"sdcard Path: " + sdCardPath);
+		sdCardPath = "file:///" + Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
+		if (DEBUG_LOG) Log.d(TAG, "sdcard Path: " + sdCardPath);
 		// Restore preferences
 		PreferenceManager.getDefaultSharedPreferences(this);
 		//SharedPreferences settings = getSharedPreferences("R.xml.prefs"), 0);
 
 		mlocListener = new MyLocationListener();
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		try {
+			currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		}
+		catch(SecurityException e) {
+			currentLocation = null;
+		}
 
 		btn_locateMe = (Button)findViewById(R.id.btn_locate_me);
 		btn_locateMe.setOnClickListener(locateMeListener);
@@ -309,6 +313,8 @@ public class EQForm_MapView extends Activity {
 		btn_selectVectorLayer =(Button)findViewById(R.id.btn_select_vector_layer);
 		btn_selectVectorLayer.setOnClickListener(selectVectorLayerListener);
 
+		btn_showMenu = (Button)findViewById(R.id.btn_show_menu);
+		btn_showMenu.setOnClickListener(showMenuListener);
 
 		btn_zoomIn =(Button)findViewById(R.id.btn_zoom_in);
 		btn_zoomIn.setOnClickListener(zoomInListener);
@@ -411,11 +417,22 @@ public class EQForm_MapView extends Activity {
 		
 
 		if (DEBUG_LOG) Log.d("IDCT","Requesting location updates for network");
-
-		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
+		try {
+			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+					minTimePositionUpdates, minDistPositionUpdates, mlocListener);
+		}
+		catch(SecurityException e) {
+			if (DEBUG_LOG) Log.d("IDCT",
+					"Failed to request location updates for network: "+e.getMessage());
+		}
 		if (DEBUG_LOG) Log.d("IDCT","Requesting location updates for GPS");
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
-
+		try {
+			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
+		}
+		catch(SecurityException e) {
+			if (DEBUG_LOG) Log.d("IDCT",
+					"Requesting location updates for GPS"+e.getMessage());
+		}
 		mWebView.loadUrl("javascript:clearMyPositions()");
 		loadPrevSurveyPoints();
 
@@ -518,6 +535,12 @@ public class EQForm_MapView extends Activity {
 		}
 	};
 
+	private OnClickListener showMenuListener  = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			EQForm_MapView.this.openOptionsMenu();
+		}
+	};
 
 	private OnClickListener editPointsListener = new OnClickListener() {
 		@Override
@@ -885,6 +908,7 @@ public class EQForm_MapView extends Activity {
 	}
 
 	//Called from JS with geoJson of Openlayers features
+	@android.webkit.JavascriptInterface
 	public JSONObject getCurrentLocation() {
 		JSONObject object=new JSONObject();
 		try {
@@ -899,6 +923,7 @@ public class EQForm_MapView extends Activity {
 	}
 
 	//Called from JS with geoJson of Openlayers features
+	@android.webkit.JavascriptInterface
 	public boolean loadLayerNames(final String layerNamesJson) {
 		if (DEBUG_LOG) Log.d(TAG,"loading layer names");
 		if (DEBUG_LOG) Log.d(TAG,"layers are: " + layerNamesJson);
@@ -909,6 +934,7 @@ public class EQForm_MapView extends Activity {
 	//This point forms the survey point and should be saved in the db
 	//It could be a new survey point or a new geom of an exisiting one 
 	//Can then mark the map tab as complete
+	@android.webkit.JavascriptInterface
 	public boolean loadSurveyPoint(final double lon, final double lat,final String gemId) {
 		if (DEBUG_LOG) Log.d(TAG,"edited point location from Openlayers. Lon:" + lon + " lat: " + lat+ " gemId: " + gemId);
 		//mWebView.loadUrl("javascript:locateMe("+ lat+","+lon+","+currentLocationAccuracy+","+true+")");
@@ -1445,7 +1471,7 @@ public class EQForm_MapView extends Activity {
 					mWebView.loadUrl("javascript:addKmlStringToMap2("+packingVar1 +", \"" +   layerFileName +"\", \"" +  escaped+ "\")");
 
 
-					/** Sleeps this thread for 100ms */
+					/* Sleeps this thread for 100ms */
 					//Thread.sleep(100);
 
 			

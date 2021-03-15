@@ -5,7 +5,7 @@
 
     <!-- Splash Strings -->
    <string name="splash_title">IDCT: Herramienta móvil de campo</string>
-    <string name="splash_version_info">Versión 1.2.0</string>
+    <string name="splash_version_info">Versión 1.2.1</string>
     <string name="splash_author_info">"University of Nottingham, GEM Foundation, y Corporación OSSO "</string>
     
     <!-- Main Menu Strings" -->
@@ -203,6 +203,6 @@
     <string name="titleDatabaseHelperDeleting">Eliminando registros</string>
     <string name="titleMapViewLocationGPSProviderDisabled">proveedor de ubicación GPS deshabilitado</string>
     <string name="titleMapViewLocationGPSProviderEnabled">proveedor de ubicación GPS habilitado</string>
-
+    <string name="btn_show_menu">Menú</string>
 
 </resources>
