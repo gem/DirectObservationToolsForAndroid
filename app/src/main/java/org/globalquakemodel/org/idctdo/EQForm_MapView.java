@@ -107,7 +107,6 @@ public class EQForm_MapView extends Activity {
 	public boolean isFirstLoad = true;
 
 	public Location currentLocation;
-	public LocationManager locationManager;
 	public LocationListener mlocListener;
 	public double currentLatitude;
 	public double currentLongitude;
@@ -277,13 +276,7 @@ public class EQForm_MapView extends Activity {
 		//SharedPreferences settings = getSharedPreferences("R.xml.prefs"), 0);
 
 		mlocListener = new MyLocationListener();
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		try {
-			currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		}
-		catch(SecurityException e) {
-			currentLocation = null;
-		}
+
 
 		btn_locateMe = (Button)findViewById(R.id.btn_locate_me);
 		btn_locateMe.setOnClickListener(locateMeListener);
@@ -387,34 +380,11 @@ public class EQForm_MapView extends Activity {
 			text_view_gpsInfo2.setVisibility(View.INVISIBLE);//
 		}
 
-
-
-
-		/*
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10f, mlocListener);
-		locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
-
-		// Register the listener with the Location Manager to receive location
-		// updates
-		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-			locationManager.requestLocationUpdates(
-					LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
-		} else {
-			locationManager.requestLocationUpdates(
-					LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
-		}
-		 */
-
-
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
 		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-//			Toast.makeText(this, "GPS is Enabled in your device", Toast.LENGTH_SHORT).show();
 			Toast.makeText(this, R.string.titleMapViewGPSEnabled, Toast.LENGTH_SHORT).show();
-		}else{
-			//showGPSDisabledAlertToUser();
 		}
-		
 
 		if (DEBUG_LOG) Log.d("IDCT","Requesting location updates for network");
 		try {
@@ -473,32 +443,33 @@ public class EQForm_MapView extends Activity {
 
 	@Override
 	protected void onStart() {
-		// TODO Auto-generated method stub
 		super.onStart();
 		if (DEBUG_LOG) Log.d(TAG, "On Start .....");
+
+		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		try {
+			currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		}
+		catch(SecurityException e) {
+			currentLocation = null;
+		}
 	}
 
 	@Override
 	protected void onPause() {
-		// TODO Auto-generated method stub
 		super.onPause();
 		Log.d("IDCT", "On Pause .....");
 		//Stop receiving location updates to save battery when app pauses
+		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		locationManager.removeUpdates(mlocListener);
-		//drawUpdateCounter.cancel();
+		locationManager = null;
 	}
 
 	@Override
 	protected void onRestart() {
-		// TODO Auto-generated method stub
 		super.onRestart();
 		if (DEBUG_LOG) Log.d(TAG, "On Restart .....");
 	}
-
-
-
-
-
 
 	/***********************************************************
 	 * MAP UI BUTTON CLICK LISTENERS
@@ -1667,16 +1638,6 @@ public class EQForm_MapView extends Activity {
 						provider + getResources().getString(R.string.titleMapViewLocationProviderDisabled),
 						Toast.LENGTH_SHORT ).show();
 			}
-
-
-			/*
-			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-			if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTimePositionUpdates, minDistPositionUpdates,  mlocListener );
-			} else {
-				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener );
-			} 
-			 */
 		}
 
 
@@ -1705,18 +1666,7 @@ public class EQForm_MapView extends Activity {
 						provider + getResources().getString(R.string.titleMapViewLocationProviderEnabled),
 						Toast.LENGTH_SHORT).show();
 			}
-			/*
-			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);   
-			if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
-			} else {
-				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTimePositionUpdates, minDistPositionUpdates, mlocListener);
-			}
-			 */
 		}
-
-
-
 
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -1725,26 +1675,21 @@ public class EQForm_MapView extends Activity {
 			switch (status) {
 			case LocationProvider.OUT_OF_SERVICE:
 				if (DEBUG_LOG) Log.d(TAG, "Status Changed: Out of Service");
-//				Toast.makeText(getApplicationContext(), provider + " location provider status Changed: Out of Service",	Toast.LENGTH_SHORT).show();
-				Toast.makeText(getApplicationContext(), provider + " " +  R.string.titleMapViewLocationProviderChangedOut,	Toast.LENGTH_SHORT).show();
-				//textGpsStatus.setText("Provider:" + provider + " status: " + status);
+				Toast.makeText(getApplicationContext(),
+						provider + " " +  R.string.titleMapViewLocationProviderChangedOut,
+						Toast.LENGTH_SHORT).show();
 				break;
 			case LocationProvider.TEMPORARILY_UNAVAILABLE:
 				if (DEBUG_LOG) Log.d(TAG, "Status Changed: Temporarily Unavailable");
-				//textGpsStatus.setText("Provider:" + provider + " status: " + status);
-//				Toast.makeText(getApplicationContext(), provider + " location provider status Changed: TEMPORARILY_UNAVAILABLE",	Toast.LENGTH_SHORT).show();
-				Toast.makeText(getApplicationContext(), provider + " " + R.string.titleMapViewLocationProviderChangedUnavailable,	Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(),
+						provider + " " + R.string.titleMapViewLocationProviderChangedUnavailable,
+						Toast.LENGTH_SHORT).show();
 				break;
 			case LocationProvider.AVAILABLE:
-
 				if (DEBUG_LOG) Log.d(TAG, "Status Changed: Available");
-
-				//textGpsStatus.setText("Provider:" + provider + " status: " + status);
-
-//				Toast.makeText(getApplicationContext(), provider + " location provider status Changed: AVAILABLE",	Toast.LENGTH_SHORT).show();
-				Toast.makeText(getApplicationContext(), provider + " " + R.string.titleMapViewLocationProviderChangedAvailable,	Toast.LENGTH_SHORT).show();
-
-				//Toast.makeText(getApplicationContext(), "Status Changed: Available",Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(),
+						provider + " " + R.string.titleMapViewLocationProviderChangedAvailable,
+						Toast.LENGTH_SHORT).show();
 				break;
 			}
 		}
