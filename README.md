@@ -26,17 +26,17 @@ Many thanks to [Corporación OSSO](http://osso.org.co) for their generous contri
 
 ## Application Structure
 
-###Database
+### Database
 
 The Global Earthquake Model IDCT SQLite database is located at *assets/gem.db3*. This database file may be updated with an alternative version of a GEM IDCT SQLite database prior to application complilation.
 
 
-###Glossary / In-app help documentation
+### Glossary / In-app help documentation
 
 The Global Earthquake Model glossary .HTML files are located in *assets/glossary/glossary_cleaned*. Corresponding images (linked in the .HTML files) for the glossary are located *assets/images-1*.
 
 
-###Forms
+### Forms
 
 Forms within the application have corresponding Java classes to manage data IO to and from the SQLite database.
 
